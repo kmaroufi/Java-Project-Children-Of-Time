@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -6,10 +7,7 @@ import java.util.Map;
 public class Skill {
     public static Map<String, Skill> listOfSkills;
     private String effectedOnHero;
-    private Health health;
-    private AttackPower attackPower;
-    private Magic magic;
-    private EnergyPoint energyPoint;
+    private ArrayList<Property> properties;
     private int nonTargetedEnemy;
     private boolean isRepeated;
     private boolean isGlobal;
@@ -22,10 +20,17 @@ public class Skill {
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
 
-    public boolean isActivated() {};
+    public boolean isActivated() {
+        //TODO
+        return false;
+    };
 
-    public void useSkill() {};
+    public void useSkill() {
+        //TODO
+    };
 
-    public void upgrade() {};
+    public void upgrade() {
+        //TODO
+    };
 
 }
