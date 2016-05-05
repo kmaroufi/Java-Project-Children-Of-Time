@@ -6,20 +6,28 @@ public class Condition {
     private int criticalHitChanceStatus;
     private double criticalHitDamage;
     private int criticalHitDamageStatus;
+    private double maximumHealth; // in uml, we missed health in condition
+    private int maximumHealthStatus;
+    private double healthRefillRate;
+    private int healthRefillRateStatus;
+    private double currentHealth;
+    private int currentHealthStatus;
     private double maximumMagic; // is double true?!
     private int maximumMagicStatus;
     private double magicRefillRate;
     private int magicRefillRateStatus;
     private double currentMagic;
     private int currentMagicStatus;
+    private double attackPower; // in uml, we missed attackPower
+    private int attackPowerStatus;
     private double attackPowerRatio;
     private int attackPowerRatioStatus;
     private double attackPowerRatioOnNonTargetedEnemy;
     private int attackPowerRatioOnNonTargetedEnemyStatus;
     private double numberOfNonTargetedEnemyEffected;
     private int numberOfNonTargetedEnemyEffectedStatus;
-    private double energyPoints;
-    private int energyPointsStatus;
+    private double maximumEnergyPoints; // change to maximumEnergyPoint
+    private int maximumEnergyPointsStatus;
 
     public boolean checkCondition() {
         //TODO
@@ -36,6 +44,21 @@ public class Condition {
         return false;
     }
 
+    private boolean checkMaximumHealth() {
+        //ToDO
+        return false;
+    }
+
+    private boolean checkHealthRefillRate() {
+        //ToDO
+        return false;
+    }
+
+    private boolean checkCurrentHealth() {
+        //ToDO
+        return false;
+    }
+
     private boolean checkMaximumMagic() {
         //ToDO
         return false;
@@ -47,6 +70,11 @@ public class Condition {
     }
 
     private boolean checkCurrentMagic() {
+        //ToDO
+        return false;
+    }
+
+    private boolean checkAttackPower() {
         //ToDO
         return false;
     }
@@ -71,3 +99,8 @@ public class Condition {
         return false;
     }
 }
+
+// add health and attackPower
+// change energyPoint field to maximumEnergyPoint.
+// do we add currentEnergyPoint near maximumEnergyPoints?
+// this class should extremely review!!! baraye mesal: perki darim ke dar moghabele doshman haye weak zarbeye kamtari mikhorad.
