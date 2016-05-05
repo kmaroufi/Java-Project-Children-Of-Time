@@ -13,7 +13,7 @@ public class Perk {
     private Map<Condition, PerkMode> mapOfCondition;
     private PerkMode currentMode;
 
-    public void upgarade() {};
+    public void upgrade() {};
 
     public void updatePerkEffect() {};
 }
