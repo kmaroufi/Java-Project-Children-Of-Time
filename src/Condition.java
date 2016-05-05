@@ -5,7 +5,7 @@ public class Condition {
     private double criticalHitChance;
     private int criticalHitChanceStatus;
     private double criticalHitDamage;
-    private int criticalHitDamageStatuse;
+    private int criticalHitDamageStatus;
     private double maximumHealth; // in uml, we missed health in condition
     private int maximumHealthStatus;
     private double healthRefillRate;
