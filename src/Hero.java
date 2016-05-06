@@ -47,14 +47,29 @@ public class Hero extends HeroClass {
     }
 
     //------------------------------------------ Functions
-    public void attack(){
-
+    public void attack(Enemy enemy){
+        enemy.setCurrentHealth(enemy.getCurrentHealth() - this.attackPower);
     }
     public void useSkill(String skillName){
-
+        for(int i = 0;i < this.skills.size();i++){                  //finding Skill with Skillname
+            if(this.skills.get(i).getName().equals(skillName)){
+                 this.skills.get(i).useSkill();
+            }
+        }
     }
     public void upgradeAbility(String abilityName){
-
+        for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
+            if(this.skills.get(i).getName().equals(abilityName)){
+                this.skills.get(i).upgrade();
+                return;
+            }
+        }
+        for(int i = 0;i < this.perks.size();i++){                  //finding perk with abilityName
+            if(this.perks.get(i).getName().equals(abilityName)){
+                this.perks.get(i).upgrade();
+                return;
+            }
+        }
     }
     public void useItem(String itemName){
 
