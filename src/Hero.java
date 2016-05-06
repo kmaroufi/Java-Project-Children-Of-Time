@@ -3,7 +3,7 @@
  */
 import java.util.*;
 public class Hero {
-    public static HashMap<String,ArrayList<Hero>> listOfHeros;
+    public static HashMap<String, Hero> listOfHeroes;
     public static HashMap<String, String> listOfHeroClasses;
     public static ArrayList<Skill> listOfActiveGlobalSkills;
     public static ArrayList<Perk> listOfActiveGlobalPerks;

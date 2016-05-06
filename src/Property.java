@@ -13,16 +13,28 @@ public class Property {
     private double[] magicCoefficient;
     private double[] healthRefillRateCoefficient;
     private double[] magicRefillRateCoefficient;
+    //--------------------------------------------------------------
+    public Property(){
+
+    }
+    public String getName(){
+        return this.name;
+    }
+    //--------------------------------------------------------------
 
     private void calculateProperty() {
         //TODO
     }
 
-    public void effect() {
-        //TODO
+    public void effect(String heroName) {
+        Hero hero = Hero.listOfHeroes.get(heroName);
+        if(getName().equals("attackPower")){
+
+        }
     }
 
     public void removeEffect() {
         //TODO
     }
+
 }
