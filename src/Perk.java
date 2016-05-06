@@ -4,7 +4,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Perk {
+public class Perk extends Ability{
     public static Map<String, Perk> listOfPerks;
     private boolean isGlobal;
     private boolean hasEffectOnEnemy;
