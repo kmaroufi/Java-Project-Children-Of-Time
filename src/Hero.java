@@ -15,7 +15,7 @@ public class Hero {
     private Integer maximumMagic;
     private Double magicRefillRate;
     private Integer currentMagic;
-    private Double attackPowerRatioDuringAttack;		//   :| namusan be hich dardi nemikhore!
+    private Double attackPowerRatioDuringAttack;
     private Double healthRefillRateRatio;
     private Double magicRefillRateRatio;
     private Double energyPointRatio;
@@ -31,6 +31,9 @@ public class Hero {
 
 
     //------------------------------------------
+    public Hero(HeroHandler heroHandler){
+
+    }
     //------------------------------------------
     public void attack(){
 
