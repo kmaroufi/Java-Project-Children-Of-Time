@@ -3,10 +3,21 @@
  */
 import java.util.*;
 public class Hero extends HeroClass {
-    public static HashMap<String, Hero> listOfHeroes;
-    public static ArrayList<Skill> listOfActiveGlobalSkills;
-    public static ArrayList<Perk> listOfActiveGlobalPerks;
+    public static HashMap<String, Hero> listOfHeroes = new HashMap<String, Hero>();
+    public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
+//  public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
+    private HashMap<String, Item> listOfitems = new HashMap<String, Item>();
+    private ArrayList<Item> items = new ArrayList<Item>();
+    private String name;
 
+    //------------------------------------------ Constructors
+    public Hero(){
+
+    }
+    public Hero(String name){
+        this.name = name;
+    }
+    //------------------------------------------ Getter && Setters
     public String getName() {
         return name;
     }
@@ -31,17 +42,7 @@ public class Hero extends HeroClass {
         this.items = items;
     }
 
-    private String name;
-    private HashMap<String, Item> listOfitems;
-    private ArrayList<Item> items;
-
-
-
-    //------------------------------------------
-    public Hero(String name){
-        this.name = name;
-    }
-    //------------------------------------------
+    //------------------------------------------ Functions
     public void attack(){
 
     }

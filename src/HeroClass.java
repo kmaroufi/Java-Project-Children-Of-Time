@@ -6,8 +6,63 @@ import java.util.HashMap;
  */
 public class HeroClass extends Soldier{
     public static HashMap<String, HeroClass> listOfHeroClasses;
-    private ArrayList<Hero> listOfHeroes;
+    private ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
+    protected ArrayList<Perk> perks;
+    protected ArrayList<Skill> skills;
+    protected Double criticalHitChance;
+    protected Double criticalHitChanceRatio;
+    protected Double criticalHitDamage;
+    protected Double criticalHitDamageRatio;
+    protected Double magicRefillRate;
+    protected Double attackPowerRatioDuringAttack;
+    protected Double healthRefillRateRatio;
+    protected Double magicRefillRateRatio;
+    protected Double energyPointRatio;
+    protected Double attackPowerRatioOnNonTargetedEnemy;
+    protected Double attackPowerOnNonTargetedEnemy;
+    protected Integer numberOfNonTargetedEnemyEffected;
+    protected Integer maximumEnergyPoint;
+    protected Integer currentEnergyPoint;
+    protected Integer inventorySize;
+    protected Integer maximumMagic;
+    protected Integer currentMagic;
 
+    //--------------------------------------------------
+    public HeroClass(){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
+                Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
+            }
+        }
+    }
+    public HeroClass(HeroClassHandler heroClassHandler){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
+                Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
+            }
+        }
+        this.setAttackPowerOnNonTargetedEnemy(heroClassHandler.getAttackPowerOnNonTargetedEnemy());
+        this.setAttackPowerRatioDuringAttack(heroClassHandler.getAttackPowerRatioDuringAttack());
+        this.setAttackPowerRatioOnNonTargetedEnemy(heroClassHandler.getAttackPowerRatioOnNonTargetedEnemy());
+        this.setCriticalHitChance(heroClassHandler.getCriticalHitChance());
+        this.setCriticalHitChanceRatio(heroClassHandler.getCriticalHitChanceRatio());
+        this.setCriticalHitDamage(heroClassHandler.getCriticalHitDamage());
+        this.setCriticalHitDamageRatio(heroClassHandler.getCriticalHitDamageRatio());
+        this.setCurrentEnergyPoint(heroClassHandler.getCurrentEnergyPoint());
+        this.setCurrentMagic(heroClassHandler.getCurrentMagic());
+        this.setEnergyPointRatio(heroClassHandler.getEnergyPointRatio());
+        this.setHealthRefillRateRatio(heroClassHandler.getHealthRefillRateRatio());
+        this.setInventorySize(heroClassHandler.getInventorySize());
+        this.setSkills(heroClassHandler.getSkills());
+        this.setPerks(heroClassHandler.getPerks());
+        this.setMaximumEnergyPoint(heroClassHandler.getMaximumEnergyPoint());
+        this.setMaximumMagic(heroClassHandler.getMaximumMagic());
+        this.setNumberOfNonTargetedEnemyEffected(heroClassHandler.getNumberOfNonTargetedEnemyEffected());
+        this.setMagicRefillRateRatio(heroClassHandler.getMagicRefillRateRatio());
+        this.setMagicRefillRate(heroClassHandler.getMagicRefillRate());
+
+    }
+    //-------------------------------------------------- Getter && Setters
     public ArrayList<Hero> getListOfHeroes() {
         return listOfHeroes;
     }
@@ -166,32 +221,5 @@ public class HeroClass extends Soldier{
 
     public void setSkills(ArrayList<Skill> skills) {
         this.skills = skills;
-    }
-
-    protected Double criticalHitChance;
-    protected Double criticalHitChanceRatio;
-    protected Double criticalHitDamage;
-    protected Double criticalHitDamageRatio;
-    protected Integer maximumMagic;
-    protected Double magicRefillRate;
-    protected Integer currentMagic;
-    protected Double attackPowerRatioDuringAttack;
-    protected Double healthRefillRateRatio;
-    protected Double magicRefillRateRatio;
-    protected Double energyPointRatio;
-    protected Double attackPowerRatioOnNonTargetedEnemy;
-    protected Double attackPowerOnNonTargetedEnemy;
-    protected Integer numberOfNonTargetedEnemyEffected;
-    protected Integer maximumEnergyPoint;
-    protected Integer currentEnergyPoint;
-    protected Integer inventorySize;
-    protected ArrayList<Perk> perks;
-    protected ArrayList<Skill> skills;
-    //--------------------------------------------------
-    public HeroClass(){
-
-    }
-    public HeroClass(HeroClassHandler heroClassHandler){
-
     }
 }
