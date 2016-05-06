@@ -72,7 +72,12 @@ public class Hero extends HeroClass {
         }
     }
     public void useItem(String itemName){
-
+        for(int i = 0;i < this.items.size();i++){                  //finding item with itemName
+            if(this.items.get(i).getName().equals(itemName)){
+                this.items.get(i).useItem();                        // using that item
+                return;
+            }
+        }
     }
 
 }
