@@ -8,5 +8,7 @@ public class Ability {
     private int currentGrade;
     public static Map<String, String> listOfAbilities;
 
-    public void upgrade() {};
+    public void upgrade() {
+        //TODO
+    }
 }

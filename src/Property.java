@@ -6,8 +6,7 @@ public class Property {
     private String name;
 
     private double[] constantProperty;
-    private double[] attackPower;
-    private double[] maximumAttackPowerCoefficient;
+    private double[] attackPowerCoefficient;
     private double[] maximumHealthCoefficient;
     private double[] maximumMagicCoefficient;
     private double[] healthCoefficient;

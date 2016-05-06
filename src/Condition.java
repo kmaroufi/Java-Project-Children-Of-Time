@@ -1,33 +1,37 @@
+import java.util.Map;
+
 /**
  * Created by asus-pc on 5/5/2016.
  */
 public class Condition {
-    private double criticalHitChance;
-    private int criticalHitChanceStatus;
-    private double criticalHitDamage;
-    private int criticalHitDamageStatus;
-    private double maximumHealth; // in uml, we missed health in condition
-    private int maximumHealthStatus;
-    private double healthRefillRate;
-    private int healthRefillRateStatus;
-    private double currentHealth;
-    private int currentHealthStatus;
-    private double maximumMagic; // is double true?!
-    private int maximumMagicStatus;
-    private double magicRefillRate;
-    private int magicRefillRateStatus;
-    private double currentMagic;
-    private int currentMagicStatus;
-    private double attackPower; // in uml, we missed attackPower
-    private int attackPowerStatus;
-    private double attackPowerRatio;
-    private int attackPowerRatioStatus;
-    private double attackPowerRatioOnNonTargetedEnemy;
-    private int attackPowerRatioOnNonTargetedEnemyStatus;
-    private double numberOfNonTargetedEnemyEffected;
-    private int numberOfNonTargetedEnemyEffectedStatus;
-    private double maximumEnergyPoints; // change to maximumEnergyPoint
-    private int maximumEnergyPointsStatus;
+//    private double criticalHitChance;
+//    private int criticalHitChanceStatus;
+//    private double criticalHitDamage;
+//    private int criticalHitDamageStatus;
+//    private double maximumHealth; // in uml, we missed health in condition
+//    private int maximumHealthStatus;
+//    private double healthRefillRate;
+//    private int healthRefillRateStatus;
+//    private double currentHealth;
+//    private int currentHealthStatus;
+//    private double maximumMagic; // is double true?!
+//    private int maximumMagicStatus;
+//    private double magicRefillRate;
+//    private int magicRefillRateStatus;
+//    private double currentMagic;
+//    private int currentMagicStatus;
+//    private double attackPower; // in uml, we missed attackPower
+//    private int attackPowerStatus;
+//    private double attackPowerRatio;
+//    private int attackPowerRatioStatus;
+//    private double attackPowerRatioOnNonTargetedEnemy;
+//    private int attackPowerRatioOnNonTargetedEnemyStatus;
+//    private double numberOfNonTargetedEnemyEffected;
+//    private int numberOfNonTargetedEnemyEffectedStatus;
+//    private double maximumEnergyPoints; // change to maximumEnergyPoint
+//    private int maximumEnergyPointsStatus;
+    private Map<String, Double> mapOfFields;
+    private Map<String, Double> mapOfStatusOfFields;
 
     public boolean checkCondition() {
         //TODO
