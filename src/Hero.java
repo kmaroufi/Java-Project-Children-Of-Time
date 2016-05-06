@@ -14,7 +14,11 @@ public class Hero extends HeroClass {
     public Hero(){
 
     }
+
     public Hero(String name){
+        if(listOfHeroes.containsKey(name)){
+            this.name = name + "-2";
+        }
         this.name = name;
     }
     //------------------------------------------ Getter && Setters
