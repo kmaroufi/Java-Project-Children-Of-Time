@@ -3,19 +3,21 @@
  */
 import java.util.*;
 public class Enemy extends Soldier{
-    public static HashMap<String , ArrayList<Enemy>> listOfEnemies;
-    private String version;
-    private Double attackPowerRatio;
+    public static HashMap<String , Enemy> listOfEnemies;        // ArrayList is Wrong
+    private String version;                         // it has problem
     private String className;
     private String name;
+    private Double attackPowerRatio;
 
     //---------------------------------------------------- Constructors
     public Enemy(){
     }
-    public Enemy(Integer attackPower , String className, String name){
+    public Enemy(Integer attackPower , String className, String name, String version){
         this.setAttackPower(attackPower);
         this.setClassName(className);
         this.setName(name);
+        this.setVersion(version);
+        listOfEnemies.put(this.name,this);
     }
     //---------------------------------------------------- Functions
     protected void doTurn(){
