@@ -5,6 +5,27 @@ public class Property {
     private double[] totalEffectOnProperty;
     private String name;
 
+    private double[] constantProperty;
+    private double[] attackPowerCoefficient;
+    private double[] maximumHealthCoefficient;
+    private double[] maximumMagicCoefficient;
+    private double[] healthCoefficient;
+    private double[] magicCoefficient;
+    private double[] healthRefillRateCoefficient;
+    private double[] magicRefillRateCoefficient;
+
+    //--------------------------------------------------------------
+
+    public Property(){
+
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    //--------------------------------------------------------------
+
     public double[] getConstantProperty() {
         return constantProperty;
     }
@@ -80,23 +101,6 @@ public class Property {
     public void setMagicRefillRateCoefficient(double[] magicRefillRateCoefficient) {
         this.magicRefillRateCoefficient = magicRefillRateCoefficient;
     }
-
-    private double[] constantProperty;
-    private double[] attackPowerCoefficient;
-    private double[] maximumHealthCoefficient;
-    private double[] maximumMagicCoefficient;
-    private double[] healthCoefficient;
-    private double[] magicCoefficient;
-    private double[] healthRefillRateCoefficient;
-    private double[] magicRefillRateCoefficient;
-    //--------------------------------------------------------------
-    public Property(){
-        Console.printf("Creating The First Step Of Ability:");
-    }
-    public String getName(){
-        return this.name;
-    }
-    //--------------------------------------------------------------
 
     private void calculateProperty() {
         //TODO

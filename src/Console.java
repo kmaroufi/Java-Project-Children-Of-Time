@@ -6,12 +6,17 @@ import java.util.Scanner;
 
 public class Console {
     private static Scanner cin;
+
+    //----------------------------------
+
     public static String getString(){
         return cin.nextLine();
     }
+
     public static int getInteger(){
         return cin.nextInt();
     }
+
     public static double getDouble(){
         return cin.nextDouble();
     }
@@ -19,12 +24,16 @@ public class Console {
     public static void printInEachLine(String sentence){
         System.out.println(sentence);
     }
+
     public static HeroClassHandler getHeroClass(){
         HeroClassHandler heroClassHandler = new HeroClassHandler();
         //............!!!
         return heroClassHandler;
     }
+
     public static void printf(String sentence){
         System.out.printf(sentence);
     }
+
+
 }
