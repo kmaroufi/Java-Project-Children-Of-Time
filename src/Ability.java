@@ -3,7 +3,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Ability {
+public abstract class Ability {
 
     protected String name;
     private int currentGrade;
@@ -25,7 +25,5 @@ public class Ability {
         this.currentGrade = currentGrade;
     }
 
-    public void upgrade() {
-        //TODO
-    }
+    abstract public void upgrade();
 }
