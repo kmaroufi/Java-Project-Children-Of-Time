@@ -19,7 +19,11 @@ public class Console {
     public static void printInEachLine(String sentence){
         System.out.println(sentence);
     }
-
+    public static HeroClassHandler getHeroClass(){
+        HeroClassHandler heroClassHandler = new HeroClassHandler();
+        //............!!!
+        return heroClassHandler;
+    }
     public static void printf(String sentence){
         System.out.printf(sentence);
     }

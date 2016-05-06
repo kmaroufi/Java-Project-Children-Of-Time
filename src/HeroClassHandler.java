@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroHandler extends Hero{
+public class HeroClassHandler {
     private ArrayList<Perk> perks;
     private ArrayList<Skill> skills;
     private Double criticalHitChance;
@@ -24,7 +24,5 @@ public class HeroHandler extends Hero{
     private Integer currentEnergyPoint;
     private Integer inventorySize;
     //----------------------------------------------------------------
-    public void setCurrentMagic(int magic){
-        this.currentMagic = magic;
-    }
+
 }

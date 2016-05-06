@@ -15,7 +15,7 @@ public class Property {
     private double[] magicRefillRateCoefficient;
     //--------------------------------------------------------------
     public Property(){
-
+        Console.printf("Creating The First Step Of Ability:");
     }
     public String getName(){
         return this.name;

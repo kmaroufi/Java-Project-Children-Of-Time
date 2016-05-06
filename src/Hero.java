@@ -2,37 +2,19 @@
  * Created by Future on 5/6/2016.
  */
 import java.util.*;
-public class Hero {
+public class Hero extends HeroClass {
     public static HashMap<String, Hero> listOfHeroes;
-    public static HashMap<String, String> listOfHeroClasses;
     public static ArrayList<Skill> listOfActiveGlobalSkills;
     public static ArrayList<Perk> listOfActiveGlobalPerks;
+    private String name;
     private HashMap<String, Item> listOfitems;
-    private Double criticalHitChance;
-    private Double criticalHitChanceRatio;
-    private Double criticalHitDamage;
-    private Double criticalHitDamageRatio;
-    private Integer maximumMagic;
-    private Double magicRefillRate;
-    private Integer currentMagic;
-    private Double attackPowerRatioDuringAttack;
-    private Double healthRefillRateRatio;
-    private Double magicRefillRateRatio;
-    private Double energyPointRatio;
-    private Double attackPowerRatioOnNonTargetedEnemy;
-    private Double attackPowerOnNonTargetedEnemy;
-    private Integer numberOfNonTargetedEnemyEffected;
-    private Integer maximumEnergyPoint;
-    private Integer currentEnergyPoint;
-    private Integer inventorySize;
     private ArrayList<Item> items;
-    private ArrayList<Perk> perks;
-    private ArrayList<Skill> skills;
+
 
 
     //------------------------------------------
-    public Hero(HeroHandler heroHandler){
-
+    public Hero(String name){
+        this.name = name;
     }
     //------------------------------------------
     public void attack(){

@@ -11,4 +11,7 @@ public class Player {
     public void doBattle() {
         //TODO
     }
+    public void addHero(Hero hero){
+        this.listOfHeros.add(hero);
+    }
 }
