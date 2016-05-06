@@ -9,4 +9,18 @@ public class Console {
     public static String getString(){
         return cin.nextLine();
     }
+    public static int getInteger(){
+        return cin.nextInt();
+    }
+    public static double getDouble(){
+        return cin.nextDouble();
+    }
+
+    public static void printInEachLine(String sentence){
+        System.out.println(sentence);
+    }
+
+    public static void printf(String sentence){
+        System.out.printf(sentence);
+    }
 }
