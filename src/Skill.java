@@ -4,7 +4,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Skill {
+public class Skill extends Ability{
     public static Map<String, Skill> listOfSkills;
     private String effectedOnHero;
     private ArrayList<Property> properties;
