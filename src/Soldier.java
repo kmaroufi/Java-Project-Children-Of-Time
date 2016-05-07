@@ -5,7 +5,7 @@ public class Soldier {
     protected int maximumHealth;
     protected int attackPower;
     protected double healthRefillRate;
-    protected int currentHealth;
+    protected double currentHealth;
     protected String className;
 
     //------------------------------------------- Functions
@@ -14,6 +14,10 @@ public class Soldier {
             return true;
         }
         return false;
+    }
+
+    public void getDamage(double attackPower) {
+        this.setCurrentHealth(currentHealth - attackPower); // we did not check the skills!
     }
     //------------------------------------------- Getters && Setters
 
@@ -41,11 +45,11 @@ public class Soldier {
         this.healthRefillRate = attackRefillRate;
     }
 
-    public int getCurrentHealth() {
+    public double getCurrentHealth() {
         return currentHealth;
     }
 
-    public void setCurrentHealth(int currentHealth) {
+    public void setCurrentHealth(double currentHealth) {
         this.currentHealth = currentHealth;
     }
 

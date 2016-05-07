@@ -2,8 +2,9 @@
  * Created by Future on 5/6/2016.
  */
 import java.util.*;
-public class Enemy extends Soldier{
-    public static HashMap<String , Enemy> listOfEnemies;        // ArrayList is Wrong
+public abstract class Enemy extends Soldier{
+    public static HashMap<String , Enemy> mapOfEnemies;        // ArrayList is Wrong
+    public static ArrayList<Enemy> listOfEnemies;
     private String version;                         // it has problem
     private Double attackPowerRatio;
     private String name;
@@ -17,13 +18,11 @@ public class Enemy extends Soldier{
         this.setClassName(className);
         this.setName(name);
         this.setVersion(version);
-        listOfEnemies.put(this.className,this);
+        mapOfEnemies.put(this.className,this);
     }
 
     //---------------------------------------------------- Functions
-    protected void doTurn(){
-
-    }
+    public abstract void doTurn();
 
     //---------------------------------------------------- Getter && Setters
     public String getVersion() {
