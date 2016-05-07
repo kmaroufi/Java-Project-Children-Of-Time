@@ -3,9 +3,10 @@
  */
 import java.util.*;
 public class Hero extends HeroClass {
-    public static HashMap<String, Hero> listOfHeroes = new HashMap<String, Hero>();
+    public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
+    private ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
     public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
-  public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
+    public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
     private HashMap<String, Item> listOfItems = new HashMap<String, Item>();
     private ArrayList<Item> items = new ArrayList<Item>();
     private String name;
@@ -16,7 +17,7 @@ public class Hero extends HeroClass {
     }
 
     public Hero(String name){
-        if(listOfHeroes.containsKey(name)){
+        if(mapOfHeroes.containsKey(name)){
             this.name = name + "-2";
         }
         this.name = name;

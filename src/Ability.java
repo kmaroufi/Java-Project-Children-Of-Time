@@ -10,6 +10,10 @@ public abstract class Ability {
     private int currentGrade;
     public static Map<String, String> listOfAbilities;
 
+    Ability(AbilityHandler abilityHandler) {
+
+    }
+
     public String getName() {
         return name;
     }

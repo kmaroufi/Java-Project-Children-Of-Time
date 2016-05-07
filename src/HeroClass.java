@@ -5,8 +5,8 @@ import java.util.HashMap;
  * Created by Future on 5/6/2016.
  */
 public class HeroClass extends Soldier{
-    public static HashMap<String, HeroClass> listOfHeroClasses;
-    private ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
+    public static HashMap<String, HeroClass> mapOfHeroClasses;
+    public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     protected ArrayList<Perk> perks;
     protected ArrayList<Skill> skills;
     protected Double criticalHitChance;
@@ -63,13 +63,6 @@ public class HeroClass extends Soldier{
 
     }
     //-------------------------------------------------- Getter && Setters
-    public ArrayList<Hero> getListOfHeroes() {
-        return listOfHeroes;
-    }
-
-    public void setListOfHeroes(ArrayList<Hero> listOfHeroes) {
-        this.listOfHeroes = listOfHeroes;
-    }
 
     public Double getCriticalHitChance() {
         return criticalHitChance;
