@@ -9,6 +9,7 @@ public class FinalBoss extends Enemy {
         this.setClassName("FinalBoss");
         this.setFullName();
         this.setMaximumHealth(1000);
+        this.setCurrentHealth(1000);
     }
 
     public void doTurn() {
@@ -19,18 +20,18 @@ public class FinalBoss extends Enemy {
             this.setAttackPower(250);
         }
         Random random = new Random();
-        int randomIndex1 = random.nextInt(Hero.listOfHeroes.size());
-        int randomIndex2 = random.nextInt(Hero.listOfHeroes.size());
+        int randomIndex1 = random.nextInt(GameEngine.listOfHeroes.size());
+        int randomIndex2 = random.nextInt(GameEngine.listOfHeroes.size());
         while (randomIndex1 == randomIndex2) {
-            randomIndex2 = random.nextInt(Hero.listOfHeroes.size());
+            randomIndex2 = random.nextInt(GameEngine.listOfHeroes.size());
         }
-        Hero targetedHero1 = Hero.listOfHeroes.get(randomIndex1);
-        Hero targetedHero2 = Hero.listOfHeroes.get(randomIndex2);
+        Hero targetedHero1 = GameEngine.listOfHeroes.get(randomIndex1);
+        Hero targetedHero2 = GameEngine.listOfHeroes.get(randomIndex2);
         targetedHero1.getDamage(this.attackPower);
         targetedHero2.getDamage(this.attackPower);
         Console.printInEachLine("Collector just attacked " + targetedHero1.getName() + " with " + this.getAttackPower() + " power");
         Console.printInEachLine("Collector just attacked " + targetedHero2.getName() + " with " + this.getAttackPower() + " power");
-        for (Hero hero: Hero.listOfHeroes) {
+        for (Hero hero: GameEngine.listOfHeroes) {
             int randomValue = random.nextInt(3) + 2;
             hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - randomValue);
             Console.printInEachLine("Collector just burned " + randomValue + " energy points from " + hero.getName());

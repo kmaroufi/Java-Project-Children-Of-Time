@@ -8,10 +8,12 @@ public class Tank extends Enemy {
         if(version.equals("Weak")){
             this.setAttackPower(30);
             this.setMaximumHealth(400);
+            this.setCurrentHealth(400);
         }
         else if(version.equals("Able")){
             this.setAttackPower(90);
             this.setMaximumHealth(500);
+            this.setCurrentHealth(500);
         }
     }
     public void doTurn() {

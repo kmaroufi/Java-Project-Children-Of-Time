@@ -14,10 +14,12 @@ public class Angel extends Enemy {
         if(version.equals("Weak")){
             this.setHealPower(100);
             this.setMaximumHealth(150);
+            this.setCurrentHealth(150);
         }
         else if(version.equals("Able")) {
             this.setHealPower(150);
             this.setMaximumHealth(250);
+            this.setCurrentHealth(250);
         }
     }
     public void doTurn() {
