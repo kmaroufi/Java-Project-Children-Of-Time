@@ -6,15 +6,16 @@ import java.util.Random;
 public class Angel extends Enemy {
     private Integer healPower;              // i think it must be Integer it is not neccessery to be Double
     private Integer tempHealPower;          // i'm not sure about this field!
+
+
     public Angel(String version){
         if(version.equals("Weak")){
-
+            this.setHealPower(100);
+            this.setMaximumHealth(150);
         }
-        else if(version.equals("Able")){
-
-        }
-        else if(version.equals("Mighty")){
-
+        else if(version.equals("Able")) {
+            this.setHealPower(150);
+            this.setMaximumHealth(250);
         }
     }
     public void doTurn() {
@@ -24,4 +25,12 @@ public class Angel extends Enemy {
         targetedEnemy.setCurrentHealth(targetedEnemy.currentHealth + this.healPower);
         Console.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + this.healPower + " health points");
     }
+    public Integer getHealPower() {
+        return healPower;
+    }
+
+    public void setHealPower(Integer healPower) {
+        this.healPower = healPower;
+    }
+
 }
