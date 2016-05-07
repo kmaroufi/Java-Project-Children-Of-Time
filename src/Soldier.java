@@ -4,8 +4,9 @@
 public class Soldier {
     protected int maximumHealth;
     protected int attackPower;
-    protected double attackRefillRate;
+    protected double healthRefillRate;
     protected int currentHealth;
+    protected String name;
 
     //------------------------------------------- Functions
     public boolean isDead(){
@@ -31,12 +32,12 @@ public class Soldier {
         this.attackPower = attackPower;
     }
 
-    public double getAttackRefillRate() {
-        return attackRefillRate;
+    public double getHealthRefillRate() {
+        return healthRefillRate;
     }
 
-    public void setAttackRefillRate(double attackRefillRate) {
-        this.attackRefillRate = attackRefillRate;
+    public void setHealthRefillRate(double attackRefillRate) {
+        this.healthRefillRate = attackRefillRate;
     }
 
     public int getCurrentHealth() {
