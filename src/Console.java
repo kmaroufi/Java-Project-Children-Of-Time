@@ -55,6 +55,18 @@ public class Console {
         return perkHandler;
     }
 
+    public static PerkModeHandler getPerkMode() {
+        PerkModeHandler perkModeHandler = new PerkModeHandler();
+
+        return perkModeHandler;
+    }
+
+    public static ConditionHandler getCondition() {
+        ConditionHandler conditionHandler = new ConditionHandler();
+
+        return conditionHandler;
+    }
+
     public static void printf(String sentence){
         System.out.printf(sentence);
     }
