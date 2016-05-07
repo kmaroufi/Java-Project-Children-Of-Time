@@ -2,7 +2,15 @@
  * Created by asus-pc on 5/7/2016.
  */
 public class Tank extends Enemy {
-    public Tank(){
+    public Tank(String version){
+        if(version.equals("Weak")){
+            this.setAttackPower(30);
+            this.setMaximumHealth(400);
+        }
+        else if(version.equals("Able")){
+            this.setAttackPower(90);
+            this.setMaximumHealth(500);
+        }
 
     }
     public void doTurn() {
