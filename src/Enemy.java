@@ -4,7 +4,6 @@
 import java.util.*;
 public abstract class Enemy extends Soldier{
     public static HashMap<String , Enemy> mapOfEnemies;        // ArrayList is Wrong
-    public static ArrayList<Enemy> listOfEnemies;
     private String version;                         // it has problem
     private Double attackPowerRatio;
     private String name;

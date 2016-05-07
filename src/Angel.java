@@ -9,8 +9,8 @@ public class Angel extends Enemy {
 
     public void doTurn() {
         Random random = new Random();
-        int randomIndex = random.nextInt(Enemy.listOfEnemies.size());
-        Enemy targetedEnemy = Enemy.listOfEnemies.get(randomIndex);
+        int randomIndex = random.nextInt(GameEngine.listOfEnemies.size());
+        Enemy targetedEnemy = GameEngine.listOfEnemies.get(randomIndex);
         targetedEnemy.setCurrentHealth(targetedEnemy.currentHealth + this.healPower);
     }
 }

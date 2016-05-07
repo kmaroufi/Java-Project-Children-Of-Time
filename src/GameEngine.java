@@ -5,8 +5,9 @@ import java.util.ArrayList;
  */
 public class GameEngine {
     private Player player;
-    private ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
-    private ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
+    public static ArrayList<Enemy> listOfEnemies = new ArrayList<Enemy>();
+    public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
+    public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
 
     //------------------------------------------ Getter && Setters
 
