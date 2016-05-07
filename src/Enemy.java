@@ -4,9 +4,9 @@
 import java.util.*;
 public abstract class Enemy extends Soldier{
     public static HashMap<String , Enemy> mapOfEnemies;        // ArrayList is Wrong
-    private String version;                         // it has problem (Weak-Able-Mighty)
+    private String version;                         // (Weak-Able-Mighty)
     private Double attackPowerRatio;
-    private String name;                            // Full name of An Enemy        (ClassName is Like Thug)
+    private String name;                            // Full name of An Enemy   ----->     (ClassName is Like Thug)
 
     //---------------------------------------------------- Constructors
     public Enemy(){}
