@@ -1,11 +1,9 @@
 /**
- * Created by asus-pc on 5/5/2016.
+ * Created by asus-pc on 5/6/2016.
  */
-public class Property {
-    private double[] totalEffectOnProperty;
+public class PropertyHandler {
     private String name;
-
-    private double[] constantProperty;
+    private double[] constantProperty ;
     private double[] attackPowerCoefficient;
     private double[] maximumHealthCoefficient;
     private double[] maximumMagicCoefficient;
@@ -14,25 +12,15 @@ public class Property {
     private double[] healthRefillRateCoefficient;
     private double[] magicRefillRateCoefficient;
 
-    //--------------------------------------------------------------
+    // constructor should created!
 
-    public Property(PropertyHandler propertyHandler){
-        setName(propertyHandler.getName());
-        setConstantProperty(propertyHandler.getConstantProperty());
-        setAttackPowerCoefficient(propertyHandler.getAttackPowerCoefficient());
-        setMaximumHealthCoefficient(propertyHandler.getMaximumHealthCoefficient());
-        setMaximumMagicCoefficient(propertyHandler.getMaximumMagicCoefficient());
-        setHealthCoefficient(propertyHandler.getHealthCoefficient());
-        setMagicCoefficient(propertyHandler.getMagicCoefficient());
-        setHealthRefillRateCoefficient(propertyHandler.getHealthRefillRateCoefficient());
-        setMagicRefillRateCoefficient(propertyHandler.getMagicRefillRateCoefficient());
+    public String getName() {
+        return name;
     }
 
-    public String getName(){
-        return this.name;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    //--------------------------------------------------------------
 
     public double[] getConstantProperty() {
         return constantProperty;
@@ -40,18 +28,6 @@ public class Property {
 
     public void setConstantProperty(double[] constantProperty) {
         this.constantProperty = constantProperty;
-    }
-
-    public double[] getTotalEffectOnProperty() {
-        return totalEffectOnProperty;
-    }
-
-    public void setTotalEffectOnProperty(double[] totalEffectOnProperty) {
-        this.totalEffectOnProperty = totalEffectOnProperty;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double[] getAttackPowerCoefficient() {
@@ -109,20 +85,4 @@ public class Property {
     public void setMagicRefillRateCoefficient(double[] magicRefillRateCoefficient) {
         this.magicRefillRateCoefficient = magicRefillRateCoefficient;
     }
-
-    private void calculateProperty() {
-        //TODO
-    }
-
-    public void effect(String heroName) {
-        Hero hero = Hero.listOfHeroes.get(heroName);
-        if(getName().equals("attackPower")){
-
-        }
-    }
-
-    public void removeEffect() {
-        //TODO
-    }
-
 }
