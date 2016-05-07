@@ -5,8 +5,8 @@ import java.util.*;
 public class Hero extends HeroClass {
     public static HashMap<String, Hero> listOfHeroes = new HashMap<String, Hero>();
     public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
-//  public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
-    private HashMap<String, Item> listOfitems = new HashMap<String, Item>();
+  public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
+    private HashMap<String, Item> listOfItems = new HashMap<String, Item>();
     private ArrayList<Item> items = new ArrayList<Item>();
     private String name;
 
@@ -22,6 +22,7 @@ public class Hero extends HeroClass {
         this.name = name;
     }
     //------------------------------------------ Getter && Setters
+
     public String getName() {
         return name;
     }
@@ -30,12 +31,12 @@ public class Hero extends HeroClass {
         this.name = name;
     }
 
-    public HashMap<String, Item> getListOfitems() {
-        return listOfitems;
+    public HashMap<String, Item> getListOfItems() {
+        return listOfItems;
     }
 
-    public void setListOfitems(HashMap<String, Item> listOfitems) {
-        this.listOfitems = listOfitems;
+    public void setListOfItems(HashMap<String, Item> listOfItems) {
+        this.listOfItems = listOfItems;
     }
 
     public ArrayList<Item> getItems() {
@@ -47,11 +48,12 @@ public class Hero extends HeroClass {
     }
 
     //------------------------------------------ Functions
+
     public void attack(Enemy enemy){
         enemy.setCurrentHealth(enemy.getCurrentHealth() - this.attackPower);
     }
     public void useSkill(String skillName){
-        for(int i = 0;i < this.skills.size();i++){                  //finding Skill with Skillname
+        for(int i = 0;i < this.skills.size();i++){                  //finding Skill with SkillName
             if(this.skills.get(i).getName().equals(skillName)){
                  this.skills.get(i).useSkill();
             }

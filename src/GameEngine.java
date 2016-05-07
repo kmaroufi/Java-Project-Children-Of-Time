@@ -4,6 +4,12 @@ import java.util.ArrayList;
  * Created by asus-pc on 5/6/2016.
  */
 public class GameEngine {
+    private Player player;
+    private ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
+    private ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
+
+    //------------------------------------------ Getter && Setters
+
     public Player getPlayer() {
         return player;
     }
@@ -20,8 +26,15 @@ public class GameEngine {
         this.listOfHeroClasses = listOfHeroClasses;
     }
 
-    private Player player;
-    private ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
+    public ArrayList<Hero> getListOfHeroes() {
+        return listOfHeroes;
+    }
+
+    public void setListOfHeroes(ArrayList<Hero> listOfHeroes) {
+        this.listOfHeroes = listOfHeroes;
+    }
+
+    //------------------------------------------ Functions
 
     public void addNewHeroClass() {
         HeroClassHandler heroClassHandler = Console.getHeroClass();
