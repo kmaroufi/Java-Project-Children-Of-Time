@@ -5,6 +5,8 @@ import java.util.Random;
  */
 public class Thug extends Enemy {
     public Thug(String version){
+        this.setClassName("Thug");
+        this.setFullName();
         if(version.equals("Weak")){
             this.setAttackPower(50);
             this.setMaximumHealth(200);

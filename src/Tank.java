@@ -3,6 +3,8 @@
  */
 public class Tank extends Enemy {
     public Tank(String version){
+        this.setClassName("Tank");
+        this.setFullName();
         if(version.equals("Weak")){
             this.setAttackPower(30);
             this.setMaximumHealth(400);
@@ -11,7 +13,6 @@ public class Tank extends Enemy {
             this.setAttackPower(90);
             this.setMaximumHealth(500);
         }
-
     }
     public void doTurn() {
         for (Hero hero: GameEngine.listOfHeroes) {

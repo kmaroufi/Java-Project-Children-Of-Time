@@ -6,7 +6,9 @@ import java.util.Random;
  */
 public class FinalBoss extends Enemy {
     public FinalBoss(){
-
+        this.setClassName("FinalBoss");
+        this.setFullName();
+        this.setMaximumHealth(1000);
     }
 
     public void doTurn() {
