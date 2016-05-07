@@ -6,7 +6,7 @@ public class Soldier {
     protected int attackPower;
     protected double healthRefillRate;
     protected int currentHealth;
-    protected String name;
+    protected String className;
 
     //------------------------------------------- Functions
     public boolean isDead(){
@@ -16,6 +16,7 @@ public class Soldier {
         return false;
     }
     //------------------------------------------- Getters && Setters
+
     public int getMaximumHealth() {
         return maximumHealth;
     }
@@ -48,5 +49,11 @@ public class Soldier {
         this.currentHealth = currentHealth;
     }
 
+    public String getClassName() {
+        return className;
+    }
 
+    public void setClassName(String className) {
+        this.className = className;
+    }
 }

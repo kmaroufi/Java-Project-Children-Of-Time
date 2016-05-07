@@ -5,8 +5,8 @@ import java.util.*;
 public class Enemy extends Soldier{
     public static HashMap<String , Enemy> listOfEnemies;        // ArrayList is Wrong
     private String version;                         // it has problem
-    private String className;
     private Double attackPowerRatio;
+    private String name;
 
     //---------------------------------------------------- Constructors
     public Enemy(){
@@ -17,7 +17,7 @@ public class Enemy extends Soldier{
         this.setClassName(className);
         this.setName(name);
         this.setVersion(version);
-        listOfEnemies.put(this.name,this);
+        listOfEnemies.put(this.className,this);
     }
 
     //---------------------------------------------------- Functions
@@ -40,14 +40,6 @@ public class Enemy extends Soldier{
 
     public void setAttackPowerRatio(Double attackPowerRatio) {
         this.attackPowerRatio = attackPowerRatio;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
     }
 
     public String getName() {
