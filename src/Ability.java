@@ -6,6 +6,7 @@ import java.util.Map;
 public abstract class Ability {
 
     protected String name;
+    private int numberOfGrades;
     private int currentGrade;
     public static Map<String, String> listOfAbilities;
 
@@ -15,6 +16,14 @@ public abstract class Ability {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getNumberOfGrades() {
+        return numberOfGrades;
+    }
+
+    public void setNumberOfGrades(int numberOfGrades) {
+        this.numberOfGrades = numberOfGrades;
     }
 
     public int getCurrentGrade() {
