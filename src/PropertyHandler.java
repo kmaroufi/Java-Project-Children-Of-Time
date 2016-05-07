@@ -3,6 +3,7 @@
  */
 public class PropertyHandler {
     private String name;
+    private final int NumberOfUpgrades;
     private double[] constantProperty ;
     private double[] attackPowerCoefficient;
     private double[] maximumHealthCoefficient;
@@ -12,7 +13,22 @@ public class PropertyHandler {
     private double[] healthRefillRateCoefficient;
     private double[] magicRefillRateCoefficient;
 
-    // constructor should created!
+    //-------------------------------------------------------------- Constructors
+    public PropertyHandler(int numberOfUpgrades){
+        this.NumberOfUpgrades = numberOfUpgrades;
+        this.constantProperty = new double[this.NumberOfUpgrades];
+        this.attackPowerCoefficient = new double[this.NumberOfUpgrades];
+        this.maximumHealthCoefficient = new double[this.NumberOfUpgrades];
+        this.maximumMagicCoefficient = new double[this.NumberOfUpgrades];
+        this.healthCoefficient = new double[this.NumberOfUpgrades];
+        this.magicCoefficient = new double[this.NumberOfUpgrades];
+        this.healthRefillRateCoefficient = new double[this.NumberOfUpgrades];
+        this.magicRefillRateCoefficient = new double[this.NumberOfUpgrades];
+    }
+    public PropertyHandler(){
+        this.NumberOfUpgrades = 0;
+    }
+    //--------------------------------------------------------------- Getter && Setters
 
     public String getName() {
         return name;
