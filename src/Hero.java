@@ -4,7 +4,7 @@
 import java.util.*;
 public class Hero extends HeroClass {
     public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
-    private ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
+    public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
     public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
     public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
     private HashMap<String, Item> listOfItems = new HashMap<String, Item>();
