@@ -10,15 +10,6 @@ public abstract class Enemy extends Soldier{
 
     //---------------------------------------------------- Constructors
     public Enemy(){}
-    public Enemy(String name,String version){
-        this.setName(name);
-        this.setVersion(version);
-    }
-    public Enemy(Integer attackPower,Integer maximumHealth){
-        this.setAttackPower(attackPower);
-        this.setMaximumHealth(maximumHealth);
-    }
-
     //---------------------------------------------------- Functions
     public abstract void doTurn();
     public void setFullName(){
