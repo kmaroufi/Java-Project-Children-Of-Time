@@ -10,6 +10,12 @@ public class FinalBoss extends Enemy {
     }
 
     public void doTurn() {
+        if(this.getCurrentHealth() > 400){
+            this.setAttackPower(150);
+        }
+        else {
+            this.setAttackPower(250);
+        }
         Random random = new Random();
         int randomIndex1 = random.nextInt(Hero.listOfHeroes.size());
         int randomIndex2 = random.nextInt(Hero.listOfHeroes.size());

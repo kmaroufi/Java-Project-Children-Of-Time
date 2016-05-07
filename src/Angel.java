@@ -6,8 +6,16 @@ import java.util.Random;
 public class Angel extends Enemy {
     private Integer healPower;              // i think it must be Integer it is not neccessery to be Double
     private Integer tempHealPower;          // i'm not sure about this field!
-    public Angel(){
+    public Angel(String version){
+        if(version.equals("Weak")){
 
+        }
+        else if(version.equals("Able")){
+
+        }
+        else if(version.equals("Mighty")){
+
+        }
     }
     public void doTurn() {
         Random random = new Random();

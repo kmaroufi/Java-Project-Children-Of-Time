@@ -9,20 +9,18 @@ public abstract class Enemy extends Soldier{
     private String name;
 
     //---------------------------------------------------- Constructors
-    public Enemy(){
-
-    }
-    public Enemy(Integer attackPower , String className, String name, String version){
-        this.setAttackPower(attackPower);
-        this.setClassName(className);
+    public Enemy(){}
+    public Enemy(String name,String version){
         this.setName(name);
         this.setVersion(version);
-        mapOfEnemies.put(this.className,this);
+    }
+    public Enemy(Integer attackPower,Integer maximumHealth){
+        this.setAttackPower(attackPower);
+        this.setMaximumHealth(maximumHealth);
     }
 
     //---------------------------------------------------- Functions
     public abstract void doTurn();
-
     //---------------------------------------------------- Getter && Setters
     public String getVersion() {
         return version;

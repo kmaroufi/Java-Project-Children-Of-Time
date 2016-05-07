@@ -4,8 +4,19 @@ import java.util.Random;
  * Created by asus-pc on 5/7/2016.
  */
 public class Thug extends Enemy {
-    public Thug(){
-
+    public Thug(String version){
+        if(version.equals("Weak")){
+            this.setAttackPower(50);
+            this.setMaximumHealth(200);
+        }
+        else if(version.equals("Able")){
+            this.setAttackPower(90);
+            this.setMaximumHealth(300);
+        }
+        else if(version.equals("Mighty")){
+            this.setAttackPower(150);
+            this.setMaximumHealth(400);
+        }
     }
     public void doTurn() {                          // Chooses Random Hero From All Heroes
         Random random = new Random();
