@@ -115,7 +115,7 @@ public class Property {
     }
 
     public void effect(String heroName) {
-        Hero hero = Hero.listOfHeroes.get(heroName);
+        Hero hero = Hero.mapOfHeroes.get(heroName);
         if(getName().equals("attackPower")){
 
         }

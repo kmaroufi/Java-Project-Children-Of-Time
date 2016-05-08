@@ -10,10 +10,6 @@ public class Skill extends Ability{
     private ArrayList<Property> properties;
     private int nonTargetedEnemy;
     private boolean isRepeated;
-
-
-    private boolean isGlobal;
-    private boolean hasEffectedOnEnemy;
     private int time;
     private int remainingTime;
     private int cooldown;
@@ -36,13 +32,6 @@ public class Skill extends Ability{
         //TODO
     }
     //---------------------------------------------------- Getter && Setters
-    public boolean isGlobal() {
-        return isGlobal;
-    }
-
-    public void setGlobal(boolean global) {
-        isGlobal = global;
-    }
 
     public String getEffectedOnHero() {
         return effectedOnHero;
@@ -74,14 +63,6 @@ public class Skill extends Ability{
 
     public void setRepeated(boolean repeated) {
         isRepeated = repeated;
-    }
-
-    public boolean isHasEffectedOnEnemy() {
-        return hasEffectedOnEnemy;
-    }
-
-    public void setHasEffectedOnEnemy(boolean hasEffectedOnEnemy) {
-        this.hasEffectedOnEnemy = hasEffectedOnEnemy;
     }
 
     public int getTime() {

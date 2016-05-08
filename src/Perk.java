@@ -6,8 +6,6 @@ import java.util.Map;
  */
 public class Perk extends Ability{
     public static Map<String, Perk> listOfPerks;
-    private boolean isGlobal;
-    private boolean hasEffectOnEnemy;
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode> listOfModes;
     private Map<Condition, PerkMode> mapOfCondition;
