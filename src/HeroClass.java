@@ -26,6 +26,12 @@ public class HeroClass extends Soldier{
     protected Integer inventorySize;
     protected Integer maximumMagic;
     protected Integer currentMagic;
+    protected Double armor;
+    protected Double armorRatio; // I know you have problem with this. just keep calm :))
+    protected Double damageResistance;
+    protected Double criticalDamageResistanceChance;
+    protected Double criticalDamageResistance;
+    protected Double headShotChance; // when you headShot an enemy, you kill it immediately!
 
     //--------------------------------------------------
     public HeroClass(){

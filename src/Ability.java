@@ -18,7 +18,7 @@ public abstract class Ability {
     }
 
     Ability() {
-        
+
     }
 
     public boolean isGlobal() {
