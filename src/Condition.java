@@ -32,6 +32,8 @@ public class Condition {
 //    private int maximumEnergyPointsStatus;
     private Map<String, Double> mapOfFields;
     private Map<String, Double> mapOfStatusOfFields;
+//    private boolean isDependsOnEnemy;
+//    private String checkThisConditionOn; // This condition on who will be checked?
 
     public boolean checkCondition() {
         //TODO

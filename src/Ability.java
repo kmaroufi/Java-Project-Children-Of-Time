@@ -1,3 +1,5 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -7,10 +9,15 @@ public abstract class Ability {
 
     protected String name;
     protected String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.
+    protected ArrayList<String> effectedSoldiers;
+    protected ArrayList<String> listOfSoldiersThatCanGetEffected;
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;
     private int numberOfGrades;
     private int currentGrade;
+    private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
+    private boolean isPermanently;
+    private int[] costOfUpgrade;
     public static Map<String, String> listOfAbilities;
 
     Ability(AbilityHandler abilityHandler) {

@@ -47,7 +47,28 @@ public class Hero extends HeroClass {
     //------------------------------------------ Functions
 
     public void attack(Enemy enemy){
-        enemy.setCurrentHealth(enemy.getCurrentHealth() - this.attackPower);
+        Random random = new Random();
+        int criticalHitChance = (int)(1 / this.criticalHitChance);
+        if ((criticalHitChance - 1) == random.nextInt(criticalHitChance)) {
+            enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack * this.criticalHitDamage);
+        }
+        else {
+            enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack);
+        }
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        enemies.addAll(GameEngine.listOfEnemies);
+        enemies.remove(enemy);
+        for (int i = 0; i < this.numberOfNonTargetedEnemyEffected; i++) {
+            int randomIndex = random.nextInt(enemies.size());
+            if ((criticalHitChance - 1) == random.nextInt(criticalHitChance)) {
+                enemies.get(randomIndex).getDamage((this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower) * this.criticalHitDamage);
+            }
+            else {
+                enemies.get(randomIndex).getDamage(this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower);
+            }
+            enemies.remove(randomIndex);
+        }
+
     }
     public void useSkill(String skillName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with SkillName
