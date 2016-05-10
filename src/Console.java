@@ -14,12 +14,29 @@ public class Console {
     }
 
     public static int getInteger(){
-        return cin.nextInt();
+        int i = 0;
+        while (true) {
+            try {
+                i = cin.nextInt();
+                break;
+            } catch (Exception e) {
+                System.out.println("Wrong Input!");
+            }
+        }
+        return i;
     }
 
     public static double getDouble(){
-        return cin.nextDouble();
-    }
+        double i = 0;
+        while (true) {
+            try {
+                i = cin.nextDouble();
+                break;
+            } catch (Exception e) {
+                System.out.println("Wrong Input!");
+            }
+        }
+        return i;    }
 
     public static void printInEachLine(String sentence){
         System.out.println(sentence);

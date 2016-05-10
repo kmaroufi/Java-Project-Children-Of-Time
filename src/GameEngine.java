@@ -10,7 +10,33 @@ public class GameEngine {
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
 
+    private String level;
+
     //------------------------------------------ Functions
+    public void chooseLevelOfGame(){
+        Console.printInEachLine("Choose Level Of Game:");
+        Console.printInEachLine("1 - Easy");
+        Console.printInEachLine("2 - Medium");
+        Console.printInEachLine("3 - Hard");
+        int choose = Console.getInteger();
+        while(true){
+            if(choose == 1) {
+                this.setLevel("Easy");
+                break;
+            }
+            else if(choose == 2) {
+                this.setLevel("Medium");
+                break;
+            }
+            else if(choose == 3) {
+                this.setLevel("Hard");
+                break;
+            }
+            else {
+                Console.printInEachLine("Wrong Number! Try Again!");
+            }
+        }
+    }
     public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
@@ -26,6 +52,26 @@ public class GameEngine {
         Hero Meryl = new Hero("Meryl",supporterHandler);
         //Adding Bolti
         Hero Bolti = new Hero("Bolty",supporterHandler);
+        //Adding Enemies
+        if(this.getLevel().equals("Easy")){
+            Thug thug = new Thug("Weak");
+            Angel angel = new Angel("Weak");
+            Tank tank = new Tank("Weak");
+            FinalBoss finalBoss = new FinalBoss();
+        }
+        else if(this.getLevel().equals("Medium")){
+            Thug thug = new Thug("Able");
+            Angel angel = new Angel("Able");
+            Tank tank = new Tank("Able");
+            FinalBoss finalBoss = new FinalBoss();
+        }
+        else if(this.getLevel().equals("Hard")){
+            Thug thug = new Thug("Mighty");
+            Angel angel = new Angel("Able");
+            Tank tank = new Tank("Able");
+            FinalBoss finalBoss = new FinalBoss();
+
+        }
 
 
 
@@ -126,5 +172,14 @@ public class GameEngine {
     public void setCustomGame(boolean customGame) {
         isCustomGame = customGame;
     }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
 
 }
