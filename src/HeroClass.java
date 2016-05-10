@@ -4,53 +4,49 @@ import java.util.HashMap;
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClass extends Soldier {
+public class HeroClass extends Soldier{
     public static HashMap<String, HeroClass> mapOfHeroClasses;
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     protected ArrayList<Perk> perks;
     protected ArrayList<Skill> skills;
-    protected int numberOfNonTargetedEnemyEffected;
-    protected int maximumEnergyPoint;
-    protected int currentEnergyPoint;
-    protected int inventorySize;
-    protected int maximumMagic;
-    protected int currentMagic;
-    protected double criticalHitChance;
-    protected double criticalHitChanceRatio;
-    protected double criticalHitDamage;
-    protected double criticalHitDamageRatio;
-    protected double magicRefillRate;
-    protected double attackPowerRatioDuringAttack;
-    protected double healthRefillRateRatio;
-    protected double magicRefillRateRatio;
-    protected double energyPointRatio;
-    protected double attackPowerRatioOnNonTargetedEnemy;
-    protected double attackPowerOnNonTargetedEnemy;
-    protected double armor;
-    protected double armorRatio; // I know you have problem with this. just keep calm :))
-    protected double damageResistance;
-    protected double criticalDamageResistanceChance;
-    protected double criticalDamageResistance;
-    protected double headShotChance; // when you headShot an enemy, you kill it immediately!
+    protected Double criticalHitChance;
+    protected Double criticalHitChanceRatio;
+    protected Double criticalHitDamage;
+    protected Double criticalHitDamageRatio;
+    protected Double magicRefillRate;
+    protected Double attackPowerRatioDuringAttack;
+    protected Double healthRefillRateRatio;
+    protected Double magicRefillRateRatio;
+    protected Double energyPointRatio;
+    protected Double attackPowerRatioOnNonTargetedEnemy;
+    protected Double attackPowerOnNonTargetedEnemy;
+    protected Integer numberOfNonTargetedEnemyEffected;
+    protected Integer maximumEnergyPoint;
+    protected Integer currentEnergyPoint;
+    protected Integer inventorySize;
+    protected Integer maximumMagic;
+    protected Integer currentMagic;
+    protected Double armor;
+    protected Double armorRatio; // I know you have problem with this. just keep calm :))
+    protected Double damageResistance;
+    protected Double criticalDamageResistanceChance;
+    protected Double criticalDamageResistance;
+    protected Double headShotChance; // when you headShot an enemy, you kill it immediately!
 
-    private String name;
-
-    //-------------------------------------------------- Constructors
-    public HeroClass() {
-        for (int i = 0; i < this.skills.size(); i++) {
-            if (this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))) {       // if it is not repeated
+    //--------------------------------------------------
+    public HeroClass(){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
                 Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
             }
         }
     }
-
-    public HeroClass(HeroClassHandler heroClassHandler) {
-        for (int i = 0; i < this.skills.size(); i++) {
-            if (this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))) {       // if it is not repeated
+    public HeroClass(HeroClassHandler heroClassHandler){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
                 Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
             }
         }
-        this.setName(heroClassHandler.getName());
         this.setAttackPowerOnNonTargetedEnemy(heroClassHandler.getAttackPowerOnNonTargetedEnemy());
         this.setAttackPowerRatioDuringAttack(heroClassHandler.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClassHandler.getAttackPowerRatioOnNonTargetedEnemy());
@@ -74,28 +70,140 @@ public class HeroClass extends Soldier {
     }
     //-------------------------------------------------- Getter && Setters
 
-    public double getCriticalDamageResistance() {
-        return criticalDamageResistance;
+    public Double getCriticalHitChance() {
+        return criticalHitChance;
     }
 
-    public void setCriticalDamageResistance(double criticalDamageResistance) {
-        this.criticalDamageResistance = criticalDamageResistance;
+    public void setCriticalHitChance(Double criticalHitChance) {
+        this.criticalHitChance = criticalHitChance;
     }
 
-    public static HashMap<String, HeroClass> getMapOfHeroClasses() {
-        return mapOfHeroClasses;
+    public Double getCriticalHitChanceRatio() {
+        return criticalHitChanceRatio;
     }
 
-    public static void setMapOfHeroClasses(HashMap<String, HeroClass> mapOfHeroClasses) {
-        HeroClass.mapOfHeroClasses = mapOfHeroClasses;
+    public void setCriticalHitChanceRatio(Double criticalHitChanceRatio) {
+        this.criticalHitChanceRatio = criticalHitChanceRatio;
     }
 
-    public static ArrayList<HeroClass> getListOfHeroClasses() {
-        return listOfHeroClasses;
+    public Double getCriticalHitDamage() {
+        return criticalHitDamage;
     }
 
-    public static void setListOfHeroClasses(ArrayList<HeroClass> listOfHeroClasses) {
-        HeroClass.listOfHeroClasses = listOfHeroClasses;
+    public void setCriticalHitDamage(Double criticalHitDamage) {
+        this.criticalHitDamage = criticalHitDamage;
+    }
+
+    public Double getCriticalHitDamageRatio() {
+        return criticalHitDamageRatio;
+    }
+
+    public void setCriticalHitDamageRatio(Double criticalHitDamageRatio) {
+        this.criticalHitDamageRatio = criticalHitDamageRatio;
+    }
+
+    public Integer getMaximumMagic() {
+        return maximumMagic;
+    }
+
+    public void setMaximumMagic(Integer maximumMagic) {
+        this.maximumMagic = maximumMagic;
+    }
+
+    public Double getMagicRefillRate() {
+        return magicRefillRate;
+    }
+
+    public void setMagicRefillRate(Double magicRefillRate) {
+        this.magicRefillRate = magicRefillRate;
+    }
+
+    public Integer getCurrentMagic() {
+        return currentMagic;
+    }
+
+    public void setCurrentMagic(Integer currentMagic) {
+        this.currentMagic = currentMagic;
+    }
+
+    public Double getAttackPowerRatioDuringAttack() {
+        return attackPowerRatioDuringAttack;
+    }
+
+    public void setAttackPowerRatioDuringAttack(Double attackPowerRatioDuringAttack) {
+        this.attackPowerRatioDuringAttack = attackPowerRatioDuringAttack;
+    }
+
+    public Double getHealthRefillRateRatio() {
+        return healthRefillRateRatio;
+    }
+
+    public void setHealthRefillRateRatio(Double healthRefillRateRatio) {
+        this.healthRefillRateRatio = healthRefillRateRatio;
+    }
+
+    public Double getMagicRefillRateRatio() {
+        return magicRefillRateRatio;
+    }
+
+    public void setMagicRefillRateRatio(Double magicRefillRateRatio) {
+        this.magicRefillRateRatio = magicRefillRateRatio;
+    }
+
+    public Double getEnergyPointRatio() {
+        return energyPointRatio;
+    }
+
+    public void setEnergyPointRatio(Double energyPointRatio) {
+        this.energyPointRatio = energyPointRatio;
+    }
+
+    public Double getAttackPowerRatioOnNonTargetedEnemy() {
+        return attackPowerRatioOnNonTargetedEnemy;
+    }
+
+    public void setAttackPowerRatioOnNonTargetedEnemy(Double attackPowerRatioOnNonTargetedEnemy) {
+        this.attackPowerRatioOnNonTargetedEnemy = attackPowerRatioOnNonTargetedEnemy;
+    }
+
+    public Double getAttackPowerOnNonTargetedEnemy() {
+        return attackPowerOnNonTargetedEnemy;
+    }
+
+    public void setAttackPowerOnNonTargetedEnemy(Double attackPowerOnNonTargetedEnemy) {
+        this.attackPowerOnNonTargetedEnemy = attackPowerOnNonTargetedEnemy;
+    }
+
+    public Integer getNumberOfNonTargetedEnemyEffected() {
+        return numberOfNonTargetedEnemyEffected;
+    }
+
+    public void setNumberOfNonTargetedEnemyEffected(Integer numberOfNonTargetedEnemyEffected) {
+        this.numberOfNonTargetedEnemyEffected = numberOfNonTargetedEnemyEffected;
+    }
+
+    public Integer getMaximumEnergyPoint() {
+        return maximumEnergyPoint;
+    }
+
+    public void setMaximumEnergyPoint(Integer maximumEnergyPoint) {
+        this.maximumEnergyPoint = maximumEnergyPoint;
+    }
+
+    public Integer getCurrentEnergyPoint() {
+        return currentEnergyPoint;
+    }
+
+    public void setCurrentEnergyPoint(Integer currentEnergyPoint) {
+        this.currentEnergyPoint = currentEnergyPoint;
+    }
+
+    public Integer getInventorySize() {
+        return inventorySize;
+    }
+
+    public void setInventorySize(Integer inventorySize) {
+        this.inventorySize = inventorySize;
     }
 
     public ArrayList<Perk> getPerks() {
@@ -113,191 +221,4 @@ public class HeroClass extends Soldier {
     public void setSkills(ArrayList<Skill> skills) {
         this.skills = skills;
     }
-
-    public int getNumberOfNonTargetedEnemyEffected() {
-        return numberOfNonTargetedEnemyEffected;
-    }
-
-    public void setNumberOfNonTargetedEnemyEffected(int numberOfNonTargetedEnemyEffected) {
-        this.numberOfNonTargetedEnemyEffected = numberOfNonTargetedEnemyEffected;
-    }
-
-    public int getMaximumEnergyPoint() {
-        return maximumEnergyPoint;
-    }
-
-    public void setMaximumEnergyPoint(int maximumEnergyPoint) {
-        this.maximumEnergyPoint = maximumEnergyPoint;
-    }
-
-    public int getCurrentEnergyPoint() {
-        return currentEnergyPoint;
-    }
-
-    public void setCurrentEnergyPoint(int currentEnergyPoint) {
-        this.currentEnergyPoint = currentEnergyPoint;
-    }
-
-    public int getInventorySize() {
-        return inventorySize;
-    }
-
-    public void setInventorySize(int inventorySize) {
-        this.inventorySize = inventorySize;
-    }
-
-    public int getMaximumMagic() {
-        return maximumMagic;
-    }
-
-    public void setMaximumMagic(int maximumMagic) {
-        this.maximumMagic = maximumMagic;
-    }
-
-    public int getCurrentMagic() {
-        return currentMagic;
-    }
-
-    public void setCurrentMagic(int currentMagic) {
-        this.currentMagic = currentMagic;
-    }
-
-    public double getCriticalHitChance() {
-        return criticalHitChance;
-    }
-
-    public void setCriticalHitChance(double criticalHitChance) {
-        this.criticalHitChance = criticalHitChance;
-    }
-
-    public double getCriticalHitChanceRatio() {
-        return criticalHitChanceRatio;
-    }
-
-    public void setCriticalHitChanceRatio(double criticalHitChanceRatio) {
-        this.criticalHitChanceRatio = criticalHitChanceRatio;
-    }
-
-    public double getCriticalHitDamage() {
-        return criticalHitDamage;
-    }
-
-    public void setCriticalHitDamage(double criticalHitDamage) {
-        this.criticalHitDamage = criticalHitDamage;
-    }
-
-    public double getCriticalHitDamageRatio() {
-        return criticalHitDamageRatio;
-    }
-
-    public void setCriticalHitDamageRatio(double criticalHitDamageRatio) {
-        this.criticalHitDamageRatio = criticalHitDamageRatio;
-    }
-
-    public double getMagicRefillRate() {
-        return magicRefillRate;
-    }
-
-    public void setMagicRefillRate(double magicRefillRate) {
-        this.magicRefillRate = magicRefillRate;
-    }
-
-    public double getAttackPowerRatioDuringAttack() {
-        return attackPowerRatioDuringAttack;
-    }
-
-    public void setAttackPowerRatioDuringAttack(double attackPowerRatioDuringAttack) {
-        this.attackPowerRatioDuringAttack = attackPowerRatioDuringAttack;
-    }
-
-    public double getHealthRefillRateRatio() {
-        return healthRefillRateRatio;
-    }
-
-    public void setHealthRefillRateRatio(double healthRefillRateRatio) {
-        this.healthRefillRateRatio = healthRefillRateRatio;
-    }
-
-    public double getMagicRefillRateRatio() {
-        return magicRefillRateRatio;
-    }
-
-    public void setMagicRefillRateRatio(double magicRefillRateRatio) {
-        this.magicRefillRateRatio = magicRefillRateRatio;
-    }
-
-    public double getEnergyPointRatio() {
-        return energyPointRatio;
-    }
-
-    public void setEnergyPointRatio(double energyPointRatio) {
-        this.energyPointRatio = energyPointRatio;
-    }
-
-    public double getAttackPowerRatioOnNonTargetedEnemy() {
-        return attackPowerRatioOnNonTargetedEnemy;
-    }
-
-    public void setAttackPowerRatioOnNonTargetedEnemy(double attackPowerRatioOnNonTargetedEnemy) {
-        this.attackPowerRatioOnNonTargetedEnemy = attackPowerRatioOnNonTargetedEnemy;
-    }
-
-    public double getAttackPowerOnNonTargetedEnemy() {
-        return attackPowerOnNonTargetedEnemy;
-    }
-
-    public void setAttackPowerOnNonTargetedEnemy(double attackPowerOnNonTargetedEnemy) {
-        this.attackPowerOnNonTargetedEnemy = attackPowerOnNonTargetedEnemy;
-    }
-
-    public double getArmor() {
-        return armor;
-    }
-
-    public void setArmor(double armor) {
-        this.armor = armor;
-    }
-
-    public double getArmorRatio() {
-        return armorRatio;
-    }
-
-    public void setArmorRatio(double armorRatio) {
-        this.armorRatio = armorRatio;
-    }
-
-    public double getDamageResistance() {
-        return damageResistance;
-    }
-
-    public void setDamageResistance(double damageResistance) {
-        this.damageResistance = damageResistance;
-    }
-
-    public double getCriticalDamageResistanceChance() {
-        return criticalDamageResistanceChance;
-    }
-
-    public void setCriticalDamageResistanceChance(double criticalDamageResistanceChance) {
-        this.criticalDamageResistanceChance = criticalDamageResistanceChance;
-    }
-
-    public double getHeadShotChance() {
-        return headShotChance;
-    }
-
-    public void setHeadShotChance(double headShotChance) {
-        this.headShotChance = headShotChance;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-
 }

@@ -3,7 +3,7 @@
  */
 public class Soldier {
     protected int maximumHealth;
-    protected int attackPower;
+    protected Integer attackPower = new Integer(3);
     protected double healthRefillRate;
     protected double currentHealth;
     protected String className;

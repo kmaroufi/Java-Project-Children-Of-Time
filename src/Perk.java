@@ -9,9 +9,29 @@ public class Perk extends Ability{
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode> listOfModes;
     private Map<Condition, PerkMode> mapOfCondition;
+    private Condition currentCondition;
     private PerkMode currentMode;
 
     public void upgrade() {};
 
-    public void updatePerkEffect() {};
+    public boolean updateCurrentPerkMode() {
+        Condition validCondition = new Condition();
+        for (Condition condition: this.listOfCondition) {
+            if (condition.checkCondition()) {
+                validCondition = condition;
+                break;
+            }
+        }
+        if (validCondition == this.currentCondition)
+            return false;
+        this.currentCondition = validCondition;
+        this.currentMode = this.mapOfCondition.get(validCondition);
+        return true;
+    }
+
+    public void updatePerkEffect() {
+        if (this.updateCurrentPerkMode() == false)
+            return;
+        this.currentMode.effect(this.relatedSoldiers);
+    };
 }

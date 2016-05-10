@@ -6,4 +6,10 @@ import java.util.ArrayList;
 public class PerkMode {
     private ArrayList<Property> properties;
     private int nonTargetedEnemy; //it isn't clear that this field has int type!
+
+    public void effect(ArrayList<Soldier> relatedSoldiers) {
+        for (Property property: this.properties) {
+            property.effect(relatedSoldiers);
+        }
+    }
 }

@@ -9,14 +9,15 @@ public abstract class Ability {
 
     protected String name;
     protected String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.
-    protected ArrayList<String> effectedSoldiers;
-    protected ArrayList<String> listOfSoldiersThatCanGetEffected;
+    protected ArrayList<Soldier> effectedSoldiers;
+    protected ArrayList<Soldier> relatedSoldiers;
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;
     private int numberOfGrades;
     private int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean isPermanently;
+    private boolean hasCondition;
     private int[] costOfUpgrade;
     public static Map<String, String> listOfAbilities;
     //-------------------------------------------------------- Constructors

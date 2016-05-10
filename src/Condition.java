@@ -33,7 +33,7 @@ public class Condition {
     private Map<String, Double> mapOfFields;
     private Map<String, Double> mapOfStatusOfFields;
 //    private boolean isDependsOnEnemy;
-//    private String checkThisConditionOn; // This condition on who will be checked?
+    private String checkThisConditionOn; // This condition on who will be checked?
 
     public boolean checkCondition() {
         //TODO

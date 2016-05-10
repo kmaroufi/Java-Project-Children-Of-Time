@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
 /**
  * Created by asus-pc on 5/5/2016.
  */
 public class Property {
     private double[] totalEffectOnProperty;
     private String name;
+    private String fieldOfEffecting;
 
     private double[] constantProperty;
     private double[] attackPowerCoefficient;
@@ -114,11 +117,8 @@ public class Property {
         //TODO
     }
 
-    public void effect(String heroName) {
-        Hero hero = Hero.mapOfHeroes.get(heroName);
-        if(getName().equals("attackPower")){
+    public void effect(ArrayList<Soldier> relatedSoldiers) {
 
-        }
     }
 
     public void removeEffect() {
