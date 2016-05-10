@@ -55,7 +55,7 @@ public class Hero extends HeroClass {
         else {
             enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack);
         }
-        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         enemies.addAll(GameEngine.listOfEnemies);
         enemies.remove(enemy);
         for (int i = 0; i < this.numberOfNonTargetedEnemyEffected; i++) {
