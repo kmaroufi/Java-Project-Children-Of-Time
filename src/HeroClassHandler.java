@@ -3,27 +3,41 @@ import java.util.ArrayList;
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClassHandler {
+public class HeroClassHandler extends Soldier{
     private ArrayList<Perk> perks;
     private ArrayList<Skill> skills;
-    private Double criticalHitChance;
-    private Double criticalHitChanceRatio;
-    private Double criticalHitDamage;
-    private Double criticalHitDamageRatio;
-    private Integer maximumMagic;
-    private Double magicRefillRate;
-    private Integer currentMagic;
-    private Double attackPowerRatioDuringAttack;
-    private Double healthRefillRateRatio;
-    private Double magicRefillRateRatio;
-    private Double energyPointRatio;
-    private Double attackPowerRatioOnNonTargetedEnemy;
-    private Double attackPowerOnNonTargetedEnemy;
-    private Integer numberOfNonTargetedEnemyEffected;
-    private Integer maximumEnergyPoint;
-    private Integer currentEnergyPoint;
-    private Integer inventorySize;
-    //----------------------------------------------------------------Getter && Setters
+    private double criticalHitChance;
+    private double criticalHitChanceRatio;
+    private double criticalHitDamage;
+    private double criticalHitDamageRatio;
+    private double magicRefillRate;
+    private double attackPowerRatioDuringAttack;
+    private double healthRefillRateRatio;
+    private double magicRefillRateRatio;
+    private double energyPointRatio;
+    private double attackPowerRatioOnNonTargetedEnemy;
+    private double attackPowerOnNonTargetedEnemy;
+    private int maximumMagic;
+    private int currentMagic;
+    private int numberOfNonTargetedEnemyEffected;
+    private int maximumEnergyPoint;
+    private int currentEnergyPoint;
+    private int inventorySize;
+    private int energyPoint;
+
+    private String name;
+
+
+    //---------------------------------------------------------------- Constructors
+    public HeroClassHandler(int maximumHealth,int attackPower,int maximumMagic,int energyPoint,int inventorySize,double healthRefillRate, double magicRefillRate){
+        super(maximumHealth,attackPower,healthRefillRate);
+        this.setMaximumMagic(maximumMagic);
+        this.setEnergyPoint(energyPoint);
+        this.setInventorySize(inventorySize);
+    }
+    //---------------------------------------------------------------- Getter && Setters
+
+
     public ArrayList<Perk> getPerks() {
         return perks;
     }
@@ -40,141 +54,157 @@ public class HeroClassHandler {
         this.skills = skills;
     }
 
-    public Double getCriticalHitChance() {
+    public double getCriticalHitChance() {
         return criticalHitChance;
     }
 
-    public void setCriticalHitChance(Double criticalHitChance) {
+    public void setCriticalHitChance(double criticalHitChance) {
         this.criticalHitChance = criticalHitChance;
     }
 
-    public Double getCriticalHitChanceRatio() {
+    public double getCriticalHitChanceRatio() {
         return criticalHitChanceRatio;
     }
 
-    public void setCriticalHitChanceRatio(Double criticalHitChanceRatio) {
+    public void setCriticalHitChanceRatio(double criticalHitChanceRatio) {
         this.criticalHitChanceRatio = criticalHitChanceRatio;
     }
 
-    public Double getCriticalHitDamage() {
+    public double getCriticalHitDamage() {
         return criticalHitDamage;
     }
 
-    public void setCriticalHitDamage(Double criticalHitDamage) {
+    public void setCriticalHitDamage(double criticalHitDamage) {
         this.criticalHitDamage = criticalHitDamage;
     }
 
-    public Double getCriticalHitDamageRatio() {
+    public double getCriticalHitDamageRatio() {
         return criticalHitDamageRatio;
     }
 
-    public void setCriticalHitDamageRatio(Double criticalHitDamageRatio) {
+    public void setCriticalHitDamageRatio(double criticalHitDamageRatio) {
         this.criticalHitDamageRatio = criticalHitDamageRatio;
     }
 
-    public Integer getMaximumMagic() {
-        return maximumMagic;
-    }
-
-    public void setMaximumMagic(Integer maximumMagic) {
-        this.maximumMagic = maximumMagic;
-    }
-
-    public Double getMagicRefillRate() {
+    public double getMagicRefillRate() {
         return magicRefillRate;
     }
 
-    public void setMagicRefillRate(Double magicRefillRate) {
+    public void setMagicRefillRate(double magicRefillRate) {
         this.magicRefillRate = magicRefillRate;
     }
 
-    public Integer getCurrentMagic() {
-        return currentMagic;
-    }
-
-    public void setCurrentMagic(Integer currentMagic) {
-        this.currentMagic = currentMagic;
-    }
-
-    public Double getAttackPowerRatioDuringAttack() {
+    public double getAttackPowerRatioDuringAttack() {
         return attackPowerRatioDuringAttack;
     }
 
-    public void setAttackPowerRatioDuringAttack(Double attackPowerRatioDuringAttack) {
+    public void setAttackPowerRatioDuringAttack(double attackPowerRatioDuringAttack) {
         this.attackPowerRatioDuringAttack = attackPowerRatioDuringAttack;
     }
 
-    public Double getHealthRefillRateRatio() {
+    public double getHealthRefillRateRatio() {
         return healthRefillRateRatio;
     }
 
-    public void setHealthRefillRateRatio(Double healthRefillRateRatio) {
+    public void setHealthRefillRateRatio(double healthRefillRateRatio) {
         this.healthRefillRateRatio = healthRefillRateRatio;
     }
 
-    public Double getMagicRefillRateRatio() {
+    public double getMagicRefillRateRatio() {
         return magicRefillRateRatio;
     }
 
-    public void setMagicRefillRateRatio(Double magicRefillRateRatio) {
+    public void setMagicRefillRateRatio(double magicRefillRateRatio) {
         this.magicRefillRateRatio = magicRefillRateRatio;
     }
 
-    public Double getEnergyPointRatio() {
+    public double getEnergyPointRatio() {
         return energyPointRatio;
     }
 
-    public void setEnergyPointRatio(Double energyPointRatio) {
+    public void setEnergyPointRatio(double energyPointRatio) {
         this.energyPointRatio = energyPointRatio;
     }
 
-    public Double getAttackPowerRatioOnNonTargetedEnemy() {
+    public double getAttackPowerRatioOnNonTargetedEnemy() {
         return attackPowerRatioOnNonTargetedEnemy;
     }
 
-    public void setAttackPowerRatioOnNonTargetedEnemy(Double attackPowerRatioOnNonTargetedEnemy) {
+    public void setAttackPowerRatioOnNonTargetedEnemy(double attackPowerRatioOnNonTargetedEnemy) {
         this.attackPowerRatioOnNonTargetedEnemy = attackPowerRatioOnNonTargetedEnemy;
     }
 
-    public Double getAttackPowerOnNonTargetedEnemy() {
+    public double getAttackPowerOnNonTargetedEnemy() {
         return attackPowerOnNonTargetedEnemy;
     }
 
-    public void setAttackPowerOnNonTargetedEnemy(Double attackPowerOnNonTargetedEnemy) {
+    public void setAttackPowerOnNonTargetedEnemy(double attackPowerOnNonTargetedEnemy) {
         this.attackPowerOnNonTargetedEnemy = attackPowerOnNonTargetedEnemy;
     }
 
-    public Integer getNumberOfNonTargetedEnemyEffected() {
+    public int getMaximumMagic() {
+        return maximumMagic;
+    }
+
+    public void setMaximumMagic(int maximumMagic) {
+        this.maximumMagic = maximumMagic;
+    }
+
+    public int getCurrentMagic() {
+        return currentMagic;
+    }
+
+    public void setCurrentMagic(int currentMagic) {
+        this.currentMagic = currentMagic;
+    }
+
+    public int getNumberOfNonTargetedEnemyEffected() {
         return numberOfNonTargetedEnemyEffected;
     }
 
-    public void setNumberOfNonTargetedEnemyEffected(Integer numberOfNonTargetedEnemyEffected) {
+    public void setNumberOfNonTargetedEnemyEffected(int numberOfNonTargetedEnemyEffected) {
         this.numberOfNonTargetedEnemyEffected = numberOfNonTargetedEnemyEffected;
     }
 
-    public Integer getMaximumEnergyPoint() {
+    public int getMaximumEnergyPoint() {
         return maximumEnergyPoint;
     }
 
-    public void setMaximumEnergyPoint(Integer maximumEnergyPoint) {
+    public void setMaximumEnergyPoint(int maximumEnergyPoint) {
         this.maximumEnergyPoint = maximumEnergyPoint;
     }
 
-    public Integer getCurrentEnergyPoint() {
+    public int getCurrentEnergyPoint() {
         return currentEnergyPoint;
     }
 
-    public void setCurrentEnergyPoint(Integer currentEnergyPoint) {
+    public void setCurrentEnergyPoint(int currentEnergyPoint) {
         this.currentEnergyPoint = currentEnergyPoint;
     }
 
-    public Integer getInventorySize() {
+    public int getInventorySize() {
         return inventorySize;
     }
 
-    public void setInventorySize(Integer inventorySize) {
+    public void setInventorySize(int inventorySize) {
         this.inventorySize = inventorySize;
     }
 
+    public int getEnergyPoint() {
+        return energyPoint;
+    }
+
+    public void setEnergyPoint(int energyPoint) {
+        this.energyPoint = energyPoint;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

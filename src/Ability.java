@@ -19,14 +19,16 @@ public abstract class Ability {
     private boolean isPermanently;
     private int[] costOfUpgrade;
     public static Map<String, String> listOfAbilities;
-
+    //-------------------------------------------------------- Constructors
     Ability(AbilityHandler abilityHandler) {
 
     }
-
     Ability() {
 
     }
+    //-------------------------------------------------------- Functions
+    abstract public void upgrade();
+    //-------------------------------------------------------- Getter And Setters
 
     public boolean isGlobal() {
         return isGlobal;
@@ -76,5 +78,4 @@ public abstract class Ability {
         this.currentGrade = currentGrade;
     }
 
-    abstract public void upgrade();
 }

@@ -11,7 +11,20 @@ public class GameEngine {
     public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
 
     //------------------------------------------ Functions
+    public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
+        //Adding FighterClass
+        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,120,6,2,0.1,0.05);
+        this.listOfHeroClasses.add(new HeroClass(fighterHandler));
 
+
+    }
+    public void doCustomGame(){
+
+    }
+
+    public void doCampaign(){                                       // do Campaign Game (not Custom Game)
+        this.getListOfHeroClasses().add(new HeroClass());
+    }
     public void addNewHeroClass() {
         HeroClassHandler heroClassHandler = Console.getHeroClass();
         this.listOfHeroClasses.add(new HeroClass(heroClassHandler));
@@ -95,5 +108,12 @@ public class GameEngine {
         this.listOfHeroes = listOfHeroes;
     }
 
+    public boolean isCustomGame() {
+        return isCustomGame;
+    }
+
+    public void setCustomGame(boolean customGame) {
+        isCustomGame = customGame;
+    }
 
 }

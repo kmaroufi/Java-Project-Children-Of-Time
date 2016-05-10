@@ -7,7 +7,13 @@ public class Soldier {
     protected double healthRefillRate;
     protected double currentHealth;
     protected String className;
-
+    //------------------------------------------- Constructors
+    public Soldier(){}
+    public Soldier(int maximumHealth,int attackPower,double healthRefillRate){
+        this.setMaximumHealth(maximumHealth);
+        this.setAttackPower(attackPower);
+        this.setHealthRefillRate(healthRefillRate);
+    }
     //------------------------------------------- Functions
     public boolean isDead(){
         if(this.currentHealth <= 0){
