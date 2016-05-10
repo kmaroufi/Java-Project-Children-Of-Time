@@ -12,9 +12,21 @@ public class GameEngine {
 
     //------------------------------------------ Functions
     public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
-        //Adding FighterClass
-        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,120,6,2,0.1,0.05);
+        //Adding Fighter Class
+        HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
         this.listOfHeroClasses.add(new HeroClass(fighterHandler));
+        //Adding Supporter Class
+        HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
+        this.listOfHeroClasses.add(new HeroClass(supporterHandler));
+        //Adding Eley
+        Hero Eley = new Hero("Eley",fighterHandler);
+        //Adding Chrome
+        Hero Chrome = new Hero("Chrome",fighterHandler);
+        //Adding Meryl
+        Hero Meryl = new Hero("Meryl",supporterHandler);
+        //Adding Bolti
+        Hero Bolti = new Hero("Bolty",supporterHandler);
+
 
 
     }
@@ -23,7 +35,6 @@ public class GameEngine {
     }
 
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
-        this.getListOfHeroClasses().add(new HeroClass());
     }
     public void addNewHeroClass() {
         HeroClassHandler heroClassHandler = Console.getHeroClass();

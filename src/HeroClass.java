@@ -50,6 +50,7 @@ public class HeroClass extends Soldier {
                 Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
             }
         }
+        this.setName(heroClassHandler.getName());
         this.setAttackPowerOnNonTargetedEnemy(heroClassHandler.getAttackPowerOnNonTargetedEnemy());
         this.setAttackPowerRatioDuringAttack(heroClassHandler.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClassHandler.getAttackPowerRatioOnNonTargetedEnemy());
