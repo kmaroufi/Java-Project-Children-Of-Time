@@ -10,7 +10,7 @@ public class GameEngine {
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
 
-    private String level;
+    private String level;                   // level of Game(Easy-Medium-Hard)
 
     //------------------------------------------ Functions
     public void chooseLevelOfGame(){
@@ -37,6 +37,7 @@ public class GameEngine {
             }
         }
     }
+
     public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
@@ -70,18 +71,16 @@ public class GameEngine {
             Angel angel = new Angel("Able");
             Tank tank = new Tank("Able");
             FinalBoss finalBoss = new FinalBoss();
-
         }
-
-
-
     }
+
     public void doCustomGame(){
 
     }
 
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
     }
+
     public void addNewHeroClass() {
         HeroClassHandler heroClassHandler = Console.getHeroClass();
         this.listOfHeroClasses.add(new HeroClass(heroClassHandler));
