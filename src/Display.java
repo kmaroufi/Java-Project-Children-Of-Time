@@ -43,19 +43,29 @@ public class Display {
     }
 
     public static Hero getHero(){                   // Choose The The Hero Class(if none of them make a hero class)
-        Hero hero = new Hero();
+        Hero newHero = new Hero();
+        String name;
+        Display.printf("Set Name For Your Hero:");
+        name = Display.getString();
         //Choose A hero Class or make it!
-        Display.printInEachLine("Choose One OF HeroClasses For Your Own Hero!");
+        Display.printInEachLine("You Must Choose One OF HeroClasses For Your Own Hero!(0 for make a new hero class!)");
         for(int i = 0;i < GameEngine.listOfHeroClasses.size();i++){
-            Display.printInEachLine(i + " - " + GameEngine.listOfHeroClasses.get(i).getName());
+            Display.printInEachLine((i + 1) + " - " + GameEngine.listOfHeroClasses.get(i).getName());
         }
         //Bug! (Commands) Soon Will Correct it!
-        Display.getInteger();
+        int choose = Display.getInteger();
         //if chooses one of hero classes
+        if(choose > 0 && choose <= GameEngine.listOfHeroClasses.size()){
+            newHero = new Hero(name,GameEngine.listOfHeroClasses.get(choose - 1));
+        }
+        else if(choose == 0){
+            HeroClassHandler heroClassHandler = Display.getHeroClass();
+            GameEngine.listOfHeroClasses.add(new HeroClass(heroClassHandler));
+            newHero = new Hero(name,heroClassHandler);
+        }
+        //else implement Later!
 
-        //else
-
-        return hero;
+        return newHero;
     }
 
     public static HeroClassHandler getHeroClass(){

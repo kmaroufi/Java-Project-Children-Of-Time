@@ -19,6 +19,10 @@ public class Hero extends HeroClass {
         super(heroClassHandler);
         this.setName(name);
     }
+    public Hero(String name,HeroClass heroClass){
+        super(heroClass);
+        this.setName(name);
+    }
     //------------------------------------------ Getter && Setters
 
     public String getName() {

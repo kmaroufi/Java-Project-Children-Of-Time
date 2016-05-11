@@ -70,6 +70,35 @@ public class HeroClass extends Soldier{
         this.setMagicRefillRate(heroClassHandler.getMagicRefillRate());
 
     }
+
+    public HeroClass(HeroClass heroClass){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
+                Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
+            }
+        }
+        this.setName(heroClass.getName());
+        this.setAttackPowerOnNonTargetedEnemy(heroClass.getAttackPowerOnNonTargetedEnemy());
+        this.setAttackPowerRatioDuringAttack(heroClass.getAttackPowerRatioDuringAttack());
+        this.setAttackPowerRatioOnNonTargetedEnemy(heroClass.getAttackPowerRatioOnNonTargetedEnemy());
+        this.setCriticalHitChance(heroClass.getCriticalHitChance());
+        this.setCriticalHitChanceRatio(heroClass.getCriticalHitChanceRatio());
+        this.setCriticalHitDamage(heroClass.getCriticalHitDamage());
+        this.setCriticalHitDamageRatio(heroClass.getCriticalHitDamageRatio());
+        this.setCurrentEnergyPoint(heroClass.getCurrentEnergyPoint());
+        this.setCurrentMagic(heroClass.getCurrentMagic());
+        this.setEnergyPointRatio(heroClass.getEnergyPointRatio());
+        this.setHealthRefillRateRatio(heroClass.getHealthRefillRateRatio());
+        this.setInventorySize(heroClass.getInventorySize());
+        this.setSkills(heroClass.getSkills());
+        this.setPerks(heroClass.getPerks());
+        this.setMaximumEnergyPoint(heroClass.getMaximumEnergyPoint());
+        this.setMaximumMagic(heroClass.getMaximumMagic());
+        this.setNumberOfNonTargetedEnemyEffected(heroClass.getNumberOfNonTargetedEnemyEffected());
+        this.setMagicRefillRateRatio(heroClass.getMagicRefillRateRatio());
+        this.setMagicRefillRate(heroClass.getMagicRefillRate());
+
+    }
     //-------------------------------------------------- Getter && Setters
 
     public String getName() {

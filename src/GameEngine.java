@@ -88,8 +88,8 @@ public class GameEngine {
         this.listOfHeroClasses.add(new HeroClass(heroClassHandler));
     }
 
-    public void addNewHero(Hero hero) {
-        this.getListOfHeroes().add(hero);
+    public void addNewHero() {
+        this.getListOfHeroes().add(Display.getHero());
     }
 
     public void addNewAbility() {
