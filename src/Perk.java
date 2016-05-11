@@ -9,29 +9,31 @@ public class Perk extends Ability{
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode> listOfModes;
     private Map<Condition, PerkMode> mapOfCondition;
-    private Condition currentCondition;
-    private PerkMode currentMode;
+    private boolean isConditionDependOnRelatedSoldier;
 
     public void upgrade() {};
 
-    public boolean updateCurrentPerkMode() {
-        Condition validCondition = new Condition();
+    public <E> Condition validCondition(E relatedSoldier) {
         for (Condition condition: this.listOfCondition) {
-            if (condition.checkCondition()) {
-                validCondition = condition;
-                break;
+            if (condition.checkCondition(relatedSoldier)) {
+                return condition;
             }
         }
-        if (validCondition == this.currentCondition)
-            return false;
-        this.currentCondition = validCondition;
-        this.currentMode = this.mapOfCondition.get(validCondition);
-        return true;
+        return null;
     }
 
-    public void updatePerkEffect() {
-        if (this.updateCurrentPerkMode() == false)
+    public <E> void updatePerkEffect(ArrayList<E> relatedSoldiers) {
+        if (this.isConditionDependOnRelatedSoldier == false) {
+            Hero owner = Hero.mapOfHeroes.get(this.ownerName);
+            PerkMode perkMode = this.mapOfCondition.get(this.validCondition(owner));
+            for (E soldier: relatedSoldiers) {
+                perkMode.effect(relatedSoldiers, owner);
+            }
             return;
-        this.currentMode.effect(this.relatedSoldiers);
-    };
+        }
+        for (E soldier: relatedSoldiers) {
+            PerkMode perkMode = this.mapOfCondition.get(this.validCondition(relatedSoldiers));
+            perkMode.effect(relatedSoldiers, Hero.mapOfHeroes.get(this.ownerName));
+        }
+    }
 }

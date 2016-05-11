@@ -33,10 +33,10 @@ public class Condition {
     private Map<String, Double> mapOfFields;
     private Map<String, Double> mapOfStatusOfFields;
 //    private boolean isDependsOnEnemy;
-    private String checkThisConditionOn; // This condition on who will be checked?
+//    private String checkThisConditionOn; // This condition on who will be checked?
+//    private String isDependOnEffectedSoldier;
 
-    public boolean checkCondition() {
-        //TODO
+    public <T> boolean checkCondition(T relatedSoldier) {
         return false;
     }
 
