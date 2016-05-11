@@ -97,10 +97,10 @@ public class GameEngine {
     public void addNewHeroClass(HeroClass heroClass) {
         if(isCustomGame){
             //Creating A new Hero Class
-            this.getListOfHeroClasses().add(heroClass);
+            this.listOfHeroClasses.add(heroClass);
         }
         else{
-            this.getListOfHeroClasses().add(heroClass);
+            this.listOfHeroClasses.add(heroClass);
         }
     }
 
@@ -123,10 +123,10 @@ public class GameEngine {
             } else if (choose == 0) {
                 this.addNewHeroClass(new HeroClass());
             }
-            this.getListOfHeroes().add(hero);
+            this.listOfHeroes.add(hero);
         }
         else{
-            this.getListOfHeroes().add(hero);
+            this.listOfHeroes.add(hero);
         }
     }
 
