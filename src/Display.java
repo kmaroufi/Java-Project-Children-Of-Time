@@ -71,7 +71,6 @@ public class Display {
 
     public static PerkModeHandler getPerkMode() {
         PerkModeHandler perkModeHandler = new PerkModeHandler();
-
         return perkModeHandler;
     }
 

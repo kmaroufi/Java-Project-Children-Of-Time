@@ -86,6 +86,10 @@ public class GameEngine {
 
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
         this.addDefaultAttributes();
+        for(int i = 0;i < 5;i++){
+            this.showBattleMessage(i + 1);
+            //Do Battle - move - ...
+        }
     }
 
     public void addNewHeroClass(HeroClass heroClass) {
