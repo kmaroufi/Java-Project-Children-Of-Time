@@ -10,7 +10,6 @@ public abstract class Ability<T> {
     protected String name;
     protected String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.
     protected ArrayList<T> effectedSoldiers;
-
     protected ArrayList<T> relatedSoldiers;
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;

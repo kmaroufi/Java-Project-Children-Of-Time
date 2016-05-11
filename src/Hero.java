@@ -82,6 +82,19 @@ public class Hero extends HeroClass {
                 return;
             }
         }
+        Display.printInEachLine("item Not Found!");
+    }
+
+    public void showDescription(){
+        Display.printInEachLine(this.getName());
+        Display.printInEachLine("Health: " + this.getCurrentHealth() + " / " + this.getMaximumHealth());
+        Display.printInEachLine("Magic: " + this.getCurrentMagic() + " / " + this.getMaximumMagic());
+        Display.printInEachLine("Energy points: " + this.getCurrentEnergyPoint());
+        Display.printInEachLine("Attack power: " + this.getAttackPower());
+        Display.printInEachLine("Can Cast (ability’s name) for __ energy points, __ magic points and a __ turn cooldown");
+        for(int i = 0;i < this.skills.size();i++){
+
+        }
     }
 
     //------------------------------------------ Getter && Setters
