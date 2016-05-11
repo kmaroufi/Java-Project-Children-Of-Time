@@ -41,18 +41,18 @@ public class GameEngine {
     public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
-        this.listOfHeroClasses.add(new HeroClass(fighterHandler));
+        this.addNewHeroClass(new HeroClass(fighterHandler));
         //Adding Supporter Class
         HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
-        this.listOfHeroClasses.add(new HeroClass(supporterHandler));
+        this.addNewHeroClass(new HeroClass(supporterHandler));
         //Adding Eley
-        Hero Eley = new Hero("Eley",fighterHandler);
+        this.addNewHero(new Hero("Eley",fighterHandler));
         //Adding Chrome
-        Hero Chrome = new Hero("Chrome",fighterHandler);
+        this.addNewHero(new Hero("Chrome",fighterHandler));
         //Adding Meryl
-        Hero Meryl = new Hero("Meryl",supporterHandler);
+        this.addNewHero(new Hero("Meryl",supporterHandler));
         //Adding Bolti
-        Hero Bolti = new Hero("Bolty",supporterHandler);
+        this.addNewHero(new Hero("Bolti",supporterHandler));
         //Adding Enemies
         if(this.getLevel().equals("Easy")){
             Thug thug = new Thug("Weak");
@@ -76,20 +76,52 @@ public class GameEngine {
 
     public void doCustomGame(){
         this.addDefaultAttributes();
-
+        this.setCustomGame(true);
+        while (true){
+            //Add A new Hero!
+            Hero newHero = new Hero();
+            this.addNewHero(newHero);
+        }
     }
 
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
         this.addDefaultAttributes();
     }
 
-    public void addNewHeroClass() {
-        HeroClassHandler heroClassHandler = Display.getHeroClass();
-        this.listOfHeroClasses.add(new HeroClass(heroClassHandler));
+    public void addNewHeroClass(HeroClass heroClass) {
+        if(isCustomGame){
+            //Creating A new Hero Class
+            this.getListOfHeroClasses().add(heroClass);
+        }
+        else{
+            this.getListOfHeroClasses().add(heroClass);
+        }
     }
 
-    public void addNewHero() {
-        this.getListOfHeroes().add(Display.getHero());
+    public void addNewHero(Hero hero) {
+        if(isCustomGame) {
+            String name;
+            Display.printf("Set Name For Your Hero:");
+            name = Display.getString();
+            //Choose A hero Class or make it!
+            Display.printInEachLine("You Must Choose One OF HeroClasses For Your Own Hero!");
+            Display.printInEachLine("0 - Make A New Hero Class!");
+            for (int i = 0; i < GameEngine.listOfHeroClasses.size(); i++) {
+                Display.printInEachLine((i + 1) + " - " + GameEngine.listOfHeroClasses.get(i).getName());
+            }
+            //Bug! (Commands) Soon Will Correct it!
+            int choose = Display.getInteger();
+            //if chooses one of hero classes
+            if (choose > 0 && choose <= GameEngine.listOfHeroClasses.size()) {
+                hero = new Hero(name, GameEngine.listOfHeroClasses.get(choose - 1));
+            } else if (choose == 0) {
+                this.addNewHeroClass(new HeroClass());
+            }
+            this.getListOfHeroes().add(hero);
+        }
+        else{
+            this.getListOfHeroes().add(hero);
+        }
     }
 
     public void addNewAbility() {
