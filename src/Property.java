@@ -1,11 +1,12 @@
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Property {
-    private double totalEffectOnProperty;
+public class Property<E> {
+    private Double totalEffectOnProperty;
     private String name;
     private String fieldOfEffecting;
     private int currentGrade;
@@ -19,6 +20,8 @@ public class Property {
     private double[] magicCoefficient;
     private double[] healthRefillRateCoefficient;
     private double[] magicRefillRateCoefficient;
+
+    private Map<E, Double> valueOfEffectingOnEffectedSoldiers;
 
     //--------------------------------------------------------------    Constructor
 
@@ -173,22 +176,54 @@ public class Property {
             else {
                 this.calculateProperty(owner);
             }
+            this.valueOfEffectingOnEffectedSoldiers.put((E)relatedSoldier, this.totalEffectOnProperty);
             if (type.equals("int")) {
-                field.set(relatedSoldier, (int)field.get(relatedSoldier) + (int)this.totalEffectOnProperty);
+                field.set(relatedSoldier, (int)field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
             }
             if (type.equals("double")) {
                 field.set(relatedSoldier, (double)field.get(relatedSoldier) + this.totalEffectOnProperty);
             }
             if (type.equals("float")) {
-                field.set(relatedSoldier, (float)field.get(relatedSoldier) + (float)this.totalEffectOnProperty);
+                field.set(relatedSoldier, (float)field.get(relatedSoldier) + this.totalEffectOnProperty.floatValue());
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public <T> void removeEffect(T relatedSoldiers) {
-        //TODO
+    public <T> void removeEffect(T relatedSoldier) {
+        Class classOfSoldier = relatedSoldier.getClass();
+        Field field = null;
+        int cond = 0;
+        try {
+            field = classOfSoldier.getDeclaredField(this.name);
+        } catch (NoSuchFieldException e) {
+            cond = 1;
+        }
+        if (cond == 1) {
+            cond = 0;
+            classOfSoldier = classOfSoldier.getSuperclass();
+            try {
+                field = classOfSoldier.getDeclaredField(this.name);
+            } catch (NoSuchFieldException e) {
+                cond = 1;
+            }
+        }
+        String type = field.getGenericType().toString();
+        try {
+            if (type.equals("int")) {
+                field.set(relatedSoldier, (int)field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).intValue());
+            }
+            if (type.equals("double")) {
+                field.set(relatedSoldier, (double)field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier));
+            }
+            if (type.equals("float")) {
+                field.set(relatedSoldier, (float)field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).floatValue());
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        this.valueOfEffectingOnEffectedSoldiers.remove(relatedSoldier);
     }
 
 }

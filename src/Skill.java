@@ -6,7 +6,6 @@ import java.util.Map;
  */
 public class Skill extends Ability{
     public static Map<String, Skill> listOfSkills;
-    private String effectedOnHero;
     private ArrayList<Property> properties;
     private int nonTargetedEnemy;
     private boolean isRepeated;
@@ -14,6 +13,7 @@ public class Skill extends Ability{
     private int remainingTime;
     private int cooldown;
     private int remainingCooldown;
+    private boolean casStackUp;
     private boolean isUsed;
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
@@ -22,24 +22,20 @@ public class Skill extends Ability{
     public boolean isActivated() {
         //TODO
         return false;
-    };
+    }
 
     public void useSkill() {
-        //TODO
+        if (this.remainingCooldown != 0) {
+            return;
+        }
+        if ((this.remainingTime == 0) || ((this.remainingTime != 0) && (this.casStackUp))) {
+        }
     };
 
     public void upgrade() {
         //TODO
     }
     //---------------------------------------------------- Getter && Setters
-
-    public String getEffectedOnHero() {
-        return effectedOnHero;
-    }
-
-    public void setEffectedOnHero(String effectedOnHero) {
-        this.effectedOnHero = effectedOnHero;
-    }
 
     public ArrayList<Property> getProperties() {
         return properties;

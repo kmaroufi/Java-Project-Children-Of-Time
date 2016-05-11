@@ -129,7 +129,6 @@ public class GameEngine {
     }
 
     public void addNewAbility() {
-        //TODO
     }
 
     public void addNewItem() {
