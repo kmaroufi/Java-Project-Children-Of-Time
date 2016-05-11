@@ -7,8 +7,8 @@ import java.util.HashMap;
 public class HeroClass extends Soldier{
     public static HashMap<String, HeroClass> mapOfHeroClasses;
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
-    protected ArrayList<Perk> perks;
-    protected ArrayList<Skill> skills;
+    protected ArrayList<Perk> perks = new ArrayList<>();
+    protected ArrayList<Skill> skills = new ArrayList<>();
     protected double criticalHitChance;
     protected double criticalHitChanceRatio;
     protected double criticalHitDamage;
