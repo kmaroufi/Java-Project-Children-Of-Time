@@ -19,34 +19,10 @@ public class Hero extends HeroClass {
         super(heroClassHandler);
         this.setName(name);
     }
+
     public Hero(String name,HeroClass heroClass){
         super(heroClass);
         this.setName(name);
-    }
-    //------------------------------------------ Getter && Setters
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public HashMap<String, Item> getListOfItems() {
-        return listOfItems;
-    }
-
-    public void setListOfItems(HashMap<String, Item> listOfItems) {
-        this.listOfItems = listOfItems;
-    }
-
-    public ArrayList<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
     }
 
     //------------------------------------------ Functions
@@ -75,13 +51,15 @@ public class Hero extends HeroClass {
         }
 
     }
+
     public void useSkill(String skillName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with SkillName
             if(this.skills.get(i).getName().equals(skillName)){
-                 this.skills.get(i).useSkill();
+                this.skills.get(i).useSkill();
             }
         }
     }
+
     public void upgradeAbility(String abilityName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
             if(this.skills.get(i).getName().equals(abilityName)){
@@ -96,6 +74,7 @@ public class Hero extends HeroClass {
             }
         }
     }
+
     public void useItem(String itemName){
         for(int i = 0;i < this.items.size();i++){                  //finding item with itemName
             if(this.items.get(i).getName().equals(itemName)){
@@ -104,5 +83,32 @@ public class Hero extends HeroClass {
             }
         }
     }
+
+    //------------------------------------------ Getter && Setters
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public HashMap<String, Item> getListOfItems() {
+        return listOfItems;
+    }
+
+    public void setListOfItems(HashMap<String, Item> listOfItems) {
+        this.listOfItems = listOfItems;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
 
 }

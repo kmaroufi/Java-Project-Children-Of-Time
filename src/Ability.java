@@ -10,6 +10,7 @@ public abstract class Ability<T> {
     protected String name;
     protected String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.
     protected ArrayList<T> effectedSoldiers;
+
     protected ArrayList<T> relatedSoldiers;
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;
@@ -24,10 +25,24 @@ public abstract class Ability<T> {
     private int[] costOfUpgrade;
     public static Map<String, String> listOfAbilities;
     //-------------------------------------------------------- Constructors
-    Ability(AbilityHandler abilityHandler) {
-
+    public Ability(AbilityHandler abilityHandler) {
+        this.setName(abilityHandler.getName());
+        this.setCostOfUpgrade(abilityHandler.getCostOfUpgrade());
+        this.setCurrentGrade(abilityHandler.getCurrentGrade());
+        this.setFieldOfEffecting(abilityHandler.getFieldOfEffecting());
+        this.setGlobal(abilityHandler.isGlobal());
+        this.setHasCondition(abilityHandler.isHasCondition());
+        this.setNumberOfGrades(abilityHandler.getNumberOfGrades());
+        this.setNumberOfRelatedSoldiers(abilityHandler.getNumberOfRelatedSoldiers());
+        this.setOwnerName(abilityHandler.getOwnerName());
+        this.setPermanently(abilityHandler.isPermanently());
+        this.setRandomSoldierSelecting(abilityHandler.isRandomSoldierSelecting());
+        this.setRelatedSoldiers(abilityHandler.getRelatedSoldiers());
+        this.setEffectedSoldiers(abilityHandler.getEffectedSoldiers());
     }
-    Ability() {
+
+
+    public Ability() {
 
     }
     //-------------------------------------------------------- Functions
@@ -37,7 +52,7 @@ public abstract class Ability<T> {
     private void choosingRelatedSoldiers() {
         if (this.hasEffectedOnEnemy) {
             if (this.isRandomSoldierSelecting) {
-                ArrayList<Enemy> enemies = new ArrayList<>();
+                ArrayList<Enemy> enemies = new ArrayList<Enemy>();
                 enemies.addAll(GameEngine.listOfEnemies);
                 for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
                     Random random = new Random();
@@ -55,7 +70,7 @@ public abstract class Ability<T> {
         }
         else {
             if (this.isRandomSoldierSelecting) {
-                ArrayList<Hero> heroes = new ArrayList<>();
+                ArrayList<Hero> heroes = new ArrayList<Hero>();
                 heroes.addAll(GameEngine.listOfHeroes);
                 for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
                     Random random = new Random();
@@ -120,6 +135,79 @@ public abstract class Ability<T> {
 
     public void setCurrentGrade(int currentGrade) {
         this.currentGrade = currentGrade;
+    }
+
+
+    public ArrayList<T> getEffectedSoldiers() {
+        return effectedSoldiers;
+    }
+
+    public void setEffectedSoldiers(ArrayList<T> effectedSoldiers) {
+        this.effectedSoldiers = effectedSoldiers;
+    }
+
+    public ArrayList<T> getRelatedSoldiers() {
+        return relatedSoldiers;
+    }
+
+    public void setRelatedSoldiers(ArrayList<T> relatedSoldiers) {
+        this.relatedSoldiers = relatedSoldiers;
+    }
+
+    public boolean isRandomSoldierSelecting() {
+        return isRandomSoldierSelecting;
+    }
+
+    public void setRandomSoldierSelecting(boolean randomSoldierSelecting) {
+        isRandomSoldierSelecting = randomSoldierSelecting;
+    }
+
+    public int getNumberOfRelatedSoldiers() {
+        return numberOfRelatedSoldiers;
+    }
+
+    public void setNumberOfRelatedSoldiers(int numberOfRelatedSoldiers) {
+        this.numberOfRelatedSoldiers = numberOfRelatedSoldiers;
+    }
+
+    public String getFieldOfEffecting() {
+        return fieldOfEffecting;
+    }
+
+    public void setFieldOfEffecting(String fieldOfEffecting) {
+        this.fieldOfEffecting = fieldOfEffecting;
+    }
+
+    public boolean isPermanently() {
+        return isPermanently;
+    }
+
+    public void setPermanently(boolean permanently) {
+        isPermanently = permanently;
+    }
+
+    public boolean isEffectDuringAttack() {
+        return isEffectDuringAttack;
+    }
+
+    public void setEffectDuringAttack(boolean effectDuringAttack) {
+        isEffectDuringAttack = effectDuringAttack;
+    }
+
+    public boolean isHasCondition() {
+        return hasCondition;
+    }
+
+    public void setHasCondition(boolean hasCondition) {
+        this.hasCondition = hasCondition;
+    }
+
+    public int[] getCostOfUpgrade() {
+        return costOfUpgrade;
+    }
+
+    public void setCostOfUpgrade(int[] costOfUpgrade) {
+        this.costOfUpgrade = costOfUpgrade;
     }
 
 }
