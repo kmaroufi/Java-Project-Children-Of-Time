@@ -9,6 +9,8 @@ public class GameEngine {
     public static ArrayList<Enemy> listOfEnemies = new ArrayList<Enemy>();
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
+    public static ArrayList<Skill> listOfSkills = new ArrayList<Skill>();
+    public static ArrayList<Perk> listOfPerks = new ArrayList<Perk>();
 
     private String level;                   // level of Game(Easy-Medium-Hard)
 
@@ -128,7 +130,24 @@ public class GameEngine {
         }
     }
 
-    public void addNewAbility() {
+    public void addNewPerk(Perk perk){
+        if(isCustomGame){
+            //...
+            this.listOfPerks.add(perk);
+        }
+        else{
+            this.listOfPerks.add(perk);
+        }
+    }
+
+    public void addNewSkill(Skill skill) {
+        if(isCustomGame){
+            //...
+            this.listOfSkills.add(skill);
+        }
+        else{
+            this.listOfSkills.add(skill);
+        }
     }
 
     public void addNewItem() {
@@ -183,22 +202,6 @@ public class GameEngine {
 
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    public ArrayList<HeroClass> getListOfHeroClasses() {
-        return listOfHeroClasses;
-    }
-
-    public void setListOfHeroClasses(ArrayList<HeroClass> listOfHeroClasses) {
-        this.listOfHeroClasses = listOfHeroClasses;
-    }
-
-    public ArrayList<Hero> getListOfHeroes() {
-        return listOfHeroes;
-    }
-
-    public void setListOfHeroes(ArrayList<Hero> listOfHeroes) {
-        this.listOfHeroes = listOfHeroes;
     }
 
     public boolean isCustomGame() {
