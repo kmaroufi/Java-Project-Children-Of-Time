@@ -37,6 +37,7 @@ public class HeroClassHandler extends Soldier{
         this.setEnergyPoint(energyPoint);
         this.setInventorySize(inventorySize);
     }
+    
     //---------------------------------------------------------------- Getter && Setters
 
 
