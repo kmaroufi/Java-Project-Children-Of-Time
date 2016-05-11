@@ -28,7 +28,7 @@ public class Thug extends Enemy {
         int randomIndex = random.nextInt(GameEngine.listOfHeroes.size());
         Hero targetedHero = GameEngine.listOfHeroes.get(randomIndex);
         targetedHero.getDamage(this.attackPower);
-        Console.printInEachLine("Thug just attacked " + targetedHero.getName() + " with " + this.getAttackPower() + " power");
+        Display.printInEachLine("Thug just attacked " + targetedHero.getName() + " with " + this.getAttackPower() + " power");
         if(targetedHero.isDead()){
             GameEngine.listOfHeroes.remove(targetedHero);
         }

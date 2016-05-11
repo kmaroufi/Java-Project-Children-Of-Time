@@ -20,6 +20,6 @@ public class Tank extends Enemy {
         for (Hero hero: GameEngine.listOfHeroes) {
             hero.getDamage(this.getAttackPower());
         }
-        Console.printInEachLine("Tank just damaged all of your heroes with " + this.getAttackPower() + " power");
+        Display.printInEachLine("Tank just damaged all of your heroes with " + this.getAttackPower() + " power");
     }
 }

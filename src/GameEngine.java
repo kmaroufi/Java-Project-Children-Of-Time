@@ -14,11 +14,11 @@ public class GameEngine {
 
     //------------------------------------------ Functions
     public void chooseLevelOfGame(){
-        Console.printInEachLine("Choose Level Of Game:");
-        Console.printInEachLine("1 - Easy");
-        Console.printInEachLine("2 - Medium");
-        Console.printInEachLine("3 - Hard");
-        int choose = Console.getInteger();
+        Display.printInEachLine("Choose Level Of Game:");
+        Display.printInEachLine("1 - Easy");
+        Display.printInEachLine("2 - Medium");
+        Display.printInEachLine("3 - Hard");
+        int choose = Display.getInteger();
         while(true){
             if(choose == 1) {
                 this.setLevel("Easy");
@@ -33,7 +33,7 @@ public class GameEngine {
                 break;
             }
             else {
-                Console.printInEachLine("Wrong Number! Try Again!");
+                Display.printInEachLine("Wrong Number! Try Again!");
             }
         }
     }
@@ -84,12 +84,12 @@ public class GameEngine {
     }
 
     public void addNewHeroClass() {
-        HeroClassHandler heroClassHandler = Console.getHeroClass();
+        HeroClassHandler heroClassHandler = Display.getHeroClass();
         this.listOfHeroClasses.add(new HeroClass(heroClassHandler));
     }
 
-    public void addNewHero() {
-        //TODO
+    public void addNewHero(Hero hero) {
+        this.getListOfHeroes().add(hero);
     }
 
     public void addNewAbility() {
@@ -119,22 +119,22 @@ public class GameEngine {
     public void showBattleMessage(int numberOfBattle){
         switch(numberOfBattle){
             case 1:
-                Console.printInEachLine("You’ve entered the castle, it takes a while for your eyes to get used to the darkness but the horrifying halo of your enemies is vaguely visible. Angel’s unsettling presence and the growling of thugs tell you that your first battle has BEGUN!");
+                Display.printInEachLine("You’ve entered the castle, it takes a while for your eyes to get used to the darkness but the horrifying halo of your enemies is vaguely visible. Angel’s unsettling presence and the growling of thugs tell you that your first battle has BEGUN!");
                 break;
             case 2:
-                Console.printInEachLine("As you wander into the hall you realize the surrounding doors can lead your destiny to something far worse than you expected. You know what’s anticipating you behind the only open door but there’s no other choice.");
+                Display.printInEachLine("As you wander into the hall you realize the surrounding doors can lead your destiny to something far worse than you expected. You know what’s anticipating you behind the only open door but there’s no other choice.");
                 break;
             case 3:
-                Console.printInEachLine("The door behind you is shut with a thunderous sound and you progress into the next hall holding the first key that you’ve found, hoping to seek the second one.");
+                Display.printInEachLine("The door behind you is shut with a thunderous sound and you progress into the next hall holding the first key that you’ve found, hoping to seek the second one.");
                 break;
             case 4:
-                Console.printInEachLine("Running with the second key in your hand, you unlock the door back to the first hall and use the first key to burst into your most terrifying nightmares.");
+                Display.printInEachLine("Running with the second key in your hand, you unlock the door back to the first hall and use the first key to burst into your most terrifying nightmares.");
                 break;
             case 5:
-                Console.printInEachLine("You feel hopeless and exhausted as you stalk to the final door. What’s behind that door makes your hearts pound and your spines shake with fear, but you came here to do one thing and backing down is not an option.");
+                Display.printInEachLine("You feel hopeless and exhausted as you stalk to the final door. What’s behind that door makes your hearts pound and your spines shake with fear, but you came here to do one thing and backing down is not an option.");
                 break;
             case 6:
-                Console.printInEachLine("The collector falls down on his knees, he’s strained and desperate but still tries to drag himself toward Epoch. He knows his era has come to an end. The ancient time machine calls you to end the disorder and bring unity under its glorious wings, now it’s your turn to be the MASTERS OF TIME!");
+                Display.printInEachLine("The collector falls down on his knees, he’s strained and desperate but still tries to drag himself toward Epoch. He knows his era has come to an end. The ancient time machine calls you to end the disorder and bring unity under its glorious wings, now it’s your turn to be the MASTERS OF TIME!");
                 break;
         }
     }

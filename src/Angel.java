@@ -27,7 +27,7 @@ public class Angel extends Enemy {
         int randomIndex = random.nextInt(GameEngine.listOfEnemies.size());
         Enemy targetedEnemy = GameEngine.listOfEnemies.get(randomIndex);
         targetedEnemy.setCurrentHealth(targetedEnemy.currentHealth + this.healPower);
-        Console.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + this.healPower + " health points");
+        Display.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + this.healPower + " health points");
     }
     public Integer getHealPower() {
         return healPower;

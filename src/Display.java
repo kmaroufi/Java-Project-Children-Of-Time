@@ -4,7 +4,7 @@ import java.util.Scanner;
  * Created by Future on 5/6/2016.
  */
 
-public class Console {
+public class Display {
     private static Scanner cin;
 
     //----------------------------------
@@ -40,6 +40,22 @@ public class Console {
 
     public static void printInEachLine(String sentence){
         System.out.println(sentence);
+    }
+
+    public static Hero getHero(){                   // Choose The The Hero Class(if none of them make a hero class)
+        Hero hero = new Hero();
+        //Choose A hero Class or make it!
+        Display.printInEachLine("Choose One OF HeroClasses For Your Own Hero!");
+        for(int i = 0;i < GameEngine.listOfHeroClasses.size();i++){
+            Display.printInEachLine(i + " - " + GameEngine.listOfHeroClasses.get(i).getName());
+        }
+        //Bug! (Commands) Soon Will Correct it!
+        Display.getInteger();
+        //if chooses one of hero classes
+
+        //else
+
+        return hero;
     }
 
     public static HeroClassHandler getHeroClass(){

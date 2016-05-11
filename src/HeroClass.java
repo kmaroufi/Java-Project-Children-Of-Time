@@ -5,10 +5,11 @@ import java.util.HashMap;
  * Created by Future on 5/6/2016.
  */
 public class HeroClass extends Soldier{
+    private String name;
     public static HashMap<String, HeroClass> mapOfHeroClasses;
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
-    protected ArrayList<Perk> perks = new ArrayList<>();
-    protected ArrayList<Skill> skills = new ArrayList<>();
+    protected ArrayList<Perk> perks = new ArrayList<Perk>();
+    protected ArrayList<Skill> skills = new ArrayList<Skill>();
     protected double criticalHitChance;
     protected double criticalHitChanceRatio;
     protected double criticalHitDamage;
@@ -47,6 +48,7 @@ public class HeroClass extends Soldier{
                 Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
             }
         }
+        this.setName(heroClassHandler.getName());
         this.setAttackPowerOnNonTargetedEnemy(heroClassHandler.getAttackPowerOnNonTargetedEnemy());
         this.setAttackPowerRatioDuringAttack(heroClassHandler.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClassHandler.getAttackPowerRatioOnNonTargetedEnemy());
@@ -70,6 +72,13 @@ public class HeroClass extends Soldier{
     }
     //-------------------------------------------------- Getter && Setters
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public static HashMap<String, HeroClass> getMapOfHeroClasses() {
         return mapOfHeroClasses;

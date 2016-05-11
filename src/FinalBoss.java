@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -29,13 +28,13 @@ public class FinalBoss extends Enemy {
         Hero targetedHero2 = GameEngine.listOfHeroes.get(randomIndex2);
         targetedHero1.getDamage(this.attackPower);
         targetedHero2.getDamage(this.attackPower);
-        Console.printInEachLine("Collector just attacked " + targetedHero1.getName() + " with " + this.getAttackPower() + " power");
-        Console.printInEachLine("Collector just attacked " + targetedHero2.getName() + " with " + this.getAttackPower() + " power");
+        Display.printInEachLine("Collector just attacked " + targetedHero1.getName() + " with " + this.getAttackPower() + " power");
+        Display.printInEachLine("Collector just attacked " + targetedHero2.getName() + " with " + this.getAttackPower() + " power");
         for (Hero hero: GameEngine.listOfHeroes) {
             int randomValue = random.nextInt(3) + 2;
             hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - randomValue);
-            Console.printInEachLine("Collector just burned " + randomValue + " energy points from " + hero.getName());
+            Display.printInEachLine("Collector just burned " + randomValue + " energy points from " + hero.getName());
         }
-        Console.printInEachLine("Collector has mutated");
+        Display.printInEachLine("Collector has mutated");
     }
 }
