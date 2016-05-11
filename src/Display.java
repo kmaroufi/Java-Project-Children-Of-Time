@@ -1,3 +1,5 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -81,6 +83,10 @@ public class Display {
 
     public static void printf(String sentence){
         System.out.printf(sentence);
+    }
+
+    public static ArrayList<String> getAbilityDetailsBeforeUsing() {
+        return null;
     }
 
 
