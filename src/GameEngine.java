@@ -75,10 +75,12 @@ public class GameEngine {
     }
 
     public void doCustomGame(){
+        this.addDefaultAttributes();
 
     }
 
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
+        this.addDefaultAttributes();
     }
 
     public void addNewHeroClass() {
