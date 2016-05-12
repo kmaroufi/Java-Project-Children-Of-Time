@@ -12,6 +12,7 @@ public abstract class Enemy extends Soldier{
     //---------------------------------------------------- Constructors
 
     public Enemy(){
+
     }
 
     //---------------------------------------------------- Functions
