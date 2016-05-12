@@ -17,7 +17,7 @@ public class HeroClass extends Soldier{
     protected double magicRefillRate;
     protected double attackPowerRatioDuringAttack;
     protected double healthRefillRateRatio;
-    protected double magicRefillRateRatio;
+    protected double magicRefillRateRatio;                                  //F*** All Ratioes! :((((
     protected double energyPointRatio;
     protected double attackPowerRatioOnNonTargetedEnemy;
     protected double attackPowerOnNonTargetedEnemy;

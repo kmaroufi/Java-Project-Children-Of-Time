@@ -16,6 +16,10 @@ public class Item {
     private boolean isInstantlyUsed;
     private int maximumTimeOfUsed;
     private int remainingTimeOfUsed;
+    private int requiredEnergyPoint;
+    private int requiredMagicPoint;
+    private int cooldown;
+
     private ArrayList<Property> properties;
 
     public void isActivated() {
@@ -26,6 +30,32 @@ public class Item {
         //TODO
     }
     //--------------------------------------------------- Getter && Setters
+
+
+    public int getRequiredEnergyPoint() {
+        return requiredEnergyPoint;
+    }
+
+    public void setRequiredEnergyPoint(int requiredEnergyPoint) {
+        this.requiredEnergyPoint = requiredEnergyPoint;
+    }
+
+    public int getRequiredMagicPoint() {
+        return requiredMagicPoint;
+    }
+
+    public void setRequiredMagicPoint(int requiredMagicPoint) {
+        this.requiredMagicPoint = requiredMagicPoint;
+    }
+
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
 
     public String getName() {
         return name;
