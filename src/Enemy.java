@@ -7,14 +7,16 @@ public abstract class Enemy extends Soldier{
     private String version;                         // (Weak-Able-Mighty)
     private Double attackPowerRatio;
     private Integer isAstounded;
-    private String name;                            // Full name of An Enemy   ----->     (ClassName is Like Thug)
+    protected String name;                            // Full name of An Enemy   ----->     (ClassName is Like Thug)
 
     //---------------------------------------------------- Constructors
 
-    public Enemy(){}
+    public Enemy(){
+    }
 
     //---------------------------------------------------- Functions
     public void showDescription(){
+        Display.printInEachLine(this.getName());
         Display.printInEachLine("Health: " + this.getCurrentHealth() + " / " + this.getMaximumHealth());
     }
 
@@ -51,7 +53,7 @@ public abstract class Enemy extends Soldier{
 
     public String getName() {
         return name;
-    }
+    }                               // gets The Full Name
 
     public void setName(String name) {
         this.name = name;

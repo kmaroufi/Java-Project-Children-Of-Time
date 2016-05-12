@@ -4,8 +4,9 @@ import java.util.Random;
  * Created by asus-pc on 5/7/2016.
  */
 public class Angel extends Enemy {
-    private Integer healPower;              // i think it must be Integer it is not neccessery to be Double
-    private Integer tempHealPower;          // i'm not sure about this field!
+    private int healPower;              // i think it must be Integer it is not neccessery to be Double
+    private int tempHealPower;          // i'm not sure about this field!
+
 
 
     public Angel(String version){
@@ -22,6 +23,7 @@ public class Angel extends Enemy {
             this.setCurrentHealth(250);
         }
     }
+
     public void doTurn() {
         Random random = new Random();
         int randomIndex = random.nextInt(GameEngine.listOfEnemies.size());
@@ -29,7 +31,8 @@ public class Angel extends Enemy {
         targetedEnemy.setCurrentHealth(targetedEnemy.currentHealth + this.healPower);
         Display.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + this.healPower + " health points");
     }
-    public Integer getHealPower() {
+
+    public int getHealPower() {
         return healPower;
     }
 
