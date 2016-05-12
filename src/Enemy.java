@@ -14,7 +14,12 @@ public abstract class Enemy extends Soldier{
     public Enemy(){}
 
     //---------------------------------------------------- Functions
+    public void showDescription(){
+        Display.printInEachLine("Health: " + this.getCurrentHealth() + " / " + this.getMaximumHealth());
+    }
+
     public abstract void doTurn();
+
     public void setFullName(){
         int numberOfEnemiesWithSameName = 0;
         for(Enemy e : GameEngine.listOfEnemies){

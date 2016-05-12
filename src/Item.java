@@ -22,7 +22,14 @@ public class Item {
 
     private ArrayList<Property> properties;
 
+    //--------------------------------------------------- Constructors
+    public Item(){}
+
+    public Item(String name){}
+    //--------------------------------------------------- Functions
+
     public void isActivated() {
+
         //TODO
     }
 

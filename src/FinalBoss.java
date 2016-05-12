@@ -11,6 +11,7 @@ public class FinalBoss extends Enemy {
         this.setCurrentHealth(1000);
     }
 
+
     public void doTurn() {
         if(this.getCurrentHealth() > 400){
             this.setAttackPower(150);
