@@ -118,8 +118,26 @@ public class Hero extends HeroClass {
     public void showItems(){
         Display.printf(this.name + " has ");
         for(Item item : this.items){
-            Display.printInEachLine(item.getName() + " worth " + item.getRequiredMoney()/2);
+            Display.printf(item.getName() + " worth " + (item.getRequiredMoney()/2.0) + " dollars ,");
         }
+    }
+
+    public boolean hasItem(Item item){
+        for(int i = 0;i < this.items.size();i++){
+            if(this.items.get(i).equals(item)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasSkill(Skill skill){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).equals(skill)){
+                return true;
+            }
+        }
+        return false;
     }
 
     //------------------------------------------ Getter && Setters

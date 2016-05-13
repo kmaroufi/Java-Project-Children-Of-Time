@@ -167,10 +167,46 @@ public class GameEngine {
             Display.printInEachLine("Your current experience is : " + this.player.getXp());
             Display.printInEachLine("#######################################");
             Shop.showItems();
+            for(Hero hero : this.listOfHeroes){
+                hero.showItems();
+            }
+            Display.printInEachLine("Your current wealth is: " + player.getMoney());
             while(true){
                 String command = Display.getString();
-                if(command.contains("Acquire ")){     //(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
+                for(Item item: Shop.listOfItems){
+                    if(command.equalsIgnoreCase(item.getName() + "?")){
+                        item.getDescription();
+                        break;
+                    }
+                    if(command.contains("Buy " + item.getName() + " for ") || command.contains("Sell " + item.getName() + " of ")){
+                        for(Hero hero : this.listOfHeroes){
+                            if(command.equals("Buy " + item.getName() + " for " + hero.getName())){
+                                if(hero.getInventorySize() < item.getSize()){
+                                    Display.printInEachLine(hero.getName() + "'s inventory is full");
+                                }
+                                else if(this.player.getMoney() >= item.getRequiredMoney() && hero.getInventorySize() >= item.getSize()){                                 //(item name) “ bought successfully, your current wealth is: ” + (current money)
+                                    this.player.setMoney(this.player.getMoney() - item.getRequiredMoney());
+                                    Display.printInEachLine(item.getName() + " bought successfully, your current wealth is: " + this.player.getMoney());
+                                }
+                                else if (this.player.getMoney() < item.getRequiredMoney() && hero.getInventorySize() >= item.getSize()){
+                                    Display.printInEachLine("You don’t have enough money");
+                                }
 
+                            }
+                            else if(command.equals("Sell " + item.getName() + " of " + hero.getName())){    //(item name) + “ successfully sold, your current wealth is: “ + (current money)
+                                if(hero.hasItem(item)) {
+                                    this.player.setMoney(this.player.getMoney() + (item.getRequiredMoney() / 2));
+                                    Display.printInEachLine(item.getName() + " successfully sold, your current wealth is: " + player.getMoney());
+                                }
+                                else{
+                                    Display.printInEachLine(hero.getName() + "hasn't this item");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(command.contains("Acquire ")){     //(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
                     for(Perk perk: this.listOfPerks){
                         if(command.contains("Acquire " + perk.getName() + " for ")){
                             for(Hero hero : this.listOfHeroes){

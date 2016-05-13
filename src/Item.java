@@ -20,6 +20,7 @@ public class Item {
     private int requiredMagicPoint;
     private double requiredMoney;
     private int cooldown;
+    private String Description;
 
     private ArrayList<Property> properties;
 
@@ -55,6 +56,14 @@ public class Item {
     }
     //--------------------------------------------------- Getter && Setters
 
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
 
     public int getRequiredEnergyPoint() {
         return requiredEnergyPoint;
