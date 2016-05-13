@@ -62,21 +62,21 @@ public class Hero extends HeroClass {
     public void useSkill(String skillName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with SkillName
             if(this.skills.get(i).getName().equals(skillName)){
-                this.skills.get(i).useSkill();
+                this.skills.get(i).useSkill(this.skills.get(i).relatedSoldiers,this);
             }
         }
     }
 
-    public void upgradeAbility(String abilityName){
+    public void upgradeAbility(Player player,String abilityName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
             if(this.skills.get(i).getName().equals(abilityName)){
-                this.skills.get(i).upgrade();
+                this.skills.get(i).upgrade(player);
                 return;
             }
         }
         for(int i = 0;i < this.perks.size();i++){                  //finding perk with abilityName
             if(this.perks.get(i).getName().equals(abilityName)){
-                this.perks.get(i).upgrade();
+                this.perks.get(i).upgrade(player);
                 return;
             }
         }

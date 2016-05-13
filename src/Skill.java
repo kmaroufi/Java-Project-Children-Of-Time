@@ -20,7 +20,7 @@ public class Skill<E> extends Ability{
     private int[] cooldown;
     private int remainingCooldown;
     private boolean isDependsRelatedSoldiersSelectingOnPlayer;
-    private boolean canStackUp;                                 // What is this Shit?
+    private boolean canStackUp;
     private boolean isUsed;
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;

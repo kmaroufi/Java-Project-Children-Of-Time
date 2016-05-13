@@ -7,17 +7,17 @@ public class Thug extends Enemy {
     public Thug(String version){
         this.setClassName("Thug");
         this.setFullName();
-        if(version.equals("Weak")){
+        if(version.equalsIgnoreCase("Weak")){
             this.setAttackPower(50);
             this.setMaximumHealth(200);
             this.setCurrentHealth(200);
         }
-        else if(version.equals("Able")){
+        else if(version.equalsIgnoreCase("Able")){
             this.setAttackPower(90);
             this.setMaximumHealth(300);
             this.setCurrentHealth(300);
         }
-        else if(version.equals("Mighty")){
+        else if(version.equalsIgnoreCase("Mighty")){
             this.setAttackPower(150);
             this.setMaximumHealth(400);
             this.setCurrentHealth(400);

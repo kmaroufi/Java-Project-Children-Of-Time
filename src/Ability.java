@@ -9,8 +9,8 @@ public abstract class Ability<T> {
 
     protected String name;
     protected String ownerName;
-    protected ArrayList<T> effectedSoldiers = new ArrayList<>();
-    protected ArrayList<T> relatedSoldiers = new ArrayList<>();
+    protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
+    protected ArrayList<T> relatedSoldiers = new ArrayList<T>();
     private boolean isGlobal; // Just clear that other heroes can use this Ability or no.
     protected boolean hasEffectedOnEnemy;
     protected boolean isRandomSoldierSelecting;

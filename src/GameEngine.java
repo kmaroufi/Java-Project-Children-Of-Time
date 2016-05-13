@@ -55,27 +55,27 @@ public class GameEngine {
         double[] tmp = {0,0,0};
         double[] arr = {30,30,30};
         PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
-        Property<Enemy> property = new Property<>(propertyHandler);
-        ArrayList<Property<Enemy>> properties = new ArrayList<>();
+        Property<Enemy> property = new Property<Enemy>(propertyHandler);
+        ArrayList<Property<Enemy>> properties = new ArrayList<Property<Enemy>>();
         properties.add(property);
 //        ArrayList<String> blackList = new ArrayList<>();
 //        blackList.add("Eley");
         int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
         SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
         int[] costOfUpgrade = {2,4,6};
-        Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
-        ArrayList<String> tmpArr = new ArrayList<>();
+        Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<Integer, ArrayList<String>>();
+        ArrayList<String> tmpArr = new ArrayList<String>();
         tmpArr.add("Fight Training");
         nameOfNecessaryAbilities.put(0, tmpArr); nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr);
-        Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-        Map<String, Integer> tmpMap = new HashMap<>();
+        Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<Integer, Map<String, Integer>>();
+        Map<String, Integer> tmpMap = new HashMap<String, Integer>();
         tmpMap.put("Fight Training", 1);
         gradeOfNecessaryAbilities.put(1, tmpMap);
         tmpMap.put("Fight Training", 2);
         gradeOfNecessaryAbilities.put(2, tmpMap);
         tmpMap.put("Fight Training", 3);
         gradeOfNecessaryAbilities.put(3, tmpMap);
-        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities);
         Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);                     //Eley's Skill
 
 
@@ -119,36 +119,36 @@ public class GameEngine {
         bolti.addSkill(manaBeam);
         this.addNewHero(bolti);
         //Adding Enemies
-        if(this.getLevelOfGame().equals("Easy")){
-            Thug thug = new Thug("Weak");
-            Angel angel = new Angel("Weak");
-            Tank tank = new Tank("Weak");
-            FinalBoss finalBoss = new FinalBoss();
-            this.listOfEnemies.add(thug);
-            this.listOfEnemies.add(angel);
-            this.listOfEnemies.add(tank);
-            this.listOfEnemies.add(finalBoss);
-        }
-        else if(this.getLevelOfGame().equals("Medium")){
-            Thug thug = new Thug("Able");
-            Angel angel = new Angel("Able");
-            Tank tank = new Tank("Able");
-            FinalBoss finalBoss = new FinalBoss();
-            this.listOfEnemies.add(thug);
-            this.listOfEnemies.add(angel);
-            this.listOfEnemies.add(tank);
-            this.listOfEnemies.add(finalBoss);
-        }
-        else if(this.getLevelOfGame().equals("Hard")){
-            Thug thug = new Thug("Mighty");
-            Angel angel = new Angel("Able");
-            Tank tank = new Tank("Able");
-            FinalBoss finalBoss = new FinalBoss();
-            this.listOfEnemies.add(thug);
-            this.listOfEnemies.add(angel);
-            this.listOfEnemies.add(tank);
-            this.listOfEnemies.add(finalBoss);
-        }
+//        if(this.getLevelOfGame().equals("Easy")){
+//            Thug thug = new Thug("Weak");
+//            Angel angel = new Angel("Weak");
+//            Tank tank = new Tank("Weak");
+//            FinalBoss finalBoss = new FinalBoss();
+//            this.listOfEnemies.add(thug);
+//            this.listOfEnemies.add(angel);
+//            this.listOfEnemies.add(tank);
+//            this.listOfEnemies.add(finalBoss);
+//        }
+//        else if(this.getLevelOfGame().equals("Medium")){
+//            Thug thug = new Thug("Able");
+//            Angel angel = new Angel("Able");
+//            Tank tank = new Tank("Able");
+//            FinalBoss finalBoss = new FinalBoss();
+//            this.listOfEnemies.add(thug);
+//            this.listOfEnemies.add(angel);
+//            this.listOfEnemies.add(tank);
+//            this.listOfEnemies.add(finalBoss);
+//        }
+//        else if(this.getLevelOfGame().equals("Hard")){
+//            Thug thug = new Thug("Mighty");
+//            Angel angel = new Angel("Able");
+//            Tank tank = new Tank("Able");
+//            FinalBoss finalBoss = new FinalBoss();
+//            this.listOfEnemies.add(thug);
+//            this.listOfEnemies.add(angel);
+//            this.listOfEnemies.add(tank);
+//            this.listOfEnemies.add(finalBoss);
+//        }
         //Adding Abilities
 
         //Adding Items
@@ -179,16 +179,42 @@ public class GameEngine {
         this.addDefaultAttributes("");                              // player's name
         this.setCustomGame(true);
         while (true){
-            //Add A new Hero!
+            //Welcome To Our Adding Factory
             Hero newHero = new Hero();
             this.addNewHero(newHero);
         }
     }
-
+    public void setEnemies(int numberOfBattle){
+        if(numberOfBattle == 1){
+            Thug thug1 = new Thug("Weak");
+            Thug thug2 = new Thug("Weak");
+            Thug thug3 = new Thug("Weak");
+            Angel angel1 = new Angel("Weak");
+        }
+        else if(numberOfBattle == 2){
+            Thug thug1 = new Thug("Able");
+            Thug thug2 = new Thug("Able");
+            Angel angel1 = new Angel("Weak");
+            Tank tank1 = new Tank("Weak");
+        }
+        else if(numberOfBattle == 3){
+            Thug thug1 = new Thug("Able");
+            Thug thug2 = new Thug("Mighty");
+            Angel angel1 = new Angel("Able");
+            Tank tank1 = new Tank("Weak");
+        }
+        else if(numberOfBattle == 4){
+            Thug thug1 = new Thug("Mighty");
+            Thug thug2 = new Thug("Mighty");
+            Angel angel1 = new Angel("Able");
+            Tank tank1 = new Tank("Able");
+            Tank tank2 = new Tank("Able");
+        }
+    }
     public void doCampaign(){                                               // do Campaign Game (not Custom Game)
         this.addDefaultAttributes("");                                      // player's name
         for(int i = 0;i < 5;i++){
-            boolean hasBoughtInShop = false;
+            setEnemies(i + 1);
             this.showBattleMessage(i + 1);                                  // Showing The Story Of Game
             Display.printInEachLine("#######################################");
             this.showEnemyTeamDescription();                                // Showing The Enemy Team Description
@@ -248,10 +274,12 @@ public class GameEngine {
                                             Display.printInEachLine("This ability cannot be upgraded anymore");
                                             break;
                                         }
-                                        if(/*perk's xp >> player's xp*/){                            //Kamyar
+                                        if(perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()){
                                             Display.printInEachLine("Your experience is insufficient");
                                         }
-                                        hero.upgradeAbility(perk.getName());                        // kamyar Decrease XP!!!!!!!!!!!!!!!!!!!!!!
+                                        hero.upgradeAbility(this.player,perk.getName());
+                                        this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
+                                        perk.setCurrentGrade(perk.getCurrentGrade() + 1);
                                         Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
                                         break;
                                     }
@@ -265,11 +293,6 @@ public class GameEngine {
                         }
                     }
                 }
-                if(command.equals("Shop!")){                // Correct it!
-                    // buy from shop
-                    //if buy or sell                    hasBoughtInShop = true;
-                }
-
                 for(Hero hero: this.listOfHeroes){
                     if(command.equalsIgnoreCase(hero.getName() + "?")){
                         hero.showDescription();
@@ -281,7 +304,7 @@ public class GameEngine {
                         for(Skill skill:hero.getSkills()){
                             if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName())){
                                 skill.getDescription();
-                                Display.printInEachLine("You need " + skill.getRequiredExperience() + " experience points");
+                                Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
                                 break;
                             }
                         }
