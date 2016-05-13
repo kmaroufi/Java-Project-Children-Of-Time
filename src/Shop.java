@@ -5,18 +5,18 @@ import java.util.Map;
  * Created by asus-pc on 5/6/2016.
  */
 public class Shop {
-    public static ArrayList<Item> listOfItems = new ArrayList<>();
+    public static ArrayList<ItemProperties> listOfItems = new ArrayList<>();
 
     public static void showItems(){
         Display.printInEachLine("This This shop offers you ");
-        for(Item item : listOfItems){
-            Display.printInEachLine(item.getName() + " for " + item.getRequiredMoney() + " dollars ");
+        for(ItemProperties itemProperties : listOfItems){
+            Display.printInEachLine(itemProperties.getItem().getName() + " for " + itemProperties.getPrice() + " dollars ");
         }
     }
 
     public void sellItemToHero(String itemName) {                                       // hero buys an item
         for(int i = 0;i < this.listOfItems.size();i++){
-            if(this.listOfItems.get(i).getName().equals(itemName)){
+            if(this.listOfItems.get(i).getItem().getName().equals(itemName)){
                 this.listOfItems.remove(this.listOfItems.get(i));
                 return;
             }
@@ -28,7 +28,6 @@ public class Shop {
     public void byeItemFromHero(Hero hero,String itemName) {                      // hero sells an item
         for(int i = 0;i < hero.getListOfItems().size();i++){
             if(hero.getListOfItems().get(i).getName().equals(itemName)){
-                this.listOfItems.add(hero.getListOfItems().get(i));
                 hero.getListOfItems().remove(hero.getListOfItems().get(i));
                 return;
             }
