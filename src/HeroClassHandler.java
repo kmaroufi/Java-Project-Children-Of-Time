@@ -32,6 +32,9 @@ public class HeroClassHandler extends Soldier{
     public HeroClassHandler(){}
     public HeroClassHandler(String name,int maximumHealth,int attackPower,int maximumMagic,int energyPoint,int inventorySize,double healthRefillRate, double magicRefillRate){
         super(maximumHealth,attackPower,healthRefillRate);
+        this.setCurrentEnergyPoint(this.getMaximumEnergyPoint());
+        this.setCurrentMagic(this.getMaximumMagic());
+        this.setCurrentHealth(this.getMaximumHealth());
         this.setName(name);
         this.setMaximumMagic(maximumMagic);
         this.setEnergyPoint(energyPoint);
