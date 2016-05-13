@@ -58,10 +58,7 @@ public class GameEngine {
 
 
         Perk criticalStrike = new Perk();                           //Chrome's Perk
-        Skill elixir = new Skill();                                 //Meryl's Skill
-        Perk careTaker = new Perk();                                //Meryl's Perk
-        Skill boost = new Skill();                                  //Bolti's Skill
-        Skill manaBeam = new Skill();                               //Bolti's Skill
+
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
         fighterHandler.addPerk(fightTraining);
@@ -74,23 +71,23 @@ public class GameEngine {
         this.addNewHeroClass(new HeroClass(supporterHandler));
         //Adding Eley
         Hero eley = new Hero("Eley",fighterHandler);
-        eley.addSkill(overPoweredAttack);
+        eley.addSkill(Skill.listOfSkills.get("overPoweredAttack"));
         eley.addPerk(swirlingAttack);
         this.addNewHero(eley);
         //Adding Chrome
         Hero chrome = new Hero("Chrome",fighterHandler);
-        chrome.addSkill(sacrifice);
+        chrome.addSkill(Skill.listOfSkills.get("sacrifice"));
         chrome.addPerk(criticalStrike);
         this.addNewHero(chrome);
         //Adding Meryl
         Hero meryl = new Hero("Meryl",supporterHandler);
-        meryl.addSkill(elixir);
-        meryl.addPerk(careTaker);
+        meryl.addSkill(Skill.listOfSkills.get("elixir"));
+        meryl.addSkill(Skill.listOfSkills.get("careTaker"));
         this.addNewHero(meryl);
         //Adding Bolti
         Hero bolti = new Hero("Bolti",supporterHandler);
-        bolti.addSkill(boost);
-        bolti.addSkill(manaBeam);
+        bolti.addSkill(Skill.listOfSkills.get("boost"));
+        bolti.addSkill(Skill.listOfSkills.get("manaBeam"));
         this.addNewHero(bolti);
         //Adding Enemies
 //        if(this.getLevelOfGame().equals("Easy")){
