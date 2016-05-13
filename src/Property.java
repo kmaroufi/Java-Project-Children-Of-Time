@@ -9,6 +9,8 @@ public class Property<E> {
     private String name;
     private String fieldOfEffecting;
     private int currentGrade;
+    private int numberOfUpgrades;
+
     private boolean isDependOnEffectedSoldier;
 
     private boolean isDependOnUserHero;
@@ -28,6 +30,7 @@ public class Property<E> {
     //-------------------------------------------------------------- Constructors
 
     public Property(PropertyHandler propertyHandler) {
+        setNumberOfUpgrades(propertyHandler.getNumberOfUpgrades());
         setName(propertyHandler.getName());
         setConstantProperty(propertyHandler.getConstantProperty());
         setAttackPowerCoefficient(propertyHandler.getAttackPowerCoefficient());
@@ -155,8 +158,24 @@ public class Property<E> {
         this.valueOfEffectingOnEffectedSoldiers.remove(relatedSoldier);
     }
 
+    public String showCurrentUpgradeNumber(){
+        if(this.numberOfUpgrades == 0){
+            return "not acquired";
+        }
+        else{
+            String sentence = "Upgrade Number : " + this.currentGrade;
+            return sentence;
+        }
+    }
 
     //--------------------------------------------------------------      Getter & Setter
+    public int getNumberOfUpgrades() {
+        return numberOfUpgrades;
+    }
+
+    public void setNumberOfUpgrades(int numberOfUpgrades) {
+        this.numberOfUpgrades = numberOfUpgrades;
+    }
 
     public double[] getConstantProperty() {
         return constantProperty;

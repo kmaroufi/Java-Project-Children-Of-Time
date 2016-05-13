@@ -102,4 +102,10 @@ public class PropertyHandler {
     public void setMagicRefillRateCoefficient(double[] magicRefillRateCoefficient) {
         this.magicRefillRateCoefficient = magicRefillRateCoefficient;
     }
+
+    public int getNumberOfUpgrades() {
+        return NumberOfUpgrades;
+    }
+
+
 }
