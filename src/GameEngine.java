@@ -55,27 +55,27 @@ public class GameEngine {
         double[] tmp = {0,0,0};
         double[] arr = {30,30,30};
         PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
-        Property<Enemy> property = new Property<>(propertyHandler);
-        ArrayList<Property<Enemy>> properties = new ArrayList<>();
+        Property<Enemy> property = new Property<Enemy>(propertyHandler);
+        ArrayList<Property<Enemy>> properties = new ArrayList<Property<Enemy>>();
         properties.add(property);
 //        ArrayList<String> blackList = new ArrayList<>();
 //        blackList.add("Eley");
         int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
         SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
         int[] costOfUpgrade = {2,4,6};
-        Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
-        ArrayList<String> tmpArr = new ArrayList<>();
+        Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<Integer, ArrayList<String>>();
+        ArrayList<String> tmpArr = new ArrayList<String>();
         tmpArr.add("Fight Training");
         nameOfNecessaryAbilities.put(0, tmpArr); nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr);
-        Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-        Map<String, Integer> tmpMap = new HashMap<>();
+        Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<Integer, Map<String, Integer>>();
+        Map<String, Integer> tmpMap = new HashMap<String, Integer>();
         tmpMap.put("Fight Training", 1);
         gradeOfNecessaryAbilities.put(1, tmpMap);
         tmpMap.put("Fight Training", 2);
         gradeOfNecessaryAbilities.put(2, tmpMap);
         tmpMap.put("Fight Training", 3);
         gradeOfNecessaryAbilities.put(3, tmpMap);
-        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities);
         Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);                     //Eley's Skill
 
 
