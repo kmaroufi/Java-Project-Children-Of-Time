@@ -693,10 +693,8 @@ public class GameEngine {
     }
 
     public void showEnemyTeamDescription(){
-        for(int i = 0;i < 4;i++){
-            int count = 0;
-
-
+        for(Enemy enemy: this.listOfEnemies){
+            Display.printInEachLine(enemy.getName());
         }
     }
 
