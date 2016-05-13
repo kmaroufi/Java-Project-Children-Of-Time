@@ -809,11 +809,11 @@ public class GameEngine {
         while(true){
             if(choose == 1){
                 this.setCustomGame(false);
-                this.doCampaign();
+                break;
             }
             else if(choose == 2){
                 this.setCustomGame(true);
-                this.doCustomGame();
+                break;
             }
             else{
                 Display.printInEachLine("Wrong Number! Try Again!");

@@ -5,7 +5,7 @@ import java.util.Map;
  * Created by asus-pc on 5/6/2016.
  */
 public class Shop {
-    public static ArrayList<Item> listOfItems;
+    public static ArrayList<Item> listOfItems = new ArrayList<>();
 
     public static void showItems(){
         Display.printInEachLine("This This shop offers you ");

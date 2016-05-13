@@ -4,8 +4,8 @@ import java.util.ArrayList;
  * Created by Future on 5/6/2016.
  */
 public class HeroClassHandler extends Soldier{
-    private ArrayList<Perk> perks;
-    private ArrayList<Skill> skills;
+    private ArrayList<Perk> perks = new ArrayList<>();
+    private ArrayList<Skill> skills = new ArrayList<>();
     private double criticalHitChance;
     private double criticalHitChanceRatio;
     private double criticalHitDamage;

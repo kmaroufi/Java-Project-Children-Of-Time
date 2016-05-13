@@ -14,6 +14,6 @@ public class MainClass {
         childrenOfTime.setPlayer(new Player(playerName,15,40));
         Display.printInEachLine("Hi " + childrenOfTime.getPlayer().getName());
         childrenOfTime.chooseModeOfGame();
-//        childrenOfTime.play();
+        childrenOfTime.play();
     }
 }
