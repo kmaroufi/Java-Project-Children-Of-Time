@@ -12,6 +12,12 @@ public class Time {
         this.setNumberOfClashes(time.getNumberOfClashes());
     }
 
+    Time() {
+        setNumberOfClashes(0);
+        setNumberOfCycles(0);
+        setNumberOfTurns(0);
+    }
+
     public boolean isTimePassed() {
         if ((this.numberOfTurns < 1) && (this.numberOfCycles < 1) && (this.numberOfClashes < 1))
             return true;

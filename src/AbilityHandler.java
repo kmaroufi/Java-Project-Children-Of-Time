@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by asus-pc on 5/7/2016.
@@ -6,8 +7,6 @@ import java.util.ArrayList;
 public class AbilityHandler<T> {
     private String name;
     private String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.
-    private ArrayList<T> effectedSoldiers;
-    private ArrayList<T> relatedSoldiers;
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;
     private boolean isRandomSoldierSelecting;
@@ -19,17 +18,10 @@ public class AbilityHandler<T> {
     private boolean isEffectDuringAttack;
     private boolean hasCondition;
     private int[] costOfUpgrade;                //cost of it per Upgrade
+    private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
+    private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necess
 
     //---------------------------------------------------------------- Getter && Setters
-
-
-    public ArrayList<T> getEffectedSoldiers() {
-        return effectedSoldiers;
-    }
-
-    public void setEffectedSoldiers(ArrayList<T> effectedSoldiers) {
-        this.effectedSoldiers = effectedSoldiers;
-    }
 
     public String getName() {
         return name;
@@ -45,14 +37,6 @@ public class AbilityHandler<T> {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
-    }
-
-    public ArrayList<T> getRelatedSoldiers() {
-        return relatedSoldiers;
-    }
-
-    public void setRelatedSoldiers(ArrayList<T> relatedSoldiers) {
-        this.relatedSoldiers = relatedSoldiers;
     }
 
     public boolean isGlobal() {

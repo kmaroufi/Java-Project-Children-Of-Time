@@ -1,15 +1,18 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import static javafx.scene.input.KeyCode.T;
 
 /**
  * Created by asus-pc on 5/5/2016.
  */
 public class Skill<E> extends Ability{
-    public static Map<String, Skill> listOfSkills;
+    public static Map<String, Skill> listOfSkills = new HashMap<>();
     private ArrayList<Property> propertiesOfRelatedSoldiers;
     private Property propertiesOfUser;
-    protected Map<E, Time> mapOfEffectedSoldiers;
+    protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<>();
     private int nonTargetedEnemy;
     private boolean isRepeated;
     private Time timeOfEffecting;
@@ -24,6 +27,12 @@ public class Skill<E> extends Ability{
     private int requiredExperience;
 
     //---------------------------------------------------------------- Functions
+
+    Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
+
+    }
+
+
     public boolean isActivated() {
        return false;
     }

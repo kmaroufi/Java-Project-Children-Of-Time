@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 /**
  * Created by asus-pc on 5/6/2016.
@@ -49,7 +50,16 @@ public class GameEngine {
         Perk quickAsBunny = new Perk();                             //Supporter Class's Perk
         Perk magicLessons = new Perk();                             //Supporter Class's Perk
 
-        Skill overPoweredAttack = new Skill();                      //Eley's Skill
+        double[] tmp = {0,0,0};
+        double[] arr = {30,30,30};
+        PropertyHandler propertyHandler = new PropertyHandler("overPoweredAttack", 3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
+        Property<Hero> property = new Property<>(propertyHandler);
+        ArrayList<Property<Hero>> properties = new ArrayList<>();
+        properties.add(property);
+        ArrayList<String> blackList = new ArrayList<>();
+        blackList.add("Eley");
+        SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(), blackList, 0, true, false, 2, 50);
+        Skill overPoweredAttack = new Skill();                     //Eley's Skill
         Perk swirlingAttack = new Perk();                           //Eley's Perk
         Skill sacrifice = new Skill();                              //Chrome's Skill
         Perk criticalStrike = new Perk();                           //Chrome's Perk
