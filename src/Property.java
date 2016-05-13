@@ -10,9 +10,7 @@ public class Property<E> {
     private String fieldOfEffecting;
     private int currentGrade;
     private int numberOfUpgrades;
-
     private boolean isDependOnEffectedSoldier;
-
     private boolean isDependOnUserHero;
     private boolean isPermanently;
 
@@ -32,6 +30,10 @@ public class Property<E> {
     public Property(PropertyHandler propertyHandler) {
         setNumberOfUpgrades(propertyHandler.getNumberOfUpgrades());
         setName(propertyHandler.getName());
+        setCurrentGrade(0);
+        setDependOnEffectedSoldier(propertyHandler.isDependOnEffectedSoldier());
+        setDependOnUserHero(propertyHandler.isDependOnUserHero());
+        setPermanently(propertyHandler.isPermanently());
         setConstantProperty(propertyHandler.getConstantProperty());
         setAttackPowerCoefficient(propertyHandler.getAttackPowerCoefficient());
         setMaximumHealthCoefficient(propertyHandler.getMaximumHealthCoefficient());
@@ -294,4 +296,19 @@ public class Property<E> {
         this.valueOfEffectingOnEffectedSoldiers = valueOfEffectingOnEffectedSoldiers;
     }
 
+    public boolean isDependOnUserHero() {
+        return isDependOnUserHero;
+    }
+
+    public void setDependOnUserHero(boolean dependOnUserHero) {
+        isDependOnUserHero = dependOnUserHero;
+    }
+
+    public boolean isPermanently() {
+        return isPermanently;
+    }
+
+    public void setPermanently(boolean permanently) {
+        isPermanently = permanently;
+    }
 }

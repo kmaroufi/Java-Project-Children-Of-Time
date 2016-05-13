@@ -4,6 +4,10 @@
 public class PropertyHandler {
     private String name;
     private final int NumberOfUpgrades;
+    private boolean isDependOnEffectedSoldier;
+    private boolean isDependOnUserHero;
+    private boolean isPermanently;
+
     private double[] constantProperty ;
     private double[] attackPowerCoefficient;
     private double[] maximumHealthCoefficient;
@@ -26,10 +30,51 @@ public class PropertyHandler {
         this.magicRefillRateCoefficient = new double[this.NumberOfUpgrades];
     }
 
+    public PropertyHandler(String name, int numberOfUpgrades, boolean isDependOnEffectedSoldier, boolean isDependOnUserHero, boolean isPermanently, double[] constantProperty, double[] attackPowerCoefficient, double[] maximumHealthCoefficient, double[] maximumMagicCoefficient, double[] healthCoefficient, double[] magicCoefficient, double[] healthRefillRateCoefficient, double[] magicRefillRateCoefficient) {
+        this.name = name;
+        NumberOfUpgrades = numberOfUpgrades;
+        this.isDependOnEffectedSoldier = isDependOnEffectedSoldier;
+        this.isDependOnUserHero = isDependOnUserHero;
+        this.isPermanently = isPermanently;
+        this.constantProperty = constantProperty;
+        this.attackPowerCoefficient = attackPowerCoefficient;
+        this.maximumHealthCoefficient = maximumHealthCoefficient;
+        this.maximumMagicCoefficient = maximumMagicCoefficient;
+        this.healthCoefficient = healthCoefficient;
+        this.magicCoefficient = magicCoefficient;
+        this.healthRefillRateCoefficient = healthRefillRateCoefficient;
+        this.magicRefillRateCoefficient = magicRefillRateCoefficient;
+    }
+
     public PropertyHandler(){
         this.NumberOfUpgrades = 0;
     }
     //--------------------------------------------------------------- Getter && Setters
+
+
+    public boolean isDependOnEffectedSoldier() {
+        return isDependOnEffectedSoldier;
+    }
+
+    public void setDependOnEffectedSoldier(boolean dependOnEffectedSoldier) {
+        isDependOnEffectedSoldier = dependOnEffectedSoldier;
+    }
+
+    public boolean isDependOnUserHero() {
+        return isDependOnUserHero;
+    }
+
+    public void setDependOnUserHero(boolean dependOnUserHero) {
+        isDependOnUserHero = dependOnUserHero;
+    }
+
+    public boolean isPermanently() {
+        return isPermanently;
+    }
+
+    public void setPermanently(boolean permanently) {
+        isPermanently = permanently;
+    }
 
     public String getName() {
         return name;
