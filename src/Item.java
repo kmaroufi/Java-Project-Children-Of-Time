@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Item {
 
     private String name;
-    private String owner; // is this necessary?!
+    private String owner;
     private ArrayList<String> effectedHero;
     private int size;
     private boolean isGlobal;
@@ -25,8 +25,12 @@ public class Item {
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name){
+    public Item(String name,int size,int requiredEnergyPoint,int requiredMagicPoint,int cooldown){
         this.setName(name);
+        this.setSize(size);
+        this.setRequiredEnergyPoint(requiredEnergyPoint);
+        this.setRequiredMagicPoint(requiredMagicPoint);
+        this.setCooldown(cooldown);
     }
     //--------------------------------------------------- Functions
 
@@ -34,8 +38,12 @@ public class Item {
         //TODO
     }
 
-    public void useItem() {
-        //TODO
+    public void useItem(String owner) {
+        for(int i = 0;i < this.effectedHero.size();i++){
+            if(this.effectedHero.get(i).equals(owner)){
+                //USE YOUR SELF!
+            }
+        }
     }
     //--------------------------------------------------- Getter && Setters
 
