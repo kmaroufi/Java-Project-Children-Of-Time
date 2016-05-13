@@ -173,7 +173,11 @@ public class GameEngine {
             gradeOfNecessaryAbilities.put(2, tmpMap);
             tmpMap.put("Fight Training", 3);
             gradeOfNecessaryAbilities.put(3, tmpMap);
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: N=1.2 for 2 xp points, needs Fight training upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: N=1.4 for 4 xp points, needs Fight training upgrade 2";
+            upgradeDescription[2] = "Upgrade 3: N=1.6 for 6 xp points, needs Fight training upgrade 3";
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription);
             Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Fight Training", overPoweredAttack);
         }
@@ -203,7 +207,11 @@ public class GameEngine {
             gradeOfNecessaryAbilities.put(2, tmpMap);
             tmpMap.put("Work out", 3);
             gradeOfNecessaryAbilities.put(3, tmpMap);
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: H=40 for 2 xp points, needs Work out upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: H=50 for 3 xp points, needs Work out upgrade 2";
+            upgradeDescription[2] = "Upgrade 3: H=60 for 4 xp points, needs Work out upgrade 3";
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription);
             Skill WorkOut = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Work out", WorkOut);
         }
@@ -229,7 +237,11 @@ public class GameEngine {
             gradeOfNecessaryAbilities.put(2, tmpMap);
             tmpMap.put("Magic lessons", 2);
             gradeOfNecessaryAbilities.put(3, tmpMap);
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: H=100 for 2 xp points and takes 1 turn to cool down";
+            upgradeDescription[1] = "Upgrade 2: H=150 for 3 xp points, takes 1 turn to cool down and needs Magic lessons upgrade 1";
+            upgradeDescription[2] = "Upgrade 3: H=150 for 5 xp points, cools down instantly and needs Magic lessons upgrade 2";
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription);
             Skill MagicLessons = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("MagicLessons", MagicLessons);
         }
@@ -258,7 +270,11 @@ public class GameEngine {
             gradeOfNecessaryAbilities.put(2, tmpMap);
             tmpMap.put("Quick as a bunny", 3);
             gradeOfNecessaryAbilities.put(3, tmpMap);
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: takes 2 energy points and has a 1 turn cooldown for 2 xp points, needs Quick as a bunny upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: takes 2 energy points and cools down instantly for 3 xp points, needs Quick as a bunny upgrade 2";
+            upgradeDescription[2] = "Upgrade 3 takes 1 energy point and cools down instantly for 5 xp points, needs Quick as a bunny upgrade 3";
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription);
             Skill Caretaker = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Caretaker", Caretaker);
         }
@@ -285,7 +301,11 @@ public class GameEngine {
 //            gradeOfNecessaryAbilities.put(2, tmpMap);
 //            tmpMap.put("Quick as a bunny", 3);
 //            gradeOfNecessaryAbilities.put(3, tmpMap);
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: A=20 for 2 xp points and takes 1 turn to cool down";
+            upgradeDescription[1] = "Upgrade 2: A=30 for 3 xp points and takes 1 turn to cool down";
+            upgradeDescription[2] = "Upgrade 3: A=30 for 5 xp points and cools down instantly";
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription);
             Skill Boost = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Boost", Boost);
         }
@@ -312,7 +332,11 @@ public class GameEngine {
             gradeOfNecessaryAbilities.put(2, tmpMap);
             tmpMap.put("magic lessons", 3);
             gradeOfNecessaryAbilities.put(3, tmpMap);
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: M=50 for 2 xp points and takes 1 turn to cool down, needs magic lessons upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: M=80 for 3 xp points and takes 1 turn to cool down, needs magic lessons upgrade 2";
+            upgradeDescription[2] = "Upgrade 3: M=80 for 4 xp points and cools down instantly, needs magic lessons upgrade 3";
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription);
             Skill ManaBeam = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Mana beam", ManaBeam);
         }

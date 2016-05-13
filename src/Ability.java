@@ -21,6 +21,7 @@ public abstract class Ability<T> {
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean hasCondition;
     private int[] costOfUpgrade;
+    private String[] upgradeDescription;
     private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
     private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
     public static Map<String, String> listOfAbilities;
