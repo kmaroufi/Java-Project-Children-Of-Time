@@ -37,7 +37,7 @@ public class HeroClassHandler extends Soldier{
         this.setCurrentHealth(this.getMaximumHealth());
         this.setName(name);
         this.setMaximumMagic(maximumMagic);
-        this.setEnergyPoint(energyPoint);
+        this.setMaximumEnergyPoint(energyPoint);
         this.setInventorySize(inventorySize);
     }
     //---------------------------------------------------------------- Functions
