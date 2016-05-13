@@ -100,6 +100,62 @@ public class Property<E> {
             }
         }
         String type = field.getGenericType().toString();
+        Class classOfSoldier2 = relatedSoldier.getClass();
+        Field field2 = null;
+        if ("maximumHealth".equals("currentHealth")) {
+            cond = 0;
+            try {
+                field2 = classOfSoldier2.getDeclaredField("maximumHealth");
+            } catch (NoSuchFieldException e) {
+                cond = 1;
+            }
+            if (cond == 1) {
+                cond = 0;
+                classOfSoldier2 = classOfSoldier2.getSuperclass();
+                try {
+                    field2 = classOfSoldier2.getDeclaredField("maximumHealth");
+                } catch (NoSuchFieldException e) {
+                    cond = 1;
+                }
+            }
+            if (cond == 1) {
+                cond = 0;
+                classOfSoldier2 = classOfSoldier2.getSuperclass().getSuperclass();
+                try {
+                    field2 = classOfSoldier2.getDeclaredField("maximumHealth");
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                    cond = 1;
+                }
+            }
+        }
+        if ("maximumMagic".equals("currentMagic")) {
+            cond = 0;
+            try {
+                field2 = classOfSoldier2.getDeclaredField("maximumMagic");
+            } catch (NoSuchFieldException e) {
+                cond = 1;
+            }
+            if (cond == 1) {
+                cond = 0;
+                classOfSoldier2 = classOfSoldier2.getSuperclass();
+                try {
+                    field2 = classOfSoldier2.getDeclaredField("maximumMagic");
+                } catch (NoSuchFieldException e) {
+                    cond = 1;
+                }
+            }
+            if (cond == 1) {
+                cond = 0;
+                classOfSoldier2 = classOfSoldier2.getSuperclass().getSuperclass();
+                try {
+                    field2 = classOfSoldier2.getDeclaredField("maximumMagic");
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                    cond = 1;
+                }
+            }
+        }
         try {
             if (this.isDependOnEffectedSoldier)
                 this.calculateProperty(relatedSoldier);
@@ -109,20 +165,33 @@ public class Property<E> {
             else {
                 this.calculateProperty(owner);
             }
+            if (type.equals("int")) {
+                if (this.name.equals("currentHealth")) {
+                    if (((Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((Integer)field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                }
+                if (this.name.equals("maximumMagic")) {
+                    if (((Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((Integer)field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                }
+                field.set(relatedSoldier, (Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
+            }
+            if (type.equals("double")) {
+                if (this.name.equals("currentHealth")) {
+                    if (((Double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((Double) field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                }
+                if (this.name.equals("maximumMagic")) {
+                    if (((Double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((Double) field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                }
+                field.set(relatedSoldier, (Double) field.get(relatedSoldier) + this.totalEffectOnProperty);
+            }
             if (this.valueOfEffectingOnEffectedSoldiers.containsKey(relatedSoldier)) {
                 this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier) + this.totalEffectOnProperty);
             }
             else {
                 this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.totalEffectOnProperty);
-            }
-            if (type.equals("int")) {
-                field.set(relatedSoldier, (Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
-            }
-            if (type.equals("double")) {
-                field.set(relatedSoldier, (Double) field.get(relatedSoldier) + this.totalEffectOnProperty);
-            }
-            if (type.equals("float")) {
-                field.set(relatedSoldier, (Float) field.get(relatedSoldier) + this.totalEffectOnProperty.floatValue());
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
