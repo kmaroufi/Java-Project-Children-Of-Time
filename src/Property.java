@@ -11,7 +11,6 @@ public class Property<E> {
     private String fieldOfEffecting;
     private int currentGrade;
     private boolean isDependOnEffectedSoldier;
-
     private double[] constantProperty;
     private double[] attackPowerCoefficient;
     private double[] maximumHealthCoefficient;
@@ -23,9 +22,9 @@ public class Property<E> {
 
     private Map<E, Double> valueOfEffectingOnEffectedSoldiers;
 
-    //--------------------------------------------------------------    Constructor
+    //-------------------------------------------------------------- Constructors
 
-    public Property(PropertyHandler propertyHandler){
+    public Property(PropertyHandler propertyHandler) {
         setName(propertyHandler.getName());
         setConstantProperty(propertyHandler.getConstantProperty());
         setAttackPowerCoefficient(propertyHandler.getAttackPowerCoefficient());
@@ -37,9 +36,117 @@ public class Property<E> {
         setMagicRefillRateCoefficient(propertyHandler.getMagicRefillRateCoefficient());
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
+
+    //---------------------------------------    Functions
+
+    private <T> void calculateProperty(T relatedSoldier) {
+        this.totalEffectOnProperty += this.constantProperty[this.currentGrade];
+        if (relatedSoldier instanceof Hero) {
+            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getAttackPower();
+            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMaximumHealth();
+            this.totalEffectOnProperty += this.maximumMagicCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMaximumMagic();
+            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getCurrentHealth();
+            this.totalEffectOnProperty += this.magicCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getCurrentMagic();
+            this.totalEffectOnProperty += this.healthRefillRateCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getHealthRefillRate();
+            this.totalEffectOnProperty += this.magicRefillRateCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMagicRefillRate();
+            return;
+        }
+        if (relatedSoldier instanceof Enemy) {
+            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getAttackPower();
+            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getMaximumHealth();
+            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getCurrentHealth();
+            return;
+        }
+    }
+
+    public <T> void effect(T relatedSoldier, Hero owner) {
+        Class classOfSoldier = relatedSoldier.getClass();
+        Field field = null;
+        int cond = 0;
+        try {
+            field = classOfSoldier.getDeclaredField(this.name);
+        } catch (NoSuchFieldException e) {
+            cond = 1;
+        }
+        if (cond == 1) {
+            cond = 0;
+            classOfSoldier = classOfSoldier.getSuperclass();
+            try {
+                field = classOfSoldier.getDeclaredField(this.name);
+            } catch (NoSuchFieldException e) {
+                cond = 1;
+            }
+        }
+        if (cond == 1) {
+            cond = 0;
+            classOfSoldier = classOfSoldier.getSuperclass().getSuperclass();
+            try {
+                field = classOfSoldier.getDeclaredField(this.name);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+                cond = 1;
+            }
+        }
+        String type = field.getGenericType().toString();
+        try {
+            if (this.isDependOnEffectedSoldier)
+                this.calculateProperty(relatedSoldier);
+            else {
+                this.calculateProperty(owner);
+            }
+            this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.totalEffectOnProperty);
+            if (type.equals("int")) {
+                field.set(relatedSoldier, (Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
+            }
+            if (type.equals("double")) {
+                field.set(relatedSoldier, (Double) field.get(relatedSoldier) + this.totalEffectOnProperty);
+            }
+            if (type.equals("float")) {
+                field.set(relatedSoldier, (Float) field.get(relatedSoldier) + this.totalEffectOnProperty.floatValue());
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public <T> void removeEffect(T relatedSoldier) {
+        Class classOfSoldier = relatedSoldier.getClass();
+        Field field = null;
+        int cond = 0;
+        try {
+            field = classOfSoldier.getDeclaredField(this.name);
+        } catch (NoSuchFieldException e) {
+            cond = 1;
+        }
+        if (cond == 1) {
+            cond = 0;
+            classOfSoldier = classOfSoldier.getSuperclass();
+            try {
+                field = classOfSoldier.getDeclaredField(this.name);
+            } catch (NoSuchFieldException e) {
+                cond = 1;
+            }
+        }
+        String type = field.getGenericType().toString();
+        try {
+            if (type.equals("int")) {
+                field.set(relatedSoldier, (Integer) field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).intValue());
+            }
+            if (type.equals("double")) {
+                field.set(relatedSoldier, (Double) field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier));
+            }
+            if (type.equals("float")) {
+                field.set(relatedSoldier, (Float) field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).floatValue());
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        this.valueOfEffectingOnEffectedSoldiers.remove(relatedSoldier);
+    }
+
 
     //--------------------------------------------------------------      Getter & Setter
 
@@ -119,111 +226,40 @@ public class Property<E> {
         this.magicRefillRateCoefficient = magicRefillRateCoefficient;
     }
 
-    //---------------------------------------    Functions
-
-    private <T> void calculateProperty(T relatedSoldier) {
-        this.totalEffectOnProperty += this.constantProperty[this.currentGrade];
-        if (relatedSoldier instanceof Hero) {
-            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade] * ((Hero)relatedSoldier).getAttackPower();
-            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMaximumHealth();
-            this.totalEffectOnProperty += this.maximumMagicCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMaximumMagic();
-            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getCurrentHealth();
-            this.totalEffectOnProperty += this.magicCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getCurrentMagic();
-            this.totalEffectOnProperty += this.healthRefillRateCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getHealthRefillRate();
-            this.totalEffectOnProperty += this.magicRefillRateCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMagicRefillRate();
-            return;
-        }
-        if (relatedSoldier instanceof Enemy) {
-            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade] * ((Enemy)relatedSoldier).getAttackPower();
-            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getMaximumHealth();
-            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getCurrentHealth();
-            return;
-        }
+    public int getCurrentGrade() {
+        return currentGrade;
     }
 
-    public <T> void effect(T relatedSoldier, Hero owner) {
-        Class classOfSoldier = relatedSoldier.getClass();
-        Field field = null;
-        int cond = 0;
-        try {
-            field = classOfSoldier.getDeclaredField(this.name);
-        } catch (NoSuchFieldException e) {
-            cond = 1;
-        }
-        if (cond == 1) {
-            cond = 0;
-            classOfSoldier = classOfSoldier.getSuperclass();
-            try {
-                field = classOfSoldier.getDeclaredField(this.name);
-            } catch (NoSuchFieldException e) {
-                cond = 1;
-            }
-        }
-        if (cond == 1) {
-            cond = 0;
-            classOfSoldier = classOfSoldier.getSuperclass().getSuperclass();
-            try {
-                field = classOfSoldier.getDeclaredField(this.name);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-                cond = 1;
-            }
-        }
-        String type = field.getGenericType().toString();
-        try {
-            if (this.isDependOnEffectedSoldier)
-                this.calculateProperty(relatedSoldier);
-            else {
-                this.calculateProperty(owner);
-            }
-            this.valueOfEffectingOnEffectedSoldiers.put((E)relatedSoldier, this.totalEffectOnProperty);
-            if (type.equals("int")) {
-                field.set(relatedSoldier, (int)field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
-            }
-            if (type.equals("double")) {
-                field.set(relatedSoldier, (double)field.get(relatedSoldier) + this.totalEffectOnProperty);
-            }
-            if (type.equals("float")) {
-                field.set(relatedSoldier, (float)field.get(relatedSoldier) + this.totalEffectOnProperty.floatValue());
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    public void setCurrentGrade(int currentGrade) {
+        this.currentGrade = currentGrade;
     }
 
-    public <T> void removeEffect(T relatedSoldier) {
-        Class classOfSoldier = relatedSoldier.getClass();
-        Field field = null;
-        int cond = 0;
-        try {
-            field = classOfSoldier.getDeclaredField(this.name);
-        } catch (NoSuchFieldException e) {
-            cond = 1;
-        }
-        if (cond == 1) {
-            cond = 0;
-            classOfSoldier = classOfSoldier.getSuperclass();
-            try {
-                field = classOfSoldier.getDeclaredField(this.name);
-            } catch (NoSuchFieldException e) {
-                cond = 1;
-            }
-        }
-        String type = field.getGenericType().toString();
-        try {
-            if (type.equals("int")) {
-                field.set(relatedSoldier, (int)field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).intValue());
-            }
-            if (type.equals("double")) {
-                field.set(relatedSoldier, (double)field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier));
-            }
-            if (type.equals("float")) {
-                field.set(relatedSoldier, (float)field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).floatValue());
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        this.valueOfEffectingOnEffectedSoldiers.remove(relatedSoldier);
+    public void setTotalEffectOnProperty(Double totalEffectOnProperty) {
+        this.totalEffectOnProperty = totalEffectOnProperty;
+    }
+
+    public String getFieldOfEffecting() {
+        return fieldOfEffecting;
+    }
+
+    public void setFieldOfEffecting(String fieldOfEffecting) {
+        this.fieldOfEffecting = fieldOfEffecting;
+    }
+
+    public boolean isDependOnEffectedSoldier() {
+        return isDependOnEffectedSoldier;
+    }
+
+    public void setDependOnEffectedSoldier(boolean dependOnEffectedSoldier) {
+        isDependOnEffectedSoldier = dependOnEffectedSoldier;
+    }
+
+    public Map<E, Double> getValueOfEffectingOnEffectedSoldiers() {
+        return valueOfEffectingOnEffectedSoldiers;
+    }
+
+    public void setValueOfEffectingOnEffectedSoldiers(Map<E, Double> valueOfEffectingOnEffectedSoldiers) {
+        this.valueOfEffectingOnEffectedSoldiers = valueOfEffectingOnEffectedSoldiers;
     }
 
 }

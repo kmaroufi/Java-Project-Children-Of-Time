@@ -13,7 +13,7 @@ public class Skill extends Ability{
     private int remainingTime;
     private int cooldown;
     private int remainingCooldown;
-    private boolean casStackUp;
+    private boolean casStackUp;                                 // What is this Shit?
     private boolean isUsed;
     private int requiredEnergyPoint;
     private int requiredMagicPoint;

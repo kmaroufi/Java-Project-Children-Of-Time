@@ -25,6 +25,7 @@ public class PropertyHandler {
         this.healthRefillRateCoefficient = new double[this.NumberOfUpgrades];
         this.magicRefillRateCoefficient = new double[this.NumberOfUpgrades];
     }
+
     public PropertyHandler(){
         this.NumberOfUpgrades = 0;
     }
