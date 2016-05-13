@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 /**
  * Created by asus-pc on 5/3/2016.
  */
-public class Main {
+public class MainClass {
     public static GameEngine childrenOfTime = new GameEngine();
     public static void main(String[] args) {
         Display.printInEachLine("Hi,Welcome!");
@@ -16,6 +16,5 @@ public class Main {
         childrenOfTime.chooseModeOfGame();
         childrenOfTime.chooseLevelOfGame();
         childrenOfTime.play();
-
     }
 }
