@@ -274,10 +274,12 @@ public class GameEngine {
                                             Display.printInEachLine("This ability cannot be upgraded anymore");
                                             break;
                                         }
-                                        if(perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()){                            //Kamyar
+                                        if(perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()){
                                             Display.printInEachLine("Your experience is insufficient");
                                         }
-                                        hero.upgradeAbility(this.player,perk.getName());                        // kamyar Decrease XP!!!!!!!!!!!!!!!!!!!!!!
+                                        hero.upgradeAbility(this.player,perk.getName());
+                                        this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
+                                        perk.setCurrentGrade(perk.getCurrentGrade() + 1);
                                         Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
                                         break;
                                     }
