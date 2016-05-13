@@ -71,7 +71,7 @@ public class HeroClass extends Soldier{
         this.setMagicRefillRate(heroClassHandler.getMagicRefillRate());
         this.setMaximumHealth(heroClassHandler.getMaximumHealth());
         this.setCurrentMagic(this.getMaximumMagic());
-        this.setCurrentEnergyPoint(this.getCurrentEnergyPoint());
+        this.setCurrentEnergyPoint(this.getMaximumEnergyPoint());
         this.setCurrentHealth(this.getMaximumHealth());
         this.setAttackPower(heroClassHandler.getAttackPower());
     }
