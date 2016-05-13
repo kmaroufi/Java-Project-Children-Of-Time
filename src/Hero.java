@@ -106,6 +106,22 @@ public class Hero extends HeroClass {
         }
     }
 
+    public boolean hasPerk(Perk perk){
+        for(int i = 0;i < this.perks.size();i++){
+            if(perk.equals(this.perks.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void showItems(){
+        Display.printf(this.name + " has ");
+        for(Item item : this.items){
+            Display.printInEachLine(item.getName() + " worth " + item.getRequiredMoney()/2);
+        }
+    }
+
     //------------------------------------------ Getter && Setters
 
     public String getName() {

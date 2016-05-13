@@ -7,6 +7,13 @@ import java.util.Map;
 public class Shop {
     public static ArrayList<Item> listOfItems;
 
+    public static void showItems(){
+        Display.printInEachLine("This This shop offers you ");
+        for(Item item : listOfItems){
+            Display.printInEachLine(item.getName() + " for " + item.getRequiredMoney() + " dollars ");
+        }
+    }
+
     public void sellItemToHero(String itemName) {                                       // hero buys an item
         for(int i = 0;i < this.listOfItems.size();i++){
             if(this.listOfItems.get(i).getName().equals(itemName)){

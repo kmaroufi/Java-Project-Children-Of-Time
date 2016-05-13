@@ -45,7 +45,12 @@ public class Skill extends Ability{
         this.relatedSoldiers.add(hero);
     }
 
-
+    public boolean equals(Skill skill){
+        if(this.name.equals(skill.getName())){
+            return true;
+        }
+        return false;
+    }
 
     public void choosingRelatedSoldiers() {
         this.relatedSoldiers.clear();

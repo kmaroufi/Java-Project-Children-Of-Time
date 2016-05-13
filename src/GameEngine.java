@@ -11,6 +11,7 @@ public class GameEngine {
     public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
     public static ArrayList<Skill> listOfSkills = new ArrayList<Skill>();
     public static ArrayList<Perk> listOfPerks = new ArrayList<Perk>();
+    public static ArrayList<Shop> shops = new ArrayList<Shop>();
     private int NumberOfBattle;                     // which battle we are in(1-2-3-4-5)
     private String levelOfGame;                     // level of Game(Easy-Medium-Hard)
 
@@ -165,8 +166,38 @@ public class GameEngine {
             Display.printInEachLine("#######################################");
             Display.printInEachLine("Your current experience is : " + this.player.getXp());
             Display.printInEachLine("#######################################");
+            Shop.showItems();
             while(true){
                 String command = Display.getString();
+                if(command.contains("Acquire ")){     //(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
+
+                    for(Perk perk: this.listOfPerks){
+                        if(command.contains("Acquire " + perk.getName() + " for ")){
+                            for(Hero hero : this.listOfHeroes){
+                                if(command.equalsIgnoreCase("Acquire " + perk.getName() + " for " + hero.getName())){
+                                    if(hero.hasPerk(perk)){
+                                        //if getXP was less than perks
+                                        if(perk.getCurrentGrade() == perk.getNumberOfGrades()){
+                                            Display.printInEachLine("This ability cannot be upgraded anymore");
+                                            break;
+                                        }
+                                        if(/*perk's xp >> player's xp*/){                            //Kamyar
+                                            Display.printInEachLine("Your experience is insufficient");
+                                        }
+                                        hero.upgradeAbility(perk.getName());                        // kamyar Decrease XP!!!!!!!!!!!!!!!!!!!!!!
+                                        Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                        break;
+                                    }
+                                    else{
+                                        hero.getPerks().add(perk);
+                                        Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 if(command.equals("Shop!")){                // Correct it!
                     // buy from shop
                     //if buy or sell                    hasBoughtInShop = true;

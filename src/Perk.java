@@ -20,7 +20,12 @@ public class Perk<E> extends Ability{
     }
 
     //---------------------------------------------------------- Functions
-
+    public boolean equals(Perk perk){
+        if(perk.getName().equals(this.name)){
+            return true;
+        }
+        return false;
+    }
 
     private Condition validCondition(E relatedSoldier) {
         for (Condition condition: this.listOfCondition) {

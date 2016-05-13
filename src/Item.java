@@ -18,6 +18,7 @@ public class Item {
     private int remainingTimeOfUsed;
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
+    private double requiredMoney;
     private int cooldown;
 
     private ArrayList<Property> properties;
@@ -79,6 +80,13 @@ public class Item {
         this.cooldown = cooldown;
     }
 
+    public double getRequiredMoney() {
+        return requiredMoney;
+    }
+
+    public void setRequiredMoney(double requiredMoney) {
+        this.requiredMoney = requiredMoney;
+    }
 
     public String getName() {
         return name;
