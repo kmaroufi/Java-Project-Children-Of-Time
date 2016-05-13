@@ -183,6 +183,7 @@ public class GameEngine {
         this.setNumberOfBattle(1);                                  //Number of battle
 
         this.creatingDefaultSkills();
+        this.creatingDefaultPerks();
 
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
