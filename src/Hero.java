@@ -124,9 +124,9 @@ public class Hero extends HeroClass {
     }
 
     public void showItems(){
-        Display.printf(this.name + " has ");
+        Display.printInEachLine(this.name + " has :");
         for(Item item : this.items){
-            Display.printf(item.getName() + " worth " + (item.getRequiredMoney()/2.0) + " dollars ,");
+            Display.printInEachLine(item.getName() + " worth " + (item.getRequiredMoney()/2.0) + " dollars ,");
         }
     }
 

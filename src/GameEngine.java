@@ -492,7 +492,7 @@ public class GameEngine {
     public void heroesAnnouncement(){
         this.showHeroTeamDescription();
         while(true) {
-            Display.printInEachLine("Any Question?(If no type 'Next'");
+            Display.printInEachLine("Any Question?(If no type 'Next')");
             String command = Display.getString();
             if (command.equalsIgnoreCase("next")) {
                 return;
@@ -509,7 +509,7 @@ public class GameEngine {
     public void enemiesAnnouncement(){
         this.showEnemyTeamDescription();
         while(true) {
-            Display.printInEachLine("Any Question?(If no type 'Next'");
+            Display.printInEachLine("Any Question?(If no type 'Next')");
             String command = Display.getString();
             if (command.equalsIgnoreCase("next")) {
                 return;
