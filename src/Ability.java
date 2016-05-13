@@ -7,6 +7,8 @@ import java.util.Random;
  */
 public abstract class Ability<T> {
 
+    public static Map<String, String> listOfAbilities;
+
     protected String name;
     protected String ownerName;
     protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
@@ -15,16 +17,16 @@ public abstract class Ability<T> {
     protected boolean hasEffectedOnEnemy;
     protected boolean isRandomSoldierSelecting;
     protected int numberOfRelatedSoldiers;
-    protected String description;
     private int numberOfGrades;
     protected int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean hasCondition;
     private int[] costOfUpgrade;
-    private String[] upgradeDescription;
     private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
     private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
-    public static Map<String, String> listOfAbilities;
+    private String[] upgradeDescription;
+    protected String description;
+
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
         this.setName(abilityHandler.getName());
@@ -40,6 +42,8 @@ public abstract class Ability<T> {
         this.setCostOfUpgrade(abilityHandler.getCostOfUpgrade());
         this.setNameOfNecessaryAbilities(abilityHandler.getNameOfNecessaryAbilities());
         this.setGradeOfNecessaryAbilities(abilityHandler.getGradeOfNecessaryAbilities());
+        this.setUpgradeDescription(abilityHandler.getUpgradeDescription());
+        this.setDescription(abilityHandler.getDescription());
     }
 
 
@@ -72,6 +76,14 @@ public abstract class Ability<T> {
 
     //-------------------------------------------------------- Getter And Setters
 
+
+    public String[] getUpgradeDescription() {
+        return upgradeDescription;
+    }
+
+    public void setUpgradeDescription(String[] upgradeDescription) {
+        this.upgradeDescription = upgradeDescription;
+    }
 
     public Map<Integer, ArrayList<String>> getNameOfNecessaryAbilities() {
         return nameOfNecessaryAbilities;
