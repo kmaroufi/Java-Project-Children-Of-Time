@@ -104,7 +104,7 @@ public class Skill<E> extends Ability{
     public void choosingRelatedSoldiers() {
         this.relatedSoldiers.clear();
         if (this.hasEffectedOnEnemy) {
-            if (this.numberOfRelatedSoldiers == GameEngine.listOfEnemies.size())
+            if (this.numberOfRelatedSoldiers == -5)
                 this.relatedSoldiers.addAll(GameEngine.listOfEnemies);
             else if (this.isRandomSoldierSelecting) {
                 ArrayList<Enemy> enemies = new ArrayList<Enemy>();

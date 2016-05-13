@@ -37,6 +37,10 @@ public class AbilityHandler<T> {
         this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
     }
 
+    public AbilityHandler() {
+
+    }
+
 
     //---------------------------------------------------------------- Getter && Setters
 

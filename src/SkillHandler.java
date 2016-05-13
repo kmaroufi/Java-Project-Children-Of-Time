@@ -32,6 +32,9 @@ public class SkillHandler<T> {
         this.requiredMagicPoint = requiredMagicPoint;
     }
 
+    public SkillHandler() {
+
+    }
 
     //----------------------------------------         Getter & Setter!
 

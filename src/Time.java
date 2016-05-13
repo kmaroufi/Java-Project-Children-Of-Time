@@ -18,6 +18,12 @@ public class Time {
         setNumberOfTurns(0);
     }
 
+    public Time(int numberOfTurns, int numberOfCycles, int numberOfClashes) {
+        this.numberOfTurns = numberOfTurns;
+        this.numberOfCycles = numberOfCycles;
+        this.numberOfClashes = numberOfClashes;
+    }
+
     public boolean isTimePassed() {
         if ((this.numberOfTurns < 1) && (this.numberOfCycles < 1) && (this.numberOfClashes < 1))
             return true;
