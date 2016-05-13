@@ -472,7 +472,7 @@ public class GameEngine {
     }
 
     public void doCustomGame(){
-        this.addDefaultAttributes("");                              // player's name
+        this.addDefaultAttributes();                              // player's name
         this.setCustomGame(true);
         while (true){
             //Welcome To Our Adding Factory
@@ -616,7 +616,7 @@ public class GameEngine {
                     }
                     if(command.contains(hero.getName() + " use ")){
                         for(Item item: Shop.listOfItems){
-                            if(command.contains(hero.getName() + " use " + item.getName() + " on "){
+                            if(command.contains(hero.getName() + " use " + item.getName() + " on ")){
                                 if(!hero.hasItem(item)){
                                     Display.printInEachLine("You don’t have this item");
                                     break;
