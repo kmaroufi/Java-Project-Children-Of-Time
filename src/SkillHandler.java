@@ -10,15 +10,15 @@ public class SkillHandler<T> {
     private boolean isRepeated;
     private Time timeOfEffecting;
     private ArrayList<String> blackList;
-    private int cooldown;
+    private int[] cooldown;
     private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private boolean canStackUp;                                 // What is this Shit?
-    private int requiredEnergyPoint;
-    private int requiredMagicPoint;
+    private int[] requiredEnergyPoint;
+    private int[] requiredMagicPoint;
 
     //----------------------------------------          Constructor
 
-    public SkillHandler(ArrayList<Property<T>> propertiesOfRelatedSoldiers, Property propertiesOfUser, int nonTargetedEnemy, boolean isRepeated, Time timeOfEffecting, ArrayList<String> blackList, int cooldown, boolean isDependsRelatedSoldiersSelectingOnPlayer, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint) {
+    public SkillHandler(ArrayList<Property<T>> propertiesOfRelatedSoldiers, Property propertiesOfUser, int nonTargetedEnemy, boolean isRepeated, Time timeOfEffecting, ArrayList<String> blackList, int[] cooldown, boolean isDependsRelatedSoldiersSelectingOnPlayer, boolean canStackUp, int[] requiredEnergyPoint, int[] requiredMagicPoint) {
         this.propertiesOfRelatedSoldiers = propertiesOfRelatedSoldiers;
         this.propertiesOfUser = propertiesOfUser;
         this.nonTargetedEnemy = nonTargetedEnemy;
@@ -84,11 +84,11 @@ public class SkillHandler<T> {
         this.blackList = blackList;
     }
 
-    public int getCooldown() {
+    public int[] getCooldown() {
         return cooldown;
     }
 
-    public void setCooldown(int cooldown) {
+    public void setCooldown(int[] cooldown) {
         this.cooldown = cooldown;
     }
 
@@ -108,19 +108,19 @@ public class SkillHandler<T> {
         this.canStackUp = canStackUp;
     }
 
-    public int getRequiredEnergyPoint() {
+    public int[] getRequiredEnergyPoint() {
         return requiredEnergyPoint;
     }
 
-    public void setRequiredEnergyPoint(int requiredEnergyPoint) {
+    public void setRequiredEnergyPoint(int[] requiredEnergyPoint) {
         this.requiredEnergyPoint = requiredEnergyPoint;
     }
 
-    public int getRequiredMagicPoint() {
+    public int[] getRequiredMagicPoint() {
         return requiredMagicPoint;
     }
 
-    public void setRequiredMagicPoint(int requiredMagicPoint) {
+    public void setRequiredMagicPoint(int[] requiredMagicPoint) {
         this.requiredMagicPoint = requiredMagicPoint;
     }
 

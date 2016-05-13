@@ -12,7 +12,6 @@ public class AbilityHandler<T> {
     private boolean isRandomSoldierSelecting;
     private int numberOfRelatedSoldiers;                // soldiers under effect of this ability
     private int numberOfGrades;
-    private int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean isPermanently;
     private boolean isEffectDuringAttack;
@@ -21,7 +20,44 @@ public class AbilityHandler<T> {
     private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
     private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necess
 
+    //-----------------------------------------------          Constructor
+
+    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isPermanently, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities) {
+        this.name = name;
+        this.ownerName = ownerName;
+        this.isGlobal = isGlobal;
+        this.hasEffectedOnEnemy = hasEffectedOnEnemy;
+        this.isRandomSoldierSelecting = isRandomSoldierSelecting;
+        this.numberOfRelatedSoldiers = numberOfRelatedSoldiers;
+        this.numberOfGrades = numberOfGrades;
+        this.fieldOfEffecting = fieldOfEffecting;
+        this.isPermanently = isPermanently;
+        this.isEffectDuringAttack = isEffectDuringAttack;
+        this.hasCondition = hasCondition;
+        this.costOfUpgrade = costOfUpgrade;
+        this.nameOfNecessaryAbilities = nameOfNecessaryAbilities;
+        this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
+    }
+
+
     //---------------------------------------------------------------- Getter && Setters
+
+
+    public Map<Integer, ArrayList<String>> getNameOfNecessaryAbilities() {
+        return nameOfNecessaryAbilities;
+    }
+
+    public void setNameOfNecessaryAbilities(Map<Integer, ArrayList<String>> nameOfNecessaryAbilities) {
+        this.nameOfNecessaryAbilities = nameOfNecessaryAbilities;
+    }
+
+    public Map<Integer, Map<String, Integer>> getGradeOfNecessaryAbilities() {
+        return gradeOfNecessaryAbilities;
+    }
+
+    public void setGradeOfNecessaryAbilities(Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities) {
+        this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
+    }
 
     public String getName() {
         return name;
@@ -77,14 +113,6 @@ public class AbilityHandler<T> {
 
     public void setNumberOfGrades(int numberOfGrades) {
         this.numberOfGrades = numberOfGrades;
-    }
-
-    public int getCurrentGrade() {
-        return currentGrade;
-    }
-
-    public void setCurrentGrade(int currentGrade) {
-        this.currentGrade = currentGrade;
     }
 
     public String getFieldOfEffecting() {

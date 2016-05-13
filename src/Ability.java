@@ -17,7 +17,7 @@ public abstract class Ability<T> {
     protected int numberOfRelatedSoldiers;
     protected String description;
     private int numberOfGrades;
-    private int currentGrade;
+    protected int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean hasCondition;
     private int[] costOfUpgrade;
@@ -26,9 +26,13 @@ public abstract class Ability<T> {
     public static Map<String, String> listOfAbilities;
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
+        this.setHasEffectedOnEnemy(abilityHandler.isHasEffectedOnEnemy());
+        this.setNameOfNecessaryAbilities(abilityHandler.getNameOfNecessaryAbilities());
+        this.setGradeOfNecessaryAbilities(abilityHandler.getGradeOfNecessaryAbilities());
+        this.setRandomSoldierSelecting(abilityHandler.isRandomSoldierSelecting());
         this.setName(abilityHandler.getName());
         this.setCostOfUpgrade(abilityHandler.getCostOfUpgrade());
-        this.setCurrentGrade(abilityHandler.getCurrentGrade());
+        this.setCurrentGrade(0);
         this.setFieldOfEffecting(abilityHandler.getFieldOfEffecting());
         this.setGlobal(abilityHandler.isGlobal());
         this.setHasCondition(abilityHandler.isHasCondition());
@@ -68,6 +72,22 @@ public abstract class Ability<T> {
 
     //-------------------------------------------------------- Getter And Setters
 
+
+    public Map<Integer, ArrayList<String>> getNameOfNecessaryAbilities() {
+        return nameOfNecessaryAbilities;
+    }
+
+    public void setNameOfNecessaryAbilities(Map<Integer, ArrayList<String>> nameOfNecessaryAbilities) {
+        this.nameOfNecessaryAbilities = nameOfNecessaryAbilities;
+    }
+
+    public Map<Integer, Map<String, Integer>> getGradeOfNecessaryAbilities() {
+        return gradeOfNecessaryAbilities;
+    }
+
+    public void setGradeOfNecessaryAbilities(Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities) {
+        this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
+    }
 
     public String getDescription() {
         return description;

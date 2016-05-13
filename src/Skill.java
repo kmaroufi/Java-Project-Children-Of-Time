@@ -17,19 +17,19 @@ public class Skill<E> extends Ability{
     private boolean isRepeated;
     private Time timeOfEffecting;
     private ArrayList<String> blackList;
-    private int cooldown;
+    private int[] cooldown;
     private int remainingCooldown;
     private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private boolean canStackUp;                                 // What is this Shit?
     private boolean isUsed;
-    private int requiredEnergyPoint;
-    private int requiredMagicPoint;
-    private int requiredExperience;
+    private int[] requiredEnergyPoint;
+    private int[] requiredMagicPoint;
 
     //---------------------------------------------------------------- Functions
 
     Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
-
+        super(abilityHandler);
+        setPropertiesOfRelatedSoldiers(skillHandler.getPropertiesOfRelatedSoldiers());
     }
 
 
@@ -52,7 +52,7 @@ public class Skill<E> extends Ability{
         }
         if (this.propertiesOfUser != null)
             this.propertiesOfUser.effect(userHero, Hero.mapOfHeroes.get(this.ownerName), userHero);
-        this.remainingCooldown = this.cooldown;
+        this.remainingCooldown = this.cooldown[this.currentGrade];
     }
 
     public void removeEffect() {
@@ -137,6 +137,31 @@ public class Skill<E> extends Ability{
     }
     //---------------------------------------------------- Getter && Setters
 
+
+    public Property getPropertiesOfUser() {
+        return propertiesOfUser;
+    }
+
+    public void setPropertiesOfUser(Property propertiesOfUser) {
+        this.propertiesOfUser = propertiesOfUser;
+    }
+
+    public Map<E, Time> getMapOfEffectedSoldiers() {
+        return mapOfEffectedSoldiers;
+    }
+
+    public void setMapOfEffectedSoldiers(Map<E, Time> mapOfEffectedSoldiers) {
+        this.mapOfEffectedSoldiers = mapOfEffectedSoldiers;
+    }
+
+    public ArrayList<String> getBlackList() {
+        return blackList;
+    }
+
+    public void setBlackList(ArrayList<String> blackList) {
+        this.blackList = blackList;
+    }
+
     public ArrayList<Property> getPropertiesOfRelatedSoldiers() {
         return propertiesOfRelatedSoldiers;
     }
@@ -161,11 +186,11 @@ public class Skill<E> extends Ability{
         isRepeated = repeated;
     }
 
-    public int getCooldown() {
+    public int[] getCooldown() {
         return cooldown;
     }
 
-    public void setCooldown(int cooldown) {
+    public void setCooldown(int[] cooldown) {
         this.cooldown = cooldown;
     }
 
@@ -185,19 +210,19 @@ public class Skill<E> extends Ability{
         isUsed = used;
     }
 
-    public int getRequiredEnergyPoint() {
+    public int[] getRequiredEnergyPoint() {
         return requiredEnergyPoint;
     }
 
-    public void setRequiredEnergyPoint(int requiredEnergyPoint) {
+    public void setRequiredEnergyPoint(int[] requiredEnergyPoint) {
         this.requiredEnergyPoint = requiredEnergyPoint;
     }
 
-    public int getRequiredMagicPoint() {
+    public int[] getRequiredMagicPoint() {
         return requiredMagicPoint;
     }
 
-    public void setRequiredMagicPoint(int requiredMagicPoint) {
+    public void setRequiredMagicPoint(int[] requiredMagicPoint) {
         this.requiredMagicPoint = requiredMagicPoint;
     }
 
@@ -223,14 +248,6 @@ public class Skill<E> extends Ability{
 
     public void setCanStackUp(boolean canStackUp) {
         this.canStackUp = canStackUp;
-    }
-
-    public int getRequiredExperience() {
-        return requiredExperience;
-    }
-
-    public void setRequiredExperience(int requiredExperience) {
-        this.requiredExperience = requiredExperience;
     }
 
 }
