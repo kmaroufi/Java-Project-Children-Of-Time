@@ -6,7 +6,7 @@ import java.util.Map;
  * Created by asus-pc on 5/5/2016.
  */
 public class Property<E> {
-    private Double totalEffectOnProperty;
+    private Double totalEffectOnProperty;               // az che noii e??????
     private String name;
     private String fieldOfEffecting;
     private int currentGrade;

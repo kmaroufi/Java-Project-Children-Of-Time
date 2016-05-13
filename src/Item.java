@@ -45,6 +45,13 @@ public class Item {
             }
         }
     }
+
+    public boolean equals(Item item){
+        if(this.name.equals(item.getName())){
+            return true;
+        }
+        return false;
+    }
     //--------------------------------------------------- Getter && Setters
 
 
