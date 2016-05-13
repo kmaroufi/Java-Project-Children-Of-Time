@@ -1,5 +1,4 @@
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -11,6 +10,10 @@ public class Property<E> {
     private String fieldOfEffecting;
     private int currentGrade;
     private boolean isDependOnEffectedSoldier;
+
+    private boolean isDependOnUserHero;
+    private boolean isPermanently;
+
     private double[] constantProperty;
     private double[] attackPowerCoefficient;
     private double[] maximumHealthCoefficient;
@@ -62,7 +65,7 @@ public class Property<E> {
         }
     }
 
-    public <T> void effect(T relatedSoldier, Hero owner) {
+    public <T> void effect(T relatedSoldier, Hero owner, Hero userHero) {
         Class classOfSoldier = relatedSoldier.getClass();
         Field field = null;
         int cond = 0;
@@ -94,6 +97,9 @@ public class Property<E> {
         try {
             if (this.isDependOnEffectedSoldier)
                 this.calculateProperty(relatedSoldier);
+            else if (this.isDependOnUserHero){
+                this.calculateProperty(userHero);
+            }
             else {
                 this.calculateProperty(owner);
             }
@@ -113,6 +119,8 @@ public class Property<E> {
     }
 
     public <T> void removeEffect(T relatedSoldier) {
+        if (isPermanently)
+            return;
         Class classOfSoldier = relatedSoldier.getClass();
         Field field = null;
         int cond = 0;
