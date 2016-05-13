@@ -65,6 +65,7 @@ public class Perk<E> extends Ability{
     }
 
     public void choosingRelatedSoldiersDuringAttack(Enemy defenderEnemy, Hero attackerHero) {
+        this.relatedSoldiers.clear();
         if (this.hasEffectedOnEnemy) {
             this.relatedSoldiers.add(defenderEnemy);
             return;
@@ -72,9 +73,26 @@ public class Perk<E> extends Ability{
         this.relatedSoldiers.add(attackerHero);
     }
 
+    public void choosingRelatedSoldiersDuringDefend(Enemy attackerEnemy, Hero defenderHero) {
+        this.relatedSoldiers.clear();
+        if (this.hasEffectedOnEnemy) {
+            this.relatedSoldiers.add(attackerEnemy);
+            return;
+        }
+        this.relatedSoldiers.add(defenderHero);
+    }
 
 
-    public void choosingRelatedSoldiers() {
-
+    public void choosingRelatedSoldiersAfterEachActivity() {
+        this.relatedSoldiers.clear();
+        if (this.hasEffectedOnEnemy) {
+            this.relatedSoldiers.addAll(GameEngine.listOfEnemies);
+            return;
+        }
+        if (this.numberOfRelatedSoldiers == 1) {
+            this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
+            return;
+        }
+        this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Random;
 public abstract class Ability<T> {
 
     protected String name;
-    protected String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.
+    protected String ownerName;
     protected ArrayList<T> effectedSoldiers;
     protected ArrayList<T> relatedSoldiers;
     private boolean isGlobal; // Just clear that other heroes can use this Ability or no.
@@ -18,7 +18,6 @@ public abstract class Ability<T> {
     private int numberOfGrades;
     private int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
-    private boolean isEffectDuringAttack;
     private boolean hasCondition;
     private int[] costOfUpgrade;
     public static Map<String, String> listOfAbilities;
@@ -46,7 +45,6 @@ public abstract class Ability<T> {
 
     abstract public void upgrade();
 
-    abstract public void choosingRelatedSoldiers();
     //-------------------------------------------------------- Getter And Setters
 
     public boolean isGlobal() {
@@ -136,14 +134,6 @@ public abstract class Ability<T> {
 
     public void setFieldOfEffecting(String fieldOfEffecting) {
         this.fieldOfEffecting = fieldOfEffecting;
-    }
-
-    public boolean isEffectDuringAttack() {
-        return isEffectDuringAttack;
-    }
-
-    public void setEffectDuringAttack(boolean effectDuringAttack) {
-        isEffectDuringAttack = effectDuringAttack;
     }
 
     public boolean isHasCondition() {
