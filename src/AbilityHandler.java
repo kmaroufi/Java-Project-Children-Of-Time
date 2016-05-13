@@ -10,7 +10,7 @@ public class AbilityHandler<T> {
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;
     private boolean isRandomSoldierSelecting;
-    private int numberOfRelatedSoldiers;                // soldiers under effect of this ability
+    private int numberOfRelatedSoldiers;            // soldiers under effect of this ability
     private int numberOfGrades;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean isEffectDuringAttack;
@@ -18,10 +18,12 @@ public class AbilityHandler<T> {
     private int[] costOfUpgrade;                //cost of it per Upgrade
     private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
     private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necess
+    private String[] upgradeDescription;
+    private String description;
 
     //-----------------------------------------------          Constructor
 
-    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities) {
+    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities, String[] upgradeDescription,String description) {
         this.name = name;
         this.ownerName = ownerName;
         this.isGlobal = isGlobal;
@@ -35,6 +37,8 @@ public class AbilityHandler<T> {
         this.costOfUpgrade = costOfUpgrade;
         this.nameOfNecessaryAbilities = nameOfNecessaryAbilities;
         this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
+        this.upgradeDescription = upgradeDescription;
+        this.description = description;
     }
 
     public AbilityHandler() {
@@ -44,6 +48,22 @@ public class AbilityHandler<T> {
 
     //---------------------------------------------------------------- Getter && Setters
 
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String[] getUpgradeDescription() {
+        return upgradeDescription;
+    }
+
+    public void setUpgradeDescription(String[] upgradeDescription) {
+        this.upgradeDescription = upgradeDescription;
+    }
 
     public Map<Integer, ArrayList<String>> getNameOfNecessaryAbilities() {
         return nameOfNecessaryAbilities;
