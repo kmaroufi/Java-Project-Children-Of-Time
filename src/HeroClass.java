@@ -69,6 +69,11 @@ public class HeroClass extends Soldier{
         this.setNumberOfNonTargetedEnemyEffected(heroClassHandler.getNumberOfNonTargetedEnemyEffected());
         this.setMagicRefillRateRatio(heroClassHandler.getMagicRefillRateRatio());
         this.setMagicRefillRate(heroClassHandler.getMagicRefillRate());
+        this.setMaximumHealth(heroClassHandler.getMaximumHealth());
+        this.setCurrentMagic(this.getMaximumMagic());
+        this.setCurrentEnergyPoint(this.getCurrentEnergyPoint());
+        this.setCurrentHealth(this.getMaximumHealth());
+        this.setAttackPower(heroClassHandler.getAttackPower());
     }
 
     public HeroClass(HeroClass heroClass){
@@ -97,6 +102,11 @@ public class HeroClass extends Soldier{
         this.setNumberOfNonTargetedEnemyEffected(heroClass.getNumberOfNonTargetedEnemyEffected());
         this.setMagicRefillRateRatio(heroClass.getMagicRefillRateRatio());
         this.setMagicRefillRate(heroClass.getMagicRefillRate());
+        this.setMaximumHealth(heroClass.getMaximumHealth());
+        this.setCurrentMagic(this.getMaximumMagic());
+        this.setCurrentEnergyPoint(this.getCurrentEnergyPoint());
+        this.setCurrentHealth(this.getMaximumHealth());
+        this.setAttackPower(heroClass.getAttackPower());
 
     }
 
