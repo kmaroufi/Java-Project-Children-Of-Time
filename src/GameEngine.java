@@ -748,22 +748,22 @@ public class GameEngine {
 
     public void setEnemies(int numberOfBattle){
         if(numberOfBattle == 1){
-            Thug thug1 = new Thug("Weak");
-            Thug thug2 = new Thug("Weak");
-            Thug thug3 = new Thug("Weak");
-            Angel angel1 = new Angel("Weak");
+            this.listOfEnemies.add(new Thug("Weak"));
+            this.listOfEnemies.add(new Thug("Weak"));
+            this.listOfEnemies.add(new Thug("Weak"));
+            this.listOfEnemies.add(new Angel("Weak"));
         }
         else if(numberOfBattle == 2){
-            Thug thug1 = new Thug("Able");
-            Thug thug2 = new Thug("Able");
-            Angel angel1 = new Angel("Weak");
-            Tank tank1 = new Tank("Weak");
+            this.listOfEnemies.add(new Thug("Able"));
+            this.listOfEnemies.add(new Thug("Able"));
+            this.listOfEnemies.add(new Angel("Weak"));
+            this.listOfEnemies.add(new Tank("Weak"));
         }
         else if(numberOfBattle == 3){
-            Thug thug1 = new Thug("Able");
-            Thug thug2 = new Thug("Mighty");
-            Angel angel1 = new Angel("Able");
-            Tank tank1 = new Tank("Weak");
+            this.listOfEnemies.add(new Thug("Able"));
+            this.listOfEnemies.add(new Thug("Mighty"));
+            this.listOfEnemies.add(new Angel("Able"));
+            this.listOfEnemies.add(new Tank("Weak"));
         }
         else if(numberOfBattle == 4){
             Thug thug1 = new Thug("Mighty");
