@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 
 public class Display {
-    private static Scanner cin;
+    private static Scanner cin = new Scanner(System.in);
 
     //----------------------------------
 
