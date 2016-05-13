@@ -5,12 +5,12 @@ public class Tank extends Enemy {
     public Tank(String version){
         this.setClassName("Tank");
         this.setFullName();
-        if(version.equals("Weak")){
+        if(version.equalsIgnoreCase("Weak")){
             this.setAttackPower(30);
             this.setMaximumHealth(400);
             this.setCurrentHealth(400);
         }
-        else if(version.equals("Able")){
+        else if(version.equalsIgnoreCase("Able")){
             this.setAttackPower(90);
             this.setMaximumHealth(500);
             this.setCurrentHealth(500);
