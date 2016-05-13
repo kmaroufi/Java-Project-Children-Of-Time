@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -7,17 +8,29 @@ import java.util.Map;
 public class Perk<E> extends Ability{
     public static Map<String, Perk> listOfPerks;
     private ArrayList<Condition> listOfCondition;
-    private ArrayList<PerkMode> listOfModes;
-    private Map<Condition, PerkMode> mapOfCondition;
-    private Map<E, PerkMode> mapOfRelatedSoldiers;
+    private ArrayList<PerkMode<E>> listOfModes;
+    private Map<Condition, PerkMode<E>> mapOfCondition;
+    private Map<E, PerkMode<E>> mapOfRelatedSoldiers = new HashMap<>();
     private boolean isConditionDependOnRelatedSoldier;
     private boolean isConditionDependOnUserHero;
     private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
 
     //---------------------------------------------------------- Constructors
-    public Perk(){
 
+
+    public Perk(AbilityHandler<E> abilityHandler, ArrayList<Condition> listOfCondition, ArrayList<PerkMode<E>> listOfModes, Map<Condition, PerkMode<E>> mapOfCondition, boolean isConditionDependOnRelatedSoldier, boolean isConditionDependOnUserHero, String timeOfCheck) {
+        super(abilityHandler);
+        this.listOfCondition = listOfCondition;
+        this.listOfModes = listOfModes;
+        this.mapOfCondition = mapOfCondition;
+        this.mapOfRelatedSoldiers = mapOfRelatedSoldiers;
+        this.isConditionDependOnRelatedSoldier = isConditionDependOnRelatedSoldier;
+        this.isConditionDependOnUserHero = isConditionDependOnUserHero;
+        this.timeOfCheck = timeOfCheck;
     }
+
+
+    public Perk() {}
 
     //---------------------------------------------------------- Functions
     public boolean equals(Perk perk){
@@ -107,27 +120,27 @@ public class Perk<E> extends Ability{
         this.listOfCondition = listOfCondition;
     }
 
-    public ArrayList<PerkMode> getListOfModes() {
+    public ArrayList<PerkMode<E>> getListOfModes() {
         return listOfModes;
     }
 
-    public void setListOfModes(ArrayList<PerkMode> listOfModes) {
+    public void setListOfModes(ArrayList<PerkMode<E>> listOfModes) {
         this.listOfModes = listOfModes;
     }
 
-    public Map<Condition, PerkMode> getMapOfCondition() {
+    public Map<Condition, PerkMode<E>> getMapOfCondition() {
         return mapOfCondition;
     }
 
-    public void setMapOfCondition(Map<Condition, PerkMode> mapOfCondition) {
+    public void setMapOfCondition(Map<Condition, PerkMode<E>> mapOfCondition) {
         this.mapOfCondition = mapOfCondition;
     }
 
-    public Map<E, PerkMode> getMapOfRelatedSoldiers() {
+    public Map<E, PerkMode<E>> getMapOfRelatedSoldiers() {
         return mapOfRelatedSoldiers;
     }
 
-    public void setMapOfRelatedSoldiers(Map<E, PerkMode> mapOfRelatedSoldiers) {
+    public void setMapOfRelatedSoldiers(Map<E, PerkMode<E>> mapOfRelatedSoldiers) {
         this.mapOfRelatedSoldiers = mapOfRelatedSoldiers;
     }
 

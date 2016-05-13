@@ -37,8 +37,22 @@ public class Condition {
 //    private String checkThisConditionOn; // This condition on who will be checked?
 //    private String isDependOnEffectedSoldier;
 
+    Condition() {
+        setAlwaysTrue(true);
+    }
+
     public <T> boolean checkCondition(T relatedSoldier) {
+        if (this.isAlwaysTrue)
+            return true;
         return false;
+    }
+
+    public boolean isAlwaysTrue() {
+        return isAlwaysTrue;
+    }
+
+    public void setAlwaysTrue(boolean alwaysTrue) {
+        isAlwaysTrue = alwaysTrue;
     }
 
     private boolean checkCriticalHitChance() {

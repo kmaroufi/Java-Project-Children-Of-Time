@@ -181,37 +181,28 @@ public class GameEngine {
     public void addDefaultAttributes(){            // Adds All Datas in PDF (Fighter-Meryl-......)
         //Adding Abilities
         this.setNumberOfBattle(1);                                  //Number of battle
-        Perk fightTraining = new Perk();                            //Fighter Class's Perk
-        Perk workOut = new Perk();                                  //Fighter Class's Perk
-        Perk quickAsBunny = new Perk();                             //Supporter Class's Perk
-        Perk magicLessons = new Perk();                             //Supporter Class's Perk
 
-
-        Perk swirlingAttack = new Perk();                           //Eley's Perk
-
-
-
-        Perk criticalStrike = new Perk();                           //Chrome's Perk
+        this.creatingDefaultSkills();
 
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
-        fighterHandler.addPerk(fightTraining);
-        fighterHandler.addPerk(workOut);
+        fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
+        fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));
         //Adding Supporter Class
         HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
-        supporterHandler.addPerk(quickAsBunny);
-        supporterHandler.addPerk(magicLessons);
+        supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
+        supporterHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
         this.addNewHeroClass(new HeroClass(supporterHandler));
         //Adding Eley
         Hero eley = new Hero("Eley",fighterHandler);
         eley.addSkill(Skill.listOfSkills.get("overPoweredAttack"));
-        eley.addPerk(swirlingAttack);
+        eley.addPerk(Perk.listOfPerks.get("Swirling attack"));
         this.addNewHero(eley);
         //Adding Chrome
         Hero chrome = new Hero("Chrome",fighterHandler);
         chrome.addSkill(Skill.listOfSkills.get("sacrifice"));
-        chrome.addPerk(criticalStrike);
+        chrome.addPerk(Perk.listOfPerks.get("Critical strike"));
         this.addNewHero(chrome);
         //Adding Meryl
         Hero meryl = new Hero("Meryl",supporterHandler);
@@ -280,11 +271,242 @@ public class GameEngine {
 
     }
 
+    private void creatingDefaultPerks() {
+        {
+            //Fighter Class's Perk
+            double[] tmp = {0,0,0};
+            double[] arr = {30,30,30};
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+//            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+//            ArrayList<String> tmpArr = new ArrayList<>();
+//            tmpArr.add("Fight Training");
+//            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+//            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+//            Map<String, Integer> tmpMap = new HashMap<>();
+//            tmpMap.put("Fight Training", 1);
+//            gradeOfNecessaryAbilities.put(1, tmpMap);
+//            tmpMap.put("Fight Training", 2);
+//            gradeOfNecessaryAbilities.put(2, tmpMap);
+//            tmpMap.put("Fight Training", 3);
+//            gradeOfNecessaryAbilities.put(3, tmpMap);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade1: +30 attack power for 2 xp points";
+            upgradeDescription[1] = "Upgrade2: +30 attack power for 3 xp points";
+            upgradeDescription[2] = "Upgrade3: +30 attack power for 4 xp points";
+            String description = "Permanently increases attack power";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
+            Perk.listOfPerks.put("FightTraining", FightTraining);
+        }
+        {
+            //Fighter Class's Perk
+            double[] tmp = {0,0,0};
+            double[] arr = {50,50,50};
+            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+//            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+//            ArrayList<String> tmpArr = new ArrayList<>();
+//            tmpArr.add("Fight Training");
+//            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+//            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+//            Map<String, Integer> tmpMap = new HashMap<>();
+//            tmpMap.put("Fight Training", 1);
+//            gradeOfNecessaryAbilities.put(1, tmpMap);
+//            tmpMap.put("Fight Training", 2);
+//            gradeOfNecessaryAbilities.put(2, tmpMap);
+//            tmpMap.put("Fight Training", 3);
+//            gradeOfNecessaryAbilities.put(3, tmpMap);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: +50 maximum health for 2 xp points";
+            upgradeDescription[1] = "Upgrade 2: +50 maximum health for 3 xp points";
+            upgradeDescription[2] = "Upgrade 3: +50 maximum health for 4 xp points";
+            String description = "Permanently increases maximum health";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            Perk<Hero> WorkOut = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
+            Perk.listOfPerks.put("Work out", WorkOut);
+        }
+        {
+            //Supporter Class's Perk
+            double[] tmp = {0,0,0};
+            double[] arr = {1,1,1};
+            PropertyHandler propertyHandler = new PropertyHandler("maximumEnergyPoint",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+//            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+//            ArrayList<String> tmpArr = new ArrayList<>();
+//            tmpArr.add("Fight Training");
+//            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+//            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+//            Map<String, Integer> tmpMap = new HashMap<>();
+//            tmpMap.put("Fight Training", 1);
+//            gradeOfNecessaryAbilities.put(1, tmpMap);
+//            tmpMap.put("Fight Training", 2);
+//            gradeOfNecessaryAbilities.put(2, tmpMap);
+//            tmpMap.put("Fight Training", 3);
+//            gradeOfNecessaryAbilities.put(3, tmpMap);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade1: +1 energy point for 2 xp points";
+            upgradeDescription[1] = "Upgrade2: +1 energy point for 3 xp points";
+            upgradeDescription[2] = "Upgrade3: +1 energy point for 4 xp points";
+            String description = "Permanently increases energy points";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            Perk<Hero> Quickasabunny = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
+            Perk.listOfPerks.put("Quick as a bunny", Quickasabunny);
+        }
+        {
+            //Supporter Class's Perk
+            double[] tmp = {0,0,0};
+            double[] arr = {50,50,50};
+            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+//            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+//            ArrayList<String> tmpArr = new ArrayList<>();
+//            tmpArr.add("Fight Training");
+//            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+//            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+//            Map<String, Integer> tmpMap = new HashMap<>();
+//            tmpMap.put("Fight Training", 1);
+//            gradeOfNecessaryAbilities.put(1, tmpMap);
+//            tmpMap.put("Fight Training", 2);
+//            gradeOfNecessaryAbilities.put(2, tmpMap);
+//            tmpMap.put("Fight Training", 3);
+//            gradeOfNecessaryAbilities.put(3, tmpMap);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: +50 maximum magic for 2 xp points";
+            upgradeDescription[1] = "Upgrade 2: +50 maximum magic for 3 xp points";
+            upgradeDescription[2] = "Upgrade 3: +50 maximum magic for 4 xp points";
+            String description = "Permanently increases maximum magic";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            Perk<Hero> Magiclessons = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
+            Perk.listOfPerks.put("Magic lessons", Magiclessons);
+        }
+        {
+            //Eley's Perk
+            double[] tmp = {0,0,0};
+            double[] arr = {10,20,30};
+            PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioOnNonTargetedEnemy",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Fight training");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, null); nameOfNecessaryAbilities.put(3, null);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("Fight training", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            gradeOfNecessaryAbilities.put(2, null);
+            gradeOfNecessaryAbilities.put(3, null);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: P=20 for 2 xp points, needs Fight training upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
+            upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
+            String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
+            Perk.listOfPerks.put("Critical strike", Criticalstrike);
+        }
+        {
+            //Eley's Perk
+            double[] tmp = {0,0,0};
+            double[] arr = {20,30,40};
+            PropertyHandler propertyHandler = new PropertyHandler("criticalHitChance",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            double[] arr2 = {2,0,0};
+            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property2 = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            properties.add(property2);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Work out");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, null); nameOfNecessaryAbilities.put(3, null);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("Work out", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            gradeOfNecessaryAbilities.put(2, null);
+            gradeOfNecessaryAbilities.put(3, null);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: P=10 for 2 xp points, needs Work out upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
+            upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
+            String description = "While attacking, non-targeted enemies also take P percent of its damage";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
+            Perk.listOfPerks.put("Swirling attack", Swirlingattack);
+        }
+    }
+
     private void creatingDefaultSkills() {
         {
             //Eley's Skill
             double[] tmp = {0,0,0};
-            double[] arr = {30,30,30};
+            double[] arr = {1.2,1.2,1.2};
             PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Enemy> property = new Property<>(propertyHandler);
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
