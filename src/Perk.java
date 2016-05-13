@@ -1,12 +1,10 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by asus-pc on 5/5/2016.
  */
 public class Perk<E> extends Ability{
-    public static Map<String, Perk> listOfPerks;
+    public static Map<String, Perk> listOfPerks = new HashMap<>();
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode<E>> listOfModes;
     private Map<Condition, PerkMode<E>> mapOfCondition;
