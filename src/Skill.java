@@ -30,6 +30,18 @@ public class Skill<E> extends Ability{
     Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
         super(abilityHandler);
         setPropertiesOfRelatedSoldiers(skillHandler.getPropertiesOfRelatedSoldiers());
+        setPropertiesOfUser(skillHandler.getPropertiesOfUser());
+        setNonTargetedEnemy(skillHandler.getNonTargetedEnemy());
+        setRepeated(skillHandler.isRepeated());
+        setTimeOfEffecting(skillHandler.getTimeOfEffecting());
+        setBlackList(skillHandler.getBlackList());
+        setCooldown(skillHandler.getCooldown());
+        setRemainingCooldown(0);
+        setDependsRelatedSoldiersSelectingOnPlayer(skillHandler.isDependsRelatedSoldiersSelectingOnPlayer());
+        setCanStackUp(skillHandler.isCanStackUp());
+        setUsed(false);
+        setRequiredEnergyPoint(skillHandler.getRequiredEnergyPoint());
+        setRequiredMagicPoint(skillHandler.getRequiredMagicPoint());
     }
 
 
