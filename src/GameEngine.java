@@ -170,7 +170,7 @@ public class GameEngine {
         }
     }
 
-    public void addDefaultAttributes(String playerName){            // Adds All Datas in PDF (Fighter-Meryl-......)
+    public void addDefaultAttributes(){            // Adds All Datas in PDF (Fighter-Meryl-......)
         //Adding Abilities
         this.setNumberOfBattle(1);                                  //Number of battle
         Perk fightTraining = new Perk();                            //Fighter Class's Perk
@@ -542,19 +542,9 @@ public class GameEngine {
             Tank tank2 = new Tank("Able");
         }
     }
-    public void Campaign(){
-        for(int i = 0;i < 5;i++){
-            setEnemies(i + 1);
-            this.showBattleMessage(i + 1);
-            Display.printInEachLine("#######################################");
-            this.heroesAnnouncement();
-            Display.printInEachLine("#######################################");
-            this.enemiesAnnouncement();
-            Display.printInEachLine("#######################################");
-        }
-    }
+
     public void doCampaign(){                                               // do Campaign Game (not Custom Game)
-        this.addDefaultAttributes("");                                      // player's name
+        this.addDefaultAttributes();                                      // player's name
         for(int i = 0;i < 5;i++){
             setEnemies(i + 1);
             this.showBattleMessage(i + 1);
@@ -570,6 +560,8 @@ public class GameEngine {
 //                hero.showItems();
 //            }
 //            Display.printInEachLine("Your current wealth is: " + player.getMoney());
+            this.abilityCastCommands();
+            this.shoppingCommands();
             for(Hero hero : this.listOfHeroes){
                 hero.showDescription();
             }
