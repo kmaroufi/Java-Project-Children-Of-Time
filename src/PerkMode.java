@@ -7,9 +7,9 @@ public class PerkMode {
     private ArrayList<Property> properties;
     private int nonTargetedEnemy; //it isn't clear that this field has int type!
 
-    public <T> void effect(T relatedSoldiers, Hero owner) {
+    public <T> void effect(T relatedSoldiers, Hero owner, Hero userHero) {
         for (Property property: this.properties) {
-            property.effect(relatedSoldiers, owner);
+            property.effect(relatedSoldiers, owner, userHero);
         }
     }
 

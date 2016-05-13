@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by asus-pc on 5/5/2016.
@@ -34,6 +35,45 @@ public class Skill extends Ability{
 
     public void upgrade() {
         //TODO
+    }
+
+    public void choosingRelatedSoldiers() {
+        if (this.hasEffectedOnEnemy) {
+            if (this.isRandomSoldierSelecting) {
+                ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+                enemies.addAll(GameEngine.listOfEnemies);
+                for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(enemies.size());
+                    this.relatedSoldiers.add(enemies.get(randomIndex));
+                    enemies.remove(randomIndex);
+                }
+            }
+            else {
+                ArrayList<String> nameOfEnemies = Display.getAbilityDetailsBeforeUsing();
+                for (String nameOfEnemy: nameOfEnemies) {
+                    this.relatedSoldiers.add(Enemy.mapOfEnemies.get(nameOfEnemy));
+                }
+            }
+        }
+        else {
+            if (this.isRandomSoldierSelecting) {
+                ArrayList<Hero> heroes = new ArrayList<Hero>();
+                heroes.addAll(GameEngine.listOfHeroes);
+                for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(heroes.size());
+                    this.relatedSoldiers.add(heroes.get(randomIndex));
+                    heroes.remove(randomIndex);
+                }
+            }
+            else {
+                ArrayList<String> nameOfHeroes = Display.getAbilityDetailsBeforeUsing();
+                for (String nameOfHero: nameOfHeroes) {
+                    this.relatedSoldiers.add(Hero.mapOfHeroes.get(nameOfHero));
+                }
+            }
+        }
     }
     //---------------------------------------------------- Getter && Setters
 
