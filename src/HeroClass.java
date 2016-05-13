@@ -34,7 +34,7 @@ public class HeroClass extends Soldier{
     protected double criticalDamageResistance;
     protected double headShotChance; // when you headShot an enemy, you kill it immediately!
 
-    //--------------------------------------------------
+    //-------------------------------------------------- Constructors
     public HeroClass(){
         for(int i = 0;i < this.skills.size();i++){
             if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
@@ -68,7 +68,6 @@ public class HeroClass extends Soldier{
         this.setNumberOfNonTargetedEnemyEffected(heroClassHandler.getNumberOfNonTargetedEnemyEffected());
         this.setMagicRefillRateRatio(heroClassHandler.getMagicRefillRateRatio());
         this.setMagicRefillRate(heroClassHandler.getMagicRefillRate());
-
     }
 
     public HeroClass(HeroClass heroClass){

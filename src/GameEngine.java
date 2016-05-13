@@ -41,20 +41,50 @@ public class GameEngine {
     }
 
     public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
+        //Adding Abilities
+        Perk fightTraining = new Perk();                            //Fighter Class's Perk
+        Perk workOut = new Perk();                                  //Fighter Class's Perk
+        Perk quickAsBunny = new Perk();                             //Supporter Class's Perk
+        Perk magicLessons = new Perk();                             //Supporter Class's Perk
+
+        Skill overPoweredAttack = new Skill();                      //Eley's Skill
+        Perk swirlingAttack = new Perk();                           //Eley's Perk
+        Skill sacrifice = new Skill();                              //Chrome's Skill
+        Perk criticalStrike = new Perk();                           //Chrome's Perk
+        Skill elixir = new Skill();                                 //Meryl's Skill
+        Perk careTaker = new Perk();                                //Meryl's Perk
+        Skill boost = new Skill();                                  //Bolti's Skill
+        Skill manaBeam = new Skill();                               //Bolti's Skill
         //Adding Fighter Class
         HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
+        fighterHandler.addPerk(fightTraining);
+        fighterHandler.addPerk(workOut);
         this.addNewHeroClass(new HeroClass(fighterHandler));
         //Adding Supporter Class
         HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
+        supporterHandler.addPerk(quickAsBunny);
+        supporterHandler.addPerk(magicLessons);
         this.addNewHeroClass(new HeroClass(supporterHandler));
         //Adding Eley
-        this.addNewHero(new Hero("Eley",fighterHandler));
+        Hero eley = new Hero("Eley",fighterHandler);
+        eley.addSkill(overPoweredAttack);
+        eley.addPerk(swirlingAttack);
+        this.addNewHero(eley);
         //Adding Chrome
-        this.addNewHero(new Hero("Chrome",fighterHandler));
+        Hero chrome = new Hero("Chrome",fighterHandler);
+        chrome.addSkill(sacrifice);
+        chrome.addPerk(criticalStrike);
+        this.addNewHero(chrome);
         //Adding Meryl
-        this.addNewHero(new Hero("Meryl",supporterHandler));
+        Hero meryl = new Hero("Meryl",supporterHandler);
+        meryl.addSkill(elixir);
+        meryl.addPerk(careTaker);
+        this.addNewHero(meryl);
         //Adding Bolti
-        this.addNewHero(new Hero("Bolti",supporterHandler));
+        Hero bolti = new Hero("Bolti",supporterHandler);
+        bolti.addSkill(boost);
+        bolti.addSkill(manaBeam);
+        this.addNewHero(bolti);
         //Adding Enemies
         if(this.getLevel().equals("Easy")){
             Thug thug = new Thug("Weak");
@@ -74,6 +104,18 @@ public class GameEngine {
             Tank tank = new Tank("Able");
             FinalBoss finalBoss = new FinalBoss();
         }
+        //Adding Abilities
+
+        //Adding Items
+        Item toughen = new Item();
+        Item guide = new Item();
+        Item defy = new Item();
+        Item sword = new Item();
+        Item energyBoots = new Item();
+        Item armor = new Item();
+        Item magicStick = new Item();
+        Item healthPotion = new Item();
+        Item magicPotion = new Item();
     }
 
     public void doCustomGame(){

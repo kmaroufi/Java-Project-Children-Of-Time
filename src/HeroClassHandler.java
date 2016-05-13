@@ -37,6 +37,13 @@ public class HeroClassHandler extends Soldier{
         this.setEnergyPoint(energyPoint);
         this.setInventorySize(inventorySize);
     }
+    //---------------------------------------------------------------- Functions
+    public void addSkill(Skill skill){
+        this.skills.add(skill);
+    }
+    public void addPerk(Perk perk){
+        this.perks.add(perk);
+    }
     
     //---------------------------------------------------------------- Getter && Setters
 

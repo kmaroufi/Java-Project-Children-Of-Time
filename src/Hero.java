@@ -26,6 +26,13 @@ public class Hero extends HeroClass {
     }
 
     //------------------------------------------ Functions
+    public void addSkill(Skill skill){
+        this.skills.add(skill);
+    }
+
+    public void addPerk(Perk perk){
+        this.perks.add(perk);
+    }
 
     public void attack(Enemy enemy){
         Random random = new Random();

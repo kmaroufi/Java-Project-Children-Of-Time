@@ -25,11 +25,12 @@ public class Item {
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name){}
+    public Item(String name){
+        this.setName(name);
+    }
     //--------------------------------------------------- Functions
 
     public void isActivated() {
-
         //TODO
     }
 
