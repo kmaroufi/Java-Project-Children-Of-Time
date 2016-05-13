@@ -11,6 +11,7 @@ public class Angel extends Enemy {
 
     public Angel(String version){
         this.setClassName("Angel");
+        this.setVersion(version);
         this.setFullName();
         if(version.equalsIgnoreCase("Weak")){
             this.setHealPower(100);

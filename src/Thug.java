@@ -6,6 +6,7 @@ import java.util.Random;
 public class Thug extends Enemy {
     public Thug(String version){
         this.setClassName("Thug");
+        this.setVersion(version);
         this.setFullName();
         if(version.equalsIgnoreCase("Weak")){
             this.setAttackPower(50);

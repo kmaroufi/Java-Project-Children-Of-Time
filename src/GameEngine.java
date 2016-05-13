@@ -47,8 +47,8 @@ public class GameEngine {
         for(Hero hero : this.listOfHeroes){
             hero.showItems();
         }
-        Display.printInEachLine("Your current wealth is:" + this.player.getMoney());
-        Display.printf("Enter Your Command:(type 'Next' For Next Step!");
+        Display.printInEachLine("Your current wealth is:" + this.player.getMoney() + "dollars");
+        Display.printf("Enter Your Command:(type 'Next' For Next Step!)");
         String command = Display.getString();
         for(ItemProperties itemProperties: Shop.listOfItems){
             if(command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")){                 //(item name) + “?”
@@ -1100,7 +1100,9 @@ public class GameEngine {
             this.doCustomGame();
         }
         else{
-            this.doCampaign();
+            for(int i = 0;i < 5;i++) {
+                this.doCampaign(i);
+            }
         }
     }
 

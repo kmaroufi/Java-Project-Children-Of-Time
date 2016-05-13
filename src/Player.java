@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
 
-    private static int imortalityPotion = 3;
+    public static int imortalityPotion = 3;
     private ArrayList<Hero> listOfHeros;
     private int xp;
     private double money;

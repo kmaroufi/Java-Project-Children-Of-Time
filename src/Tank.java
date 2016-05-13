@@ -4,6 +4,7 @@
 public class Tank extends Enemy {
     public Tank(String version){
         this.setClassName("Tank");
+        this.setVersion(version);
         this.setFullName();
         if(version.equalsIgnoreCase("Weak")){
             this.setAttackPower(30);
