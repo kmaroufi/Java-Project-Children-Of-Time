@@ -9,10 +9,10 @@ import static javafx.scene.input.KeyCode.T;
  * Created by asus-pc on 5/5/2016.
  */
 public class Skill<E> extends Ability{
-    public static Map<String, Skill> listOfSkills = new HashMap<>();
+    public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
     private ArrayList<Property> propertiesOfRelatedSoldiers;
     private Property propertiesOfUser;
-    protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<>();
+    protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<E, Time>();
     private int nonTargetedEnemy;
     private boolean isRepeated;
     private Time timeOfEffecting;
@@ -68,7 +68,7 @@ public class Skill<E> extends Ability{
     }
 
     public void removeEffect() {
-        ArrayList<Integer> indexOfRemovedSoldiers = new ArrayList<>();
+        ArrayList<Integer> indexOfRemovedSoldiers = new ArrayList<Integer>();
         for (int i = 0; i < this.effectedSoldiers.size(); i++) {
             E soldier = (E) this.effectedSoldiers.get(i);
             if (this.mapOfEffectedSoldiers.get(soldier).isTimePassed()) {
