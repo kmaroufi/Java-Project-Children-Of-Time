@@ -6,15 +6,16 @@ import java.lang.reflect.Type;
  * Created by asus-pc on 5/3/2016.
  */
 public class Main {
-
-    public Main() {
-    }
-
+    public static GameEngine childrenOfTime = new GameEngine();
     public static void main(String[] args) {
-        boolean isCustomGame = false;
-        if(isCustomGame) {
-            //getting data
-        }
+        Display.printInEachLine("Hi,Welcome!");
+        Display.printInEachLine("What's Your Name?");
+        String playerName = Display.getString();
+        childrenOfTime.setPlayer(new Player(playerName,15,40));
+        Display.printInEachLine("Hi " + childrenOfTime.getPlayer().getName());
+        childrenOfTime.chooseModeOfGame();
+        childrenOfTime.chooseLevelOfGame();
+        childrenOfTime.play();
 
     }
 }

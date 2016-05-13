@@ -4,6 +4,28 @@ import java.util.ArrayList;
  * Created by asus-pc on 5/6/2016.
  */
 public class Player {
+    private String name;
+
+    private ArrayList<Hero> listOfHeros;
+    private int xp;
+    private double money;
+    //----------------------------------------------- Constructors
+    public Player(){}
+
+    public Player(String name,int xp,double money){
+        this.setName(name);
+        this.setXp(xp);
+        this.setMoney(money);
+    }
+    //----------------------------------------------- Functions
+    public void doBattle() {
+        //TODO
+    }
+
+    public void addHero(Hero hero){
+        this.listOfHeros.add(hero);
+    }
+    //----------------------------------------------- Getter And Setter
     public ArrayList<Hero> getListOfHeros() {
         return listOfHeros;
     }
@@ -28,14 +50,13 @@ public class Player {
         this.money = money;
     }
 
-    private ArrayList<Hero> listOfHeros;
-    private int xp;
-    private double money;
 
-    public void doBattle() {
-        //TODO
+    public String getName() {
+        return name;
     }
-    public void addHero(Hero hero){
-        this.listOfHeros.add(hero);
+
+    public void setName(String name) {
+        this.name = name;
     }
+
 }

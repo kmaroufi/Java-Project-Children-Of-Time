@@ -11,8 +11,8 @@ public class GameEngine {
     public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
     public static ArrayList<Skill> listOfSkills = new ArrayList<Skill>();
     public static ArrayList<Perk> listOfPerks = new ArrayList<Perk>();
-
-    private String level;                   // level of Game(Easy-Medium-Hard)
+    private int NumberOfBattle;                     // which battle we are in(1-2-3-4-5)
+    private String levelOfGame;                     // level of Game(Easy-Medium-Hard)
 
     //------------------------------------------ Functions
     public void chooseLevelOfGame(){
@@ -23,15 +23,15 @@ public class GameEngine {
         int choose = Display.getInteger();
         while(true){
             if(choose == 1) {
-                this.setLevel("Easy");
+                this.setLevelOfGame("Easy");
                 break;
             }
             else if(choose == 2) {
-                this.setLevel("Medium");
+                this.setLevelOfGame("Medium");
                 break;
             }
             else if(choose == 3) {
-                this.setLevel("Hard");
+                this.setLevelOfGame("Hard");
                 break;
             }
             else {
@@ -40,8 +40,9 @@ public class GameEngine {
         }
     }
 
-    public void addDefaultAttributes(){                             // Adds All Datas in PDF (Fighter-Meryl-......)
+    public void addDefaultAttributes(String playerName){            // Adds All Datas in PDF (Fighter-Meryl-......)
         //Adding Abilities
+        this.setNumberOfBattle(1);                                  //Number of battle
         Perk fightTraining = new Perk();                            //Fighter Class's Perk
         Perk workOut = new Perk();                                  //Fighter Class's Perk
         Perk quickAsBunny = new Perk();                             //Supporter Class's Perk
@@ -86,19 +87,19 @@ public class GameEngine {
         bolti.addSkill(manaBeam);
         this.addNewHero(bolti);
         //Adding Enemies
-        if(this.getLevel().equals("Easy")){
+        if(this.getLevelOfGame().equals("Easy")){
             Thug thug = new Thug("Weak");
             Angel angel = new Angel("Weak");
             Tank tank = new Tank("Weak");
             FinalBoss finalBoss = new FinalBoss();
         }
-        else if(this.getLevel().equals("Medium")){
+        else if(this.getLevelOfGame().equals("Medium")){
             Thug thug = new Thug("Able");
             Angel angel = new Angel("Able");
             Tank tank = new Tank("Able");
             FinalBoss finalBoss = new FinalBoss();
         }
-        else if(this.getLevel().equals("Hard")){
+        else if(this.getLevelOfGame().equals("Hard")){
             Thug thug = new Thug("Mighty");
             Angel angel = new Angel("Able");
             Tank tank = new Tank("Able");
@@ -116,10 +117,22 @@ public class GameEngine {
         Item magicStick = new Item();
         Item healthPotion = new Item();
         Item magicPotion = new Item();
+        // Add Shop
+        Shop shop = new Shop();
+        Shop.listOfItems.add(toughen);
+        Shop.listOfItems.add(guide);
+        Shop.listOfItems.add(defy);
+        Shop.listOfItems.add(sword);
+        Shop.listOfItems.add(energyBoots);
+        Shop.listOfItems.add(armor);
+        Shop.listOfItems.add(magicStick);
+        Shop.listOfItems.add(healthPotion);
+        Shop.listOfItems.add(magicPotion);
+
     }
 
     public void doCustomGame(){
-        this.addDefaultAttributes();
+        this.addDefaultAttributes("");                              // player's name
         this.setCustomGame(true);
         while (true){
             //Add A new Hero!
@@ -129,7 +142,7 @@ public class GameEngine {
     }
 
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
-        this.addDefaultAttributes();
+        this.addDefaultAttributes("");                                // player's name
         for(int i = 0;i < 5;i++){
             this.showBattleMessage(i + 1);
             //Do Battle - move - ...
@@ -209,7 +222,12 @@ public class GameEngine {
     }
 
     public void play() {
-        //TODO
+        if(isCustomGame){
+            this.doCustomGame();
+        }
+        else{
+            this.doCampaign();
+        }
     }
 
     public void showBattleMessage(int numberOfBattle){
@@ -235,7 +253,23 @@ public class GameEngine {
         }
     }
 
-
+    public void chooseModeOfGame() {
+        Display.printInEachLine("Choose Mode Of Game:");
+        Display.printInEachLine("1 - Campaign");
+        Display.printInEachLine("2 - Custom Game");
+        int choose = Display.getInteger();
+        while(true){
+            if(choose == 1){
+                this.setCustomGame(false);
+            }
+            else if(choose == 2){
+                this.setCustomGame(true);
+            }
+            else{
+                Display.printInEachLine("Wrong Number! Try Again!");
+            }
+        }
+    }
     //------------------------------------------ Getter && Setters
 
     public Player getPlayer() {
@@ -254,13 +288,22 @@ public class GameEngine {
         isCustomGame = customGame;
     }
 
-    public String getLevel() {
-        return level;
+    public String getLevelOfGame() {
+        return levelOfGame;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setLevelOfGame(String levelOfGame) {
+        this.levelOfGame = levelOfGame;
     }
+
+    public int getNumberOfBattle() {
+        return NumberOfBattle;
+    }
+
+    public void setNumberOfBattle(int numberOfBattle) {
+        NumberOfBattle = numberOfBattle;
+    }
+
 
 
 }
