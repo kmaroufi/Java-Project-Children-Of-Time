@@ -52,37 +52,11 @@ public class GameEngine {
         Perk quickAsBunny = new Perk();                             //Supporter Class's Perk
         Perk magicLessons = new Perk();                             //Supporter Class's Perk
 
-        double[] tmp = {0,0,0};
-        double[] arr = {30,30,30};
-        PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
-        Property<Enemy> property = new Property<Enemy>(propertyHandler);
-        ArrayList<Property<Enemy>> properties = new ArrayList<Property<Enemy>>();
-        properties.add(property);
-//        ArrayList<String> blackList = new ArrayList<>();
-//        blackList.add("Eley");
-        int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
-        SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
-        int[] costOfUpgrade = {2,4,6};
-        Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<Integer, ArrayList<String>>();
-        ArrayList<String> tmpArr = new ArrayList<String>();
-        tmpArr.add("Fight Training");
-        nameOfNecessaryAbilities.put(0, tmpArr); nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr);
-        Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<Integer, Map<String, Integer>>();
-        Map<String, Integer> tmpMap = new HashMap<String, Integer>();
-        tmpMap.put("Fight Training", 1);
-        gradeOfNecessaryAbilities.put(1, tmpMap);
-        tmpMap.put("Fight Training", 2);
-        gradeOfNecessaryAbilities.put(2, tmpMap);
-        tmpMap.put("Fight Training", 3);
-        gradeOfNecessaryAbilities.put(3, tmpMap);
-        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities);
-        Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);                     //Eley's Skill
-
 
         Perk swirlingAttack = new Perk();                           //Eley's Perk
 
 
-        Skill sacrifice = new Skill();                              //Chrome's Skill
+
         Perk criticalStrike = new Perk();                           //Chrome's Perk
         Skill elixir = new Skill();                                 //Meryl's Skill
         Perk careTaker = new Perk();                                //Meryl's Perk
@@ -173,6 +147,175 @@ public class GameEngine {
         Shop.listOfItems.add(healthPotion);
         Shop.listOfItems.add(magicPotion);
 
+    }
+
+    private void creatingDefaultSkills() {
+        {
+            //Eley's Skill
+            double[] tmp = {0,0,0};
+            double[] arr = {30,30,30};
+            PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Enemy> property = new Property<>(propertyHandler);
+            ArrayList<Property<Enemy>> properties = new ArrayList<>();
+            properties.add(property);
+            int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
+            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            int[] costOfUpgrade = {2,4,6};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Fight Training");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("Fight Training", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            tmpMap.put("Fight Training", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap);
+            tmpMap.put("Fight Training", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Fight Training", overPoweredAttack);
+        }
+        {
+            //Chrome's Skill
+            double[] tmp = {0,0,0};
+            double[] arr1 = {40,50,60};
+            double[] arr2 = {120,150,180};
+            PropertyHandler propertyHandler1 = new PropertyHandler("currentHealth",3, false, true, true, arr2, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Enemy> property1 = new Property<>(propertyHandler1);
+            PropertyHandler propertyHandler2 = new PropertyHandler("currentHealth",3, false, true, true, arr1, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property2 = new Property<>(propertyHandler2);
+            ArrayList<Property<Enemy>> properties = new ArrayList<>();
+            properties.add(property1);
+            int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {3,3,3}; int[] requiredMagicPoint = {60,60,60};
+            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, property2, 0, false, new Time(), null, cooldown, false, false, requiredEnergyPoint, requiredEnergyPoint);
+            int[] costOfUpgrade = {2,3,4};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Work out");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("Work out", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            tmpMap.put("Work out", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap);
+            tmpMap.put("Work out", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            Skill WorkOut = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Work out", WorkOut);
+        }
+        {
+            //Meryl's Skill
+            double[] tmp = {0,0,0};
+            double[] arr = {100,150,150};
+            PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {60,60,60};
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            int[] costOfUpgrade = {2,3,5};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Magic lessons");
+            nameOfNecessaryAbilities.put(1, null); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            gradeOfNecessaryAbilities.put(1, null);
+            tmpMap.put("Magic lessons", 1);
+            gradeOfNecessaryAbilities.put(2, tmpMap);
+            tmpMap.put("Magic lessons", 2);
+            gradeOfNecessaryAbilities.put(3, tmpMap);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            Skill MagicLessons = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("MagicLessons", MagicLessons);
+        }
+        {
+            //Meryl's Skill
+            double[] tmp = {0,0,0};
+            double[] arr = {1,1,1};
+            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            int[] cooldown = {1,0,0}; int[] requiredEnergyPoint = {2,2,1}; int[] requiredMagicPoint = {30,30,30};
+            ArrayList<String> blackList = new ArrayList<>();
+            blackList.add("Meryl");
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 1, 0), blackList, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            int[] costOfUpgrade = {2,3,5};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Quick as a bunny");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("Quick as a bunny", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            tmpMap.put("Quick as a bunny", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap);
+            tmpMap.put("Quick as a bunny", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            Skill Caretaker = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Caretaker", Caretaker);
+        }
+        {
+            //Bolti's Skill
+            double[] tmp = {0,0,0};
+            double[] arr = {1.2,1.3,1.3};
+            PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioDuringAttack",3, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 1), null, cooldown, true, true, requiredEnergyPoint, requiredEnergyPoint);
+            int[] costOfUpgrade = {2,3,5};
+//            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+//            ArrayList<String> tmpArr = new ArrayList<>();
+//            tmpArr.add("Quick as a bunny");
+//            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+//            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+//            Map<String, Integer> tmpMap = new HashMap<>();
+//            tmpMap.put("Quick as a bunny", 1);
+//            gradeOfNecessaryAbilities.put(1, tmpMap);
+//            tmpMap.put("Quick as a bunny", 2);
+//            gradeOfNecessaryAbilities.put(2, tmpMap);
+//            tmpMap.put("Quick as a bunny", 3);
+//            gradeOfNecessaryAbilities.put(3, tmpMap);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null);
+            Skill Boost = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Boost", Boost);
+        }
+        {
+            //Bolti's Skill
+            double[] tmp = {0,0,0};
+            double[] arr = {50,80,80};
+            PropertyHandler propertyHandler = new PropertyHandler("currentMagic",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {1,1,1}; int[] requiredMagicPoint = {50,50,50};
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 0), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            int[] costOfUpgrade = {2,3,4};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("magic lessons");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("magic lessons", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            tmpMap.put("magic lessons", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap);
+            tmpMap.put("magic lessons", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+            Skill ManaBeam = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Mana beam", ManaBeam);
+        }
     }
 
     public void doCustomGame(){
@@ -293,6 +436,11 @@ public class GameEngine {
                         }
                     }
                 }
+                if(command.equals("Shop!")){                // Correct it!
+                    // buy from shop
+                    //if buy or sell                    hasBoughtInShop = true;
+                }
+
                 for(Hero hero: this.listOfHeroes){
                     if(command.equalsIgnoreCase(hero.getName() + "?")){
                         hero.showDescription();
@@ -304,7 +452,7 @@ public class GameEngine {
                         for(Skill skill:hero.getSkills()){
                             if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName())){
                                 skill.getDescription();
-                                Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
+                                Display.printInEachLine("You need " + skill.getRequiredExperience() + " experience points");
                                 break;
                             }
                         }
