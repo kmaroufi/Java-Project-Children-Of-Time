@@ -10,11 +10,12 @@ public class Skill extends Ability{
     private ArrayList<Property> properties;
     private int nonTargetedEnemy;
     private boolean isRepeated;
-    private int time;
-    private int remainingTime;
+    private Time time;
+    private Time remainingTime;
     private int cooldown;
+    private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private int remainingCooldown;
-    private boolean casStackUp;                                 // What is this Shit?
+    private boolean canStackUp;                                 // What is this Shit?
     private boolean isUsed;
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
@@ -29,13 +30,28 @@ public class Skill extends Ability{
         if (this.remainingCooldown != 0) {
             return;
         }
-        if ((this.remainingTime == 0) || ((this.remainingTime != 0) && (this.casStackUp))) {
+        if ((this.remainingTime.isTimePassed()) || ((this.remainingTime.isTimePassed() == false) && (this.canStackUp))) {
+
         }
-    };
-    public void ShowNumberOfUpgrade(){}
-    public void choosingRelatedSoldiers() {
+    }
+
+    public void choosingRelatedSoldiers(Enemy enemy,Hero hero) {
+        this.relatedSoldiers.clear();
         if (this.hasEffectedOnEnemy) {
-            if (this.isRandomSoldierSelecting) {
+            this.relatedSoldiers.add(enemy);
+            return;
+        }
+        this.relatedSoldiers.add(hero);
+    }
+
+
+
+    public void choosingRelatedSoldiers() {
+        this.relatedSoldiers.clear();
+        if (this.hasEffectedOnEnemy) {
+            if (this.numberOfRelatedSoldiers == GameEngine.listOfEnemies.size())
+                this.relatedSoldiers.addAll(GameEngine.listOfEnemies);
+            else if (this.isRandomSoldierSelecting) {
                 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
                 enemies.addAll(GameEngine.listOfEnemies);
                 for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
@@ -45,7 +61,7 @@ public class Skill extends Ability{
                     enemies.remove(randomIndex);
                 }
             }
-            else {
+            else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
                 ArrayList<String> nameOfEnemies = Display.getAbilityDetailsBeforeUsing();
                 for (String nameOfEnemy: nameOfEnemies) {
                     this.relatedSoldiers.add(Enemy.mapOfEnemies.get(nameOfEnemy));
@@ -53,7 +69,9 @@ public class Skill extends Ability{
             }
         }
         else {
-            if (this.isRandomSoldierSelecting) {
+            if (this.numberOfRelatedSoldiers == GameEngine.listOfHeroes.size())
+                this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
+            else if (this.isRandomSoldierSelecting) {
                 ArrayList<Hero> heroes = new ArrayList<Hero>();
                 heroes.addAll(GameEngine.listOfHeroes);
                 for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
@@ -63,11 +81,14 @@ public class Skill extends Ability{
                     heroes.remove(randomIndex);
                 }
             }
-            else {
+            else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
                 ArrayList<String> nameOfHeroes = Display.getAbilityDetailsBeforeUsing();
                 for (String nameOfHero: nameOfHeroes) {
                     this.relatedSoldiers.add(Hero.mapOfHeroes.get(nameOfHero));
                 }
+            }
+            else {
+                this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
             }
         }
     }
@@ -95,22 +116,6 @@ public class Skill extends Ability{
 
     public void setRepeated(boolean repeated) {
         isRepeated = repeated;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
     }
 
     public int getCooldown() {

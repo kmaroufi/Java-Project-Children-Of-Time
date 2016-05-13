@@ -63,26 +63,17 @@ public class Perk<E> extends Ability{
 
     }
 
-    public void choosingRelatedSoldiersDuringAttack(Enemy defenderEnemy, Hero attackerHero) {
+    public void choosingRelatedSoldiers(Enemy enemy,Hero hero) {  // in method dar moghe attack ya defend call mishavad;
         this.relatedSoldiers.clear();
         if (this.hasEffectedOnEnemy) {
-            this.relatedSoldiers.add(defenderEnemy);
+            this.relatedSoldiers.add(enemy);
             return;
         }
-        this.relatedSoldiers.add(attackerHero);
-    }
-
-    public void choosingRelatedSoldiersDuringDefend(Enemy attackerEnemy, Hero defenderHero) {
-        this.relatedSoldiers.clear();
-        if (this.hasEffectedOnEnemy) {
-            this.relatedSoldiers.add(attackerEnemy);
-            return;
-        }
-        this.relatedSoldiers.add(defenderHero);
+        this.relatedSoldiers.add(hero);
     }
 
 
-    public void choosingRelatedSoldiersAfterEachActivity() {
+    public void choosingRelatedSoldiers() {
         this.relatedSoldiers.clear();
         if (this.hasEffectedOnEnemy) {
             this.relatedSoldiers.addAll(GameEngine.listOfEnemies);
