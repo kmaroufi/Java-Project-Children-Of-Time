@@ -75,9 +75,13 @@ public class GameEngine {
         gradeOfNecessaryAbilities.put(2, tmpMap);
         tmpMap.put("Fight Training", 3);
         gradeOfNecessaryAbilities.put(3, tmpMap);
-        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, true, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
+        AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, true, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities)
         Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);                     //Eley's Skill
+
+
         Perk swirlingAttack = new Perk();                           //Eley's Perk
+
+
         Skill sacrifice = new Skill();                              //Chrome's Skill
         Perk criticalStrike = new Perk();                           //Chrome's Perk
         Skill elixir = new Skill();                                 //Meryl's Skill

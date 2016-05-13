@@ -13,7 +13,6 @@ public class AbilityHandler<T> {
     private int numberOfRelatedSoldiers;                // soldiers under effect of this ability
     private int numberOfGrades;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
-    private boolean isPermanently;
     private boolean isEffectDuringAttack;
     private boolean hasCondition;
     private int[] costOfUpgrade;                //cost of it per Upgrade
@@ -22,7 +21,7 @@ public class AbilityHandler<T> {
 
     //-----------------------------------------------          Constructor
 
-    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isPermanently, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities) {
+    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities) {
         this.name = name;
         this.ownerName = ownerName;
         this.isGlobal = isGlobal;
@@ -31,7 +30,6 @@ public class AbilityHandler<T> {
         this.numberOfRelatedSoldiers = numberOfRelatedSoldiers;
         this.numberOfGrades = numberOfGrades;
         this.fieldOfEffecting = fieldOfEffecting;
-        this.isPermanently = isPermanently;
         this.isEffectDuringAttack = isEffectDuringAttack;
         this.hasCondition = hasCondition;
         this.costOfUpgrade = costOfUpgrade;
@@ -121,14 +119,6 @@ public class AbilityHandler<T> {
 
     public void setFieldOfEffecting(String fieldOfEffecting) {
         this.fieldOfEffecting = fieldOfEffecting;
-    }
-
-    public boolean isPermanently() {
-        return isPermanently;
-    }
-
-    public void setPermanently(boolean permanently) {
-        isPermanently = permanently;
     }
 
     public boolean isEffectDuringAttack() {

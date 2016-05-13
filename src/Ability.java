@@ -26,20 +26,19 @@ public abstract class Ability<T> {
     public static Map<String, String> listOfAbilities;
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
-        this.setHasEffectedOnEnemy(abilityHandler.isHasEffectedOnEnemy());
-        this.setNameOfNecessaryAbilities(abilityHandler.getNameOfNecessaryAbilities());
-        this.setGradeOfNecessaryAbilities(abilityHandler.getGradeOfNecessaryAbilities());
-        this.setRandomSoldierSelecting(abilityHandler.isRandomSoldierSelecting());
         this.setName(abilityHandler.getName());
-        this.setCostOfUpgrade(abilityHandler.getCostOfUpgrade());
+        this.setOwnerName(abilityHandler.getOwnerName());
+        this.setGlobal(abilityHandler.isGlobal());
+        this.setHasEffectedOnEnemy(abilityHandler.isHasEffectedOnEnemy());
+        this.setRandomSoldierSelecting(abilityHandler.isRandomSoldierSelecting());
+        this.setNumberOfRelatedSoldiers(abilityHandler.getNumberOfRelatedSoldiers());
+        this.setNumberOfGrades(abilityHandler.getNumberOfGrades());
         this.setCurrentGrade(0);
         this.setFieldOfEffecting(abilityHandler.getFieldOfEffecting());
-        this.setGlobal(abilityHandler.isGlobal());
         this.setHasCondition(abilityHandler.isHasCondition());
-        this.setNumberOfGrades(abilityHandler.getNumberOfGrades());
-        this.setNumberOfRelatedSoldiers(abilityHandler.getNumberOfRelatedSoldiers());
-        this.setOwnerName(abilityHandler.getOwnerName());
-        this.setRandomSoldierSelecting(abilityHandler.isRandomSoldierSelecting());
+        this.setCostOfUpgrade(abilityHandler.getCostOfUpgrade());
+        this.setNameOfNecessaryAbilities(abilityHandler.getNameOfNecessaryAbilities());
+        this.setGradeOfNecessaryAbilities(abilityHandler.getGradeOfNecessaryAbilities());
     }
 
 
