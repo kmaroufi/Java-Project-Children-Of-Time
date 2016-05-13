@@ -106,7 +106,12 @@ public class Property<E> {
             else {
                 this.calculateProperty(owner);
             }
-            this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.totalEffectOnProperty);
+            if (this.valueOfEffectingOnEffectedSoldiers.containsKey(relatedSoldier)) {
+                this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier) + this.totalEffectOnProperty);
+            }
+            else {
+                this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.totalEffectOnProperty);
+            }
             if (type.equals("int")) {
                 field.set(relatedSoldier, (Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
             }

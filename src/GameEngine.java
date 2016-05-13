@@ -193,7 +193,7 @@ public class GameEngine {
             Display.printInEachLine("Energy points: " + this.listOfHeroes.get(i).getCurrentEnergyPoint());
             Display.printInEachLine("Attack power: " + this.listOfHeroes.get(i).getAttackPower());
             for(int j = 0;j < this.listOfHeroes.get(i).getSkills().size();j++){
-                Display.printInEachLine(this.listOfHeroes.get(i).getSkills().get(j).getName() + " " + this.listOfHeroes.get(i).getSkills().get(j).getProperties().get(0).showCurrentUpgradeNumber());
+                Display.printInEachLine(this.listOfHeroes.get(i).getSkills().get(j).getName() + " " + this.listOfHeroes.get(i).getSkills().get(j).getPropertiesOfRelatedSoldiers().get(0).showCurrentUpgradeNumber());
             }
         }
 
