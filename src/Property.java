@@ -1,4 +1,5 @@
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,13 +24,13 @@ public class Property<E> {
     private double[] healthRefillRateCoefficient;
     private double[] magicRefillRateCoefficient;
 
-    private Map<E, Double> valueOfEffectingOnEffectedSoldiers;
+    private Map<E, Double> valueOfEffectingOnEffectedSoldiers = new HashMap<>();
 
     //-------------------------------------------------------------- Constructors
 
     public Property(PropertyHandler propertyHandler) {
-        setNumberOfUpgrades(propertyHandler.getNumberOfUpgrades());
         setName(propertyHandler.getName());
+        setNumberOfUpgrades(propertyHandler.getNumberOfUpgrades());
         setCurrentGrade(0);
         setDependOnEffectedSoldier(propertyHandler.isDependOnEffectedSoldier());
         setDependOnUserHero(propertyHandler.isDependOnUserHero());
