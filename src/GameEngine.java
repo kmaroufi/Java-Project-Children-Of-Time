@@ -360,27 +360,28 @@ public class GameEngine {
             setEnemies(i + 1);
             this.showBattleMessage(i + 1);                                  // Showing The Story Of Game
             Display.printInEachLine("#######################################");
+            this.showHeroTeamDescription();                                 // Showing The Hero Team Description
+            Display.printInEachLine("#######################################");
             this.showEnemyTeamDescription();                                // Showing The Enemy Team Description
             Display.printInEachLine("#######################################");
-            this.showHeroTeamDescription();
-            Display.printInEachLine("#######################################");
-            Display.printInEachLine("Your current experience is : " + this.player.getXp());
-            Display.printInEachLine("#######################################");
-            Shop.showItems();
-            for(Hero hero : this.listOfHeroes){
-                hero.showItems();
-            }
-            Display.printInEachLine("Your current wealth is: " + player.getMoney());
+//            Display.printInEachLine("Your current experience is : " + this.player.getXp());
+//            Display.printInEachLine("#######################################");
+//            Shop.showItems();
+//            for(Hero hero : this.listOfHeroes){
+//                hero.showItems();
+//            }
+//            Display.printInEachLine("Your current wealth is: " + player.getMoney());
             while(true){
+                Display.printf("Enter Your Command:");
                 String command = Display.getString();
                 for(Item item: Shop.listOfItems){
-                    if(command.equalsIgnoreCase(item.getName() + "?")){
+                    if(command.equalsIgnoreCase(item.getName() + "?")){                 //(item name) + “?”
                         item.getDescription();
                         break;
                     }
                     if(command.contains("Buy " + item.getName() + " for ") || command.contains("Sell " + item.getName() + " of ")){
                         for(Hero hero : this.listOfHeroes){
-                            if(command.equals("Buy " + item.getName() + " for " + hero.getName())){
+                            if(command.equals("Buy " + item.getName() + " for " + hero.getName())){ //“Buy “ + (item name) + “ for “ + (hero name)
                                 if(hero.getInventorySize() < item.getSize()){
                                     Display.printInEachLine(hero.getName() + "'s inventory is full");
                                 }
@@ -393,10 +394,10 @@ public class GameEngine {
                                 }
 
                             }
-                            else if(command.equals("Sell " + item.getName() + " of " + hero.getName())){    //(item name) + “ successfully sold, your current wealth is: “ + (current money)
+                            else if(command.equals("Sell " + item.getName() + " of " + hero.getName())){//“Sell “ + (item name) + “ of” + (hero name)
                                 if(hero.hasItem(item)) {
                                     this.player.setMoney(this.player.getMoney() + (item.getRequiredMoney() / 2));
-                                    Display.printInEachLine(item.getName() + " successfully sold, your current wealth is: " + player.getMoney());
+                                    Display.printInEachLine(item.getName() + " successfully sold, your current wealth is: " + player.getMoney());//(item name) + “ successfully sold, your current wealth is: “ + (current money)
                                 }
                                 else{
                                     Display.printInEachLine(hero.getName() + "hasn't this item");
@@ -436,12 +437,7 @@ public class GameEngine {
                         }
                     }
                 }
-                if(command.equals("Shop!")){                // Correct it!
-                    // buy from shop
-                    //if buy or sell                    hasBoughtInShop = true;
-                }
-
-                for(Hero hero: this.listOfHeroes){
+                for(Hero hero: this.listOfHeroes){      //(hero name) + “?”
                     if(command.equalsIgnoreCase(hero.getName() + "?")){
                         hero.showDescription();
                         break;
@@ -450,9 +446,10 @@ public class GameEngine {
                 for(Hero hero: this.listOfHeroes){
                     if(command.contains(hero.getName())){
                         for(Skill skill:hero.getSkills()){
-                            if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName())){
-                                skill.getDescription();
-                                Display.printInEachLine("You need " + skill.getRequiredExperience() + " experience points");
+                            if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName() + "?")){//(hero name) + “ “ +(ability name) + "?"
+                                Display.printInEachLine(skill.getDescription());
+                                Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade()]);
+                                Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
                                 break;
                             }
                         }
@@ -471,14 +468,7 @@ public class GameEngine {
 
     private void showHeroTeamDescription() {
         for(int i = 0;i < this.listOfHeroes.size();i++){
-            Display.printInEachLine(this.listOfHeroes.get(i).getName());
-            Display.printInEachLine("Health: " + this.listOfHeroes.get(i).getCurrentHealth() + " / " + this.listOfHeroes.get(i).getMaximumHealth());
-            Display.printInEachLine("Magic: " + this.listOfHeroes.get(i).getCurrentMagic() + " / " + this.listOfHeroes.get(i).getMaximumMagic());
-            Display.printInEachLine("Energy points: " + this.listOfHeroes.get(i).getCurrentEnergyPoint());
-            Display.printInEachLine("Attack power: " + this.listOfHeroes.get(i).getAttackPower());
-            for(int j = 0;j < this.listOfHeroes.get(i).getSkills().size();j++){
-                Display.printInEachLine("");
-            }
+            Display.printInEachLine(this.listOfHeroes.get(i).getName() + " (" + this.listOfHeroes.get(i).getClassName() + ")");
         }
 
     }
@@ -575,21 +565,26 @@ public class GameEngine {
     public void showBattleMessage(int numberOfBattle){
         switch(numberOfBattle){
             case 1:
+                Display.printInEachLine("Welcome ,"+ this.player.getName());
                 Display.printInEachLine("You’ve entered the castle, it takes a while for your eyes to get used to the darkness but the horrifying halo of your enemies is vaguely visible. Angel’s unsettling presence and the growling of thugs tell you that your first battle has BEGUN!");
-                break;
-            case 2:
+                Display.printInEachLine("################################################################");
+                Display.printInEachLine("Battle 1:");
                 Display.printInEachLine("As you wander into the hall you realize the surrounding doors can lead your destiny to something far worse than you expected. You know what’s anticipating you behind the only open door but there’s no other choice.");
                 break;
-            case 3:
+            case 2:
+                Display.printInEachLine("Battle 2:");
                 Display.printInEachLine("The door behind you is shut with a thunderous sound and you progress into the next hall holding the first key that you’ve found, hoping to seek the second one.");
                 break;
-            case 4:
+            case 3:
+                Display.printInEachLine("Battle 3:");
                 Display.printInEachLine("Running with the second key in your hand, you unlock the door back to the first hall and use the first key to burst into your most terrifying nightmares.");
                 break;
-            case 5:
+            case 4:
+                Display.printInEachLine("Battle 4:");
                 Display.printInEachLine("You feel hopeless and exhausted as you stalk to the final door. What’s behind that door makes your hearts pound and your spines shake with fear, but you came here to do one thing and backing down is not an option.");
                 break;
-            case 6:
+            case 5:
+                Display.printInEachLine("Battle 5:");
                 Display.printInEachLine("The collector falls down on his knees, he’s strained and desperate but still tries to drag himself toward Epoch. He knows his era has come to an end. The ancient time machine calls you to end the disorder and bring unity under its glorious wings, now it’s your turn to be the MASTERS OF TIME!");
                 break;
         }

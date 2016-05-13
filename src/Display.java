@@ -46,40 +46,40 @@ public class Display {
     }
 
 
-    public static PropertyHandler getProperty() {
-        PropertyHandler propertyHandler = new PropertyHandler();
+//    public static PropertyHandler getProperty() {
+//        PropertyHandler propertyHandler = new PropertyHandler();
+//
+//        return propertyHandler;
+//    }
 
-        return propertyHandler;
-    }
-
-    public static AbilityHandler getAbility() {
-        AbilityHandler abilityHandler = new AbilityHandler();
-
-        return abilityHandler;
-    }
-
-    public static SkillHandler getSkill() {
-        SkillHandler skillHandler = new SkillHandler();
-
-        return skillHandler;
-    }
-
-    public static PerkHandler getPerk() {
-        PerkHandler perkHandler = new PerkHandler();
-
-        return perkHandler;
-    }
-
-    public static PerkModeHandler getPerkMode() {
-        PerkModeHandler perkModeHandler = new PerkModeHandler();
-        return perkModeHandler;
-    }
-
-    public static ConditionHandler getCondition() {
-        ConditionHandler conditionHandler = new ConditionHandler();
-
-        return conditionHandler;
-    }
+//    public static AbilityHandler getAbility() {
+//        AbilityHandler abilityHandler = new AbilityHandler();
+//
+//        return abilityHandler;
+//    }
+//
+//    public static SkillHandler getSkill() {
+//        SkillHandler skillHandler = new SkillHandler();
+//
+//        return skillHandler;
+//    }
+//
+//    public static PerkHandler getPerk() {
+//        PerkHandler perkHandler = new PerkHandler();
+//
+//        return perkHandler;
+//    }
+//
+//    public static PerkModeHandler getPerkMode() {
+//        PerkModeHandler perkModeHandler = new PerkModeHandler();
+//        return perkModeHandler;
+//    }
+//
+//    public static ConditionHandler getCondition() {
+//        ConditionHandler conditionHandler = new ConditionHandler();
+//
+//        return conditionHandler;
+//    }
 
     public static void printf(String sentence){
         System.out.printf(sentence);
