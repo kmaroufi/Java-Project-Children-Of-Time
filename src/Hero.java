@@ -70,7 +70,7 @@ public class Hero extends HeroClass {
     public void upgradeAbility(String abilityName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
             if(this.skills.get(i).getName().equals(abilityName)){
-                this.skills.get(i).upgrade();
+                this.skills.get(i).upgrade(this);
                 return;
             }
         }

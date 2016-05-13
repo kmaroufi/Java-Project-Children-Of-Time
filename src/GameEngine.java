@@ -92,18 +92,30 @@ public class GameEngine {
             Angel angel = new Angel("Weak");
             Tank tank = new Tank("Weak");
             FinalBoss finalBoss = new FinalBoss();
+            this.listOfEnemies.add(thug);
+            this.listOfEnemies.add(angel);
+            this.listOfEnemies.add(tank);
+            this.listOfEnemies.add(finalBoss);
         }
         else if(this.getLevelOfGame().equals("Medium")){
             Thug thug = new Thug("Able");
             Angel angel = new Angel("Able");
             Tank tank = new Tank("Able");
             FinalBoss finalBoss = new FinalBoss();
+            this.listOfEnemies.add(thug);
+            this.listOfEnemies.add(angel);
+            this.listOfEnemies.add(tank);
+            this.listOfEnemies.add(finalBoss);
         }
         else if(this.getLevelOfGame().equals("Hard")){
             Thug thug = new Thug("Mighty");
             Angel angel = new Angel("Able");
             Tank tank = new Tank("Able");
             FinalBoss finalBoss = new FinalBoss();
+            this.listOfEnemies.add(thug);
+            this.listOfEnemies.add(angel);
+            this.listOfEnemies.add(tank);
+            this.listOfEnemies.add(finalBoss);
         }
         //Adding Abilities
 
@@ -144,11 +156,59 @@ public class GameEngine {
     public void doCampaign(){                                       // do Campaign Game (not Custom Game)
         this.addDefaultAttributes("");                                // player's name
         for(int i = 0;i < 5;i++){
+            boolean hasBoughtInShop = false;
             this.showBattleMessage(i + 1);
-            //Do Battle - move - ...
+            Display.printInEachLine("#######################################");
+            this.showEnemyTeamDescription();
+            this.showHeroTeamDescription();
+            while(true){
+                String command = Display.getString();
+                if(command.equals("Shop!")){                // Correct it!
+                    // buy from shop
+                    //if buy or sell                    hasBoughtInShop = true;
+                }
+
+                for(Hero hero: this.listOfHeroes){
+                    if(command.equalsIgnoreCase(hero.getName() + "?")){
+                        hero.showDescription();
+                        break;
+                    }
+                }
+                for(Enemy enemy : this.listOfEnemies){
+                    if(command.equalsIgnoreCase(enemy.getName() + "?")){
+                        enemy.showDescription();
+                        break;
+                    }
+                }
+
+            }
         }
     }
 
+    private void showHeroTeamDescription() {
+        for(int i = 0;i < this.listOfHeroes.size();i++){
+            Display.printInEachLine(this.listOfHeroes.get(i).getName());
+            Display.printInEachLine("Health: " + this.listOfHeroes.get(i).getCurrentHealth() + " / " + this.listOfHeroes.get(i).getMaximumHealth());
+            Display.printInEachLine("Magic: " + this.listOfHeroes.get(i).getCurrentMagic() + " / " + this.listOfHeroes.get(i).getMaximumMagic());
+            Display.printInEachLine("Energy points: " + this.listOfHeroes.get(i).getCurrentEnergyPoint());
+            Display.printInEachLine("Attack power: " + this.listOfHeroes.get(i).getAttackPower());
+            for(int j = 0;j < this.listOfHeroes.get(i).getSkills().size();j++){
+                Display.printInEachLine(this.listOfHeroes.get(i).getSkills().get(j).getName() + " " + this.listOfHeroes.get(i).getSkills().get(j).getProperties());
+            }
+            for(int j = 0;j < this.listOfHeroes.get(i).getItems().size();j++){
+                Display.printInEachLine("Can Use " + this.listOfHeroes.get(i).getItems().get(i).getName() + " for " + this.listOfHeroes.get(i).getItems().get(i).getRequiredEnergyPoint() + " energy points, " + this.items.get(i).getRequiredMagicPoint() + " magic points and a " + this.items.get(i).getCooldown()+ " turn cooldown");
+            }
+        }
+
+    }
+
+    public void showEnemyTeamDescription(){
+        for(int i = 0;i < 4;i++){
+            int count = 0;
+
+
+        }
+    }
     public void addNewHeroClass(HeroClass heroClass) {
         if(isCustomGame){
             //Creating A new Hero Class

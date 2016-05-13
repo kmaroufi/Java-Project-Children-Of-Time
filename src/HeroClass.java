@@ -98,6 +98,11 @@ public class HeroClass extends Soldier{
         this.setMagicRefillRate(heroClass.getMagicRefillRate());
 
     }
+
+    //-------------------------------------------------- Functions
+    public void showDescription(){
+        Display.printInEachLine("Kooft!");
+    }
     //-------------------------------------------------- Getter && Setters
 
     public String getName() {

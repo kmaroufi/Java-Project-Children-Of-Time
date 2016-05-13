@@ -32,7 +32,7 @@ public class Skill extends Ability{
         if ((this.remainingTime == 0) || ((this.remainingTime != 0) && (this.casStackUp))) {
         }
     };
-
+    public void ShowNumberOfUpgrade(){}
     public void choosingRelatedSoldiers() {
         if (this.hasEffectedOnEnemy) {
             if (this.isRandomSoldierSelecting) {
