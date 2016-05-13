@@ -33,10 +33,6 @@ public class Skill extends Ability{
         }
     };
 
-    public void upgrade() {
-        //TODO
-    }
-
     public void choosingRelatedSoldiers() {
         if (this.hasEffectedOnEnemy) {
             if (this.isRandomSoldierSelecting) {

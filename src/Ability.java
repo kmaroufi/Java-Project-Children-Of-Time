@@ -20,6 +20,8 @@ public abstract class Ability<T> {
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean hasCondition;
     private int[] costOfUpgrade;
+    private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
+    private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
     public static Map<String, String> listOfAbilities;
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
@@ -43,7 +45,27 @@ public abstract class Ability<T> {
     }
     //-------------------------------------------------------- Functions
 
-    abstract public void upgrade();
+    public void upgrade(Player player) {
+
+        if (this.currentGrade == this.numberOfGrades)
+            return;
+
+        for (String nameOfAbility: this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
+            if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
+                Skill skill = Skill.listOfSkills.get(nameOfAbility);
+                if (skill.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
+                    return;
+            }
+            if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
+                Perk perk = Perk.listOfPerks.get(nameOfAbility);
+                if (perk.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
+                    return;
+            }
+        }
+
+        this.currentGrade += 1;
+        player.setXp(player.getXp() - this.costOfUpgrade[this.currentGrade]);
+    }
 
     //-------------------------------------------------------- Getter And Setters
 

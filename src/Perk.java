@@ -14,7 +14,6 @@ public class Perk<E> extends Ability{
     private boolean isConditionDependOnUserHero;
     private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
 
-    public void upgrade() {};
 
     private Condition validCondition(E relatedSoldier) {
         for (Condition condition: this.listOfCondition) {
