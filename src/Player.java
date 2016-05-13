@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
 
+    private static int imortalityPotion = 3;
     private ArrayList<Hero> listOfHeros;
     private int xp;
     private double money;
@@ -18,6 +19,15 @@ public class Player {
         this.setMoney(money);
     }
     //----------------------------------------------- Functions
+    public void useImortalityPotion(Hero hero){
+        if(this.imortalityPotion > 0) {
+            this.imortalityPotion -= 1;
+            Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + imortalityPotion + " immortality potions left");
+        }
+        else{
+            Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!”");
+        }
+    }
     public void doBattle() {
         //TODO
     }
@@ -58,5 +68,6 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+
 
 }
