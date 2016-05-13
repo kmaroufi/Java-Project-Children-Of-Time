@@ -48,7 +48,7 @@ public class GameEngine {
             hero.showItems();
         }
         Display.printInEachLine("Your current wealth is:" + this.player.getMoney());
-        Display.printf("Enter Your Command:(type 'Next' For Next Step!");
+        Display.printf("Enter Your Command:(type 'Next' For Next Step!)");
         String command = Display.getString();
         for(Item item: Shop.listOfItems){
             if(command.equalsIgnoreCase(item.getName() + "?")){                 //(item name) + “?”
@@ -799,6 +799,7 @@ public class GameEngine {
             for(Enemy enemy: this.listOfEnemies){
                 enemy.showDescription();
             }
+            int numberOfAttacks = 0;
             while(true){
                 Display.printInEachLine("Enter Your Command:");
                 String command = Display.getString();
@@ -814,6 +815,21 @@ public class GameEngine {
                                 Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade()]);
                                 Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
                                 break;
+                            }
+                        }
+                        for(Enemy enemy : listOfEnemies){
+                            if(command.equalsIgnoreCase(hero.getName() + " attack " + enemy.getName())){
+                                hero.attack(enemy);
+                                numberOfAttacks++;
+                                Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + hero.getAttackPower() + " power");
+                                if(enemy.isDead()){
+                                    this.listOfEnemies.remove(enemy);
+                                    Display.printInEachLine(enemy.getName() + " has died!");
+                                }
+                                if(listOfEnemies.size() == 0){
+                                    Display.printInEachLine("Victory! You’ve defeated all of your enemies");
+                                    return;
+                                }
                             }
                         }
                     }
@@ -903,7 +919,23 @@ public class GameEngine {
                         break;
                     }
                 }
-
+                if(numberOfAttacks == this.listOfHeroes.size()){
+                    for(Enemy enemy : this.listOfEnemies){
+                        enemy.doTurn();
+                        for(Hero hero : this.listOfHeroes){
+                            if(hero.isDead()){
+                                if(Player.imortalityPotion > 0){
+                                    Player.imortalityPotion--;
+                                    Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " +Player.imortalityPotion + "immortality potions left");
+                                }
+                                else {
+                                    Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
+                                    this.listOfHeroes.remove(hero);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -13,7 +13,7 @@ public class Display {
     //----------------------------------
 
     public static String getString(){
-        return cin.next();
+        return cin.nextLine();
     }
 
     public static int getInteger(){
