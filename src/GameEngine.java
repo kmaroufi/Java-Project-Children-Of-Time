@@ -9,12 +9,12 @@ import java.util.StringJoiner;
 public class GameEngine {
     private Player player;
     private boolean isCustomGame = false;
-    public static ArrayList<Enemy> listOfEnemies = new ArrayList<Enemy>();
-    public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
-    public static ArrayList<Hero> listOfHeroes = new ArrayList<Hero>();
-    public static ArrayList<Skill> listOfSkills = new ArrayList<Skill>();
-    public static ArrayList<Perk> listOfPerks = new ArrayList<Perk>();
-    public static ArrayList<Shop> shops = new ArrayList<Shop>();
+    public static ArrayList<Enemy> listOfEnemies = new ArrayList<>();
+    public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<>();
+    public static ArrayList<Hero> listOfHeroes = new ArrayList<>();
+    public static ArrayList<Skill> listOfSkills = new ArrayList<>();
+    public static ArrayList<Perk> listOfPerks = new ArrayList<>();
+    public static ArrayList<Shop> shops = new ArrayList<>();
     private int NumberOfBattle;                     // which battle we are in(1-2-3-4-5)
     private String levelOfGame;                     // level of Game(Easy-Medium-Hard)
 
