@@ -22,6 +22,7 @@ public class Player {
     public void useImortalityPotion(Hero hero){
         if(this.imortalityPotion > 0) {
             this.imortalityPotion -= 1;
+            hero.setCurrentHealth(hero.getMaximumHealth());
             Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + imortalityPotion + " immortality potions left");
         }
         else{

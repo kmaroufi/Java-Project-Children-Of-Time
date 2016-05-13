@@ -16,7 +16,6 @@ public abstract class Enemy extends Soldier{
     }
 
     //---------------------------------------------------- Functions
-
     public void showDescription(){
         Display.printInEachLine(this.getName());
         Display.printInEachLine("Health: " + this.getCurrentHealth() + " / " + this.getMaximumHealth());
