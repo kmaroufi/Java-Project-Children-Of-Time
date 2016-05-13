@@ -5,16 +5,18 @@ import java.util.Random;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Skill extends Ability{
+public class Skill<E> extends Ability{
     public static Map<String, Skill> listOfSkills;
-    private ArrayList<Property> properties;
+    private ArrayList<Property> propertiesOfRelatedSoldiers;
+    private Property propertiesOfUser;
+    protected Map<E, Time> mapOfEffectedSoldiers;
     private int nonTargetedEnemy;
     private boolean isRepeated;
-    private Time time;
-    private Time remainingTime;
+    private Time timeOfEffecting;
+    private ArrayList<String> blackList;
     private int cooldown;
-    private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private int remainingCooldown;
+    private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private boolean canStackUp;                                 // What is this Shit?
     private boolean isUsed;
     private int requiredEnergyPoint;
@@ -23,18 +25,44 @@ public class Skill extends Ability{
 
     //---------------------------------------------------------------- Functions
     public boolean isActivated() {
-        //TODO
-        return false;
+       return false;
     }
 
-    public void useSkill() {
+    public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero) {
         if (this.remainingCooldown != 0) {
             return;
         }
-        if ((this.remainingTime.isTimePassed()) || ((this.remainingTime.isTimePassed() == false) && (this.canStackUp))) {
+        for (E soldier: relatedSoldiers) {
+            if (this.effectedSoldiers.contains(soldier) && (this.canStackUp == false))
+                continue;
+            for (Property property: this.propertiesOfRelatedSoldiers) {
+                property.effect(soldier, Hero.mapOfHeroes.get(this.ownerName), userHero);
+            }
+            this.effectedSoldiers.add(soldier);
+            this.mapOfEffectedSoldiers.put(soldier, new Time(this.timeOfEffecting));
+        }
+        if (this.propertiesOfUser != null)
+            this.propertiesOfUser.effect(userHero, Hero.mapOfHeroes.get(this.ownerName), userHero);
+        this.remainingCooldown = this.cooldown;
+    }
 
+    public void removeEffect() {
+        ArrayList<Integer> indexOfRemovedSoldiers = new ArrayList<>();
+        for (int i = 0; i < this.effectedSoldiers.size(); i++) {
+            E soldier = (E) this.effectedSoldiers.get(i);
+            if (this.mapOfEffectedSoldiers.get(soldier).isTimePassed()) {
+                for (Property property: this.propertiesOfRelatedSoldiers) {
+                    property.removeEffect(soldier);
+                }
+                indexOfRemovedSoldiers.add(new Integer(i));
+                this.mapOfEffectedSoldiers.remove(soldier);
+            }
+        }
+        for (int index: indexOfRemovedSoldiers) {
+            this.effectedSoldiers.remove(index);
         }
     }
+
 
     public void choosingRelatedSoldiers(Enemy enemy,Hero hero) {
         this.relatedSoldiers.clear();
@@ -63,7 +91,7 @@ public class Skill extends Ability{
                 }
             }
             else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-                ArrayList<String> nameOfEnemies = Display.getAbilityDetailsBeforeUsing();
+                ArrayList<String> nameOfEnemies = Display.getAbilityDetailsBeforeUsing(this.blackList);
                 for (String nameOfEnemy: nameOfEnemies) {
                     this.relatedSoldiers.add(Enemy.mapOfEnemies.get(nameOfEnemy));
                 }
@@ -83,7 +111,7 @@ public class Skill extends Ability{
                 }
             }
             else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-                ArrayList<String> nameOfHeroes = Display.getAbilityDetailsBeforeUsing();
+                ArrayList<String> nameOfHeroes = Display.getAbilityDetailsBeforeUsing(this.blackList);
                 for (String nameOfHero: nameOfHeroes) {
                     this.relatedSoldiers.add(Hero.mapOfHeroes.get(nameOfHero));
                 }
@@ -95,12 +123,12 @@ public class Skill extends Ability{
     }
     //---------------------------------------------------- Getter && Setters
 
-    public ArrayList<Property> getProperties() {
-        return properties;
+    public ArrayList<Property> getPropertiesOfRelatedSoldiers() {
+        return propertiesOfRelatedSoldiers;
     }
 
-    public void setProperties(ArrayList<Property> properties) {
-        this.properties = properties;
+    public void setPropertiesOfRelatedSoldiers(ArrayList<Property> propertiesOfRelatedSoldiers) {
+        this.propertiesOfRelatedSoldiers = propertiesOfRelatedSoldiers;
     }
 
     public int getNonTargetedEnemy() {
@@ -159,20 +187,12 @@ public class Skill extends Ability{
         this.requiredMagicPoint = requiredMagicPoint;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getTimeOfEffecting() {
+        return timeOfEffecting;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    public Time getRemainingTime() {
-        return remainingTime;
-    }
-
-    public void setRemainingTime(Time remainingTime) {
-        this.remainingTime = remainingTime;
+    public void setTimeOfEffecting(Time timeOfEffecting) {
+        this.timeOfEffecting = timeOfEffecting;
     }
 
     public boolean isDependsRelatedSoldiersSelectingOnPlayer() {

@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -84,7 +85,7 @@ public class Display {
         System.out.printf(sentence);
     }
 
-    public static ArrayList<String> getAbilityDetailsBeforeUsing() {
+    public static ArrayList<String> getAbilityDetailsBeforeUsing(ArrayList<String> blackList) {
         return null;
     }
 
