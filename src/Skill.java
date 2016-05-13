@@ -19,6 +19,7 @@ public class Skill extends Ability{
     private boolean isUsed;
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
+    private int requiredExperience;
 
     //---------------------------------------------------------------- Functions
     public boolean isActivated() {
@@ -156,6 +157,46 @@ public class Skill extends Ability{
 
     public void setRequiredMagicPoint(int requiredMagicPoint) {
         this.requiredMagicPoint = requiredMagicPoint;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public Time getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(Time remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public boolean isDependsRelatedSoldiersSelectingOnPlayer() {
+        return isDependsRelatedSoldiersSelectingOnPlayer;
+    }
+
+    public void setDependsRelatedSoldiersSelectingOnPlayer(boolean dependsRelatedSoldiersSelectingOnPlayer) {
+        isDependsRelatedSoldiersSelectingOnPlayer = dependsRelatedSoldiersSelectingOnPlayer;
+    }
+
+    public boolean isCanStackUp() {
+        return canStackUp;
+    }
+
+    public void setCanStackUp(boolean canStackUp) {
+        this.canStackUp = canStackUp;
+    }
+
+    public int getRequiredExperience() {
+        return requiredExperience;
+    }
+
+    public void setRequiredExperience(int requiredExperience) {
+        this.requiredExperience = requiredExperience;
     }
 
 }

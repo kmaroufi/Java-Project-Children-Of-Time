@@ -11,14 +11,14 @@ public class AbilityHandler<T> {
     private boolean isGlobal;
     private boolean hasEffectedOnEnemy;
     private boolean isRandomSoldierSelecting;
-    private int numberOfRelatedSoldiers;
+    private int numberOfRelatedSoldiers;                // soldiers under effect of this ability
     private int numberOfGrades;
     private int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean isPermanently;
     private boolean isEffectDuringAttack;
     private boolean hasCondition;
-    private int[] costOfUpgrade;
+    private int[] costOfUpgrade;                //cost of it per Upgrade
 
     //---------------------------------------------------------------- Getter && Setters
 

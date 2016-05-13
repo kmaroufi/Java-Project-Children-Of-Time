@@ -15,6 +15,7 @@ public abstract class Ability<T> {
     protected boolean hasEffectedOnEnemy;
     protected boolean isRandomSoldierSelecting;
     protected int numberOfRelatedSoldiers;
+    protected String description;
     private int numberOfGrades;
     private int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
@@ -68,6 +69,15 @@ public abstract class Ability<T> {
     }
 
     //-------------------------------------------------------- Getter And Setters
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public boolean isGlobal() {
         return isGlobal;

@@ -153,14 +153,18 @@ public class GameEngine {
         }
     }
 
-    public void doCampaign(){                                       // do Campaign Game (not Custom Game)
-        this.addDefaultAttributes("");                                // player's name
+    public void doCampaign(){                                               // do Campaign Game (not Custom Game)
+        this.addDefaultAttributes("");                                      // player's name
         for(int i = 0;i < 5;i++){
             boolean hasBoughtInShop = false;
-            this.showBattleMessage(i + 1);
+            this.showBattleMessage(i + 1);                                  // Showing The Story Of Game
             Display.printInEachLine("#######################################");
-            this.showEnemyTeamDescription();
+            this.showEnemyTeamDescription();                                // Showing The Enemy Team Description
+            Display.printInEachLine("#######################################");
             this.showHeroTeamDescription();
+            Display.printInEachLine("#######################################");
+            Display.printInEachLine("Your current experience is : " + this.player.getXp());
+            Display.printInEachLine("#######################################");
             while(true){
                 String command = Display.getString();
                 if(command.equals("Shop!")){                // Correct it!
@@ -172,6 +176,17 @@ public class GameEngine {
                     if(command.equalsIgnoreCase(hero.getName() + "?")){
                         hero.showDescription();
                         break;
+                    }
+                }
+                for(Hero hero: this.listOfHeroes){
+                    if(command.contains(hero.getName())){
+                        for(Skill skill:hero.getSkills()){
+                            if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName())){
+                                skill.getDescription();
+                                Display.printInEachLine("You need " + skill.getRequiredExperience() + " experience points");
+                                break;
+                            }
+                        }
                     }
                 }
                 for(Enemy enemy : this.listOfEnemies){
@@ -193,7 +208,7 @@ public class GameEngine {
             Display.printInEachLine("Energy points: " + this.listOfHeroes.get(i).getCurrentEnergyPoint());
             Display.printInEachLine("Attack power: " + this.listOfHeroes.get(i).getAttackPower());
             for(int j = 0;j < this.listOfHeroes.get(i).getSkills().size();j++){
-                Display.printInEachLine(this.listOfHeroes.get(i).getSkills().get(j).getName() + " " + this.listOfHeroes.get(i).getSkills().get(j).getProperties().get(0).showCurrentUpgradeNumber());
+                Display.printInEachLine("");
             }
         }
 
@@ -206,6 +221,7 @@ public class GameEngine {
 
         }
     }
+
     public void addNewHeroClass(HeroClass heroClass) {
         if(isCustomGame){
             //Creating A new Hero Class

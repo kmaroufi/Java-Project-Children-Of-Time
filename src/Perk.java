@@ -14,6 +14,13 @@ public class Perk<E> extends Ability{
     private boolean isConditionDependOnUserHero;
     private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
 
+    //---------------------------------------------------------- Constructors
+    public Perk(){
+
+    }
+
+    //---------------------------------------------------------- Functions
+
 
     private Condition validCondition(E relatedSoldier) {
         for (Condition condition: this.listOfCondition) {
@@ -84,5 +91,62 @@ public class Perk<E> extends Ability{
             return;
         }
         this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
+    }
+    //---------------------------------------------------------- Getter && Setters
+
+    public ArrayList<Condition> getListOfCondition() {
+        return listOfCondition;
+    }
+
+    public void setListOfCondition(ArrayList<Condition> listOfCondition) {
+        this.listOfCondition = listOfCondition;
+    }
+
+    public ArrayList<PerkMode> getListOfModes() {
+        return listOfModes;
+    }
+
+    public void setListOfModes(ArrayList<PerkMode> listOfModes) {
+        this.listOfModes = listOfModes;
+    }
+
+    public Map<Condition, PerkMode> getMapOfCondition() {
+        return mapOfCondition;
+    }
+
+    public void setMapOfCondition(Map<Condition, PerkMode> mapOfCondition) {
+        this.mapOfCondition = mapOfCondition;
+    }
+
+    public Map<E, PerkMode> getMapOfRelatedSoldiers() {
+        return mapOfRelatedSoldiers;
+    }
+
+    public void setMapOfRelatedSoldiers(Map<E, PerkMode> mapOfRelatedSoldiers) {
+        this.mapOfRelatedSoldiers = mapOfRelatedSoldiers;
+    }
+
+    public boolean isConditionDependOnRelatedSoldier() {
+        return isConditionDependOnRelatedSoldier;
+    }
+
+    public void setConditionDependOnRelatedSoldier(boolean conditionDependOnRelatedSoldier) {
+        isConditionDependOnRelatedSoldier = conditionDependOnRelatedSoldier;
+    }
+
+    public boolean isConditionDependOnUserHero() {
+        return isConditionDependOnUserHero;
+    }
+
+    public void setConditionDependOnUserHero(boolean conditionDependOnUserHero) {
+        isConditionDependOnUserHero = conditionDependOnUserHero;
+    }
+
+    public String getTimeOfCheck() {
+        return timeOfCheck;
+    }
+
+    public void setTimeOfCheck(String timeOfCheck) {
+        this.timeOfCheck = timeOfCheck;
     }
 }
