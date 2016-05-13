@@ -27,9 +27,10 @@ public class Item {
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name,int size,int requiredEnergyPoint,int requiredMagicPoint,int cooldown){
+    public Item(String name,int size,int requiredMoney,int requiredEnergyPoint,int requiredMagicPoint,int cooldown){
         this.setName(name);
         this.setSize(size);
+        this.setRequiredMoney(requiredMoney);
         this.setRequiredEnergyPoint(requiredEnergyPoint);
         this.setRequiredMagicPoint(requiredMagicPoint);
         this.setCooldown(cooldown);

@@ -26,10 +26,18 @@ public class GameEngine {
             Display.printInEachLine("Magic: " + hero.getCurrentMagic() + " / " + hero.getMaximumMagic());
             Display.printInEachLine("Energy points: " + hero.getCurrentEnergyPoint());
             Display.printInEachLine("Attack power: " + hero.getAttackPower());
-            for(Skill skill : hero.skills){
-                Display.printInEachLine(skill.getDescription());
-                for(int i = 0;i < skill.getNumberOfGrades();i++){
-
+            for(Skill skill : hero.skills) {
+                try {
+                    Display.printInEachLine(skill.getDescription());
+                    for (int i = 0; i < skill.getNumberOfGrades(); i++) {
+                        try {
+                            Display.printInEachLine("Update " + (i + 1) + ": " + skill.getUpgradeDescription()[i]);
+                        } catch (Exception e) {
+                            continue;
+                        }
+                    }
+                } catch (Exception e) {
+                    continue;
                 }
             }
         }
@@ -249,15 +257,15 @@ public class GameEngine {
         //Adding Abilities
 
         //Adding Items
-        Item toughen = new Item();
-        Item guide = new Item();
-        Item defy = new Item();
-        Item sword = new Item();
-        Item energyBoots = new Item();
-        Item armor = new Item();
-        Item magicStick = new Item();
-        Item healthPotion = new Item();
-        Item magicPotion = new Item();
+        Item toughen = new Item("toughen",0,4,0,0,0);
+        Item guide = new Item("guide",0,4,0,0,0);
+        Item defy = new Item("defy",0,4,0,0,0);
+        Item sword = new Item("sword",0,25,0,0,0);
+        Item energyBoots = new Item("energyBoots",0,20,0,0,0);
+        Item armor = new Item("armor",0,25,0,0,0);
+        Item magicStick = new Item("magicStick",0,28,0,0,0);
+        Item healthPotion = new Item("healthPotion",0,15,0,0,0);
+        Item magicPotion = new Item("magicPotion",0,15,0,0,0);
         // Add Shop
         Shop shop = new Shop();
         Shop.listOfItems.add(toughen);
