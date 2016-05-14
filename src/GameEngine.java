@@ -200,10 +200,8 @@ public class GameEngine {
         eley.addSkill(Skill.listOfSkills.get("Overpowered attack"));
         eley.addPerk(Perk.listOfPerks.get("Swirling attack"));
         this.addNewHero(eley);
-        System.out.println(eley.getPerks().size());
         //Adding Chrome
         Hero chrome = new Hero("Chrome",fighterHandler);
-        System.out.println(fighterHandler.getPerks());
         chrome.addSkill(Skill.listOfSkills.get("Sacrifice"));
         chrome.addPerk(Perk.listOfPerks.get("Critical strike"));
         this.addNewHero(chrome);
