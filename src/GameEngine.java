@@ -264,7 +264,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health";
-            Item item = new Item("thoughan", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, false);
+            Item item = new Item("thoughan", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, false, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
@@ -277,7 +277,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic";
-            Item item = new Item("Guide", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, false);
+            Item item = new Item("Guide", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, false, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
@@ -290,7 +290,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power";
-            Item item = new Item("Defy", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, false);
+            Item item = new Item("Defy", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, false, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
@@ -303,7 +303,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars";
-            Item item = new Item("Sword", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true);
+            Item item = new Item("Sword", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
             shop.listOfItems.add(itemProperties);
         }
@@ -316,7 +316,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars";
-            Item item = new Item("Energy Boots", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true);
+            Item item = new Item("Energy Boots", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 20);
             shop.listOfItems.add(itemProperties);
         }
@@ -329,7 +329,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars";
-            Item item = new Item("Armor", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true);
+            Item item = new Item("Armor", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
             shop.listOfItems.add(itemProperties);
         }
@@ -342,7 +342,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars";
-            Item item = new Item("Magic stick", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true);
+            Item item = new Item("Magic stick", null, 0, true, 1, 1, 0, 0, description, false, 1, false, properties, true, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 28);
             shop.listOfItems.add(itemProperties);
         }
@@ -355,12 +355,12 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars";
-            Item item = new Item("Health potion", null, 1, false, 3, 3, 0, 0, description, true, 1, false, properties, false);
+            Item item = new Item("Health potion", null, 1, false, 3, 3, 0, 0, description, true, 1, false, properties, false, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
             shop.listOfItems.add(itemProperties);
         }
         {
-            // Health potion
+            // Magic potion
             double[] tmp = {0,0,0};
             double[] arr = {50,0,0};
             PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -368,7 +368,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars";
-            Item item = new Item("Magic potion", null, 1, false, 3, 3, 0, 0, description, true, 1, false, properties, false);
+            Item item = new Item("Magic potion", null, 1, false, 3, 3, 0, 0, description, true, 1, false, properties, false, 0);
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
             shop.listOfItems.add(itemProperties);
         }
@@ -876,7 +876,7 @@ public class GameEngine {
         }
     }
 
-    public void doCampaign(){                                               // do Campaign Game (not Custom Game)
+    public void doCampaign(int asb){                                               // do Campaign Game (not Custom Game)
         this.addDefaultAttributes();                                      // player's name
         for(int i = 0;i < 5;i++){
             setEnemies(i + 1);

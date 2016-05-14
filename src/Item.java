@@ -21,11 +21,14 @@ public class Item {
     private boolean isRandomSoldierSelecting;
     private ArrayList<Property<Hero>> properties;
     private boolean isTemporary;
+    private int cooldown;
+    private int remainingCooldown;
+    private double worth;
 
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int remainingTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary) {
+    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int remainingTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary, int cooldown) {
         this.name = name;
         this.ownerName = ownerName;
         this.size = size;
@@ -40,6 +43,9 @@ public class Item {
         this.isRandomSoldierSelecting = isRandomSoldierSelecting;
         this.properties = properties;
         this.isTemporary = isTemporary;
+        this.cooldown = cooldown;
+        this.remainingCooldown = 0;
+        this.worth = 0; // in field bayad dar moghe tahvile item be hero meghdardehi shavad.
     }
 
     //--------------------------------------------------- Functions
@@ -90,6 +96,30 @@ public class Item {
 
     //--------------------------------------------------- Getter && Setters
 
+
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public int getRemainingCooldown() {
+        return remainingCooldown;
+    }
+
+    public void setRemainingCooldown(int remainingCooldown) {
+        this.remainingCooldown = remainingCooldown;
+    }
+
+    public double getWorth() {
+        return worth;
+    }
+
+    public void setWorth(double worth) {
+        this.worth = worth;
+    }
 
     public boolean isTemporary() {
         return isTemporary;
