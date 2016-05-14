@@ -9,10 +9,14 @@ import java.util.Scanner;
 
 public class Display {
     private static Scanner cin = new Scanner(System.in);
+    private static String lastGet = new String();
 
     //----------------------------------
 
     public static String getString(){
+        if (Display.lastGet.equals("Integer") || Display.lastGet.equals("Double"))
+            cin.nextLine();
+        Display.lastGet = "String";
         return cin.nextLine();
     }
 
@@ -26,6 +30,7 @@ public class Display {
                 System.out.println("Wrong Input!");
             }
         }
+        Display.lastGet = "Integer";
         return i;
     }
 
@@ -39,6 +44,7 @@ public class Display {
                 System.out.println("Wrong Input!");
             }
         }
+        Display.lastGet = "Double";
         return i;    }
 
     public static void printInEachLine(String sentence){

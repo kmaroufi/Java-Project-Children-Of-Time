@@ -819,7 +819,7 @@ public class GameEngine {
         while(true) {
             Display.printInEachLine("Any Question?(If no type 'Next')");
             String command = Display.getString();
-            if (command.equalsIgnoreCase("next")) {
+            if (command.equalsIgnoreCase("Next")) {
                 return;
             }
             for (Hero hero : this.listOfHeroes) {      //(hero name) + “?”
