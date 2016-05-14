@@ -15,6 +15,7 @@ public class Item {
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
     private String Description;
+    private ArrayList<Hero> effectedSoldiers = new ArrayList<>();
     private ArrayList<Hero> relatedSoldiers = new ArrayList<>();
     private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private int numberOfRelatedSoldiers;
@@ -24,17 +25,18 @@ public class Item {
     private int cooldown;
     private int remainingCooldown;
     private double worth;
+    private boolean isDisappearAfterFullUse;
+    private boolean isAlive;
 
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int remainingTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary, int cooldown) {
+    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary, int cooldown, boolean isDisappearAfterFullUse) {
         this.name = name;
         this.ownerName = ownerName;
         this.size = size;
         this.isInstantlyUsed = isInstantlyUsed;
         this.maximumTimeOfUsed = maximumTimeOfUsed;
-        this.remainingTimeOfUsed = remainingTimeOfUsed;
         this.requiredEnergyPoint = requiredEnergyPoint;
         this.requiredMagicPoint = requiredMagicPoint;
         Description = description;
@@ -46,6 +48,8 @@ public class Item {
         this.cooldown = cooldown;
         this.remainingCooldown = 0;
         this.worth = 0; // in field bayad dar moghe tahvile item be hero meghdardehi shavad.
+        this.isDisappearAfterFullUse = isDisappearAfterFullUse;
+        this.isAlive = true;
     }
 
     //--------------------------------------------------- Functions
@@ -54,10 +58,41 @@ public class Item {
         //TODO
     }
 
-    public void useItem(String owner) {
+    public void useItem() {
+        if (this.remainingCooldown != 0)
+            return;
         for (Hero hero: this.relatedSoldiers) {
             for (Property property: this.properties) {
                 property.effect(relatedSoldiers, Hero.mapOfHeroes.get(this.ownerName), Hero.mapOfHeroes.get(this.ownerName));
+            }
+            this.effectedSoldiers.add(hero);
+        }
+        this.remainingTimeOfUsed--;
+        if (this.remainingTimeOfUsed == 0) {
+            if (this.isDisappearAfterFullUse) {
+                if (this.effectedSoldiers.size() == 0)
+                    this.isAlive = false;
+            }
+        }
+    }
+
+    public void removeEffect() {
+        ArrayList<Integer> indexOfRemovedSoldiers = new ArrayList<Integer>();
+        for (int i = 0; i < effectedSoldiers.size(); i++) {
+            Hero hero = effectedSoldiers.get(i);
+            for (Property property : this.properties) {
+                property.removeEffect(hero);
+            }
+            indexOfRemovedSoldiers.add(new Integer(i));
+        }
+        for (int index: indexOfRemovedSoldiers) {
+            this.effectedSoldiers.remove(index);
+        }
+
+        if (this.remainingTimeOfUsed == 0) {
+            if (this.isDisappearAfterFullUse) {
+                if (this.effectedSoldiers.size() == 0)
+                    this.isAlive = false;
             }
         }
     }
@@ -96,6 +131,22 @@ public class Item {
 
     //--------------------------------------------------- Getter && Setters
 
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public boolean isDisappearAfterFullUse() {
+        return isDisappearAfterFullUse;
+    }
+
+    public void setDisappearAfterFullUse(boolean disappearAfterFullUse) {
+        isDisappearAfterFullUse = disappearAfterFullUse;
+    }
 
     public int getCooldown() {
         return cooldown;
