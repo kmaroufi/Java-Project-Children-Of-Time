@@ -98,12 +98,13 @@ public class Hero extends HeroClass {
         Display.printInEachLine("Magic: " + this.getCurrentMagic() + " / " + this.getMaximumMagic());
         Display.printInEachLine("Energy points: " + this.getCurrentEnergyPoint());
         Display.printInEachLine("Attack power: " + this.getAttackPower());
+        for (Perk perk: this.perks) {
+            System.out.println(perk.getName());
+        }
         for(int i = 0;i < this.skills.size();i++){
-            try {
-                Display.printInEachLine("Can Cast" + this.skills.get(i).getName() + " for " + this.skills.get(i).getRequiredEnergyPoint() + " energy points, " + this.skills.get(i).getRequiredMagicPoint() + " magic points and a" + this.skills.get(i).getCooldown() + " turn cooldown");
-            }catch (Exception e){
+            if (this.skills.get(i).getCurrentGrade() == 0)
                 continue;
-            }
+            Display.printInEachLine("Can Cast " + this.skills.get(i).getName() + " for " + this.skills.get(i).getRequiredEnergyPoint()[this.skills.get(i).currentGrade - 1] + " energy points, " + this.skills.get(i).getRequiredMagicPoint()[this.skills.get(i).currentGrade - 1] + " magic points and a " + this.skills.get(i).getCooldown()[this.skills.get(i).currentGrade - 1] + " turn cooldown");
         }
         for(int i = 0;i < this.items.size();i++){
             try {

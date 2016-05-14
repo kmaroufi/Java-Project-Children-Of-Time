@@ -17,7 +17,7 @@ public abstract class Ability<T> {
     protected boolean hasEffectedOnEnemy;
     protected boolean isRandomSoldierSelecting;
     protected int numberOfRelatedSoldiers;
-    private int numberOfGrades;
+    protected int numberOfGrades;
     protected int currentGrade;
     private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
     private boolean hasCondition;

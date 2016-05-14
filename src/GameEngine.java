@@ -197,23 +197,25 @@ public class GameEngine {
         this.addNewHeroClass(new HeroClass(supporterHandler));
         //Adding Eley
         Hero eley = new Hero("Eley",fighterHandler);
-        eley.addSkill(Skill.listOfSkills.get("overPoweredAttack"));
+        eley.addSkill(Skill.listOfSkills.get("Overpowered attack"));
         eley.addPerk(Perk.listOfPerks.get("Swirling attack"));
         this.addNewHero(eley);
+        System.out.println(eley.getPerks().size());
         //Adding Chrome
         Hero chrome = new Hero("Chrome",fighterHandler);
-        chrome.addSkill(Skill.listOfSkills.get("sacrifice"));
+        System.out.println(fighterHandler.getPerks());
+        chrome.addSkill(Skill.listOfSkills.get("Sacrifice"));
         chrome.addPerk(Perk.listOfPerks.get("Critical strike"));
         this.addNewHero(chrome);
         //Adding Meryl
         Hero meryl = new Hero("Meryl",supporterHandler);
-        meryl.addSkill(Skill.listOfSkills.get("elixir"));
-        meryl.addSkill(Skill.listOfSkills.get("careTaker"));
+        meryl.addSkill(Skill.listOfSkills.get("Elixir"));
+        meryl.addSkill(Skill.listOfSkills.get("Caretaker"));
         this.addNewHero(meryl);
         //Adding Bolti
         Hero bolti = new Hero("Bolti",supporterHandler);
-        bolti.addSkill(Skill.listOfSkills.get("boost"));
-        bolti.addSkill(Skill.listOfSkills.get("manaBeam"));
+        bolti.addSkill(Skill.listOfSkills.get("Boost"));
+        bolti.addSkill(Skill.listOfSkills.get("Mana beam"));
         this.addNewHero(bolti);
         //Adding Enemies
 //        if(this.getLevelOfGame().equals("Easy")){
@@ -376,7 +378,7 @@ public class GameEngine {
 
     private void creatingDefaultPerks() {
         {
-            //Fighter Class's Perk
+            //Fighter Class's Perk: Fight training
             double[] tmp = {0,0,0};
             double[] arr = {30,30,30};
             PropertyHandler propertyHandler = new PropertyHandler("attackPower",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -411,10 +413,10 @@ public class GameEngine {
             String description = "Permanently increases attack power";
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
             Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
-            Perk.listOfPerks.put("FightTraining", FightTraining);
+            Perk.listOfPerks.put("Fight training", FightTraining);
         }
         {
-            //Fighter Class's Perk
+            //Fighter Class's Perk: Work out
             double[] tmp = {0,0,0};
             double[] arr = {50,50,50};
             PropertyHandler propertyHandler = new PropertyHandler("maximumHealth",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -452,7 +454,7 @@ public class GameEngine {
             Perk.listOfPerks.put("Work out", WorkOut);
         }
         {
-            //Supporter Class's Perk
+            //Supporter Class's Perk: Quick as a bunny
             double[] tmp = {0,0,0};
             double[] arr = {1,1,1};
             PropertyHandler propertyHandler = new PropertyHandler("maximumEnergyPoint",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -490,7 +492,7 @@ public class GameEngine {
             Perk.listOfPerks.put("Quick as a bunny", Quickasabunny);
         }
         {
-            //Supporter Class's Perk
+            //Supporter Class's Perk: Magic lessons
             double[] tmp = {0,0,0};
             double[] arr = {50,50,50};
             PropertyHandler propertyHandler = new PropertyHandler("maximumMagic",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -528,53 +530,13 @@ public class GameEngine {
             Perk.listOfPerks.put("Magic lessons", Magiclessons);
         }
         {
-            //Eley's Perk
+            //Eley's Perk: Swirling attack
             double[] tmp = {0,0,0};
             double[] arr = {10,20,30};
             PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioOnNonTargetedEnemy",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
-            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
-            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
-            listOfModes.add(perkMode);
-            Condition condition = new Condition();
-            ArrayList<Condition> listOfConditions = new ArrayList<>();
-            listOfConditions.add(condition);
-            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
-            mapOfCondition.put(condition, perkMode);
-            int[] costOfUpgrade = {2,3,4};
-            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
-            ArrayList<String> tmpArr = new ArrayList<>();
-            tmpArr.add("Fight training");
-            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, null); nameOfNecessaryAbilities.put(3, null);
-            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-            Map<String, Integer> tmpMap = new HashMap<>();
-            tmpMap.put("Fight training", 1);
-            gradeOfNecessaryAbilities.put(1, tmpMap);
-            gradeOfNecessaryAbilities.put(2, null);
-            gradeOfNecessaryAbilities.put(3, null);
-            String[] upgradeDescription = new String[3];
-            upgradeDescription[0] = "Upgrade 1: P=20 for 2 xp points, needs Fight training upgrade 1";
-            upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
-            upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
-            String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
-            Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
-            Perk.listOfPerks.put("Critical strike", Criticalstrike);
-        }
-        {
-            //Eley's Perk
-            double[] tmp = {0,0,0};
-            double[] arr = {20,30,40};
-            PropertyHandler propertyHandler = new PropertyHandler("criticalHitChance",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
-            Property<Hero> property = new Property<>(propertyHandler);
-            double[] arr2 = {2,0,0};
-            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
-            Property<Hero> property2 = new Property<>(propertyHandler);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            properties.add(property2);
             PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
             ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
             listOfModes.add(perkMode);
@@ -599,15 +561,55 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
             String description = "While attacking, non-targeted enemies also take P percent of its damage";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Swirling attack", Swirlingattack);
+        }
+        {
+            //Eley's Perk: Critical strike
+            double[] tmp = {0,0,0};
+            double[] arr = {20,30,40};
+            PropertyHandler propertyHandler = new PropertyHandler("criticalHitChance",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property = new Property<>(propertyHandler);
+            double[] arr2 = {2,0,0};
+            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property2 = new Property<>(propertyHandler);
+            ArrayList<Property<Hero>> properties = new ArrayList<>();
+            properties.add(property);
+            properties.add(property2);
+            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
+            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
+            listOfModes.add(perkMode);
+            Condition condition = new Condition();
+            ArrayList<Condition> listOfConditions = new ArrayList<>();
+            listOfConditions.add(condition);
+            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
+            mapOfCondition.put(condition, perkMode);
+            int[] costOfUpgrade = {2,3,4};
+            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
+            ArrayList<String> tmpArr = new ArrayList<>();
+            tmpArr.add("Fight training");
+            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, null); nameOfNecessaryAbilities.put(3, null);
+            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
+            Map<String, Integer> tmpMap = new HashMap<>();
+            tmpMap.put("Fight training", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap);
+            gradeOfNecessaryAbilities.put(2, null);
+            gradeOfNecessaryAbilities.put(3, null);
+            String[] upgradeDescription = new String[3];
+            upgradeDescription[0] = "Upgrade 1: P=20 for 2 xp points, needs Fight training upgrade 1";
+            upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
+            upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
+            String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
+            Perk.listOfPerks.put("Critical strike", Criticalstrike);
         }
     }
 
     private void creatingDefaultSkills() {
         {
-            //Eley's Skill
+            //Eley's Skill: Overpowered attack
             double[] tmp = {0,0,0};
             double[] arr = {1.2,1.2,1.2};
             PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -635,11 +637,11 @@ public class GameEngine {
             upgradeDescription[2] = "Upgrade 3: N=1.6 for 6 xp points, needs Fight training upgrade 3";
             String description = "Attacks an enemy with N times power for 2 energy points and 50 magic points";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
-            Skill overPoweredAttack = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Fight Training", overPoweredAttack);
+            Skill<Enemy> overPoweredAttack = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Overpowered attack", overPoweredAttack);
         }
         {
-            //Chrome's Skill
+            //Chrome's Skill: Sacrifice
             double[] tmp = {0,0,0};
             double[] arr1 = {40,50,60};
             double[] arr2 = {120,150,180};
@@ -670,11 +672,11 @@ public class GameEngine {
             upgradeDescription[2] = "Upgrade 3: H=60 for 4 xp points, needs Work out upgrade 3";
             String description = "Damages all the enemies with 3H power at the cost of H of his own health, needs 3 energy points, 60 magic points and has a 1 turn cooldown";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
-            Skill WorkOut = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Work out", WorkOut);
+            Skill Sacrifice = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Sacrifice", Sacrifice);
         }
         {
-            //Meryl's Skill
+            //Meryl's Skill: Elixir
             double[] tmp = {0,0,0};
             double[] arr = {100,150,150};
             PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -701,11 +703,11 @@ public class GameEngine {
             upgradeDescription[2] = "Upgrade 3: H=150 for 5 xp points, cools down instantly and needs Magic lessons upgrade 2";
             String description = "Refills H points of her own health or an ally’s, for 2 energy points and 60 magic points";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
-            Skill MagicLessons = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("MagicLessons", MagicLessons);
+            Skill Elixir = new Skill(skillHandler, abilityHandler);
+            Skill.listOfSkills.put("Elixir", Elixir);
         }
         {
-            //Meryl's Skill
+            //Meryl's Skill: Caretaker
             double[] tmp = {0,0,0};
             double[] arr = {1,1,1};
             PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -739,7 +741,7 @@ public class GameEngine {
             Skill.listOfSkills.put("Caretaker", Caretaker);
         }
         {
-            //Bolti's Skill
+            //Bolti's Skill: Boost
             double[] tmp = {0,0,0};
             double[] arr = {1.2,1.3,1.3};
             PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioDuringAttack",3, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -771,7 +773,7 @@ public class GameEngine {
             Skill.listOfSkills.put("Boost", Boost);
         }
         {
-            //Bolti's Skill
+            //Bolti's Skill: Mana beam
             double[] tmp = {0,0,0};
             double[] arr = {50,80,80};
             PropertyHandler propertyHandler = new PropertyHandler("currentMagic",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
