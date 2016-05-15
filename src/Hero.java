@@ -18,6 +18,12 @@ public class Hero extends HeroClass {
     public Hero(String name,HeroClassHandler heroClassHandler){
         super(heroClassHandler);
         this.setName(name);
+        for (Skill skill: this.skills) {
+            skill.setOwnerName(name);
+        }
+        for (Perk perk: this.perks) {
+            perk.setOwnerName(name);
+        }
     }
 
     public Hero(String name,HeroClass heroClass){
@@ -113,11 +119,11 @@ public class Hero extends HeroClass {
         Display.printInEachLine("Attack power: " + this.getAttackPower());
         System.out.println("Perks:");
         for (Perk perk: this.perks) {
-            System.out.println(perk.getName());
+            System.out.println(perk.getName() + " " + perk.getOwnerName());
         }
         System.out.println("Skills:");
         for (Skill skill: this.skills) {
-            System.out.println(skill.getName());
+            System.out.println(skill.getName() + " " + skill.getOwnerName());
         }
         for(int i = 0;i < this.skills.size();i++){
             if (this.skills.get(i).getCurrentGrade() == 0)

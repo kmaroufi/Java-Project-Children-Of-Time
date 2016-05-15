@@ -625,7 +625,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
             String description = "While attacking, non-targeted enemies also take P percent of its damage";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Swirling attack", Swirlingattack);
         }
@@ -665,7 +665,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
             String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Critical strike", Criticalstrike);
         }
