@@ -882,34 +882,42 @@ public class GameEngine {
         this.addDefaultAttributes();                                      // player's name
         setEnemies(battleNumber + 1);
         this.showBattleMessage(battleNumber + 1);
-        Display.printInEachLine("#######################################");
-        Display.printInEachLine("Choose What Do You Want To Do??");
-        Display.printInEachLine("1 - Show Hero Team");
-        Display.printInEachLine("2 - Show Enemy Team");
-        Display.printInEachLine("3 - Show Shop items");
-        Display.printInEachLine("4 - Aquire Or Update Abilities");
-        Display.printInEachLine("5 - Go For Fight");
-        int numberEntered = Display.getInteger();
-        switch (numberEntered){
-            case 1:
-                this.heroesAnnouncement();
-                Display.printInEachLine("#######################################");
-                break;
-            case 2:
+        while(true) {
+            Display.printInEachLine("#######################################");
+            Display.printInEachLine("Choose What Do You Want To Do??");
+            Display.printInEachLine("1 - Show Hero Team");
+            Display.printInEachLine("2 - Show Enemy Team");
+            Display.printInEachLine("3 - Show Shop items");
+            Display.printInEachLine("4 - Aquire Or Update Abilities");
+            Display.printInEachLine("5 - Go For Fight");
+            int numberEntered = Display.getInteger();
+            if(numberEntered == 1) {
+                    this.heroesAnnouncement();
+                    Display.printInEachLine("#######################################");
+                    break;
+            }
+            else if(numberEntered == 2) {
                 this.enemiesAnnouncement();
                 Display.printInEachLine("#######################################");
                 break;
-            case 3:
+            }
+            else if(numberEntered == 3) {
                 this.shoppingCommands();
                 Display.printInEachLine("#######################################");
                 break;
-            case 4:
+            }
+            else if(numberEntered == 4) {
                 this.abilityCastCommands();
                 Display.printInEachLine("#######################################");
                 break;
-            case 5:
+            }
+            else if(numberEntered == 5){
                 break;
-
+            }
+            else{
+                Display.printInEachLine("Wrong Number!Try Again!");
+                continue;
+            }
         }
 
 
@@ -919,7 +927,7 @@ public class GameEngine {
             Display.printInEachLine("2 - Show Enemy Team Description");
             Display.printInEachLine("Enter Other Numbers for Other Commands");
             Display.printInEachLine("Enter An Integer:");
-            numberEntered = Display.getInteger();
+            int numberEntered = Display.getInteger();
             switch (numberEntered){
                 case 1:
                     this.showHeroTeamDescription();
