@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Property<E> {
+public class Property<E> implements Cloneable{
     private Double totalEffectOnProperty;               // az che noii e??????
     private String name;
     private String fieldOfEffecting;
@@ -50,6 +50,12 @@ public class Property<E> {
     }
 
     //---------------------------------------    Functions
+
+    protected Property<E> clone() throws CloneNotSupportedException {
+        Property<E> property = (Property<E>) super.clone();
+        property.setValueOfEffectingOnEffectedSoldiers(new HashMap<>());
+        return property;
+    }
 
     private <T> void calculateProperty(T relatedSoldier) {
         this.totalEffectOnProperty += this.constantProperty[this.currentGrade];

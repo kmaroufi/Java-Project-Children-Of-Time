@@ -3,10 +3,19 @@ import java.util.ArrayList;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class PerkMode<E> {
+public class PerkMode<E> implements Cloneable{
     private ArrayList<Property<E>> properties;
     private int nonTargetedEnemy; //it isn't clear that this field has int type!
 
+    protected PerkMode<E> clone() throws CloneNotSupportedException {
+        PerkMode<E> perkMode = (PerkMode<E>) super.clone();
+        ArrayList<Property<E>> cloneOfProperties = new ArrayList<>();
+        for (Property<E> property: this.properties) {
+            cloneOfProperties.add(property.clone());
+        }
+        perkMode.setProperties(cloneOfProperties);
+        return perkMode;
+    }
 
     public PerkMode(ArrayList<Property<E>> properties, int nonTargetedEnemy) {
         this.properties = properties;
