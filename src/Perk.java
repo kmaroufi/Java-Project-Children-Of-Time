@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Perk<E> extends Ability{
+public class Perk<E> extends Ability implements Cloneable{
     public static Map<String, Perk> listOfPerks = new HashMap<>();
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode<E>> listOfModes;
@@ -21,7 +21,6 @@ public class Perk<E> extends Ability{
         this.listOfCondition = listOfCondition;
         this.listOfModes = listOfModes;
         this.mapOfCondition = mapOfCondition;
-        this.mapOfRelatedSoldiers = mapOfRelatedSoldiers;
         this.isConditionDependOnRelatedSoldier = isConditionDependOnRelatedSoldier;
         this.isConditionDependOnUserHero = isConditionDependOnUserHero;
         this.timeOfCheck = timeOfCheck;
@@ -31,6 +30,25 @@ public class Perk<E> extends Ability{
     public Perk() {}
 
     //---------------------------------------------------------- Functions
+
+
+    protected Perk clone() throws CloneNotSupportedException {
+        Perk<E> perk = (Perk) super.clone();
+        perk.setMapOfRelatedSoldiers(new HashMap<>());
+        ArrayList<PerkMode<E>> cloneOfListOfModes = new ArrayList<>();
+        Map<Condition, PerkMode<E>> cloneOfMapOfConditions = new HashMap<>();
+        for (Condition condition: this.listOfCondition) {
+            PerkMode<E> cloneOfPerkMode = this.mapOfCondition.get(condition).clone();
+            cloneOfListOfModes.add(cloneOfPerkMode);
+            cloneOfMapOfConditions.put(condition, cloneOfPerkMode);
+        }
+        perk.setListOfModes(cloneOfListOfModes);
+        perk.setMapOfCondition(cloneOfMapOfConditions);
+        perk.setRelatedSoldiers(new ArrayList());
+        perk.setEffectedSoldiers(new ArrayList());
+        return perk;
+    }
+
     public boolean equals(Perk perk){
         if(perk.getName().equals(this.name)){
             return true;

@@ -192,6 +192,17 @@ public class GameEngine {
         fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
         fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));
+        try {
+            HeroClassHandler fighterHandlerClone = fighterHandler.clone();
+            System.out.println(fighterHandler.getClassName());
+            System.out.println(fighterHandlerClone.getClassName());
+            System.out.println("----------------");
+            fighterHandlerClone.getPerks().add(Perk.listOfPerks.get("Fight training"));
+            System.out.println(fighterHandler.getPerks());
+            System.out.println(fighterHandlerClone.getPerks());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         //Adding Supporter Class
         HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
         supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
