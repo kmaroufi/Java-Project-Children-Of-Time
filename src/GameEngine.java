@@ -493,6 +493,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
             Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Fight training", FightTraining);
+            this.listOfPerks.add(FightTraining);
         }
         {
             //Fighter Class's Perk: Work out
@@ -531,6 +532,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
             Perk<Hero> WorkOut = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Work out", WorkOut);
+            this.listOfPerks.add(WorkOut);
         }
         {
             //Supporter Class's Perk: Quick as a bunny
@@ -569,6 +571,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
             Perk<Hero> Quickasabunny = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Quick as a bunny", Quickasabunny);
+            this.listOfPerks.add(Quickasabunny);
         }
         {
             //Supporter Class's Perk: Magic lessons
@@ -607,6 +610,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
             Perk<Hero> Magiclessons = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Magic lessons", Magiclessons);
+            this.listOfPerks.add(Magiclessons);
         }
         {
             //Eley's Perk: Swirling attack
@@ -643,6 +647,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Swirling attack", Swirlingattack);
+            this.listOfPerks.add(Swirlingattack);
         }
         {
             //Eley's Perk: Critical strike
@@ -683,6 +688,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Critical strike", Criticalstrike);
+            this.listOfPerks.add(Criticalstrike);
         }
     }
 
@@ -718,6 +724,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Skill<Enemy> overPoweredAttack = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Overpowered attack", overPoweredAttack);
+            this.listOfSkills.add(overPoweredAttack);
         }
         {
             //Chrome's Skill: Sacrifice
@@ -753,6 +760,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Skill Sacrifice = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Sacrifice", Sacrifice);
+            this.listOfSkills.add(Sacrifice);
         }
         {
             //Meryl's Skill: Elixir
@@ -784,6 +792,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Skill Elixir = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Elixir", Elixir);
+            this.listOfSkills.add(Elixir);
         }
         {
             //Meryl's Skill: Caretaker
@@ -818,6 +827,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Skill Caretaker = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Caretaker", Caretaker);
+            this.listOfSkills.add(Caretaker);
         }
         {
             //Bolti's Skill: Boost
@@ -850,6 +860,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription,description);
             Skill Boost = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Boost", Boost);
+            this.listOfSkills.add(Boost);
         }
         {
             //Bolti's Skill: Mana beam
@@ -882,11 +893,11 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Skill ManaBeam = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Mana beam", ManaBeam);
+            this.listOfSkills.add(ManaBeam);
         }
     }
 
     public void doCustomGame(){
-        this.addDefaultAttributes();                              // player's name
         this.setCustomGame(true);
         while (true){
             //Welcome To Our Adding Factory
@@ -957,8 +968,20 @@ public class GameEngine {
         }
     }
 
+    public void updateAllPerks(){
+        for(Perk perk:this.listOfPerks){
+            perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
+        }
+    }
+
+    public void updateAllSkills(){
+        for(Skill skill: this.listOfSkills){
+
+        }
+    }
+
     public void doCampaign(int battleNumber) {                                               // do Campaign Game (not Custom Game)
-        this.addDefaultAttributes();                                      // player's name
+        this.updateAllPerks();
         setEnemies(battleNumber + 1);
         this.showBattleMessage(battleNumber + 1);
         while (true) {
@@ -993,13 +1016,13 @@ public class GameEngine {
                 continue;
             }
         }
-        int numberOfAttacks = 0;
+        Display.printInEachLine("Welcome To The War!");
         while (true) {
-            Display.printInEachLine("Welcome To The War!");
             Display.printInEachLine("Choose What To Do?");
             Display.printInEachLine("1 - Show Hero Team Description");
             Display.printInEachLine("2 - Show Enemy Team Description");
             Display.printInEachLine("3 - Other Commands");
+            Display.printInEachLine("4 - Are You Done?");
             Display.printInEachLine("Enter An Integer:");
             int numberEntered = Display.getInteger();
             if (numberEntered == 1) {
@@ -1028,7 +1051,7 @@ public class GameEngine {
                         for (Enemy enemy : this.listOfEnemies) {
                             if (command.equalsIgnoreCase(hero.getName() + " attack " + enemy.getName())) {
                                 hero.attack(enemy);
-                                numberOfAttacks++;
+                                hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - 2);
                                 Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + hero.getAttackPower() + " power");
                                 Display.printInEachLine(enemy.getName() + "'s Current Health is :" + enemy.getCurrentHealth());
                                 if (enemy.isDead()) {
@@ -1126,24 +1149,34 @@ public class GameEngine {
                         break;
                     }
                 }
-                if (numberOfAttacks == this.listOfHeroes.size()) {
-                    numberOfAttacks = 0;
-                    for (Enemy enemy : listOfEnemies) {
-                        enemy.doTurn();
-                        for (Hero hero : listOfHeroes) {
-                            if (hero.isDead()) {
-                                if (Player.imortalityPotion > 0) {
-                                    Player.imortalityPotion--;
-                                    hero.setCurrentHealth(hero.getMaximumHealth());
-                                    Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
-                                } else {
-                                    this.listOfHeroes.remove(hero);
-                                    Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
-                                }
+            }
+            else if(numberEntered == 4){
+                for (Enemy enemy : listOfEnemies) {
+                    enemy.doTurn();
+                    for (Hero hero : listOfHeroes) {
+                        if (hero.isDead()) {
+                            if (Player.imortalityPotion > 0) {
+                                Player.imortalityPotion--;
+                                hero.setCurrentHealth(hero.getMaximumHealth());
+                                Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
+                            } else {
+                                this.listOfHeroes.remove(hero);
+                                Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
                             }
                         }
                     }
                 }
+                for(Hero hero : this.listOfHeroes){
+                    hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
+                    if(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) <= hero.getMaximumHealth()) {
+                        hero.setCurrentHealth(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()));
+                    }
+                    else{
+                        hero.setCurrentHealth(hero.getMaximumHealth());
+                    }
+
+                }
+                continue;
             }
             else{
                 Display.printInEachLine("Wrong Number! Try Again!");
@@ -1240,6 +1273,7 @@ public class GameEngine {
     }
 
     public void play() {
+        this.addDefaultAttributes();
         if(isCustomGame){
             this.doCustomGame();
         }
