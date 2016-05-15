@@ -62,6 +62,7 @@ public class Skill<E> extends Ability implements Cloneable{
     }
 
     public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero) {
+        this.choosingRelatedSoldiers();
         if (this.remainingCooldown != 0) {
             return;
         }
