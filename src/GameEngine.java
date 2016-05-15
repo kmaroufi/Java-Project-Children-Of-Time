@@ -892,24 +892,24 @@ public class GameEngine {
             Display.printInEachLine("5 - Go For Fight");
             int numberEntered = Display.getInteger();
             if(numberEntered == 1) {
-                    this.heroesAnnouncement();
-                    Display.printInEachLine("#######################################");
-                    break;
+                this.heroesAnnouncement();
+                Display.printInEachLine("#######################################");
+                continue;
             }
             else if(numberEntered == 2) {
                 this.enemiesAnnouncement();
                 Display.printInEachLine("#######################################");
-                break;
+                continue;
             }
             else if(numberEntered == 3) {
                 this.shoppingCommands();
                 Display.printInEachLine("#######################################");
-                break;
+                continue;
             }
             else if(numberEntered == 4) {
                 this.abilityCastCommands();
                 Display.printInEachLine("#######################################");
-                break;
+                continue;
             }
             else if(numberEntered == 5){
                 break;
