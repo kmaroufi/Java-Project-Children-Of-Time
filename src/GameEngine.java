@@ -991,7 +991,6 @@ public class GameEngine {
 
     public void updateAllSkills(){
         for(Skill skill: this.listOfSkills){
-            skill.choosingRelatedSoldiers();
             skill.removeEffect();
         }
     }
