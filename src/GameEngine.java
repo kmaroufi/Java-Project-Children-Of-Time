@@ -490,7 +490,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade2: +30 attack power for 3 xp points";
             upgradeDescription[2] = "Upgrade3: +30 attack power for 4 xp points";
             String description = "Permanently increases attack power";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Fight training", FightTraining);
             this.listOfPerks.add(FightTraining);
@@ -529,7 +529,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: +50 maximum health for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: +50 maximum health for 4 xp points";
             String description = "Permanently increases maximum health";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> WorkOut = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Work out", WorkOut);
             this.listOfPerks.add(WorkOut);
@@ -568,7 +568,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade2: +1 energy point for 3 xp points";
             upgradeDescription[2] = "Upgrade3: +1 energy point for 4 xp points";
             String description = "Permanently increases energy points";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> Quickasabunny = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Quick as a bunny", Quickasabunny);
             this.listOfPerks.add(Quickasabunny);
@@ -607,7 +607,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: +50 maximum magic for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: +50 maximum magic for 4 xp points";
             String description = "Permanently increases maximum magic";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> Magiclessons = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Magic lessons", Magiclessons);
             this.listOfPerks.add(Magiclessons);
@@ -644,7 +644,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
             String description = "While attacking, non-targeted enemies also take P percent of its damage";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Swirling attack", Swirlingattack);
             this.listOfPerks.add(Swirlingattack);
@@ -685,7 +685,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
             String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Critical strike", Criticalstrike);
             this.listOfPerks.add(Criticalstrike);
@@ -721,7 +721,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: N=1.4 for 4 xp points, needs Fight training upgrade 2";
             upgradeDescription[2] = "Upgrade 3: N=1.6 for 6 xp points, needs Fight training upgrade 3";
             String description = "Attacks an enemy with N times power for 2 energy points and 50 magic points";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill<Enemy> overPoweredAttack = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Overpowered attack", overPoweredAttack);
             this.listOfSkills.add(overPoweredAttack);
@@ -757,7 +757,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: H=50 for 3 xp points, needs Work out upgrade 2";
             upgradeDescription[2] = "Upgrade 3: H=60 for 4 xp points, needs Work out upgrade 3";
             String description = "Damages all the enemies with 3H power at the cost of H of his own health, needs 3 energy points, 60 magic points and has a 1 turn cooldown";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Sacrifice = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Sacrifice", Sacrifice);
             this.listOfSkills.add(Sacrifice);
@@ -789,7 +789,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: H=150 for 3 xp points, takes 1 turn to cool down and needs Magic lessons upgrade 1";
             upgradeDescription[2] = "Upgrade 3: H=150 for 5 xp points, cools down instantly and needs Magic lessons upgrade 2";
             String description = "Refills H points of her own health or an ally’s, for 2 energy points and 60 magic points";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Elixir = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Elixir", Elixir);
             this.listOfSkills.add(Elixir);
@@ -824,7 +824,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: takes 2 energy points and cools down instantly for 3 xp points, needs Quick as a bunny upgrade 2";
             upgradeDescription[2] = "Upgrade 3 takes 1 energy point and cools down instantly for 5 xp points, needs Quick as a bunny upgrade 3";
             String description = "Gives 1 energy point to an ally for 30 magic points (this ep does not last until the end of the battle and is only usable during the current turn)";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Caretaker = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Caretaker", Caretaker);
             this.listOfSkills.add(Caretaker);
@@ -857,7 +857,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: A=30 for 3 xp points and takes 1 turn to cool down";
             upgradeDescription[2] = "Upgrade 3: A=30 for 5 xp points and cools down instantly";
             String description = "Gives A bonus attack power to himself or an ally, which lasts till the end of the battle, for 2 energy points and 50 magic points (this bonus attack power can stack up)";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription,description);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription,description, false);
             Skill Boost = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Boost", Boost);
             this.listOfSkills.add(Boost);
@@ -890,7 +890,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: M=80 for 3 xp points and takes 1 turn to cool down, needs magic lessons upgrade 2";
             upgradeDescription[2] = "Upgrade 3: M=80 for 4 xp points and cools down instantly, needs magic lessons upgrade 3";
             String description = "Gives M magic points to himself or an ally for 1 energy point and 50 magic points";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill ManaBeam = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Mana beam", ManaBeam);
             this.listOfSkills.add(ManaBeam);

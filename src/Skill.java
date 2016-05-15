@@ -135,7 +135,14 @@ public class Skill<E> extends Ability implements Cloneable{
                 }
             }
             else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-                ArrayList<String> nameOfEnemies = Display.getAbilityDetailsBeforeUsing(this.blackList);
+                ArrayList<String> nameOfEnemies = new ArrayList<>();
+                while (true) {
+                    String input = Display.getString();
+                    for (:
+                         ) {
+                        
+                    }
+                }
                 for (String nameOfEnemy: nameOfEnemies) {
                     this.relatedSoldiers.add(Enemy.mapOfEnemies.get(nameOfEnemy));
                 }

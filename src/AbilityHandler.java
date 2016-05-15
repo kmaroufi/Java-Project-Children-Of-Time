@@ -20,10 +20,11 @@ public class AbilityHandler<T> {
     private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necess
     private String[] upgradeDescription;
     private String description;
+    private boolean isAcquire;
 
     //-----------------------------------------------          Constructor
 
-    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities, String[] upgradeDescription,String description) {
+    public AbilityHandler(String name, String ownerName, boolean isGlobal, boolean hasEffectedOnEnemy, boolean isRandomSoldierSelecting, int numberOfRelatedSoldiers, int numberOfGrades, String fieldOfEffecting, boolean isEffectDuringAttack, boolean hasCondition, int[] costOfUpgrade, Map<Integer, ArrayList<String>> nameOfNecessaryAbilities, Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities, String[] upgradeDescription,String description, boolean isAcquire) {
         this.name = name;
         this.ownerName = ownerName;
         this.isGlobal = isGlobal;
@@ -39,6 +40,7 @@ public class AbilityHandler<T> {
         this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
         this.upgradeDescription = upgradeDescription;
         this.description = description;
+        this.isAcquire = isAcquire;
     }
 
     public AbilityHandler() {
@@ -48,6 +50,14 @@ public class AbilityHandler<T> {
 
     //---------------------------------------------------------------- Getter && Setters
 
+
+    public boolean isAcquire() {
+        return isAcquire;
+    }
+
+    public void setAcquire(boolean acquire) {
+        isAcquire = acquire;
+    }
 
     public String getDescription() {
         return description;

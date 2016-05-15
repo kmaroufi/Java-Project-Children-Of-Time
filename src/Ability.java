@@ -26,6 +26,7 @@ public abstract class Ability<T> {
     private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
     private String[] upgradeDescription;
     protected String description;
+    private boolean isAcquire;
 
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
@@ -44,6 +45,7 @@ public abstract class Ability<T> {
         this.setGradeOfNecessaryAbilities(abilityHandler.getGradeOfNecessaryAbilities());
         this.setUpgradeDescription(abilityHandler.getUpgradeDescription());
         this.setDescription(abilityHandler.getDescription());
+        this.setAcquire(abilityHandler.isAcquire());
     }
 
 
@@ -84,6 +86,14 @@ public abstract class Ability<T> {
 
     //-------------------------------------------------------- Getter And Setters
 
+
+    public boolean isAcquire() {
+        return isAcquire;
+    }
+
+    public void setAcquire(boolean acquire) {
+        isAcquire = acquire;
+    }
 
     public String[] getUpgradeDescription() {
         return upgradeDescription;
