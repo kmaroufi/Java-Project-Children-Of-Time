@@ -92,8 +92,13 @@ public class Display {
     }
 
     public static ArrayList<String> getAbilityDetailsBeforeUsing(ArrayList<String> blackList) {
-        return null;
+        Display.printInEachLine("please determine your target! At end, enter 0");
+        ArrayList<String> inputs = new ArrayList<>();
+        while (true) {
+            String input = getString();
+            if (input.equals(0) == true)
+                break;
+        }
     }
-
 
 }

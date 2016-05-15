@@ -77,6 +77,9 @@ public class Skill<E> extends Ability implements Cloneable{
         if (this.propertiesOfUser != null)
             this.propertiesOfUser.effect(userHero, Hero.mapOfHeroes.get(this.ownerName), userHero);
         this.remainingCooldown = this.cooldown[this.currentGrade];
+        userHero.setCurrentEnergyPoint(userHero.getCurrentEnergyPoint() - this.requiredEnergyPoint[this.currentGrade - 1]);
+        userHero.setCurrentMagic(userHero.getCurrentMagic() - this.requiredMagicPoint[this.currentGrade - 1]);
+
     }
 
     public void removeEffect() {
