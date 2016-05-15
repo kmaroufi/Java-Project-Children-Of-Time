@@ -98,8 +98,13 @@ public class Hero extends HeroClass {
         Display.printInEachLine("Magic: " + this.getCurrentMagic() + " / " + this.getMaximumMagic());
         Display.printInEachLine("Energy points: " + this.getCurrentEnergyPoint());
         Display.printInEachLine("Attack power: " + this.getAttackPower());
+        System.out.println("Perks:");
         for (Perk perk: this.perks) {
             System.out.println(perk.getName());
+        }
+        System.out.println("Skills:");
+        for (Skill skill: this.skills) {
+            System.out.println(skill.getName());
         }
         for(int i = 0;i < this.skills.size();i++){
             if (this.skills.get(i).getCurrentGrade() == 0)

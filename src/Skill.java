@@ -51,7 +51,8 @@ public class Skill<E> extends Ability implements Cloneable{
             cloneOfPropertiesOfRelatedSoldiers.add(property.clone());
         }
         skill.setPropertiesOfRelatedSoldiers(cloneOfPropertiesOfRelatedSoldiers);
-        skill.setPropertiesOfUser(this.propertiesOfUser.clone());
+        if (this.propertiesOfUser != null)
+            skill.setPropertiesOfUser(this.propertiesOfUser.clone());
         skill.setMapOfEffectedSoldiers(new HashMap<>());
         return skill;
     }

@@ -193,41 +193,50 @@ public class GameEngine {
         fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
         fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));
-        try {
-            HeroClassHandler fighterHandlerClone = fighterHandler.clone();
-            System.out.println(fighterHandler.getClassName());
-            System.out.println(fighterHandlerClone.getClassName());
-            System.out.println("----------------");
-            fighterHandlerClone.getPerks().add(Perk.listOfPerks.get("Fight training"));
-            System.out.println(fighterHandler.getPerks());
-            System.out.println(fighterHandlerClone.getPerks());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
         //Adding Supporter Class
         HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
         supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
         supporterHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
         this.addNewHeroClass(new HeroClass(supporterHandler));
         //Adding Eley
-        Hero eley = new Hero("Eley",fighterHandler);
-        eley.addSkill(Skill.listOfSkills.get("Overpowered attack"));
-        eley.addPerk(Perk.listOfPerks.get("Swirling attack"));
+        Hero eley = null;
+        try {
+            eley = new Hero("Eley",fighterHandler.clone());
+            eley.addSkill(Skill.listOfSkills.get("Overpowered attack").clone());
+            eley.addPerk(Perk.listOfPerks.get("Swirling attack").clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         this.addNewHero(eley);
         //Adding Chrome
-        Hero chrome = new Hero("Chrome",fighterHandler);
-        chrome.addSkill(Skill.listOfSkills.get("Sacrifice"));
-        chrome.addPerk(Perk.listOfPerks.get("Critical strike"));
+        Hero chrome = null;
+        try {
+            chrome = new Hero("Chrome",fighterHandler.clone());
+            chrome.addSkill(Skill.listOfSkills.get("Sacrifice").clone());
+            chrome.addPerk(Perk.listOfPerks.get("Critical strike").clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         this.addNewHero(chrome);
         //Adding Meryl
-        Hero meryl = new Hero("Meryl",supporterHandler);
-        meryl.addSkill(Skill.listOfSkills.get("Elixir"));
-        meryl.addSkill(Skill.listOfSkills.get("Caretaker"));
+        Hero meryl = null;
+        try {
+            meryl = new Hero("Meryl",supporterHandler.clone());
+            meryl.addSkill(Skill.listOfSkills.get("Elixir").clone());
+            meryl.addSkill(Skill.listOfSkills.get("Caretaker").clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         this.addNewHero(meryl);
         //Adding Bolti
-        Hero bolti = new Hero("Bolti",supporterHandler);
-        bolti.addSkill(Skill.listOfSkills.get("Boost"));
-        bolti.addSkill(Skill.listOfSkills.get("Mana beam"));
+        Hero bolti = null;
+        try {
+            bolti = new Hero("Bolti",supporterHandler.clone());
+            bolti.addSkill(Skill.listOfSkills.get("Boost").clone());
+            bolti.addSkill(Skill.listOfSkills.get("Mana beam").clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         this.addNewHero(bolti);
         //Adding Enemies
 //        if(this.getLevelOfGame().equals("Easy")){
@@ -573,7 +582,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
             String description = "While attacking, non-targeted enemies also take P percent of its damage";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Swirling attack", Swirlingattack);
         }
@@ -613,7 +622,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
             String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description);
             Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Critical strike", Criticalstrike);
         }
