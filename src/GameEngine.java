@@ -1070,6 +1070,7 @@ public class GameEngine {
                         Display.printInEachLine(hero.getName()  + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
                     }
                     else{
+                        this.listOfHeroes.remove(hero);
                         Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
                     }
                 }
