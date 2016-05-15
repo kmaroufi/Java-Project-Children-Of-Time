@@ -90,17 +90,6 @@ public class Display {
     public static void printf(String sentence){
         System.out.printf(sentence);
     }
-
-    public static ArrayList<String> getAbilityDetailsBeforeUsing(ArrayList<String> blackList) {
-        Display.printInEachLine("please determine your target! At end, enter 0");
-        ArrayList<String> inputs = new ArrayList<>();
-        while (true) {
-            String input = getString();
-            if (input.equals("0")) {
-                break;
-            }
-        }
-        return inputs;
-    }
+    
 
 }

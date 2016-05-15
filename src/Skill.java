@@ -137,10 +137,21 @@ public class Skill<E> extends Ability implements Cloneable{
             else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
                 ArrayList<String> nameOfEnemies = new ArrayList<>();
                 while (true) {
+                    Display.printInEachLine("please determine your target! At end, enter 0");
                     String input = Display.getString();
-                    for (:
-                         ) {
-                        
+                    if (input.equals("0"))
+                        break;
+                    int cond = 0;
+                    for (Enemy enemy: GameEngine.listOfEnemies) {
+                        if (enemy.getName().equals(input)) {
+                            cond = 1;
+                            break;
+                        }
+                    }
+                    if (cond == 1)
+                        nameOfEnemies.add(input);
+                    else {
+                        Display.printInEachLine("Please enter valid command!");
                     }
                 }
                 for (String nameOfEnemy: nameOfEnemies) {
@@ -162,7 +173,25 @@ public class Skill<E> extends Ability implements Cloneable{
                 }
             }
             else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-                ArrayList<String> nameOfHeroes = Display.getAbilityDetailsBeforeUsing(this.blackList);
+                ArrayList<String> nameOfHeroes = new ArrayList<>();
+                while (true) {
+                    Display.printInEachLine("please determine your target! At end, enter 0");
+                    String input = Display.getString();
+                    if (input.equals("0"))
+                        break;
+                    int cond = 0;
+                    for (Hero hero: GameEngine.listOfHeroes) {
+                        if (hero.getName().equals(input)) {
+                            cond = 1;
+                            break;
+                        }
+                    }
+                    if (cond == 1)
+                        nameOfHeroes.add(input);
+                    else {
+                        Display.printInEachLine("Please enter valid command!");
+                    }
+                }
                 for (String nameOfHero: nameOfHeroes) {
                     this.relatedSoldiers.add(Hero.mapOfHeroes.get(nameOfHero));
                 }
