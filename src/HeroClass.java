@@ -56,8 +56,6 @@ public class HeroClass extends Soldier {
         this.setCriticalHitChanceRatio(heroClassHandler.getCriticalHitChanceRatio());
         this.setCriticalHitDamage(heroClassHandler.getCriticalHitDamage());
         this.setCriticalHitDamageRatio(heroClassHandler.getCriticalHitDamageRatio());
-        this.setCurrentEnergyPoint(heroClassHandler.getCurrentEnergyPoint());
-        this.setCurrentMagic(heroClassHandler.getCurrentMagic());
         this.setEnergyPointRatio(heroClassHandler.getEnergyPointRatio());
         this.setHealthRefillRateRatio(heroClassHandler.getHealthRefillRateRatio());
         this.setInventorySize(heroClassHandler.getInventorySize());
@@ -89,8 +87,6 @@ public class HeroClass extends Soldier {
         this.setCriticalHitChanceRatio(heroClass.getCriticalHitChanceRatio());
         this.setCriticalHitDamage(heroClass.getCriticalHitDamage());
         this.setCriticalHitDamageRatio(heroClass.getCriticalHitDamageRatio());
-        this.setCurrentEnergyPoint(heroClass.getCurrentEnergyPoint());
-        this.setCurrentMagic(heroClass.getCurrentMagic());
         this.setEnergyPointRatio(heroClass.getEnergyPointRatio());
         this.setHealthRefillRateRatio(heroClass.getHealthRefillRateRatio());
         this.setInventorySize(heroClass.getInventorySize());

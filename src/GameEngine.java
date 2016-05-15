@@ -247,12 +247,12 @@ public class GameEngine {
         this.creatingDefaultPerks();
 
         //Adding Fighter Class
-        HeroClassHandler fighterHandler = new HeroClassHandler();
+        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,0.1,"Fighter",0,1,0,1,0.05,1,1,1,1,1,0,120,0,6,2);
         fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
         fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));
         //Adding Supporter Class
-        HeroClassHandler supporterHandler = new HeroClassHandler("Supporter",220,80,200,5,3,0.05,0.1);
+        HeroClassHandler supporterHandler = new HeroClassHandler(220,80,0.05,"Supporter",0,1,0,1,0.1,1,1,1,1,1,0,200,0,5,3);
         supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
         supporterHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
         this.addNewHeroClass(new HeroClass(supporterHandler));

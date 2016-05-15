@@ -19,10 +19,8 @@ public class HeroClassHandler extends Soldier implements Cloneable{
     private double attackPowerRatioOnNonTargetedEnemy;
     private double attackPowerOnNonTargetedEnemy;
     private int maximumMagic;
-    private int currentMagic;
     private int numberOfNonTargetedEnemyEffected;
     private int maximumEnergyPoint;
-    private int currentEnergyPoint;
     private int inventorySize;
 
 
@@ -47,10 +45,8 @@ public class HeroClassHandler extends Soldier implements Cloneable{
     public HeroClassHandler(){}
 
 
-    public HeroClassHandler(int maximumHealth, int attackPower, double healthRefillRate, double currentHealth, String className, ArrayList<Perk> perks, ArrayList<Skill> skills, double criticalHitChance, double criticalHitChanceRatio, double criticalHitDamage, double criticalHitDamageRatio, double magicRefillRate, double attackPowerRatioDuringAttack, double healthRefillRateRatio, double magicRefillRateRatio, double energyPointRatio, double attackPowerRatioOnNonTargetedEnemy, double attackPowerOnNonTargetedEnemy, int maximumMagic, int currentMagic, int numberOfNonTargetedEnemyEffected, int maximumEnergyPoint, int currentEnergyPoint, int inventorySize) {
-        super(maximumHealth, attackPower, healthRefillRate, currentHealth, className);
-        this.perks = perks;
-        this.skills = skills;
+    public HeroClassHandler(int maximumHealth, int attackPower, double healthRefillRate, String className, double criticalHitChance, double criticalHitChanceRatio, double criticalHitDamage, double criticalHitDamageRatio, double magicRefillRate, double attackPowerRatioDuringAttack, double healthRefillRateRatio, double magicRefillRateRatio, double energyPointRatio, double attackPowerRatioOnNonTargetedEnemy, double attackPowerOnNonTargetedEnemy, int maximumMagic, int numberOfNonTargetedEnemyEffected, int maximumEnergyPoint, int inventorySize) {
+        super(maximumHealth, attackPower, healthRefillRate, maximumHealth, className);
         this.criticalHitChance = criticalHitChance;
         this.criticalHitChanceRatio = criticalHitChanceRatio;
         this.criticalHitDamage = criticalHitDamage;
@@ -63,10 +59,8 @@ public class HeroClassHandler extends Soldier implements Cloneable{
         this.attackPowerRatioOnNonTargetedEnemy = attackPowerRatioOnNonTargetedEnemy;
         this.attackPowerOnNonTargetedEnemy = attackPowerOnNonTargetedEnemy;
         this.maximumMagic = maximumMagic;
-        this.currentMagic = currentMagic;
         this.numberOfNonTargetedEnemyEffected = numberOfNonTargetedEnemyEffected;
         this.maximumEnergyPoint = maximumEnergyPoint;
-        this.currentEnergyPoint = currentEnergyPoint;
         this.inventorySize = inventorySize;
     }
 
@@ -193,14 +187,6 @@ public class HeroClassHandler extends Soldier implements Cloneable{
         this.maximumMagic = maximumMagic;
     }
 
-    public int getCurrentMagic() {
-        return currentMagic;
-    }
-
-    public void setCurrentMagic(int currentMagic) {
-        this.currentMagic = currentMagic;
-    }
-
     public int getNumberOfNonTargetedEnemyEffected() {
         return numberOfNonTargetedEnemyEffected;
     }
@@ -217,13 +203,6 @@ public class HeroClassHandler extends Soldier implements Cloneable{
         this.maximumEnergyPoint = maximumEnergyPoint;
     }
 
-    public int getCurrentEnergyPoint() {
-        return currentEnergyPoint;
-    }
-
-    public void setCurrentEnergyPoint(int currentEnergyPoint) {
-        this.currentEnergyPoint = currentEnergyPoint;
-    }
 
     public int getInventorySize() {
         return inventorySize;
