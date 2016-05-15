@@ -850,37 +850,36 @@ public class GameEngine {
 
     public void setEnemies(int numberOfBattle){
         if(numberOfBattle == 1){
-            Thug thug1 = new Thug("Weak");
-            Thug thug2 = new Thug("Weak");
-            Thug thug3 = new Thug("Weak");
-            Angel angel1 = new Angel("Weak");
+            this.listOfEnemies.add(new Thug("Weak"));
+            this.listOfEnemies.add(new Thug("Weak"));
+            this.listOfEnemies.add(new Thug("Weak"));
+            this.listOfEnemies.add(new Angel("Weak"));
         }
         else if(numberOfBattle == 2){
-            Thug thug1 = new Thug("Able");
-            Thug thug2 = new Thug("Able");
-            Angel angel1 = new Angel("Weak");
-            Tank tank1 = new Tank("Weak");
+            this.listOfEnemies.add(new Thug("Able"));
+            this.listOfEnemies.add(new Thug("Able"));
+            this.listOfEnemies.add(new Angel("Weak"));
+            this.listOfEnemies.add(new Tank("Weak"));
         }
         else if(numberOfBattle == 3){
-            Thug thug1 = new Thug("Able");
-            Thug thug2 = new Thug("Mighty");
-            Angel angel1 = new Angel("Able");
-            Tank tank1 = new Tank("Weak");
+            this.listOfEnemies.add(new Thug("Able"));
+            this.listOfEnemies.add(new Thug("Mighty"));
+            this.listOfEnemies.add(new Angel("Able"));
+            this.listOfEnemies.add(new Tank("Weak"));
         }
         else if(numberOfBattle == 4){
-            Thug thug1 = new Thug("Mighty");
-            Thug thug2 = new Thug("Mighty");
-            Angel angel1 = new Angel("Able");
-            Tank tank1 = new Tank("Able");
-            Tank tank2 = new Tank("Able");
+            this.listOfEnemies.add(new Thug("Mighty"));
+            this.listOfEnemies.add(new Thug("Mighty"));
+            this.listOfEnemies.add(new Angel("Able"));
+            this.listOfEnemies.add(new Tank("Able"));
+            this.listOfEnemies.add(new Tank("Able"));
         }
     }
 
-    public void doCampaign(int asb){                                               // do Campaign Game (not Custom Game)
+    public void doCampaign(int battleNumber){                                               // do Campaign Game (not Custom Game)
         this.addDefaultAttributes();                                      // player's name
-        for(int i = 0;i < 5;i++){
-            setEnemies(i + 1);
-            this.showBattleMessage(i + 1);
+            setEnemies(battleNumber + 1);
+            this.showBattleMessage(battleNumber + 1);
             Display.printInEachLine("#######################################");
             this.heroesAnnouncement();
             Display.printInEachLine("#######################################");
@@ -1008,9 +1007,9 @@ public class GameEngine {
 
             }
         }
-    }
 
     public void showHeroTeamDescription() {
+        Display.printInEachLine("Hero Team:");
         for(int i = 0;i < this.listOfHeroes.size();i++){
             Display.printInEachLine(this.listOfHeroes.get(i).getName() + " (" + this.listOfHeroes.get(i).getClassName() + ")");
         }
@@ -1018,6 +1017,7 @@ public class GameEngine {
     }
 
     public void showEnemyTeamDescription(){
+        Display.printInEachLine("Enemy Team:");
         for(Enemy enemy: this.listOfEnemies){
             Display.printInEachLine(enemy.getName());
         }
@@ -1042,7 +1042,7 @@ public class GameEngine {
             Display.printInEachLine("You Must Choose One OF HeroClasses For Your Own Hero!");
             Display.printInEachLine("0 - Make A New Hero Class!");
             for (int i = 0; i < GameEngine.listOfHeroClasses.size(); i++) {
-                Display.printInEachLine((i + 1) + " - " + GameEngine.listOfHeroClasses.get(i).getName());
+                Display.printInEachLine((i + 1) + " - " + GameEngine.listOfHeroClasses.get(i).getClassName());
             }
             //Bug! (Commands) Soon Will Correct it!
             int choose = Display.getInteger();
