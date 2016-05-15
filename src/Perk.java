@@ -139,7 +139,7 @@ public class Perk<E> extends Ability{
     }
 
     public void setMapOfRelatedSoldiers(Map<E, PerkMode<E>> mapOfRelatedSoldiers) {
-        this.mapOfRelatedSoldiers = mapOfRelatedSoldiers;
+
     }
 
     public boolean isConditionDependOnRelatedSoldier() {
