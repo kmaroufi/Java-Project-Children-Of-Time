@@ -157,6 +157,7 @@ public class Hero extends HeroClass {
         for(Item item : this.items){
             Display.printf(item.getName() + " worth " + (item.getWorth()/2.0) + " dollars ,");
         }
+        Display.printInEachLine("");
     }
 
     public boolean hasItem(Item item){

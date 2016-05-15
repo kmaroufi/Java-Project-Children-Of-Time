@@ -80,10 +80,18 @@ public class GameEngine {
                                 if (hero.getInventorySize() < itemProperties.getItem().getSize()) {
                                     Display.printInEachLine(hero.getName() + "'s inventory is full");
                                 } else if (this.player.getMoney() >= itemProperties.getPrice() && hero.getInventorySize() >= itemProperties.getItem().getSize()) {                                 //(item name) “ bought successfully, your current wealth is: ” + (current money)
-                                    hero.addItem(itemProperties.getItem());
-                                    this.player.setMoney(this.player.getMoney() - itemProperties.getPrice());
-                                    itemProperties.updatePrice();
-                                    Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());
+                                    try{
+                                        Item item = itemProperties.getItem().clone();
+                                        item.setWorth(itemProperties.getPrice());
+                                        item.setOwnerName(hero.getName());
+                                        hero.addItem(item);
+                                        this.player.setMoney(this.player.getMoney() - itemProperties.getPrice());
+                                        itemProperties.updatePrice();
+                                        Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());
+                                    }
+                                    catch (CloneNotSupportedException e){
+                                        e.getStackTrace();
+                                    }
                                 } else if (this.player.getMoney() < itemProperties.getPrice() && hero.getInventorySize() >= itemProperties.getItem().getSize()) {
                                     Display.printInEachLine("You don’t have enough money");
                                 }
@@ -987,10 +995,11 @@ public class GameEngine {
         }
         int numberOfAttacks = 0;
         while (true) {
+            Display.printInEachLine("Welcome To The War!");
             Display.printInEachLine("Choose What To Do?");
             Display.printInEachLine("1 - Show Hero Team Description");
             Display.printInEachLine("2 - Show Enemy Team Description");
-            Display.printInEachLine("Enter Other Numbers for Other Commands");
+            Display.printInEachLine("3 - Other Commands");
             Display.printInEachLine("Enter An Integer:");
             int numberEntered = Display.getInteger();
             if (numberEntered == 1) {
@@ -999,7 +1008,7 @@ public class GameEngine {
             else if (numberEntered == 2) {
                 this.enemiesAnnouncement();
             }
-            else {
+            else if(numberEntered == 3){
                 Display.printInEachLine("Enter Your Command:");
                 String command = Display.getString();
                 for (Hero hero : this.listOfHeroes) {
@@ -1135,6 +1144,10 @@ public class GameEngine {
                         }
                     }
                 }
+            }
+            else{
+                Display.printInEachLine("Wrong Number! Try Again!");
+                continue;
             }
         }
     }

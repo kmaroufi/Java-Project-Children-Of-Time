@@ -54,7 +54,7 @@ public class Item implements Cloneable{
 
     //--------------------------------------------------- Functions
 
-    protected Item clone() throws CloneNotSupportedException {
+    public Item clone() throws CloneNotSupportedException {
         Item item = (Item) super.clone();
         item.setEffectedSoldiers(new ArrayList<>());
         item.setRelatedSoldiers(new ArrayList<>());
