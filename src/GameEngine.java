@@ -53,6 +53,7 @@ public class GameEngine {
             Display.printInEachLine("2 - Show Hero Team Items");
             Display.printInEachLine("3 - Buy Or Sell Item");
             Display.printInEachLine("4 - Show Your Wealth");
+            Display.printInEachLine("5 - Exit Shop");
             int numberEntered = Display.getInteger();
             if (numberEntered == 1) {
                 Shop.showItems();
@@ -99,6 +100,9 @@ public class GameEngine {
             else if(numberEntered == 4){
                 Display.printInEachLine("Your Current Wealth is: " + this.player.getMoney() + " dollars.");
                 continue;
+            }
+            else if(numberEntered == 5){
+                return;
             }
             else{
                 Display.printInEachLine("Wrong Number! Try Again!");
