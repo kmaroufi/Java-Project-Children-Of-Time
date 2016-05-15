@@ -59,14 +59,22 @@ public abstract class Ability<T> {
 
         for (String nameOfAbility: this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
             if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
-                Skill skill = Skill.listOfSkills.get(nameOfAbility);
-                if (skill.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
-                    return;
+                for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
+                    if (skill.getName().equals(nameOfAbility)) {
+                        if (skill.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
+                            return;
+                        break;
+                    }
+                }
             }
             if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
-                Perk perk = Perk.listOfPerks.get(nameOfAbility);
-                if (perk.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
-                    return;
+                for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
+                    if (perk.getName().equals(nameOfAbility)) {
+                        if (perk.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
+                            return;
+                        break;
+                    }
+                }
             }
         }
 
