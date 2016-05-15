@@ -31,6 +31,16 @@ public class HeroClassHandler extends Soldier implements Cloneable{
 
     protected HeroClassHandler clone() throws CloneNotSupportedException {
         HeroClassHandler clone = (HeroClassHandler) super.clone();
+        ArrayList<Perk> cloneOfPerks = new ArrayList<>();
+        for (Perk perk: this.perks) {
+            cloneOfPerks.add(perk.clone());
+        }
+        ArrayList<Skill> cloneOfSkills = new ArrayList<>();
+        for (Skill skill: this.getSkills()) {
+            cloneOfSkills.add(skill.clone());
+        }
+        clone.setPerks(cloneOfPerks);
+        clone.setSkills(cloneOfSkills);
         return clone;
     }
 
