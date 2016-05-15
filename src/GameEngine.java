@@ -30,10 +30,11 @@ public class GameEngine {
                 Display.printInEachLine("Abilities:");
                 for(Skill skill : hero.skills) {
                     try {
+                        Display.printInEachLine(skill.getName() + ";");
                         skill.showDescription();
                         for (int i = 0; i < skill.getNumberOfGrades(); i++) {
                             try {
-                                Display.printInEachLine("Update " + (i + 1) + ": " + skill.getUpgradeDescription()[i]);
+                                Display.printInEachLine(skill.getUpgradeDescription()[i]);
                             } catch (Exception e) {
                                 continue;
                             }
