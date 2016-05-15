@@ -247,7 +247,7 @@ public class GameEngine {
         this.creatingDefaultPerks();
 
         //Adding Fighter Class
-        HeroClassHandler fighterHandler = new HeroClassHandler("Fighter",200,120,120,6,2,0.1,0.05);
+        HeroClassHandler fighterHandler = new HeroClassHandler();
         fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
         fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));

@@ -45,14 +45,31 @@ public class HeroClassHandler extends Soldier implements Cloneable{
     }
 
     public HeroClassHandler(){}
-    public HeroClassHandler(String className,int maximumHealth,int attackPower,int maximumMagic,int energyPoint,int inventorySize,double healthRefillRate, double magicRefillRate){
-        super(maximumHealth,attackPower,healthRefillRate, maximumHealth, className);
-        this.setCurrentEnergyPoint(this.getMaximumEnergyPoint());
-        this.setCurrentMagic(this.getMaximumMagic());
-        this.setMaximumMagic(maximumMagic);
-        this.setMaximumEnergyPoint(energyPoint);
-        this.setInventorySize(inventorySize);
+
+
+    public HeroClassHandler(int maximumHealth, int attackPower, double healthRefillRate, double currentHealth, String className, ArrayList<Perk> perks, ArrayList<Skill> skills, double criticalHitChance, double criticalHitChanceRatio, double criticalHitDamage, double criticalHitDamageRatio, double magicRefillRate, double attackPowerRatioDuringAttack, double healthRefillRateRatio, double magicRefillRateRatio, double energyPointRatio, double attackPowerRatioOnNonTargetedEnemy, double attackPowerOnNonTargetedEnemy, int maximumMagic, int currentMagic, int numberOfNonTargetedEnemyEffected, int maximumEnergyPoint, int currentEnergyPoint, int inventorySize) {
+        super(maximumHealth, attackPower, healthRefillRate, currentHealth, className);
+        this.perks = perks;
+        this.skills = skills;
+        this.criticalHitChance = criticalHitChance;
+        this.criticalHitChanceRatio = criticalHitChanceRatio;
+        this.criticalHitDamage = criticalHitDamage;
+        this.criticalHitDamageRatio = criticalHitDamageRatio;
+        this.magicRefillRate = magicRefillRate;
+        this.attackPowerRatioDuringAttack = attackPowerRatioDuringAttack;
+        this.healthRefillRateRatio = healthRefillRateRatio;
+        this.magicRefillRateRatio = magicRefillRateRatio;
+        this.energyPointRatio = energyPointRatio;
+        this.attackPowerRatioOnNonTargetedEnemy = attackPowerRatioOnNonTargetedEnemy;
+        this.attackPowerOnNonTargetedEnemy = attackPowerOnNonTargetedEnemy;
+        this.maximumMagic = maximumMagic;
+        this.currentMagic = currentMagic;
+        this.numberOfNonTargetedEnemyEffected = numberOfNonTargetedEnemyEffected;
+        this.maximumEnergyPoint = maximumEnergyPoint;
+        this.currentEnergyPoint = currentEnergyPoint;
+        this.inventorySize = inventorySize;
     }
+
     //---------------------------------------------------------------- Functions
     public void addSkill(Skill skill){
         this.skills.add(skill);

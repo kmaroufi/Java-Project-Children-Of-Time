@@ -107,6 +107,7 @@ public class HeroClass extends Soldier {
         this.setCurrentHealth(this.getMaximumHealth());
         this.setAttackPower(heroClass.getAttackPower());
 
+
     }
 
     //-------------------------------------------------- Functions
