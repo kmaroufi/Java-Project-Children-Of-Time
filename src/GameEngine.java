@@ -67,7 +67,7 @@ public class GameEngine {
             }
             else if (numberEntered == 3) {
                 Display.printInEachLine("Your current wealth is:" + this.player.getMoney() + "dollars");
-                Display.printf("Enter Your Command:(type 'Next' For Next Step!)");
+                Display.printInEachLine("Enter Your Command:(type 'Next' For Next Step!)");
                 String command = Display.getString();
                 for (ItemProperties itemProperties : Shop.listOfItems) {
                     if (command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")) {                 //(item name) + “?”
