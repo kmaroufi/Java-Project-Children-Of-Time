@@ -27,6 +27,7 @@ public class GameEngine {
             Display.printInEachLine("Magic: " + hero.getCurrentMagic() + " / " + hero.getMaximumMagic());
             Display.printInEachLine("Energy points: " + hero.getCurrentEnergyPoint());
             Display.printInEachLine("Attack power: " + hero.getAttackPower());
+            Display.printInEachLine("Abilities:");
             for(Skill skill : hero.skills) {
                 try {
                     Display.printInEachLine(skill.getDescription());
@@ -925,7 +926,7 @@ public class GameEngine {
                 continue;
             }
         }
-
+        int numberOfAttacks = 0;
 
         while (true) {
             Display.printInEachLine("Choose What To Do?");
@@ -959,6 +960,7 @@ public class GameEngine {
                     for (Enemy enemy : this.listOfEnemies) {
                         if (command.equalsIgnoreCase(hero.getName() + " attack " + enemy.getName())) {
                             hero.attack(enemy);
+                            numberOfAttacks++;
                             Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + hero.getAttackPower() + " power");
                             if (enemy.isDead()) {
                                 Display.printInEachLine(enemy.getName() + " has died");
@@ -1055,17 +1057,20 @@ public class GameEngine {
                     break;
                 }
             }
-            for (Enemy enemy : listOfEnemies) {
-                enemy.doTurn();
-                for (Hero hero : listOfHeroes) {
-                    if (hero.isDead()) {
-                        if (Player.imortalityPotion > 0) {
-                            Player.imortalityPotion--;
-                            hero.setCurrentHealth(hero.getMaximumHealth());
-                            Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
-                        } else {
-                            this.listOfHeroes.remove(hero);
-                            Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
+            if(numberOfAttacks == this.listOfHeroes.size()) {
+                numberOfAttacks = 0;
+                for (Enemy enemy : listOfEnemies) {
+                    enemy.doTurn();
+                    for (Hero hero : listOfHeroes) {
+                        if (hero.isDead()) {
+                            if (Player.imortalityPotion > 0) {
+                                Player.imortalityPotion--;
+                                hero.setCurrentHealth(hero.getMaximumHealth());
+                                Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
+                            } else {
+                                this.listOfHeroes.remove(hero);
+                                Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
+                            }
                         }
                     }
                 }
@@ -1218,6 +1223,8 @@ public class GameEngine {
             }
         }
     }
+
+    public void clearScreen(){}
     //------------------------------------------ Getter && Setters
 
     public Player getPlayer() {
