@@ -9,11 +9,15 @@ public class Soldier {
     protected String className;
     //------------------------------------------- Constructors
     public Soldier(){}
-    public Soldier(int maximumHealth,int attackPower,double healthRefillRate){
-        this.setMaximumHealth(maximumHealth);
-        this.setAttackPower(attackPower);
-        this.setHealthRefillRate(healthRefillRate);
+
+    public Soldier(int maximumHealth, int attackPower, double healthRefillRate, double currentHealth, String className) {
+        this.maximumHealth = maximumHealth;
+        this.attackPower = attackPower;
+        this.healthRefillRate = healthRefillRate;
+        this.currentHealth = currentHealth;
+        this.className = className;
     }
+
     //------------------------------------------- Functions
     public boolean isDead(){
         if(this.currentHealth <= 0){

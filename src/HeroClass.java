@@ -4,9 +4,8 @@ import java.util.HashMap;
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClass extends Soldier{
-    private String name;
-    public static HashMap<String, HeroClass> mapOfHeroClasses;
+public class HeroClass extends Soldier {
+    public static HashMap<String, HeroClass> mapOfHeroClasses = new HashMap<>();
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     protected ArrayList<Perk> perks = new ArrayList<Perk>();
     protected ArrayList<Skill> skills = new ArrayList<Skill>();
@@ -35,6 +34,7 @@ public class HeroClass extends Soldier{
     protected double headShotChance; // when you headShot an enemy, you kill it immediately!
 
     //-------------------------------------------------- Constructors
+
     public HeroClass(){
         for(int i = 0;i < this.skills.size();i++){
             if(this.skills.get(i).isGlobal() && !Hero.listOfActiveGlobalSkills.contains(this.skills.get(i))){       // if it is not repeated
@@ -48,8 +48,7 @@ public class HeroClass extends Soldier{
                 Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
             }
         }
-        this.setClassName(heroClassHandler.getName());
-        this.setName(heroClassHandler.getName());
+        this.setClassName(heroClassHandler.getClassName());
         this.setAttackPowerOnNonTargetedEnemy(heroClassHandler.getAttackPowerOnNonTargetedEnemy());
         this.setAttackPowerRatioDuringAttack(heroClassHandler.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClassHandler.getAttackPowerRatioOnNonTargetedEnemy());
@@ -82,7 +81,7 @@ public class HeroClass extends Soldier{
                 Hero.listOfActiveGlobalSkills.add(this.skills.get(i));
             }
         }
-        this.setName(heroClass.getName());
+        this.setClassName(heroClass.getClassName());
         this.setAttackPowerOnNonTargetedEnemy(heroClass.getAttackPowerOnNonTargetedEnemy());
         this.setAttackPowerRatioDuringAttack(heroClass.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClass.getAttackPowerRatioOnNonTargetedEnemy());
@@ -115,14 +114,6 @@ public class HeroClass extends Soldier{
         Display.printInEachLine("Kooft!");
     }
     //-------------------------------------------------- Getter && Setters
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public static HashMap<String, HeroClass> getMapOfHeroClasses() {
         return mapOfHeroClasses;

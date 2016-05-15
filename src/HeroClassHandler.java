@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClassHandler extends Soldier{
+public class HeroClassHandler extends Soldier implements Cloneable{
     private ArrayList<Perk> perks = new ArrayList<>();
     private ArrayList<Skill> skills = new ArrayList<>();
     private double criticalHitChance;
@@ -23,19 +24,21 @@ public class HeroClassHandler extends Soldier{
     private int maximumEnergyPoint;
     private int currentEnergyPoint;
     private int inventorySize;
-    private int energyPoint;
-
-    private String name;
 
 
     //---------------------------------------------------------------- Constructors
+
+
+    protected HeroClassHandler clone() throws CloneNotSupportedException {
+        HeroClassHandler clone = (HeroClassHandler) super.clone();
+        return clone;
+    }
+
     public HeroClassHandler(){}
-    public HeroClassHandler(String name,int maximumHealth,int attackPower,int maximumMagic,int energyPoint,int inventorySize,double healthRefillRate, double magicRefillRate){
-        super(maximumHealth,attackPower,healthRefillRate);
+    public HeroClassHandler(String className,int maximumHealth,int attackPower,int maximumMagic,int energyPoint,int inventorySize,double healthRefillRate, double magicRefillRate){
+        super(maximumHealth,attackPower,healthRefillRate, maximumHealth, className);
         this.setCurrentEnergyPoint(this.getMaximumEnergyPoint());
         this.setCurrentMagic(this.getMaximumMagic());
-        this.setCurrentHealth(this.getMaximumHealth());
-        this.setName(name);
         this.setMaximumMagic(maximumMagic);
         this.setMaximumEnergyPoint(energyPoint);
         this.setInventorySize(inventorySize);
@@ -203,21 +206,5 @@ public class HeroClassHandler extends Soldier{
         this.inventorySize = inventorySize;
     }
 
-    public int getEnergyPoint() {
-        return energyPoint;
-    }
-
-    public void setEnergyPoint(int energyPoint) {
-        this.energyPoint = energyPoint;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }
