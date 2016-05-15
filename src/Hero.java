@@ -26,6 +26,19 @@ public class Hero extends HeroClass {
     }
 
     //------------------------------------------ Functions
+    public void removeItem(Item item){
+        if(hasItem(item)){
+            this.items.remove(item);
+        }
+        else{
+            Display.printInEachLine(this.getName() + " Has not This item");
+        }
+    }
+
+    public void addItem(Item item){
+        this.items.add(item);
+    }
+
     public void addSkill(Skill skill){
         this.skills.add(skill);
     }
@@ -125,9 +138,13 @@ public class Hero extends HeroClass {
     }
 
     public void showItems(){
-        Display.printInEachLine(this.name + " has :");
+        Display.printf(this.name + " has :");
+        if(this.items.isEmpty()){
+            Display.printInEachLine(" Nothing!");
+            return;
+        }
         for(Item item : this.items){
-            Display.printInEachLine(item.getName() + " worth " + (item.getWorth()/2.0) + " dollars ,");
+            Display.printf(item.getName() + " worth " + (item.getWorth()/2.0) + " dollars ,");
         }
     }
 

@@ -95,6 +95,9 @@ public class Skill<E> extends Ability implements Cloneable{
         }
     }
 
+    public void showDescription(){
+        Display.printInEachLine(this.getDescription());
+    }
 
     public void choosingRelatedSoldiers(Enemy enemy,Hero hero) {
         this.relatedSoldiers.clear();

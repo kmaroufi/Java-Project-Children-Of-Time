@@ -54,6 +54,10 @@ public class Item {
 
     //--------------------------------------------------- Functions
 
+    public void showDescription(){
+        Display.printInEachLine(this.getDescription());
+    }
+
     public void isActivated() {
         //TODO
     }

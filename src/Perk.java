@@ -113,6 +113,9 @@ public class Perk<E> extends Ability implements Cloneable{
         this.relatedSoldiers.add(hero);
     }
 
+    public void showDescription(){
+        Display.printInEachLine(this.getDescription());
+    }
 
     public void choosingRelatedSoldiers() {
         this.relatedSoldiers.clear();
