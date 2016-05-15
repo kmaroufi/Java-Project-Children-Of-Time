@@ -45,6 +45,7 @@ public class GameEngine {
             }
         }
     }
+
     public void shoppingCommands(){
         Display.printInEachLine("Welcome To The Shop!");
         while(true) {
@@ -111,6 +112,7 @@ public class GameEngine {
         }
 
     }
+
     public void abilityCastCommands(){
         while(true) {
             Display.printInEachLine("What Do You Want To Do?");
@@ -203,6 +205,7 @@ public class GameEngine {
             }
         }
     }
+
     public void chooseLevelOfGame(){
         Display.printInEachLine("Choose Level Of Game:");
         Display.printInEachLine("1 - Easy");
@@ -1018,6 +1021,7 @@ public class GameEngine {
                                 hero.attack(enemy);
                                 numberOfAttacks++;
                                 Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + hero.getAttackPower() + " power");
+                                Display.printInEachLine(enemy.getName() + "'s Current Health is :" + enemy.getCurrentHealth());
                                 if (enemy.isDead()) {
                                     Display.printInEachLine(enemy.getName() + " has died");
                                     if (this.listOfEnemies.isEmpty()) {
