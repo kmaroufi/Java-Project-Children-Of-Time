@@ -1194,6 +1194,11 @@ public class GameEngine {
                         }
                     }
                 }
+                if(this.listOfHeroes.isEmpty()){
+                    Display.printInEachLine("You Defeat!");
+                    System.exit(0);
+                    return;
+                }
                 this.updateAllSkills();
                 for(Hero hero : this.listOfHeroes){
                     hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
