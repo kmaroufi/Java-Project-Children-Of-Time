@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class Item {
+public class Item implements Cloneable{
 
     private String name;
     private String ownerName;
@@ -53,6 +53,17 @@ public class Item {
     }
 
     //--------------------------------------------------- Functions
+
+    protected Item clone() throws CloneNotSupportedException {
+        Item item = (Item) super.clone();
+        item.setEffectedSoldiers(new ArrayList<>());
+        item.setRelatedSoldiers(new ArrayList<>());
+        item.setProperties(new ArrayList<>());
+        for (Property<Hero> property: this.properties) {
+            item.getProperties().add(property.clone());
+        }
+        return item;
+    }
 
     public void showDescription(){
         Display.printInEachLine(this.getDescription());
@@ -135,6 +146,14 @@ public class Item {
 
     //--------------------------------------------------- Getter && Setters
 
+
+    public ArrayList<Hero> getEffectedSoldiers() {
+        return effectedSoldiers;
+    }
+
+    public void setEffectedSoldiers(ArrayList<Hero> effectedSoldiers) {
+        this.effectedSoldiers = effectedSoldiers;
+    }
 
     public boolean isAlive() {
         return isAlive;
