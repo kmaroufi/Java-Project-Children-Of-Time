@@ -111,7 +111,7 @@ public class HeroClass extends Soldier {
 
     //-------------------------------------------------- Functions
     public void showDescription(){
-        Display.printInEachLine("Kooft!");
+        Display.printInEachLine("");
     }
     //-------------------------------------------------- Getter && Setters
 

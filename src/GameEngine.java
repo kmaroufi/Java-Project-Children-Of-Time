@@ -921,127 +921,159 @@ public class GameEngine {
         }
 
 
-        while(true){
+        while(true) {
             Display.printInEachLine("Choose What To Do?");
             Display.printInEachLine("1 - Show Hero Team Description");
             Display.printInEachLine("2 - Show Enemy Team Description");
             Display.printInEachLine("Enter Other Numbers for Other Commands");
             Display.printInEachLine("Enter An Integer:");
             int numberEntered = Display.getInteger();
-            switch (numberEntered){
-                case 1:
-                    this.showHeroTeamDescription();
-                    break;
-                case 2:
-                    this.showEnemyTeamDescription();
-                    break;
-                default:
-                    break;
+            if (numberEntered == 1) {
+                this.showHeroTeamDescription();
+                break;
+            } else if (numberEntered == 2) {
+                this.showEnemyTeamDescription();
+                break;
+            } else {
+                break;
             }
-            Display.printInEachLine("Enter Your Command:");
-            String command = Display.getString();
-            for(Hero hero: this.listOfHeroes){
-                if(command.equalsIgnoreCase(hero.getName() + "?")){
-                    hero.showDescription();
-                    break;
+        }
+        Display.printInEachLine("Enter Your Command:");
+        String command = Display.getString();
+        for(Hero hero: this.listOfHeroes){
+            if(command.equalsIgnoreCase(hero.getName() + "?")){
+                hero.showDescription();
+                break;
+            }
+            if(command.contains(hero.getName())){
+                for(Skill skill:hero.getSkills()){
+                    if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName() + "?")){//(hero name) + “ “ +(ability name) + "?"
+                        Display.printInEachLine(skill.getDescription());
+                        Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade()]);
+                        Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
+                        break;
+                    }
                 }
-                if(command.contains(hero.getName())){
-                    for(Skill skill:hero.getSkills()){
-                        if(command.equalsIgnoreCase(hero.getName() + " " + skill.getName() + "?")){//(hero name) + “ “ +(ability name) + "?"
-                            Display.printInEachLine(skill.getDescription());
-                            Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade()]);
-                            Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
+                for(Enemy enemy : this.listOfEnemies){
+                    if(command.equalsIgnoreCase(hero.getName() + " attack " + enemy.getName())){
+                        hero.attack(enemy);
+                        Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + hero.getAttackPower() + " power");
+                        if(enemy.isDead()){
+                            Display.printInEachLine(enemy.getName() + " has died");
+                            if(this.listOfEnemies.isEmpty()){
+                                Display.printInEachLine("Victory! You’ve defeated all of your enemies");
+                                return;
+                            }
+                            this.listOfEnemies.remove(enemy);
+                            break;
+                        }
+                        if(this.listOfEnemies.isEmpty()){
+                            Display.printInEachLine("Victory! You’ve defeated all of your enemies");
+                            return;
+                        }
+                    }
+                }
+            }
+            if(command.contains(hero.getName() + " cast ")){
+                for(Skill skill : this.listOfSkills){
+                    if(command.contains(hero.getName() + " cast " + skill.getName())){
+                        if(!hero.hasSkill(skill)){
+                            Display.printInEachLine(hero.getName() + "hasn't " + skill.getName());
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
+                            hero.useSkill(skill.name);
+                            Display.printInEachLine(hero.getName() + "casts Successfully" + skill.getName());
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
+                            Display.printInEachLine("You don’t have enough magic points");
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
+                            Display.printInEachLine("You don’t have enough energy points");
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
+                            Display.printInEachLine("You don’t have enough energy points");
+                            Display.printInEachLine("You don’t have enough magic points");
                             break;
                         }
                     }
                 }
-                if(command.contains(hero.getName() + " cast ")){
-                    for(Skill skill : this.listOfSkills){
-                        if(command.contains(hero.getName() + " cast " + skill.getName())){
-                            if(!hero.hasSkill(skill)){
-                                Display.printInEachLine(hero.getName() + "hasn't " + skill.getName());
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
-                                hero.useSkill(skill.name);
-                                Display.printInEachLine(hero.getName() + "casts Successfully" + skill.getName());
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
-                                Display.printInEachLine("You don’t have enough magic points");
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
-                                Display.printInEachLine("You don’t have enough energy points");
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]){
-                                Display.printInEachLine("You don’t have enough energy points");
-                                Display.printInEachLine("You don’t have enough magic points");
-                                break;
-                            }
+            }
+            if(command.contains(hero.getName() + " use ")){
+                for(ItemProperties itemProperties: Shop.listOfItems){
+                    if(command.contains(hero.getName() + " use " + itemProperties.getItem().getName() + " on ")){
+                        if(!hero.hasItem(itemProperties.getItem())){
+                            Display.printInEachLine("You don’t have this item");
+                            break;
                         }
-                    }
-                }
-                if(command.contains(hero.getName() + " use ")){
-                    for(ItemProperties itemProperties: Shop.listOfItems){
-                        if(command.contains(hero.getName() + " use " + itemProperties.getItem().getName() + " on ")){
-                            if(!hero.hasItem(itemProperties.getItem())){
-                                Display.printInEachLine("You don’t have this item");
-                                break;
-                            }
 //                                else if(itemProperties.getItem().getRemainingTime() > 0){
 //                                    Display.printInEachLine("Your desired item is still in cooldown");
 //                                    break;
 //                                }
-                            if(hero.getCurrentEnergyPoint() >= itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() >= itemProperties.getItem().getRequiredMagicPoint()){
-                                hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - itemProperties.getItem().getRequiredEnergyPoint());
-                                hero.setCurrentMagic(hero.getCurrentMagic() - itemProperties.getItem().getRequiredMagicPoint());
-                                Display.printInEachLine(hero.getName() + "used Successfully " + itemProperties.getItem().getName());
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() >= itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() < itemProperties.getItem().getRequiredMagicPoint()){
-                                Display.printInEachLine("You don’t have enough magic points");
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() < itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() >= itemProperties.getItem().getRequiredMagicPoint()){
-                                Display.printInEachLine("You don’t have enough energy points");
-                                break;
-                            }
-                            else if(hero.getCurrentEnergyPoint() < itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() < itemProperties.getItem().getRequiredMagicPoint()){
-                                Display.printInEachLine("You don’t have enough energy points");
-                                Display.printInEachLine("You don’t have enough magic points");
-                                break;
-                            }
+                        if(hero.getCurrentEnergyPoint() >= itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() >= itemProperties.getItem().getRequiredMagicPoint()){
+                            hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - itemProperties.getItem().getRequiredEnergyPoint());
+                            hero.setCurrentMagic(hero.getCurrentMagic() - itemProperties.getItem().getRequiredMagicPoint());
+                            Display.printInEachLine(hero.getName() + "used Successfully " + itemProperties.getItem().getName());
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() >= itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() < itemProperties.getItem().getRequiredMagicPoint()){
+                            Display.printInEachLine("You don’t have enough magic points");
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() < itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() >= itemProperties.getItem().getRequiredMagicPoint()){
+                            Display.printInEachLine("You don’t have enough energy points");
+                            break;
+                        }
+                        else if(hero.getCurrentEnergyPoint() < itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() < itemProperties.getItem().getRequiredMagicPoint()){
+                            Display.printInEachLine("You don’t have enough energy points");
+                            Display.printInEachLine("You don’t have enough magic points");
+                            break;
                         }
                     }
                 }
             }
-            for(Enemy enemy : this.listOfEnemies){
-                if(command.equalsIgnoreCase(enemy.getName() + "?")){
-                    enemy.showDescription();
-                    break;
+        }
+        for(Enemy enemy : this.listOfEnemies){
+            if(command.equalsIgnoreCase(enemy.getName() + "?")){
+                enemy.showDescription();
+                break;
+            }
+        }
+        for(ItemProperties itemProperties : Shop.listOfItems){
+            if(command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")){
+                Display.printInEachLine(itemProperties.getItem().getDescription());
+                break;
+            }
+        }
+        for(Skill skill : this.listOfSkills) {
+            if (command.equalsIgnoreCase(skill.getName() + "?")) {
+                Display.printInEachLine(skill.getDescription());
+                break;
+            }
+        }
+        for(Perk perk : this.listOfPerks) {
+            if (command.equalsIgnoreCase(perk.getName() + "?")) {
+                Display.printInEachLine(perk.getDescription());
+                break;
+            }
+        }
+        for(Enemy enemy: listOfEnemies){
+            enemy.doTurn();
+            for(Hero hero: listOfHeroes){
+                if(hero.isDead()){
+                    if(Player.imortalityPotion > 0){
+                        Player.imortalityPotion--;
+                        hero.setCurrentHealth(hero.getMaximumHealth());
+                        Display.printInEachLine(hero.getName()  + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
+                    }
+                    else{
+                        Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
+                    }
                 }
             }
-            for(ItemProperties itemProperties : Shop.listOfItems){
-                if(command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")){
-                    Display.printInEachLine(itemProperties.getItem().getDescription());
-                    break;
-                }
-            }
-            for(Skill skill : this.listOfSkills) {
-                if (command.equalsIgnoreCase(skill.getName() + "?")) {
-                    Display.printInEachLine(skill.getDescription());
-                    break;
-                }
-            }
-            for(Perk perk : this.listOfPerks) {
-                if (command.equalsIgnoreCase(perk.getName() + "?")) {
-                    Display.printInEachLine(perk.getDescription());
-                    break;
-                }
-            }
-
         }
     }
 
