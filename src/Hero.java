@@ -75,7 +75,6 @@ public class Hero extends HeroClass {
             }
             enemies.remove(randomIndex);
         }
-
     }
 
     public void useSkill(String skillName){

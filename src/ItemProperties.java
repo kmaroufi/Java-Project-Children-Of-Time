@@ -57,6 +57,10 @@ public class ItemProperties {
     }
 
     public void updatePrice() {
-        //TODO
+        if (this.coefficientOfPriceIncrease == 0)
+            this.price += this.increasePriceValue;
+        else {
+            this.price *= this.coefficientOfPriceIncrease;
+        }
     }
 }
