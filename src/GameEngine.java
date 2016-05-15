@@ -19,30 +19,30 @@ public class GameEngine {
     private String levelOfGame;                     // level of Game(Easy-Medium-Hard)
 
     //------------------------------------------ Functions
-    public void showHeroesTraits(){
-        Display.printInEachLine("Hero Team Details:");
+    public void showHeroesTraits(String name){
         for(Hero hero : this.listOfHeroes){
-            Display.printInEachLine(hero.getName());
-            Display.printInEachLine("Health: " + hero.getCurrentHealth() + " / " + hero.getMaximumHealth());
-            Display.printInEachLine("Magic: " + hero.getCurrentMagic() + " / " + hero.getMaximumMagic());
-            Display.printInEachLine("Energy points: " + hero.getCurrentEnergyPoint());
-            Display.printInEachLine("Attack power: " + hero.getAttackPower());
-            Display.printInEachLine("Abilities:");
-            for(Skill skill : hero.skills) {
-                try {
-                    skill.showDescription();
-                    for (int i = 0; i < skill.getNumberOfGrades(); i++) {
-                        try {
-                            Display.printInEachLine("Update " + (i + 1) + ": " + skill.getUpgradeDescription()[i]);
-                        } catch (Exception e) {
-                            continue;
+            if(hero.getName().equalsIgnoreCase(name)){
+                Display.printInEachLine(hero.getName());
+                Display.printInEachLine("Health: " + hero.getCurrentHealth() + " / " + hero.getMaximumHealth());
+                Display.printInEachLine("Magic: " + hero.getCurrentMagic() + " / " + hero.getMaximumMagic());
+                Display.printInEachLine("Energy points: " + hero.getCurrentEnergyPoint());
+                Display.printInEachLine("Attack power: " + hero.getAttackPower());
+                Display.printInEachLine("Abilities:");
+                for(Skill skill : hero.skills) {
+                    try {
+                        skill.showDescription();
+                        for (int i = 0; i < skill.getNumberOfGrades(); i++) {
+                            try {
+                                Display.printInEachLine("Update " + (i + 1) + ": " + skill.getUpgradeDescription()[i]);
+                            } catch (Exception e) {
+                                continue;
+                            }
                         }
+                    } catch (Exception e) {
+                        continue;
                     }
-                } catch (Exception e) {
-                    continue;
                 }
             }
-            Display.printInEachLine("------------------------------------------------------");
         }
     }
     public void shoppingCommands(){
@@ -52,6 +52,7 @@ public class GameEngine {
             Display.printInEachLine("1 - Show List Of Items");
             Display.printInEachLine("2 - Show Hero Team Items");
             Display.printInEachLine("3 - Buy Or Sell Item");
+            Display.printInEachLine("4 - Show Your Wealth");
             int numberEntered = Display.getInteger();
             if (numberEntered == 1) {
                 Shop.showItems();
@@ -79,6 +80,7 @@ public class GameEngine {
                                 } else if (this.player.getMoney() >= itemProperties.getPrice() && hero.getInventorySize() >= itemProperties.getItem().getSize()) {                                 //(item name) “ bought successfully, your current wealth is: ” + (current money)
                                     hero.addItem(itemProperties.getItem());
                                     this.player.setMoney(this.player.getMoney() - itemProperties.getPrice());
+                                    itemProperties.updatePrice();
                                     Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());
                                 } else if (this.player.getMoney() < itemProperties.getPrice() && hero.getInventorySize() >= itemProperties.getItem().getSize()) {
                                     Display.printInEachLine("You don’t have enough money");
@@ -94,76 +96,106 @@ public class GameEngine {
                     }
                 }
             }
+            else if(numberEntered == 4){
+                Display.printInEachLine("Your Current Wealth is: " + this.player.getMoney() + " dollars.");
+                continue;
+            }
+            else{
+                Display.printInEachLine("Wrong Number! Try Again!");
+                continue;
+            }
         }
 
     }
     public void abilityCastCommands(){
-        this.showHeroesTraits();
-        while (true) {
-            Display.printInEachLine("Any Commands :(Type 'Next' For skip)");
-            String command = Display.getString();
-            if (command.equalsIgnoreCase("Next")) {
+        while(true) {
+            Display.printInEachLine("What Do You Want To Do?");
+            Display.printInEachLine("1 - Hero Traits");
+            Display.printInEachLine("2 - Casting Commands");
+            Display.printInEachLine("3 - Finish");
+            Display.printInEachLine("Enter An Integer");
+            int numberEntered = Display.getInteger();
+            if (numberEntered == 1) {
+                this.showHeroTeamDescription();
+                Display.printInEachLine("Enter Name of Hero:");
+                String heroName = Display.getString();
+                this.showHeroesTraits(heroName);
+            }
+            else if(numberEntered == 3){
                 return;
             }
-            if (command.contains("Acquire ")) {     //(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
-                for (Perk perk : this.listOfPerks) {
-                    if (command.contains("Acquire " + perk.getName() + " for ")) {
-                        for (Hero hero : this.listOfHeroes) {
-                            if (command.equalsIgnoreCase("Acquire " + perk.getName() + " for " + hero.getName())) {
-                                if (hero.hasPerk(perk)) {
-                                    //if getXP was less than perks
-                                    if (perk.getCurrentGrade() == perk.getNumberOfGrades()) {
-                                        Display.printInEachLine("This ability cannot be upgraded anymore");
-                                        break;
+            else if(numberEntered == 2) {
+                while (true) {
+                    Display.printInEachLine("Type Any Commands :(Type 'Next' For skip)");
+                    String command = Display.getString();
+                    if (command.equalsIgnoreCase("Next")) {
+                        break;
+                    }
+                    if (command.contains("Acquire ")) {     //(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
+                        for (Perk perk : this.listOfPerks) {
+                            if (command.contains("Acquire " + perk.getName() + " for ")) {
+                                for (Hero hero : this.listOfHeroes) {
+                                    if (command.equalsIgnoreCase("Acquire " + perk.getName() + " for " + hero.getName())) {
+                                        if (hero.hasPerk(perk)) {
+                                            //if getXP was less than perks
+                                            if (perk.getCurrentGrade() == perk.getNumberOfGrades()) {
+                                                Display.printInEachLine("This ability cannot be upgraded anymore");
+                                                break;
+                                            }
+                                            if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
+                                                Display.printInEachLine("Your experience is insufficient");
+                                                break;
+                                            }
+                                            hero.upgradeAbility(this.player, perk.getName());
+                                            this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
+                                            perk.setCurrentGrade(perk.getCurrentGrade() + 1);
+                                            Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                            break;
+                                        } else {
+                                            hero.addPerk(perk);
+                                            Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                            break;
+                                        }
                                     }
-                                    if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
-                                        Display.printInEachLine("Your experience is insufficient");
-                                        break;
+                                }
+                            }
+                        }
+                        for (Skill skill : this.listOfSkills) {
+                            if (command.contains("Acquire " + skill.getName() + " for ")) {
+                                for (Hero hero : this.listOfHeroes) {
+                                    if (command.equalsIgnoreCase("Acquire " + skill.getName() + " for " + hero.getName())) {
+                                        if (hero.hasSkill(skill)) {
+                                            if (skill.getCurrentGrade() == skill.getNumberOfGrades()) {
+                                                Display.printInEachLine("This ability cannot be upgraded anymore");
+                                                break;
+                                            }
+                                            if (skill.getCostOfUpgrade()[skill.getCurrentGrade()] > this.player.getXp()) {
+                                                Display.printInEachLine("Your experience is insufficient");
+                                                break;
+                                            }
+                                            hero.upgradeAbility(this.player, skill.getName());
+                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade()]);
+                                            skill.setCurrentGrade(skill.getCurrentGrade() + 1);
+                                            Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                            break;
+                                        } else {
+                                            hero.addSkill(skill);
+                                            Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                            break;
+                                        }
                                     }
-                                    hero.upgradeAbility(this.player, perk.getName());
-                                    this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
-                                    perk.setCurrentGrade(perk.getCurrentGrade() + 1);
-                                    Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                    break;
-                                } else {
-                                    hero.getPerks().add(perk);
-                                    Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                    break;
                                 }
                             }
                         }
                     }
-                }
-                for (Skill skill : this.listOfSkills) {
-                    if (command.contains("Acquire " + skill.getName() + " for ")) {
-                        for (Hero hero : this.listOfHeroes) {
-                            if (command.equalsIgnoreCase("Acquire " + skill.getName() + " for " + hero.getName())) {
-                                if (hero.hasSkill(skill)) {
-                                    if (skill.getCurrentGrade() == skill.getNumberOfGrades()) {
-                                        Display.printInEachLine("This ability cannot be upgraded anymore");
-                                        break;
-                                    }
-                                    if (skill.getCostOfUpgrade()[skill.getCurrentGrade()] > this.player.getXp()) {
-                                        Display.printInEachLine("Your experience is insufficient");
-                                        break;
-                                    }
-                                    hero.upgradeAbility(this.player, skill.getName());
-                                    this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade()]);
-                                    skill.setCurrentGrade(skill.getCurrentGrade() + 1);
-                                    Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                    break;
-                                } else {
-                                    hero.getSkills().add(skill);
-                                    Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                    break;
-                                }
-                            }
-                        }
+                    else {
+                        Display.printInEachLine("Wrong Command!Try Again!");
                     }
                 }
-
-            } else {
-                Display.printInEachLine("Wrong Command!Try Again!");
+            }
+            else {
+                Display.printInEachLine("Wrong Number! Try Again!");
+                continue;
             }
         }
     }
