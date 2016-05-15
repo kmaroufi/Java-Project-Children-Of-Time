@@ -156,16 +156,30 @@ public class GameEngine {
                                                 Display.printInEachLine("This ability cannot be upgraded anymore");
                                                 break;
                                             }
-                                            if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
-                                                Display.printInEachLine("Your experience is insufficient");
+                                            if(!perk.isAcquire()) {
+                                                if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
+                                                    Display.printInEachLine("Your experience is insufficient");
+                                                    break;
+                                                }
+                                                hero.upgradeAbility(this.player, perk.getName());
+                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
+                                                perk.setCurrentGrade(perk.getCurrentGrade() + 1);
+                                                Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
                                                 break;
                                             }
-                                            hero.upgradeAbility(this.player, perk.getName());
-                                            this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
-                                            perk.setCurrentGrade(perk.getCurrentGrade() + 1);
-                                            Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                            break;
-                                        } else {
+                                            else{
+                                                if (perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1] > this.player.getXp()) {
+                                                    Display.printInEachLine("Your experience is insufficient");
+                                                    break;
+                                                }
+                                                hero.upgradeAbility(this.player, perk.getName());
+                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1]);
+                                                perk.setCurrentGrade(perk.getCurrentGrade() + 1);
+                                                Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                                break;
+                                            }
+                                        }
+                                        else {
                                             hero.addPerk(perk);
                                             Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
                                             break;
@@ -183,12 +197,12 @@ public class GameEngine {
                                                 Display.printInEachLine("This ability cannot be upgraded anymore");
                                                 break;
                                             }
-                                            if (skill.getCostOfUpgrade()[skill.getCurrentGrade()] > this.player.getXp()) {
+                                            if (skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1] > this.player.getXp()) {
                                                 Display.printInEachLine("Your experience is insufficient");
                                                 break;
                                             }
                                             hero.upgradeAbility(this.player, skill.getName());
-                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade()]);
+                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
                                             skill.setCurrentGrade(skill.getCurrentGrade() + 1);
                                             Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
                                             break;
@@ -994,6 +1008,7 @@ public class GameEngine {
             Display.printInEachLine("3 - Show Shop items");
             Display.printInEachLine("4 - Aquire Or Update Abilities");
             Display.printInEachLine("5 - Go For Fight");
+            Display.printInEachLine("6 - Help!");
             int numberEntered = Display.getInteger();
             if (numberEntered == 1) {
                 this.heroesAnnouncement();
@@ -1013,7 +1028,19 @@ public class GameEngine {
                 continue;
             } else if (numberEntered == 5) {
                 break;
-            } else {
+            }
+            else if(numberEntered == 6){
+                Display.printInEachLine("(item name) + “?” ----> (item description)");
+                Display.printInEachLine("(ability name) + “?” ----> (ability description)");
+                Display.printInEachLine("(hero name) + “?” ----> (hero description)");
+                Display.printInEachLine("(enemy name) + “?” ----> (enemy description)");
+                Display.printInEachLine("(hero name) + “ cast “ + (ability name) + “ on “ + (hero name / enemy name and id) ----> cast hero's ability");
+                Display.printInEachLine("(hero name) + “ use “ + (item name) + “ on “ + (hero name / enemy name and id) ----> uses item of hero");
+                Display.printInEachLine("(hero name) + “ attack “ + (enemy name and id) ----> When You Want to Attack An Enemy");
+                Display.printInEachLine("We Have Menu For You in All Activities And It's Very Very Simple!    (:D)");
+                continue;
+            }
+            else {
                 Display.printInEachLine("Wrong Number!Try Again!");
                 continue;
             }

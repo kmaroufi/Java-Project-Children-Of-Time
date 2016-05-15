@@ -90,6 +90,11 @@ public class Display {
     public static void printf(String sentence){
         System.out.printf(sentence);
     }
-    
 
+
+    public static ArrayList<String> getAbilityDetailsBeforeUsing(Object o) {
+        ArrayList<String> inputs = new ArrayList<String>();
+        inputs.add(Display.getString());
+        return  inputs;
+    }
 }
