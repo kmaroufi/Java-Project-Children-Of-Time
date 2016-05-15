@@ -8,10 +8,10 @@ import static javafx.scene.input.KeyCode.T;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Skill<E> extends Ability{
+public class Skill<E> extends Ability implements Cloneable{
     public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
-    private ArrayList<Property> propertiesOfRelatedSoldiers;
-    private Property propertiesOfUser;
+    private ArrayList<Property<E>> propertiesOfRelatedSoldiers;
+    private Property<Hero> propertiesOfUser;
     protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<E, Time>();
     private int nonTargetedEnemy;
     private boolean isRepeated;
@@ -44,6 +44,17 @@ public class Skill<E> extends Ability{
         setRequiredMagicPoint(skillHandler.getRequiredMagicPoint());
     }
 
+    protected Skill<E> clone() throws CloneNotSupportedException {
+        Skill<E> skill = (Skill<E>) super.clone();
+        ArrayList<Property<E>> cloneOfPropertiesOfRelatedSoldiers = new ArrayList<>();
+        for (Property<E> property: this.propertiesOfRelatedSoldiers) {
+            cloneOfPropertiesOfRelatedSoldiers.add(property.clone());
+        }
+        skill.setPropertiesOfRelatedSoldiers(cloneOfPropertiesOfRelatedSoldiers);
+        skill.setPropertiesOfUser(this.propertiesOfUser.clone());
+        skill.setMapOfEffectedSoldiers(new HashMap<>());
+        return skill;
+    }
 
     public boolean isActivated() {
        return false;
@@ -174,11 +185,11 @@ public class Skill<E> extends Ability{
         this.blackList = blackList;
     }
 
-    public ArrayList<Property> getPropertiesOfRelatedSoldiers() {
+    public ArrayList<Property<E>> getPropertiesOfRelatedSoldiers() {
         return propertiesOfRelatedSoldiers;
     }
 
-    public void setPropertiesOfRelatedSoldiers(ArrayList<Property> propertiesOfRelatedSoldiers) {
+    public void setPropertiesOfRelatedSoldiers(ArrayList<Property<E>> propertiesOfRelatedSoldiers) {
         this.propertiesOfRelatedSoldiers = propertiesOfRelatedSoldiers;
     }
 
