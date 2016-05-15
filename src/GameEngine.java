@@ -493,7 +493,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Fight training", FightTraining);
-            this.listOfPerks.add(FightTraining);
+            this.addNewPerk(FightTraining);
         }
         {
             //Fighter Class's Perk: Work out
@@ -532,7 +532,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> WorkOut = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Work out", WorkOut);
-            this.listOfPerks.add(WorkOut);
+            this.addNewPerk(WorkOut);
         }
         {
             //Supporter Class's Perk: Quick as a bunny
@@ -571,7 +571,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> Quickasabunny = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Quick as a bunny", Quickasabunny);
-            this.listOfPerks.add(Quickasabunny);
+            this.addNewPerk(Quickasabunny);
         }
         {
             //Supporter Class's Perk: Magic lessons
@@ -610,7 +610,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
             Perk<Hero> Magiclessons = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Magic lessons", Magiclessons);
-            this.listOfPerks.add(Magiclessons);
+            this.addNewPerk(Magiclessons);
         }
         {
             //Eley's Perk: Swirling attack
@@ -647,7 +647,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Swirling attack", Swirlingattack);
-            this.listOfPerks.add(Swirlingattack);
+            this.addNewPerk(Swirlingattack);
         }
         {
             //Eley's Perk: Critical strike
@@ -688,7 +688,7 @@ public class GameEngine {
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
             Perk.listOfPerks.put("Critical strike", Criticalstrike);
-            this.listOfPerks.add(Criticalstrike);
+            this.addNewPerk(Criticalstrike);
         }
     }
 
@@ -724,7 +724,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill<Enemy> overPoweredAttack = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Overpowered attack", overPoweredAttack);
-            this.listOfSkills.add(overPoweredAttack);
+            this.addNewSkill(overPoweredAttack);
         }
         {
             //Chrome's Skill: Sacrifice
@@ -760,7 +760,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Sacrifice = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Sacrifice", Sacrifice);
-            this.listOfSkills.add(Sacrifice);
+            this.addNewSkill(Sacrifice);
         }
         {
             //Meryl's Skill: Elixir
@@ -792,7 +792,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Elixir = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Elixir", Elixir);
-            this.listOfSkills.add(Elixir);
+            this.addNewSkill(Elixir);
         }
         {
             //Meryl's Skill: Caretaker
@@ -827,7 +827,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Caretaker = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Caretaker", Caretaker);
-            this.listOfSkills.add(Caretaker);
+            this.addNewSkill(Caretaker);
         }
         {
             //Bolti's Skill: Boost
@@ -860,7 +860,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription,description, false);
             Skill Boost = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Boost", Boost);
-            this.listOfSkills.add(Boost);
+            this.addNewSkill(Boost);
         }
         {
             //Bolti's Skill: Mana beam
@@ -893,7 +893,7 @@ public class GameEngine {
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill ManaBeam = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Mana beam", ManaBeam);
-            this.listOfSkills.add(ManaBeam);
+            this.addNewSkill(ManaBeam);
         }
     }
 
@@ -970,13 +970,15 @@ public class GameEngine {
 
     public void updateAllPerks(){
         for(Perk perk:this.listOfPerks){
+            perk.choosingRelatedSoldiers();
             perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
         }
     }
 
     public void updateAllSkills(){
         for(Skill skill: this.listOfSkills){
-
+            skill.choosingRelatedSoldiers();
+            skill.removeEffect();
         }
     }
 
@@ -1166,6 +1168,7 @@ public class GameEngine {
                         }
                     }
                 }
+                this.updateAllSkills();
                 for(Hero hero : this.listOfHeroes){
                     hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
                     if(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) <= hero.getMaximumHealth()) {

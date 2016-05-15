@@ -96,9 +96,11 @@ public class Display {
         ArrayList<String> inputs = new ArrayList<>();
         while (true) {
             String input = getString();
-            if (input.equals(0) == true)
+            if (input.equals("0")) {
                 break;
+            }
         }
+        return inputs;
     }
 
 }
