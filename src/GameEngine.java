@@ -146,77 +146,63 @@ public class GameEngine {
                     if (command.equalsIgnoreCase("Next")) {
                         break;
                     }
-                    if (command.contains("Acquire ")) {     //(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
-                        for (Perk perk : this.listOfPerks) {
-                            if (command.contains("Acquire " + perk.getName() + " for ")) {
-                                for (Hero hero : this.listOfHeroes) {
-                                    if (command.equalsIgnoreCase("Acquire " + perk.getName() + " for " + hero.getName())) {
-                                        if (hero.hasPerk(perk)) {
-                                            //if getXP was less than perks
-                                            if (perk.getCurrentGrade() == perk.getNumberOfGrades()) {
-                                                Display.printInEachLine("This ability cannot be upgraded anymore");
-                                                break;
-                                            }
-                                            if(!perk.isAcquire()) {
-                                                if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
-                                                    Display.printInEachLine("Your experience is insufficient");
-                                                    break;
-                                                }
-                                                hero.upgradeAbility(this.player, perk.getName());
-                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
-                                                perk.setCurrentGrade(perk.getCurrentGrade() + 1);
-                                                Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                                break;
-                                            }
-                                            else{
-                                                if (perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1] > this.player.getXp()) {
-                                                    Display.printInEachLine("Your experience is insufficient");
-                                                    break;
-                                                }
-                                                hero.upgradeAbility(this.player, perk.getName());
-                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1]);
-                                                perk.setCurrentGrade(perk.getCurrentGrade() + 1);
-                                                Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                                break;
-                                            }
-                                        }
-                                        else {
-                                            hero.addPerk(perk);
+                    if (command.contains("Acquire ")) {//(ability name) (“acquired”/”upgraded”) + “ successfully, your current experience is: ” + (current xp)
+                        boolean heroExistence = false;
+                        boolean perkExistence = false;
+                        boolean skillExistence = false;
+                        for (Hero hero : this.listOfHeroes) {
+                            if (command.contains(hero.getName())) {
+                                for (Perk perk : hero.getPerks()) {
+                                    if (command.contains(perk.getName())) {
+                                        if (perk.getCurrentGrade() == perk.getNumberOfGrades()) {
+                                            Display.printInEachLine("This ability cannot be upgraded anymore");
+                                        } else if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
+                                            Display.printInEachLine("Your experience is insufficient");
+                                        } else if (perk.isAcquire() == false) {
+                                            this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
+                                            hero.upgradeAbility(this.player, perk.getName());
                                             Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                            break;
+                                        } else {
+                                            this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
+                                            hero.upgradeAbility(this.player, perk.getName());
+                                            Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
                                         }
+                                        perkExistence = true;
+                                        break;
                                     }
                                 }
+                                for (Skill skill : hero.getSkills()) {
+                                    if (command.contains(skill.getName())) {
+                                        if (skill.getCurrentGrade() == skill.getNumberOfGrades()) {
+                                            Display.printInEachLine("This ability cannot be upgraded anymore");
+                                        } else if (skill.getCostOfUpgrade()[skill.getCurrentGrade()] > this.player.getXp()) {
+                                            Display.printInEachLine("Your experience is insufficient");
+                                        } else if (skill.isAcquire == false) {
+                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
+                                            hero.upgradeAbility(this.player, skill.getName());
+                                            Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                        } else {
+                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
+                                            hero.upgradeAbility(this.player, skill.getName());
+                                            Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                        }
+                                        skillExistence = true;
+                                        break;
+                                    }
+                                }
+                                heroExistence = true;
+                                break;
                             }
                         }
-                        for (Skill skill : this.listOfSkills) {
-                            if (command.contains("Acquire " + skill.getName() + " for ")) {
-                                for (Hero hero : this.listOfHeroes) {
-                                    if (command.equalsIgnoreCase("Acquire " + skill.getName() + " for " + hero.getName())) {
-                                        if (hero.hasSkill(skill)) {
-                                            if (skill.getCurrentGrade() == skill.getNumberOfGrades()) {
-                                                Display.printInEachLine("This ability cannot be upgraded anymore");
-                                                break;
-                                            }
-                                            if (skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1] > this.player.getXp()) {
-                                                Display.printInEachLine("Your experience is insufficient");
-                                                break;
-                                            }
-                                            hero.upgradeAbility(this.player, skill.getName());
-                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
-                                            skill.setCurrentGrade(skill.getCurrentGrade() + 1);
-                                            Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                            break;
-                                        } else {
-                                            hero.addSkill(skill);
-                                            Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
+                        if (heroExistence == false) {
+                            Display.printInEachLine("This hero doesn't exist!");
+                        } else if ((perkExistence == false) && (skillExistence == false)) {
+                            Display.printInEachLine("This hero has't this ability!");
                         }
                     }
+//                            if (command.contains("Acquire " + perk.getName() + " for ")) {
+//                                for (Hero hero : this.listOfHeroes) {
+//                                    if (command.equalsIgnoreCase("Acquire " + perk.getName() + " for " + hero.getName())) {
                     else {
                         Display.printInEachLine("Wrong Command!Try Again!");
                     }
@@ -255,6 +241,7 @@ public class GameEngine {
     }
 
     public void addDefaultAttributes(){            // Adds All Datas in PDF (Fighter-Meryl-......)
+
         //Adding Abilities
         this.setNumberOfBattle(1);                                  //Number of battle
 
@@ -505,7 +492,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade2: +30 attack power for 3 xp points";
             upgradeDescription[2] = "Upgrade3: +30 attack power for 4 xp points";
             String description = "Permanently increases attack power";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, true, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription, description, false);
             Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
             Perk.listOfPerks.put("Fight training", FightTraining);
             this.addNewPerk(FightTraining);
@@ -736,7 +723,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: N=1.4 for 4 xp points, needs Fight training upgrade 2";
             upgradeDescription[2] = "Upgrade 3: N=1.6 for 6 xp points, needs Fight training upgrade 3";
             String description = "Attacks an enemy with N times power for 2 energy points and 50 magic points";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("overPoweredAttack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Overpowered attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill<Enemy> overPoweredAttack = new Skill(skillHandler, abilityHandler);
             Skill.listOfSkills.put("Overpowered attack", overPoweredAttack);
             this.addNewSkill(overPoweredAttack);
@@ -961,18 +948,27 @@ public class GameEngine {
             this.listOfEnemies.add(new Thug("Weak"));
             this.listOfEnemies.add(new Thug("Weak"));
             this.listOfEnemies.add(new Angel("Weak"));
+            for (Enemy enemy: listOfEnemies) {
+                Enemy.mapOfEnemies.put(enemy.getName(), enemy);
+            }
         }
         else if(numberOfBattle == 2){
             this.listOfEnemies.add(new Thug("Able"));
             this.listOfEnemies.add(new Thug("Able"));
             this.listOfEnemies.add(new Angel("Weak"));
             this.listOfEnemies.add(new Tank("Weak"));
+            for (Enemy enemy: listOfEnemies) {
+                Enemy.mapOfEnemies.put(enemy.getName(), enemy);
+            }
         }
         else if(numberOfBattle == 3){
             this.listOfEnemies.add(new Thug("Able"));
             this.listOfEnemies.add(new Thug("Mighty"));
             this.listOfEnemies.add(new Angel("Able"));
             this.listOfEnemies.add(new Tank("Weak"));
+            for (Enemy enemy: listOfEnemies) {
+                Enemy.mapOfEnemies.put(enemy.getName(), enemy);
+            }
         }
         else if(numberOfBattle == 4){
             this.listOfEnemies.add(new Thug("Mighty"));
@@ -980,11 +976,16 @@ public class GameEngine {
             this.listOfEnemies.add(new Angel("Able"));
             this.listOfEnemies.add(new Tank("Able"));
             this.listOfEnemies.add(new Tank("Able"));
+            for (Enemy enemy: listOfEnemies) {
+                Enemy.mapOfEnemies.put(enemy.getName(), enemy);
+            }
         }
     }
 
     public void updateAllPerks(){
         for(Perk perk:this.listOfPerks){
+            if (perk.isAcquire == false)
+                continue;
             perk.choosingRelatedSoldiers();
             perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
         }
@@ -997,8 +998,8 @@ public class GameEngine {
     }
 
     public void doCampaign(int battleNumber) {                                               // do Campaign Game (not Custom Game)
-        this.updateAllPerks();
         setEnemies(battleNumber + 1);
+        this.updateAllPerks();
         this.showBattleMessage(battleNumber + 1);
         while (true) {
             Display.printInEachLine("#######################################");
@@ -1268,6 +1269,7 @@ public class GameEngine {
         }
         else{
             this.listOfHeroes.add(hero);
+            Hero.mapOfHeroes.put(hero.getName(), hero);
         }
     }
 

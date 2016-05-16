@@ -6,7 +6,7 @@ import java.util.Map;
  * Created by asus-pc on 5/5/2016.
  */
 public class Property<E> implements Cloneable{
-    private Double totalEffectOnProperty;               // az che noii e??????
+    private Double totalEffectOnProperty = new Double(0);               // az che noii e??????
     private String name;
     private String fieldOfEffecting;
     private int currentGrade;
@@ -97,7 +97,7 @@ public class Property<E> implements Cloneable{
         }
         if (cond == 1) {
             cond = 0;
-            classOfSoldier = classOfSoldier.getSuperclass().getSuperclass();
+            classOfSoldier = classOfSoldier.getSuperclass();
             try {
                 field = classOfSoldier.getDeclaredField(this.name);
             } catch (NoSuchFieldException e) {

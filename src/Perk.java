@@ -35,29 +35,32 @@ public class Perk<E> extends Ability implements Cloneable{
         if (this.currentGrade == this.numberOfGrades)
             return;
 
-        for (String nameOfAbility: (ArrayList<String>)this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
-            if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
-                for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
-                    if (skill.getName().equals(nameOfAbility)) {
-                        if (skill.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
-                            return;
-                        break;
+        if (this.nameOfNecessaryAbilities.get(this.currentGrade + 1) != null) {
+            for (String nameOfAbility: (ArrayList<String>)this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
+                if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
+                    for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
+                        if (skill.getName().equals(nameOfAbility)) {
+                            if (skill.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
+                                return;
+                            break;
+                        }
                     }
                 }
-            }
-            if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
-                for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
-                    if (perk.getName().equals(nameOfAbility)) {
-                        if (perk.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
-                            return;
-                        break;
+                if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
+                    for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
+                        if (perk.getName().equals(nameOfAbility)) {
+                            if (perk.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
+                                return;
+                            break;
+                        }
                     }
                 }
             }
         }
 
         this.currentGrade += 1;
-        player.setXp(player.getXp() - this.costOfUpgrade[this.currentGrade]);
+        if (this.isAcquire == false)
+            this.isAcquire = true;
 
         for (PerkMode<E> perkMode: this.listOfModes) {
             for (Property<E> property: perkMode.getProperties()) {

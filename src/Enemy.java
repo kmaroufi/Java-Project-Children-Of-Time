@@ -3,7 +3,7 @@
  */
 import java.util.*;
 public abstract class Enemy extends Soldier{
-    public static HashMap<String , Enemy> mapOfEnemies;        // ArrayList is Wrong
+    public static HashMap<String , Enemy> mapOfEnemies = new HashMap<>();        // ArrayList is Wrong
     private String version;                         // (Weak-Able-Mighty)
     private Double attackPowerRatio;
     private Integer isAstounded;
