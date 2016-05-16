@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import java.util.Random;
  */
 public abstract class Ability<T> {
 
-    public static Map<String, String> listOfAbilities;
+    public static Map<String, String> listOfAbilities = new HashMap<>();
 
     protected String name;
     protected String ownerName;
@@ -54,7 +55,7 @@ public abstract class Ability<T> {
     }
     //-------------------------------------------------------- Functions
 
-    abstract public void upgrade(Player player);
+    abstract public boolean upgrade(Player player);
 
     //-------------------------------------------------------- Getter And Setters
 

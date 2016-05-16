@@ -31,17 +31,15 @@ public class Perk<E> extends Ability implements Cloneable{
 
     //---------------------------------------------------------- Functions
 
-    public void upgrade(Player player) {
-        if (this.currentGrade == this.numberOfGrades)
-            return;
+    public boolean upgrade(Player player) {
 
         if (this.nameOfNecessaryAbilities.get(this.currentGrade + 1) != null) {
             for (String nameOfAbility: (ArrayList<String>)this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
                 if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
                     for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
                         if (skill.getName().equals(nameOfAbility)) {
-                            if (skill.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
-                                return;
+                            if (skill.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(skill.getName()))
+                                return false;
                             break;
                         }
                     }
@@ -49,8 +47,8 @@ public class Perk<E> extends Ability implements Cloneable{
                 if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
                     for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
                         if (perk.getName().equals(nameOfAbility)) {
-                            if (perk.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
-                                return;
+                            if (perk.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(perk.getName()))
+                                return false;
                             break;
                         }
                     }
@@ -76,6 +74,8 @@ public class Perk<E> extends Ability implements Cloneable{
         this.mapOfEffectedSoldiers.clear();
         this.choosingRelatedSoldiers();
         this.updatePerkEffect(this.relatedSoldiers, Hero.mapOfHeroes.get(this.ownerName));
+
+        return true;
     }
 
     protected Perk clone() throws CloneNotSupportedException {

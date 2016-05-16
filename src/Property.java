@@ -58,21 +58,21 @@ public class Property<E> implements Cloneable{
     }
 
     private <T> void calculateProperty(T relatedSoldier) {
-        this.totalEffectOnProperty += this.constantProperty[this.currentGrade];
+        this.totalEffectOnProperty = this.constantProperty[this.currentGrade - 1];
         if (relatedSoldier instanceof Hero) {
-            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getAttackPower();
-            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMaximumHealth();
-            this.totalEffectOnProperty += this.maximumMagicCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMaximumMagic();
-            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getCurrentHealth();
-            this.totalEffectOnProperty += this.magicCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getCurrentMagic();
-            this.totalEffectOnProperty += this.healthRefillRateCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getHealthRefillRate();
-            this.totalEffectOnProperty += this.magicRefillRateCoefficient[this.currentGrade] * ((Hero) relatedSoldier).getMagicRefillRate();
+            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getAttackPower();
+            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getMaximumHealth();
+            this.totalEffectOnProperty += this.maximumMagicCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getMaximumMagic();
+            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getCurrentHealth();
+            this.totalEffectOnProperty += this.magicCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getCurrentMagic();
+            this.totalEffectOnProperty += this.healthRefillRateCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getHealthRefillRate();
+            this.totalEffectOnProperty += this.magicRefillRateCoefficient[this.currentGrade - 1] * ((Hero) relatedSoldier).getMagicRefillRate();
             return;
         }
         if (relatedSoldier instanceof Enemy) {
-            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getAttackPower();
-            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getMaximumHealth();
-            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade] * ((Enemy) relatedSoldier).getCurrentHealth();
+            this.totalEffectOnProperty += this.attackPowerCoefficient[this.currentGrade - 1] * ((Enemy) relatedSoldier).getAttackPower();
+            this.totalEffectOnProperty += this.maximumHealthCoefficient[this.currentGrade - 1] * ((Enemy) relatedSoldier).getMaximumHealth();
+            this.totalEffectOnProperty += this.healthCoefficient[this.currentGrade - 1] * ((Enemy) relatedSoldier).getCurrentHealth();
             return;
         }
     }
@@ -108,7 +108,7 @@ public class Property<E> implements Cloneable{
         String type = field.getGenericType().toString();
         Class classOfSoldier2 = relatedSoldier.getClass();
         Field field2 = null;
-        if ("maximumHealth".equals("currentHealth")) {
+        if (this.name.equals("currentHealth")) {
             cond = 0;
             try {
                 field2 = classOfSoldier2.getDeclaredField("maximumHealth");
@@ -135,7 +135,7 @@ public class Property<E> implements Cloneable{
                 }
             }
         }
-        if ("maximumMagic".equals("currentMagic")) {
+        if (this.name.equals("currentMagic")) {
             cond = 0;
             try {
                 field2 = classOfSoldier2.getDeclaredField("maximumMagic");
@@ -176,7 +176,7 @@ public class Property<E> implements Cloneable{
                     if (((Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((Integer)field2.get(relatedSoldier)))
                         totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
                 }
-                if (this.name.equals("maximumMagic")) {
+                if (this.name.equals("currentMagic")) {
                     if (((Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((Integer)field2.get(relatedSoldier)))
                         totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
                 }
@@ -187,7 +187,7 @@ public class Property<E> implements Cloneable{
                     if (((Double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((Double) field2.get(relatedSoldier)))
                         totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
                 }
-                if (this.name.equals("maximumMagic")) {
+                if (this.name.equals("currentMagic")) {
                     if (((Double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((Double) field2.get(relatedSoldier)))
                         totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
                 }

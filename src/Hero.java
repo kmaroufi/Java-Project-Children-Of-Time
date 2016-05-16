@@ -55,9 +55,12 @@ public class Hero extends HeroClass {
 
     public void attack(Enemy enemy){
         Random random = new Random();
-        int criticalHitChance = (int)(1 / this.criticalHitChance);
+        int criticalHitChance = 0;
+        if (this.criticalHitChance != 0) {
+            criticalHitChance = (int)(1 / this.criticalHitChance);
+        }
         if ((criticalHitChance - 1) == random.nextInt(criticalHitChance)) {
-            enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack * this.criticalHitDamage);
+            enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage);
         }
         else {
             enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack);
@@ -85,19 +88,18 @@ public class Hero extends HeroClass {
         }
     }
 
-    public void upgradeAbility(Player player,String abilityName){
+    public boolean upgradeAbility(Player player,String abilityName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
             if(this.skills.get(i).getName().equals(abilityName)){
-                this.skills.get(i).upgrade(player);
-                return;
+                return this.skills.get(i).upgrade(player);
             }
         }
         for(int i = 0;i < this.perks.size();i++){                  //finding perk with abilityName
             if(this.perks.get(i).getName().equals(abilityName)){
-                this.perks.get(i).upgrade(player);
-                return;
+                return this.perks.get(i).upgrade(player);
             }
         }
+        return false;
     }
 
     public void useItem(String itemName){

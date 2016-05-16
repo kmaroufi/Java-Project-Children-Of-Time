@@ -27,6 +27,8 @@ public class GameEngine {
                 Display.printInEachLine("Magic: " + hero.getCurrentMagic() + " / " + hero.getMaximumMagic());
                 Display.printInEachLine("Energy points: " + hero.getCurrentEnergyPoint());
                 Display.printInEachLine("Attack power: " + hero.getAttackPower());
+                Display.printInEachLine("criticalHitChance: " + hero.getCriticalHitChance());
+                Display.printInEachLine("criticalHitDamage: " + hero.getCriticalHitDamage());
                 Display.printInEachLine("Abilities:");
                 for(Skill skill : hero.skills) {
                     try {
@@ -159,13 +161,21 @@ public class GameEngine {
                                         } else if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
                                             Display.printInEachLine("Your experience is insufficient");
                                         } else if (perk.isAcquire() == false) {
-                                            this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
-                                            hero.upgradeAbility(this.player, perk.getName());
-                                            Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                            if (hero.upgradeAbility(this.player, perk.getName())) {
+                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1]);
+                                                Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                            }
+                                            else {
+                                                Display.printInEachLine("Required abilities aren't acquired");
+                                            }
                                         } else {
-                                            this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade()]);
-                                            hero.upgradeAbility(this.player, perk.getName());
-                                            Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                            if (hero.upgradeAbility(this.player, perk.getName())) {
+                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1]);
+                                                Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                            }
+                                            else {
+                                                Display.printInEachLine("Required abilities aren't acquired");
+                                            }
                                         }
                                         perkExistence = true;
                                         break;
@@ -178,13 +188,21 @@ public class GameEngine {
                                         } else if (skill.getCostOfUpgrade()[skill.getCurrentGrade()] > this.player.getXp()) {
                                             Display.printInEachLine("Your experience is insufficient");
                                         } else if (skill.isAcquire == false) {
-                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
-                                            hero.upgradeAbility(this.player, skill.getName());
-                                            Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                            if (hero.upgradeAbility(this.player, skill.getName())) {
+                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
+                                                Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                            }
+                                            else {
+                                                Display.printInEachLine("Required abilities aren't acquired");
+                                            }
                                         } else {
-                                            this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
-                                            hero.upgradeAbility(this.player, skill.getName());
-                                            Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                            if (hero.upgradeAbility(this.player, skill.getName())) {
+                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
+                                                Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                            }
+                                            else {
+                                                Display.printInEachLine("Required abilities aren't acquired");
+                                            }
                                         }
                                         skillExistence = true;
                                         break;
@@ -493,8 +511,7 @@ public class GameEngine {
             upgradeDescription[2] = "Upgrade3: +30 attack power for 4 xp points";
             String description = "Permanently increases attack power";
             AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, true, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription, description, false);
-            Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
-            Perk.listOfPerks.put("Fight training", FightTraining);
+            Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(FightTraining);
         }
         {
@@ -531,9 +548,8 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: +50 maximum health for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: +50 maximum health for 4 xp points";
             String description = "Permanently increases maximum health";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
-            Perk<Hero> WorkOut = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
-            Perk.listOfPerks.put("Work out", WorkOut);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Work out", null, false, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription, description, false);
+            Perk<Hero> WorkOut = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(WorkOut);
         }
         {
@@ -570,9 +586,8 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade2: +1 energy point for 3 xp points";
             upgradeDescription[2] = "Upgrade3: +1 energy point for 4 xp points";
             String description = "Permanently increases energy points";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
-            Perk<Hero> Quickasabunny = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustForFirstTime");
-            Perk.listOfPerks.put("Quick as a bunny", Quickasabunny);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Quick as a bunny", null, false, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription, description, false);
+            Perk<Hero> Quickasabunny = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(Quickasabunny);
         }
         {
@@ -609,9 +624,8 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: +50 maximum magic for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: +50 maximum magic for 4 xp points";
             String description = "Permanently increases maximum magic";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, true, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription, description, false);
-            Perk<Hero> Magiclessons = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
-            Perk.listOfPerks.put("Magic lessons", Magiclessons);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Magic lessons", null, false, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription, description, false);
+            Perk<Hero> Magiclessons = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(Magiclessons);
         }
         {
@@ -646,20 +660,19 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
             String description = "While attacking, non-targeted enemies also take P percent of its damage";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
-            Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
-            Perk.listOfPerks.put("Swirling attack", Swirlingattack);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
+            Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(Swirlingattack);
         }
         {
             //Eley's Perk: Critical strike
             double[] tmp = {0,0,0};
-            double[] arr = {20,30,40};
+            double[] arr = {0.2,0.1,0.1};
             PropertyHandler propertyHandler = new PropertyHandler("criticalHitChance",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
             double[] arr2 = {2,0,0};
-            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
-            Property<Hero> property2 = new Property<>(propertyHandler);
+            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr2, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property2 = new Property<>(propertyHandler2);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             properties.add(property2);
@@ -687,9 +700,8 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=30 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=40 for 4 xp points";
             String description = "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
-            Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustWhenUpgraded");
-            Perk.listOfPerks.put("Critical strike", Criticalstrike);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Critical strike", "Chrome", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
+            Perk<Hero> Criticalstrike = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(Criticalstrike);
         }
     }
@@ -725,7 +737,6 @@ public class GameEngine {
             String description = "Attacks an enemy with N times power for 2 energy points and 50 magic points";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Overpowered attack", "Eley", false, true, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill<Enemy> overPoweredAttack = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Overpowered attack", overPoweredAttack);
             this.addNewSkill(overPoweredAttack);
         }
         {
@@ -761,7 +772,6 @@ public class GameEngine {
             String description = "Damages all the enemies with 3H power at the cost of H of his own health, needs 3 energy points, 60 magic points and has a 1 turn cooldown";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Sacrifice", "Chrome", false, true, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Sacrifice = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Sacrifice", Sacrifice);
             this.addNewSkill(Sacrifice);
         }
         {
@@ -793,7 +803,6 @@ public class GameEngine {
             String description = "Refills H points of her own health or an ally’s, for 2 energy points and 60 magic points";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Elixir", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Elixir = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Elixir", Elixir);
             this.addNewSkill(Elixir);
         }
         {
@@ -828,7 +837,6 @@ public class GameEngine {
             String description = "Gives 1 energy point to an ally for 30 magic points (this ep does not last until the end of the battle and is only usable during the current turn)";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Caretaker", "Meryl", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill Caretaker = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Caretaker", Caretaker);
             this.addNewSkill(Caretaker);
         }
         {
@@ -859,9 +867,8 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: A=30 for 3 xp points and takes 1 turn to cool down";
             upgradeDescription[2] = "Upgrade 3: A=30 for 5 xp points and cools down instantly";
             String description = "Gives A bonus attack power to himself or an ally, which lasts till the end of the battle, for 2 energy points and 50 magic points (this bonus attack power can stack up)";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, null, null, upgradeDescription,description, false);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription,description, false);
             Skill Boost = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Boost", Boost);
             this.addNewSkill(Boost);
         }
         {
@@ -894,7 +901,6 @@ public class GameEngine {
             String description = "Gives M magic points to himself or an ally for 1 energy point and 50 magic points";
             AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Mana beam", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Skill ManaBeam = new Skill(skillHandler, abilityHandler);
-            Skill.listOfSkills.put("Mana beam", ManaBeam);
             this.addNewSkill(ManaBeam);
         }
     }
@@ -985,6 +991,8 @@ public class GameEngine {
     public void updateAllPerks(){
         for(Perk perk:this.listOfPerks){
             if (perk.isAcquire == false)
+                continue;
+            if (perk.getTimeOfCheck().equals("JustAfterUpgrading"))
                 continue;
             perk.choosingRelatedSoldiers();
             perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
@@ -1280,6 +1288,8 @@ public class GameEngine {
         }
         else{
             this.listOfPerks.add(perk);
+            Ability.listOfAbilities.put(perk.getName(), "perk");
+            Perk.listOfPerks.put(perk.getName(), perk);
         }
     }
 
@@ -1290,6 +1300,8 @@ public class GameEngine {
         }
         else{
             this.listOfSkills.add(skill);
+            Ability.listOfAbilities.put(skill.getName(), "skill");
+            Skill.listOfSkills.put(skill.getName(), skill);
         }
     }
 
