@@ -8,7 +8,7 @@ public class Perk<E> extends Ability implements Cloneable{
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode<E>> listOfModes;
     private Map<Condition, PerkMode<E>> mapOfCondition;
-    private Map<E, PerkMode<E>> mapOfRelatedSoldiers = new HashMap<>();
+    private Map<E, PerkMode<E>> mapOfEffectedSoldiers = new HashMap<>();
     private boolean isConditionDependOnRelatedSoldier;
     private boolean isConditionDependOnUserHero;
     private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
@@ -31,10 +31,53 @@ public class Perk<E> extends Ability implements Cloneable{
 
     //---------------------------------------------------------- Functions
 
+    public void upgrade(Player player) {
+        if (this.currentGrade == this.numberOfGrades)
+            return;
+
+        for (String nameOfAbility: (ArrayList<String>)this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
+            if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
+                for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
+                    if (skill.getName().equals(nameOfAbility)) {
+                        if (skill.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
+                            return;
+                        break;
+                    }
+                }
+            }
+            if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
+                for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
+                    if (perk.getName().equals(nameOfAbility)) {
+                        if (perk.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(this.currentGrade + 1))
+                            return;
+                        break;
+                    }
+                }
+            }
+        }
+
+        this.currentGrade += 1;
+        player.setXp(player.getXp() - this.costOfUpgrade[this.currentGrade]);
+
+        for (PerkMode<E> perkMode: this.listOfModes) {
+            for (Property<E> property: perkMode.getProperties()) {
+                property.setCurrentGrade(this.currentGrade);
+            }
+        }
+
+        for (E effectedSoldier: ((ArrayList<E>)this.effectedSoldiers)) {
+            this.mapOfEffectedSoldiers.get(effectedSoldier).removeEffect(effectedSoldier);
+        }
+
+        this.effectedSoldiers.clear();
+        this.mapOfEffectedSoldiers.clear();
+        this.choosingRelatedSoldiers();
+        this.updatePerkEffect(this.relatedSoldiers, Hero.mapOfHeroes.get(this.ownerName));
+    }
 
     protected Perk clone() throws CloneNotSupportedException {
         Perk<E> perk = (Perk) super.clone();
-        perk.setMapOfRelatedSoldiers(new HashMap<>());
+        perk.setMapOfEffectedSoldiers(new HashMap<>());
         ArrayList<PerkMode<E>> cloneOfListOfModes = new ArrayList<>();
         Map<Condition, PerkMode<E>> cloneOfMapOfConditions = new HashMap<>();
         for (Condition condition: this.listOfCondition) {
@@ -69,11 +112,12 @@ public class Perk<E> extends Ability implements Cloneable{
         Hero owner = Hero.mapOfHeroes.get(this.ownerName);
         if (this.listOfCondition.size() == 1) {
             for (E relatedSoldier: relatedSoldiers) {
-                if (this.mapOfRelatedSoldiers.containsKey(relatedSoldier))
+                if (this.mapOfEffectedSoldiers.containsKey(relatedSoldier))
                     continue;
                 else {
-                    this.mapOfRelatedSoldiers.put(relatedSoldier, this.listOfModes.get(0));
+                    this.mapOfEffectedSoldiers.put(relatedSoldier, this.listOfModes.get(0));
                     this.listOfModes.get(0).effect(relatedSoldier, owner, userHero);
+                    this.effectedSoldiers.add(relatedSoldier);
                 }
 
             }
@@ -88,16 +132,17 @@ public class Perk<E> extends Ability implements Cloneable{
             else {
                 perkMode = this.mapOfCondition.get(this.validCondition((E) owner));
             }
-            if (this.mapOfRelatedSoldiers.containsKey(soldier) == false) {
-                this.mapOfRelatedSoldiers.put(soldier, perkMode);
+            if (this.mapOfEffectedSoldiers.containsKey(soldier) == false) {
+                this.mapOfEffectedSoldiers.put(soldier, perkMode);
                 perkMode.effect(relatedSoldiers, owner, userHero);
+                this.effectedSoldiers.add(soldier);
                 continue;
             }
-            if (this.mapOfRelatedSoldiers.get(soldier) == perkMode)
+            if (this.mapOfEffectedSoldiers.get(soldier) == perkMode)
                 continue;
             else {
-                this.mapOfRelatedSoldiers.get(soldier).removeEffect(soldier);
-                this.mapOfRelatedSoldiers.put(soldier, perkMode);
+                this.mapOfEffectedSoldiers.get(soldier).removeEffect(soldier);
+                this.mapOfEffectedSoldiers.put(soldier, perkMode);
                 perkMode.effect(relatedSoldiers, owner, userHero);
             }
         }
@@ -155,11 +200,11 @@ public class Perk<E> extends Ability implements Cloneable{
         this.mapOfCondition = mapOfCondition;
     }
 
-    public Map<E, PerkMode<E>> getMapOfRelatedSoldiers() {
-        return mapOfRelatedSoldiers;
+    public Map<E, PerkMode<E>> getMapOfEffectedSoldiers() {
+        return mapOfEffectedSoldiers;
     }
 
-    public void setMapOfRelatedSoldiers(Map<E, PerkMode<E>> mapOfRelatedSoldiers) {
+    public void setMapOfEffectedSoldiers(Map<E, PerkMode<E>> mapOfEffectedSoldiers) {
 
     }
 

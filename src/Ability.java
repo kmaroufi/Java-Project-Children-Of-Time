@@ -13,20 +13,20 @@ public abstract class Ability<T> {
     protected String ownerName;
     protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
     protected ArrayList<T> relatedSoldiers = new ArrayList<T>();
-    private boolean isGlobal; // Just clear that other heroes can use this Ability or no.
+    protected boolean isGlobal; // Just clear that other heroes can use this Ability or no.
     protected boolean hasEffectedOnEnemy;
     protected boolean isRandomSoldierSelecting;
     protected int numberOfRelatedSoldiers;
     protected int numberOfGrades;
     protected int currentGrade;
-    private String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
-    private boolean hasCondition;
-    private int[] costOfUpgrade;
-    private Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
-    private Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
-    private String[] upgradeDescription;
+    protected String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
+    protected boolean hasCondition;
+    protected int[] costOfUpgrade;
+    protected Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
+    protected Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
+    protected String[] upgradeDescription;
     protected String description;
-    private boolean isAcquire;
+    protected boolean isAcquire;
 
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
@@ -54,35 +54,7 @@ public abstract class Ability<T> {
     }
     //-------------------------------------------------------- Functions
 
-    public void upgrade(Player player) {
-
-        if (this.currentGrade == this.numberOfGrades)
-            return;
-
-        for (String nameOfAbility: this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
-            if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
-                for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
-                    if (skill.getName().equals(nameOfAbility)) {
-                        if (skill.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
-                            return;
-                        break;
-                    }
-                }
-            }
-            if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
-                for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
-                    if (perk.getName().equals(nameOfAbility)) {
-                        if (perk.getCurrentGrade() > this.gradeOfNecessaryAbilities.get(this.currentGrade + 1).get(nameOfAbility))
-                            return;
-                        break;
-                    }
-                }
-            }
-        }
-
-        this.currentGrade += 1;
-        player.setXp(player.getXp() - this.costOfUpgrade[this.currentGrade]);
-    }
+    abstract public void upgrade(Player player);
 
     //-------------------------------------------------------- Getter And Setters
 
