@@ -53,28 +53,42 @@ public class Hero extends HeroClass {
         this.perks.add(perk);
     }
 
-    public void attack(Enemy enemy){
+    public int attack(Enemy enemy){
+        int finalAttackPower = 0;
         Random random = new Random();
+        int criticalHitChance = 0;
+        if (this.criticalHitChance != 0) {
+            criticalHitChance = (int) (1 / this.criticalHitChance);
+        }
+        if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
+            finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage);
+            enemy.getDamage(finalAttackPower);
+            System.out.println("Critical Attack!");
+        }
+        else {
+            finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack);
+            enemy.getDamage(finalAttackPower);
+            System.out.println("Normal Attack!");
+        }
+        return finalAttackPower;
+    }
+
+    public void attackOnNonTargetedEnemies(Enemy enemy) {
+        Random random = new Random();
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        enemies.addAll(GameEngine.listOfEnemies);
+        enemies.remove(enemy);
         int criticalHitChance = 0;
         if (this.criticalHitChance != 0) {
             criticalHitChance = (int)(1 / this.criticalHitChance);
         }
-        if ((criticalHitChance - 1) == random.nextInt(criticalHitChance)) {
-            enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage);
-        }
-        else {
-            enemy.getDamage(this.attackPower * this.attackPowerRatioDuringAttack);
-        }
-        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        enemies.addAll(GameEngine.listOfEnemies);
-        enemies.remove(enemy);
         for (int i = 0; i < this.numberOfNonTargetedEnemyEffected; i++) {
             int randomIndex = random.nextInt(enemies.size());
             if ((criticalHitChance - 1) == random.nextInt(criticalHitChance)) {
-                enemies.get(randomIndex).getDamage((this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower) * this.criticalHitDamage);
+                enemies.get(randomIndex).getDamage((this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
             }
             else {
-                enemies.get(randomIndex).getDamage(this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower);
+                enemies.get(randomIndex).getDamage(this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack);
             }
             enemies.remove(randomIndex);
         }

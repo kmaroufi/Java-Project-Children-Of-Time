@@ -631,7 +631,7 @@ public class GameEngine {
         {
             //Eley's Perk: Swirling attack
             double[] tmp = {0,0,0};
-            double[] arr = {10,20,30};
+            double[] arr = {.1,.1,.1};
             PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioOnNonTargetedEnemy",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -1081,17 +1081,29 @@ public class GameEngine {
                         for (Skill skill : hero.getSkills()) {
                             if (command.equalsIgnoreCase(hero.getName() + " " + skill.getName() + "?")) {//(hero name) + “ “ +(ability name) + "?"
                                 skill.showDescription();
-                                Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade()]);
-                                Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points");
+                                if (skill.getCurrentGrade() == 0) {
+                                    Display.printInEachLine("This Ability is not acquires!");
+                                    Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points to acquire it.");
+                                }
+                                else {
+                                    Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade() - 1]);
+                                    if (skill.getCurrentGrade() != skill.getNumberOfGrades())
+                                        Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points to upgrade it.");
+                                }
                                 break;
                             }
                         }
                         for (Enemy enemy : this.listOfEnemies) {
                             if (command.equalsIgnoreCase(hero.getName() + " attack " + enemy.getName())) {
-                                hero.attack(enemy);
+                                if (hero.getCurrentEnergyPoint() < 2) {
+                                    Display.printInEachLine(hero.getName() + "'s energy point isn't enough to attack.");
+                                    break;
+                                }
+                                int attackPower = hero.attack(enemy);
+                                hero.attackOnNonTargetedEnemies(enemy);
                                 hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - 2);
-                                Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + hero.getAttackPower() + " power");
-                                Display.printInEachLine(enemy.getName() + "'s Current Health is :" + enemy.getCurrentHealth());
+                                Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + attackPower + " power");
+                                Display.printInEachLine(enemy.getName() + "'s Current Health is: " + enemy.getCurrentHealth());
                                 if (enemy.isDead()) {
                                     Display.printInEachLine(enemy.getName() + " has died");
                                     if (this.listOfEnemies.isEmpty()) {

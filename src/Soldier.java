@@ -28,6 +28,8 @@ public class Soldier {
 
     public void getDamage(double attackPower) {
         this.setCurrentHealth(currentHealth - attackPower);             // did not check the skills!
+        if (this.currentHealth < 0)
+            this.currentHealth = 0;
     }
     //------------------------------------------- Getters && Setters
 
