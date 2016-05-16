@@ -29,8 +29,14 @@ public class Angel extends Enemy {
         Random random = new Random();
         int randomIndex = random.nextInt(GameEngine.listOfEnemies.size());
         Enemy targetedEnemy = GameEngine.listOfEnemies.get(randomIndex);
-        targetedEnemy.setCurrentHealth(targetedEnemy.currentHealth + this.healPower);
-        Display.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + this.healPower + " health points");
+        if (targetedEnemy.currentHealth + this.healPower > targetedEnemy.getMaximumHealth()) {
+            Display.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + (targetedEnemy.getMaximumHealth() - targetedEnemy.getCurrentHealth()) + " health points");
+            targetedEnemy.setCurrentHealth(targetedEnemy.getMaximumHealth());
+        }
+        else {
+            Display.printInEachLine("Angel just healed " + targetedEnemy.getName() + " with " + this.healPower + " health points");
+            targetedEnemy.setCurrentHealth(targetedEnemy.currentHealth + this.healPower);
+        }
     }
 
     public int getHealPower() {

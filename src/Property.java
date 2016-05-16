@@ -126,7 +126,7 @@ public class Property<E> implements Cloneable{
             }
             if (cond == 1) {
                 cond = 0;
-                classOfSoldier2 = classOfSoldier2.getSuperclass().getSuperclass();
+                classOfSoldier2 = classOfSoldier2.getSuperclass();
                 try {
                     field2 = classOfSoldier2.getDeclaredField("maximumHealth");
                 } catch (NoSuchFieldException e) {
@@ -153,7 +153,7 @@ public class Property<E> implements Cloneable{
             }
             if (cond == 1) {
                 cond = 0;
-                classOfSoldier2 = classOfSoldier2.getSuperclass().getSuperclass();
+                classOfSoldier2 = classOfSoldier2.getSuperclass();
                 try {
                     field2 = classOfSoldier2.getDeclaredField("maximumMagic");
                 } catch (NoSuchFieldException e) {
@@ -173,25 +173,25 @@ public class Property<E> implements Cloneable{
             }
             if (type.equals("int")) {
                 if (this.name.equals("currentHealth")) {
-                    if (((Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((Integer)field2.get(relatedSoldier)))
-                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                    if (((int) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((int)field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (double) field2.get(relatedSoldier) - (double) field.get(relatedSoldier);
                 }
                 if (this.name.equals("currentMagic")) {
-                    if (((Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((Integer)field2.get(relatedSoldier)))
-                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                    if (((int) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue()) > ((int)field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (double) field2.get(relatedSoldier) - (double) field.get(relatedSoldier);
                 }
-                field.set(relatedSoldier, (Integer) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
+                field.set(relatedSoldier, (int) field.get(relatedSoldier) + this.totalEffectOnProperty.intValue());
             }
             if (type.equals("double")) {
                 if (this.name.equals("currentHealth")) {
-                    if (((Double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((Double) field2.get(relatedSoldier)))
-                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                    if (((double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((double) field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (double) field2.get(relatedSoldier) - (double) field.get(relatedSoldier);
                 }
                 if (this.name.equals("currentMagic")) {
-                    if (((Double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((Double) field2.get(relatedSoldier)))
-                        totalEffectOnProperty = (Double) field2.get(relatedSoldier) - (Double) field.get(relatedSoldier);
+                    if (((double) field.get(relatedSoldier) + this.totalEffectOnProperty) > ((double) field2.get(relatedSoldier)))
+                        totalEffectOnProperty = (double) field2.get(relatedSoldier) - (double) field.get(relatedSoldier);
                 }
-                field.set(relatedSoldier, (Double) field.get(relatedSoldier) + this.totalEffectOnProperty);
+                field.set(relatedSoldier, (double) field.get(relatedSoldier) + this.totalEffectOnProperty);
             }
             if (this.valueOfEffectingOnEffectedSoldiers.containsKey(relatedSoldier)) {
                 this.valueOfEffectingOnEffectedSoldiers.put((E) relatedSoldier, this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier) + this.totalEffectOnProperty);

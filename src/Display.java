@@ -22,12 +22,16 @@ public class Display {
 
     public static int getInteger(){
         int i = 0;
+        int cond = 0;
         while (true) {
             try {
+                if (cond == 1)
+                    cin.nextLine();
                 i = cin.nextInt();
                 break;
             } catch (Exception e) {
                 System.out.println("Wrong Input!");
+                cond = 1;
             }
         }
         Display.lastGet = "Integer";

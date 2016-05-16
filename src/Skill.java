@@ -61,8 +61,8 @@ public class Skill<E> extends Ability implements Cloneable{
        return false;
     }
 
-    public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero) {
-        this.choosingRelatedSoldiers();
+    public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero, ArrayList<E> soldeirs) {
+        this.choosingRelatedSoldiers(soldeirs);
         if (this.remainingCooldown != 0) {
             return;
         }
@@ -100,6 +100,13 @@ public class Skill<E> extends Ability implements Cloneable{
         }
     }
 
+    public void reduceTime(String typeOfTime) {
+        for (int i = 0; i < this.effectedSoldiers.size(); i++) {
+            E soldier = (E) this.effectedSoldiers.get(i);
+            this.mapOfEffectedSoldiers.get(soldier).reduceTime(typeOfTime);
+        }
+    }
+
     public void showDescription(){
         Display.printInEachLine(this.getDescription());
     }
@@ -120,7 +127,7 @@ public class Skill<E> extends Ability implements Cloneable{
         return false;
     }
 
-    public void choosingRelatedSoldiers() {
+    public void choosingRelatedSoldiers(ArrayList<E> fromCommandLine) {
         this.relatedSoldiers.clear();
         if (this.hasEffectedOnEnemy) {
             if (this.numberOfRelatedSoldiers == -5)
@@ -135,29 +142,8 @@ public class Skill<E> extends Ability implements Cloneable{
                     enemies.remove(randomIndex);
                 }
             }
-            else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-                ArrayList<String> nameOfEnemies = new ArrayList<>();
-                while (true) {
-                    Display.printInEachLine("please determine your target! At end, enter 0");
-                    String input = Display.getString();
-                    if (input.equals("0"))
-                        break;
-                    int cond = 0;
-                    for (Enemy enemy: GameEngine.listOfEnemies) {
-                        if (enemy.getName().equals(input)) {
-                            cond = 1;
-                            break;
-                        }
-                    }
-                    if (cond == 1)
-                        nameOfEnemies.add(input);
-                    else {
-                        Display.printInEachLine("Please enter valid command!");
-                    }
-                }
-                for (String nameOfEnemy: nameOfEnemies) {
-                    this.relatedSoldiers.add(Enemy.mapOfEnemies.get(nameOfEnemy));
-                }
+            else if (this.isDependsRelatedSoldiersSelectingOnPlayer()) {
+                this.relatedSoldiers.addAll(fromCommandLine);
             }
         }
         else {
@@ -173,29 +159,8 @@ public class Skill<E> extends Ability implements Cloneable{
                     heroes.remove(randomIndex);
                 }
             }
-            else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-                ArrayList<String> nameOfHeroes = new ArrayList<>();
-                while (true) {
-                    Display.printInEachLine("please determine your target! At end, enter 0");
-                    String input = Display.getString();
-                    if (input.equals("0"))
-                        break;
-                    int cond = 0;
-                    for (Hero hero: GameEngine.listOfHeroes) {
-                        if (hero.getName().equals(input)) {
-                            cond = 1;
-                            break;
-                        }
-                    }
-                    if (cond == 1)
-                        nameOfHeroes.add(input);
-                    else {
-                        Display.printInEachLine("Please enter valid command!");
-                    }
-                }
-                for (String nameOfHero: nameOfHeroes) {
-                    this.relatedSoldiers.add(Hero.mapOfHeroes.get(nameOfHero));
-                }
+            else if (this.isDependsRelatedSoldiersSelectingOnPlayer()) {
+                this.relatedSoldiers.add(fromCommandLine);
             }
             else {
                 this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
@@ -209,7 +174,7 @@ public class Skill<E> extends Ability implements Cloneable{
             if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
                 for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
                     if (skill.getName().equals(nameOfAbility)) {
-                        if (skill.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(skill.getName()))
+                        if (skill.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(skill.getName()))
                             return false;
                         break;
                     }
@@ -218,7 +183,7 @@ public class Skill<E> extends Ability implements Cloneable{
             if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
                 for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
                     if (perk.getName().equals(nameOfAbility)) {
-                        if (perk.getCurrentGrade() > ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(perk.getName()))
+                        if (perk.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(perk.getName()))
                             return false;
                         break;
                     }
@@ -227,12 +192,15 @@ public class Skill<E> extends Ability implements Cloneable{
         }
 
         this.currentGrade += 1;
-        player.setXp(player.getXp() - this.costOfUpgrade[this.currentGrade]);
+        if (this.isAcquire == false)
+            this.isAcquire = true;
 
         for (Property<E> property: this.propertiesOfRelatedSoldiers) {
             property.setCurrentGrade(this.currentGrade);
         }
-        this.propertiesOfUser.setCurrentGrade(this.currentGrade);
+
+        if (this.propertiesOfUser != null)
+            this.propertiesOfUser.setCurrentGrade(this.currentGrade);
 
         return true;
 

@@ -32,11 +32,26 @@ public class GameEngine {
                 Display.printInEachLine("Abilities:");
                 for(Skill skill : hero.skills) {
                     try {
-                        Display.printInEachLine(skill.getName() + ";");
+                        Display.printInEachLine(skill.getName() + "; current grade: " + skill.getCurrentGrade());
                         skill.showDescription();
                         for (int i = 0; i < skill.getNumberOfGrades(); i++) {
                             try {
                                 Display.printInEachLine(skill.getUpgradeDescription()[i]);
+                            } catch (Exception e) {
+                                continue;
+                            }
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
+                }
+                for(Perk perk : hero.perks) {
+                    try {
+                        Display.printInEachLine(perk.getName() + "; current grade: " + perk.getCurrentGrade());
+                        perk.showDescription();
+                        for (int i = 0; i < perk.getNumberOfGrades(); i++) {
+                            try {
+                                Display.printInEachLine(perk.getUpgradeDescription()[i]);
                             } catch (Exception e) {
                                 continue;
                             }
@@ -260,7 +275,7 @@ public class GameEngine {
 
     public void addDefaultAttributes(){            // Adds All Datas in PDF (Fighter-Meryl-......)
 
-        //Adding Abilities
+
         this.setNumberOfBattle(1);                                  //Number of battle
 
         this.creatingDefaultSkills();
@@ -710,7 +725,7 @@ public class GameEngine {
         {
             //Eley's Skill: Overpowered attack
             double[] tmp = {0,0,0};
-            double[] arr = {1.2,1.2,1.2};
+            double[] arr = {-1.2,-1.2,-1.2};
             PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Enemy> property = new Property<>(propertyHandler);
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
@@ -720,16 +735,18 @@ public class GameEngine {
             int[] costOfUpgrade = {2,4,6};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
-            tmpArr.add("Fight Training");
+            tmpArr.add("Fight training");
             nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
             Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-            Map<String, Integer> tmpMap = new HashMap<>();
-            tmpMap.put("Fight Training", 1);
-            gradeOfNecessaryAbilities.put(1, tmpMap);
-            tmpMap.put("Fight Training", 2);
-            gradeOfNecessaryAbilities.put(2, tmpMap);
-            tmpMap.put("Fight Training", 3);
-            gradeOfNecessaryAbilities.put(3, tmpMap);
+            Map<String, Integer> tmpMap1 = new HashMap<>();
+            tmpMap1.put("Fight training", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap1);
+            Map<String, Integer> tmpMap2 = new HashMap<>();
+            tmpMap2.put("Fight training", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap2);
+            Map<String, Integer> tmpMap3 = new HashMap<>();
+            tmpMap3.put("Fight training", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap3);
             String[] upgradeDescription = new String[3];
             upgradeDescription[0] = "Upgrade 1: N=1.2 for 2 xp points, needs Fight training upgrade 1";
             upgradeDescription[1] = "Upgrade 2: N=1.4 for 4 xp points, needs Fight training upgrade 2";
@@ -742,8 +759,8 @@ public class GameEngine {
         {
             //Chrome's Skill: Sacrifice
             double[] tmp = {0,0,0};
-            double[] arr1 = {40,50,60};
-            double[] arr2 = {120,150,180};
+            double[] arr1 = {-40,-50,-60};
+            double[] arr2 = {-120,-150,-180};
             PropertyHandler propertyHandler1 = new PropertyHandler("currentHealth",3, false, true, true, arr2, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Enemy> property1 = new Property<>(propertyHandler1);
             PropertyHandler propertyHandler2 = new PropertyHandler("currentHealth",3, false, true, true, arr1, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
@@ -758,13 +775,15 @@ public class GameEngine {
             tmpArr.add("Work out");
             nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
             Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-            Map<String, Integer> tmpMap = new HashMap<>();
-            tmpMap.put("Work out", 1);
-            gradeOfNecessaryAbilities.put(1, tmpMap);
-            tmpMap.put("Work out", 2);
-            gradeOfNecessaryAbilities.put(2, tmpMap);
-            tmpMap.put("Work out", 3);
-            gradeOfNecessaryAbilities.put(3, tmpMap);
+            Map<String, Integer> tmpMap1 = new HashMap<>();
+            tmpMap1.put("Work out", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap1);
+            Map<String, Integer> tmpMap2 = new HashMap<>();
+            tmpMap2.put("Work out", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap2);
+            Map<String, Integer> tmpMap3 = new HashMap<>();
+            tmpMap3.put("Work out", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap3);
             String[] upgradeDescription = new String[3];
             upgradeDescription[0] = "Upgrade 1: H=40 for 2 xp points, needs Work out upgrade 1";
             upgradeDescription[1] = "Upgrade 2: H=50 for 3 xp points, needs Work out upgrade 2";
@@ -790,12 +809,13 @@ public class GameEngine {
             tmpArr.add("Magic lessons");
             nameOfNecessaryAbilities.put(1, null); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
             Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-            Map<String, Integer> tmpMap = new HashMap<>();
+            Map<String, Integer> tmpMap1 = new HashMap<>();
             gradeOfNecessaryAbilities.put(1, null);
-            tmpMap.put("Magic lessons", 1);
-            gradeOfNecessaryAbilities.put(2, tmpMap);
-            tmpMap.put("Magic lessons", 2);
-            gradeOfNecessaryAbilities.put(3, tmpMap);
+            tmpMap1.put("Magic lessons", 1);
+            gradeOfNecessaryAbilities.put(2, tmpMap1);
+            Map<String, Integer> tmpMap2 = new HashMap<>();
+            tmpMap2.put("Magic lessons", 2);
+            gradeOfNecessaryAbilities.put(3, tmpMap2);
             String[] upgradeDescription = new String[3];
             upgradeDescription[0] = "Upgrade 1: H=100 for 2 xp points and takes 1 turn to cool down";
             upgradeDescription[1] = "Upgrade 2: H=150 for 3 xp points, takes 1 turn to cool down and needs Magic lessons upgrade 1";
@@ -823,13 +843,15 @@ public class GameEngine {
             tmpArr.add("Quick as a bunny");
             nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
             Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-            Map<String, Integer> tmpMap = new HashMap<>();
-            tmpMap.put("Quick as a bunny", 1);
-            gradeOfNecessaryAbilities.put(1, tmpMap);
-            tmpMap.put("Quick as a bunny", 2);
-            gradeOfNecessaryAbilities.put(2, tmpMap);
-            tmpMap.put("Quick as a bunny", 3);
-            gradeOfNecessaryAbilities.put(3, tmpMap);
+            Map<String, Integer> tmpMap1 = new HashMap<>();
+            tmpMap1.put("Quick as a bunny", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap1);
+            Map<String, Integer> tmpMap2 = new HashMap<>();
+            tmpMap2.put("Quick as a bunny", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap2);
+            Map<String, Integer> tmpMap3 = new HashMap<>();
+            tmpMap3.put("Quick as a bunny", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap3);
             String[] upgradeDescription = new String[3];
             upgradeDescription[0] = "Upgrade 1: takes 2 energy points and has a 1 turn cooldown for 2 xp points, needs Quick as a bunny upgrade 1";
             upgradeDescription[1] = "Upgrade 2: takes 2 energy points and cools down instantly for 3 xp points, needs Quick as a bunny upgrade 2";
@@ -884,16 +906,18 @@ public class GameEngine {
             int[] costOfUpgrade = {2,3,4};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
-            tmpArr.add("magic lessons");
+            tmpArr.add("Magic lessons");
             nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
             Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-            Map<String, Integer> tmpMap = new HashMap<>();
-            tmpMap.put("magic lessons", 1);
-            gradeOfNecessaryAbilities.put(1, tmpMap);
-            tmpMap.put("magic lessons", 2);
-            gradeOfNecessaryAbilities.put(2, tmpMap);
-            tmpMap.put("magic lessons", 3);
-            gradeOfNecessaryAbilities.put(3, tmpMap);
+            Map<String, Integer> tmpMap1 = new HashMap<>();
+            tmpMap1.put("Magic lessons", 1);
+            gradeOfNecessaryAbilities.put(1, tmpMap1);
+            Map<String, Integer> tmpMap2 = new HashMap<>();
+            tmpMap2.put("Magic lessons", 2);
+            gradeOfNecessaryAbilities.put(2, tmpMap2);
+            Map<String, Integer> tmpMap3 = new HashMap<>();
+            tmpMap3.put("Magic lessons", 3);
+            gradeOfNecessaryAbilities.put(3, tmpMap3);
             String[] upgradeDescription = new String[3];
             upgradeDescription[0] = "Upgrade 1: M=50 for 2 xp points and takes 1 turn to cool down, needs magic lessons upgrade 1";
             upgradeDescription[1] = "Upgrade 2: M=80 for 3 xp points and takes 1 turn to cool down, needs magic lessons upgrade 2";
@@ -999,8 +1023,9 @@ public class GameEngine {
         }
     }
 
-    public void updateAllSkills(){
+    public void updateAllSkills(String typeOfTime){
         for(Skill skill: this.listOfSkills){
+            skill.reduceTime(typeOfTime);
             skill.removeEffect();
         }
     }
@@ -1009,6 +1034,21 @@ public class GameEngine {
         setEnemies(battleNumber + 1);
         this.updateAllPerks();
         this.showBattleMessage(battleNumber + 1);
+        for(Hero hero : this.listOfHeroes){
+            hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
+            if(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) <= hero.getMaximumHealth()) {
+                hero.setCurrentHealth(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()));
+            }
+            else{
+                hero.setCurrentHealth(hero.getMaximumHealth());
+            }
+            if (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()) <= hero.getMaximumMagic()) {
+                hero.setCurrentMagic((int) (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio())));
+            }
+            else {
+                hero.setCurrentMagic(hero.getMaximumMagic());
+            }
+        }
         while (true) {
             Display.printInEachLine("#######################################");
             Display.printInEachLine("Choose What Do You Want To Do??");
@@ -1121,14 +1161,10 @@ public class GameEngine {
                         }
                     }
                     if (command.contains(hero.getName() + " cast ")) {
-                        for (Skill skill : this.listOfSkills) {
+                        for (Skill skill : hero.getSkills()) {
                             if (command.contains(hero.getName() + " cast " + skill.getName())) {
-                                if (!hero.hasSkill(skill)) {
-                                    Display.printInEachLine(hero.getName() + "hasn't " + skill.getName());
-                                    break;
-                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
-                                    hero.useSkill(skill.name);
-                                    Display.printInEachLine(hero.getName() + "casts Successfully" + skill.getName());
+                                if (skill.isAcquire == false) {
+                                    Display.printInEachLine("This Skill isn't acquires!");
                                     break;
                                 } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
                                     Display.printInEachLine("You don’t have enough magic points");
@@ -1139,6 +1175,32 @@ public class GameEngine {
                                 } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     Display.printInEachLine("You don’t have enough magic points");
+                                    break;
+                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
+                                    if (skill.isDependsRelatedSoldiersSelectingOnPlayer()) {
+                                        if (skill.hasEffectedOnEnemy) {
+                                            ArrayList<Enemy> targetedEnemies = new ArrayList<>();
+                                            for (Enemy enemy : this.listOfEnemies) {
+                                                if (command.contains(enemy.getName())) {
+                                                    targetedEnemies.add(enemy);
+                                                    break;
+                                                }
+                                            }
+                                            hero.useSkill(skill.name, targetedEnemies);
+                                        } else {
+                                            ArrayList<Hero> targetedHeroes = new ArrayList<>();
+                                            for (Hero targetHero : this.listOfHeroes) {
+                                                if (command.contains(targetHero.getName())) {
+                                                    targetedHeroes.add(targetHero);
+                                                    break;
+                                                }
+                                            }
+                                            hero.useSkill(skill.name, targetedHeroes);
+                                        }
+                                    } else {
+                                        hero.useSkill(skill.name, null);
+                                    }
+                                    Display.printInEachLine(hero.getName() + "casts Successfully" + skill.getName());
                                     break;
                                 }
                             }
@@ -1221,7 +1283,7 @@ public class GameEngine {
                     System.exit(0);
                     return;
                 }
-                this.updateAllSkills();
+                this.updateAllSkills("NumberOfCycles");
                 for(Hero hero : this.listOfHeroes){
                     hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
                     if(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) <= hero.getMaximumHealth()) {
@@ -1230,7 +1292,12 @@ public class GameEngine {
                     else{
                         hero.setCurrentHealth(hero.getMaximumHealth());
                     }
-
+                    if (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()) <= hero.getMaximumMagic()) {
+                        hero.setCurrentMagic((int) (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio())));
+                    }
+                    else {
+                        hero.setCurrentMagic(hero.getMaximumMagic());
+                    }
                 }
                 continue;
             }
@@ -1341,6 +1408,7 @@ public class GameEngine {
         else{
             for(int i = 0;i < 5;i++) {
                 this.doCampaign(i);
+                this.updateAllSkills("NumberOfClashes");
             }
         }
     }
