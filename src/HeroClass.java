@@ -58,6 +58,7 @@ public class HeroClass extends Soldier {
         this.setCriticalHitDamageRatio(heroClassHandler.getCriticalHitDamageRatio());
         this.setEnergyPointRatio(heroClassHandler.getEnergyPointRatio());
         this.setHealthRefillRateRatio(heroClassHandler.getHealthRefillRateRatio());
+        this.setHealthRefillRate(heroClassHandler.getHealthRefillRate());
         this.setInventorySize(heroClassHandler.getInventorySize());
         this.setSkills(heroClassHandler.getSkills());
         this.setPerks(heroClassHandler.getPerks());

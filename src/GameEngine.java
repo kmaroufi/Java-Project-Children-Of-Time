@@ -731,7 +731,7 @@ public class GameEngine {
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
-            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,4,6};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -768,7 +768,7 @@ public class GameEngine {
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
             properties.add(property1);
             int[] cooldown = {1,1,1}; int[] requiredEnergyPoint = {3,3,3}; int[] requiredMagicPoint = {60,60,60};
-            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, property2, 0, false, new Time(), null, cooldown, false, false, requiredEnergyPoint, requiredEnergyPoint);
+            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, property2, 0, false, new Time(), null, cooldown, false, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,4};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -802,7 +802,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {60,60,60};
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,5};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -836,7 +836,7 @@ public class GameEngine {
             int[] cooldown = {1,0,0}; int[] requiredEnergyPoint = {2,2,1}; int[] requiredMagicPoint = {30,30,30};
             ArrayList<String> blackList = new ArrayList<>();
             blackList.add("Meryl");
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 1, 0), blackList, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 1, 0), blackList, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,5};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -870,7 +870,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 1), null, cooldown, true, true, requiredEnergyPoint, requiredEnergyPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 1), null, cooldown, true, true, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,5};
 //            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
 //            ArrayList<String> tmpArr = new ArrayList<>();
@@ -902,7 +902,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {1,1,1}; int[] requiredMagicPoint = {50,50,50};
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 0), null, cooldown, true, false, requiredEnergyPoint, requiredEnergyPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 0), null, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,4};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -1013,20 +1013,24 @@ public class GameEngine {
     }
 
     public void updateAllPerks(){
-        for(Perk perk:this.listOfPerks){
-            if (perk.isAcquire == false)
-                continue;
-            if (perk.getTimeOfCheck().equals("JustAfterUpgrading"))
-                continue;
-            perk.choosingRelatedSoldiers();
-            perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
+        for (Hero hero: this.listOfHeroes) {
+            for(Perk perk: hero.getPerks()){
+                if (perk.isAcquire == false)
+                    continue;
+                if (perk.getTimeOfCheck().equals("JustAfterUpgrading"))
+                    continue;
+                perk.choosingRelatedSoldiers();
+                perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
+            }
         }
     }
 
     public void updateAllSkills(String typeOfTime){
-        for(Skill skill: this.listOfSkills){
-            skill.reduceTime(typeOfTime);
-            skill.removeEffect();
+        for (Hero hero: this.listOfHeroes) {
+            for (Skill skill: hero.getSkills()) {
+                skill.reduceTime(typeOfTime);
+                skill.removeEffect();
+            }
         }
     }
 
@@ -1151,6 +1155,7 @@ public class GameEngine {
                                         return;
                                     }
                                     this.listOfEnemies.remove(enemy);
+                                    Enemy.mapOfEnemies.remove(enemy);
                                     break;
                                 }
                                 if (this.listOfEnemies.isEmpty()) {
@@ -1200,12 +1205,13 @@ public class GameEngine {
                                     } else {
                                         hero.useSkill(skill.name, null);
                                     }
-                                    Display.printInEachLine(hero.getName() + "casts Successfully" + skill.getName());
+                                    Display.printInEachLine(hero.getName() + " casts Successfully " + skill.getName());
                                     break;
                                 }
                             }
                         }
                     }
+                    this.updateAllSkills("NumberOfTurns");
                     if (command.contains(hero.getName() + " use ")) {
                         for (ItemProperties itemProperties : Shop.listOfItems) {
                             if (command.contains(hero.getName() + " use " + itemProperties.getItem().getName() + " on ")) {
@@ -1261,6 +1267,21 @@ public class GameEngine {
                         break;
                     }
                 }
+                ArrayList<Enemy> removedEnemies = new ArrayList<>();
+                for (Enemy enemy: this.listOfEnemies) {
+                    if (enemy.isDead()) {
+                        removedEnemies.add(enemy);
+                        Enemy.mapOfEnemies.remove(enemy);
+                        Display.printInEachLine(enemy.getName() + " has died");
+                    }
+                }
+                for (Enemy enemy: removedEnemies) {
+                    this.listOfEnemies.remove(enemy);
+                }
+                if (this.listOfEnemies.isEmpty()) {
+                    Display.printInEachLine("Victory! You’ve defeated all of your enemies");
+                    return;
+                }
             }
             else if(numberEntered == 4){
                 for (Enemy enemy : listOfEnemies) {
@@ -1286,14 +1307,14 @@ public class GameEngine {
                 this.updateAllSkills("NumberOfCycles");
                 for(Hero hero : this.listOfHeroes){
                     hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
-                    if(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) <= hero.getMaximumHealth()) {
-                        hero.setCurrentHealth(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()));
+                    if((hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) < hero.getMaximumHealth()) {
+                        hero.setCurrentHealth(hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate() * hero.getHealthRefillRateRatio());
                     }
                     else{
                         hero.setCurrentHealth(hero.getMaximumHealth());
                     }
-                    if (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()) <= hero.getMaximumMagic()) {
-                        hero.setCurrentMagic((int) (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio())));
+                    if ((hero.getCurrentMagic() + hero.getMaximumMagic() *  hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()) < hero.getMaximumMagic()) {
+                        hero.setCurrentMagic(hero.getCurrentMagic() + (int) (hero.getMaximumMagic() * hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()));
                     }
                     else {
                         hero.setCurrentMagic(hero.getMaximumMagic());

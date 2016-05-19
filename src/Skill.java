@@ -61,8 +61,8 @@ public class Skill<E> extends Ability implements Cloneable{
        return false;
     }
 
-    public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero, ArrayList<E> soldeirs) {
-        this.choosingRelatedSoldiers(soldeirs);
+    public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero, ArrayList<E> soldiers) {
+        this.choosingRelatedSoldiers(soldiers);
         if (this.remainingCooldown != 0) {
             return;
         }
@@ -147,7 +147,7 @@ public class Skill<E> extends Ability implements Cloneable{
             }
         }
         else {
-            if (this.numberOfRelatedSoldiers == GameEngine.listOfHeroes.size())
+            if (this.numberOfRelatedSoldiers == -5)
                 this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
             else if (this.isRandomSoldierSelecting) {
                 ArrayList<Hero> heroes = new ArrayList<Hero>();
