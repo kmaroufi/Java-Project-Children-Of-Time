@@ -33,7 +33,7 @@ public class Time {
     public void reduceTime(String typeOfTime) {
         switch (typeOfTime) {
             case "NumberOfTurns":
-                this.numberOfClashes--;
+                this.numberOfTurns--;
                 break;
             case "NumberOfCycles":
                 this.numberOfCycles--;

@@ -17,6 +17,9 @@ public class GameEngine {
     public static ArrayList<Shop> shops = new ArrayList<>();
     private int NumberOfBattle;                     // which battle we are in(1-2-3-4-5)
     private String levelOfGame;                     // level of Game(Easy-Medium-Hard)
+    private int[] rewardedXP = new int[4];
+    private int[] rewardedMoney = new int[4];
+
 
     //------------------------------------------ Functions
     public void showHeroesTraits(String name){
@@ -158,6 +161,11 @@ public class GameEngine {
             }
             else if(numberEntered == 2) {
                 while (true) {
+                    for(Hero hero : this.listOfHeroes){
+                        hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
+                        hero.setCurrentHealth(hero.getMaximumHealth());
+                        hero.setCurrentMagic(hero.getMaximumMagic());
+                    }
                     Display.printInEachLine("Type Any Commands :(Type 'Next' For skip)");
                     String command = Display.getString();
                     if (command.equalsIgnoreCase("Next")) {
@@ -282,12 +290,12 @@ public class GameEngine {
         this.creatingDefaultPerks();
 
         //Adding Fighter Class
-        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,0.1,"Fighter",0,1,0,1,0.05,1,1,1,1,1,0,120,0,6,2);
+        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,0.1,"Fighter",0,1,0,1,0.05,1,1,1,1,0,0,120,0,6,2);
         fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
         fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));
         //Adding Supporter Class
-        HeroClassHandler supporterHandler = new HeroClassHandler(220,80,0.05,"Supporter",0,1,0,1,0.1,1,1,1,1,1,0,200,0,5,3);
+        HeroClassHandler supporterHandler = new HeroClassHandler(220,80,0.05,"Supporter",0,1,0,1,0.1,1,1,1,1,0,0,200,0,5,3);
         supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
         supporterHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
         this.addNewHeroClass(new HeroClass(supporterHandler));
@@ -368,6 +376,16 @@ public class GameEngine {
         Shop shop = new Shop();
 
         this.creatingDefaultItems(shop);
+
+        this.rewardedXP[0] = 20;
+        this.rewardedXP[1] = 25;
+        this.rewardedXP[2] = 30;
+        this.rewardedXP[3] = 35;
+
+        this.rewardedMoney[0] = 50;
+        this.rewardedMoney[1] = 60;
+        this.rewardedMoney[2] = 70;
+        this.rewardedMoney[3] = 80;
     }
 
     private void creatingDefaultItems(Shop shop) {
@@ -651,6 +669,10 @@ public class GameEngine {
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
+            double[] arr2 = {-5, 0, 0};
+            PropertyHandler propertyHandler2 = new PropertyHandler("numberOfNonTargetedEnemyEffected",3, false, true, true, arr2, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            Property<Hero> property2 = new Property<>(propertyHandler2);
+            properties.add(property2);
             PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
             ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
             listOfModes.add(perkMode);
@@ -675,7 +697,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: P=20 for 3 xp points";
             upgradeDescription[2] = "Upgrade 3: P=30 for 4 xp points";
             String description = "While attacking, non-targeted enemies also take P percent of its damage";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, false, false, 1, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
+            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Swirling attack", "Eley", false, false, false, -5, 3, null, false, false, costOfUpgrade, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, upgradeDescription, description, false);
             Perk<Hero> Swirlingattack = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
             this.addNewPerk(Swirlingattack);
         }
@@ -807,7 +829,7 @@ public class GameEngine {
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
             tmpArr.add("Magic lessons");
-            nameOfNecessaryAbilities.put(1, null); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
+            nameOfNecessaryAbilities.put(1, new ArrayList<>()); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
             Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
             Map<String, Integer> tmpMap1 = new HashMap<>();
             gradeOfNecessaryAbilities.put(1, null);
@@ -836,7 +858,7 @@ public class GameEngine {
             int[] cooldown = {1,0,0}; int[] requiredEnergyPoint = {2,2,1}; int[] requiredMagicPoint = {30,30,30};
             ArrayList<String> blackList = new ArrayList<>();
             blackList.add("Meryl");
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 1, 0), blackList, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 0), blackList, cooldown, true, true, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,5};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -864,7 +886,7 @@ public class GameEngine {
         {
             //Bolti's Skill: Boost
             double[] tmp = {0,0,0};
-            double[] arr = {1.2,1.3,1.3};
+            double[] arr = {0.2,0.3,0.3};
             PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioDuringAttack",3, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -889,7 +911,7 @@ public class GameEngine {
             upgradeDescription[1] = "Upgrade 2: A=30 for 3 xp points and takes 1 turn to cool down";
             upgradeDescription[2] = "Upgrade 3: A=30 for 5 xp points and cools down instantly";
             String description = "Gives A bonus attack power to himself or an ally, which lasts till the end of the battle, for 2 energy points and 50 magic points (this bonus attack power can stack up)";
-            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription,description, false);
+            AbilityHandler<Enemy> abilityHandler = new AbilityHandler<Enemy>("Boost", "Bolti", false, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<Integer, ArrayList<String>>(), new HashMap<Integer, Map<String, Integer>>(), upgradeDescription,description, false);
             Skill Boost = new Skill(skillHandler, abilityHandler);
             this.addNewSkill(Boost);
         }
@@ -1017,7 +1039,7 @@ public class GameEngine {
             for(Perk perk: hero.getPerks()){
                 if (perk.isAcquire == false)
                     continue;
-                if (perk.getTimeOfCheck().equals("JustAfterUpgrading"))
+                if (perk.getTimeOfCheck().equals("JustAfterUpgrading") || perk.getTimeOfCheck().equals("WhileAttacking"))
                     continue;
                 perk.choosingRelatedSoldiers();
                 perk.updatePerkEffect(perk.getRelatedSoldiers(),Hero.mapOfHeroes.get(perk.getOwnerName()));
@@ -1028,8 +1050,15 @@ public class GameEngine {
     public void updateAllSkills(String typeOfTime){
         for (Hero hero: this.listOfHeroes) {
             for (Skill skill: hero.getSkills()) {
-                skill.reduceTime(typeOfTime);
+                if (skill.isAcquire == false)
+                    continue;
+                if (typeOfTime.equals("NumberOfTurns") == false)
+                    skill.reduceTime(typeOfTime);
                 skill.removeEffect();
+                if (skill.getRemainingCooldown() != 0 && typeOfTime.equals("NumberOfCycles"))
+                    skill.setRemainingCooldown(skill.getRemainingCooldown() - 1);
+                if (typeOfTime.equals("NumberOfClashes"))
+                    skill.setRemainingCooldown(0);
             }
         }
     }
@@ -1038,22 +1067,12 @@ public class GameEngine {
         setEnemies(battleNumber + 1);
         this.updateAllPerks();
         this.showBattleMessage(battleNumber + 1);
-        for(Hero hero : this.listOfHeroes){
-            hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
-            if(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) <= hero.getMaximumHealth()) {
-                hero.setCurrentHealth(hero.getCurrentHealth() * (1 + hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()));
-            }
-            else{
+        while (true) {
+            for(Hero hero : this.listOfHeroes){
+                hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
                 hero.setCurrentHealth(hero.getMaximumHealth());
-            }
-            if (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()) <= hero.getMaximumMagic()) {
-                hero.setCurrentMagic((int) (hero.getCurrentMagic() * (1 + hero.getMagicRefillRate() * hero.getMagicRefillRateRatio())));
-            }
-            else {
                 hero.setCurrentMagic(hero.getMaximumMagic());
             }
-        }
-        while (true) {
             Display.printInEachLine("#######################################");
             Display.printInEachLine("Choose What Do You Want To Do??");
             Display.printInEachLine("1 - Show Hero Team");
@@ -1171,47 +1190,83 @@ public class GameEngine {
                                 if (skill.isAcquire == false) {
                                     Display.printInEachLine("This Skill isn't acquires!");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
+                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
+                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
+                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade()] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade()]) {
+                                } else if (skill.getRemainingCooldown() != 0) {
+                                    Display.printInEachLine("Your desired ability is still in cooldown." + "remaining cooldown is " + skill.getRemainingCooldown());
+                                    break;
+                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
                                     if (skill.isDependsRelatedSoldiersSelectingOnPlayer()) {
+                                        boolean isTargetInBlackList = false;
                                         if (skill.hasEffectedOnEnemy) {
                                             ArrayList<Enemy> targetedEnemies = new ArrayList<>();
                                             for (Enemy enemy : this.listOfEnemies) {
                                                 if (command.contains(enemy.getName())) {
+                                                    for (String name: (ArrayList<String>)skill.getBlackList()) {
+                                                        if (name.equals(enemy.getName())) {
+                                                            isTargetInBlackList = true;
+                                                            break;
+                                                        }
+                                                    }
                                                     targetedEnemies.add(enemy);
                                                     break;
                                                 }
                                             }
-                                            hero.useSkill(skill.name, targetedEnemies);
+                                            if (targetedEnemies.size() == 0) {
+                                                Display.printInEachLine("Your target was not recognized!");
+                                                break;
+                                            }
+                                            else if (isTargetInBlackList) {
+                                                Display.printInEachLine("Your target isn't valid");
+                                                break;
+                                            }
+                                            else {
+                                                hero.useSkill(skill.name, targetedEnemies);
+                                            }
                                         } else {
                                             ArrayList<Hero> targetedHeroes = new ArrayList<>();
                                             for (Hero targetHero : this.listOfHeroes) {
-                                                if (command.contains(targetHero.getName())) {
+                                                if (command.contains("on " + targetHero.getName())) {
+                                                    for (String name: (ArrayList<String>)skill.getBlackList()) {
+                                                        if (name.equals(targetHero.getName())) {
+                                                            isTargetInBlackList = true;
+                                                            break;
+                                                        }
+                                                    }
                                                     targetedHeroes.add(targetHero);
                                                     break;
                                                 }
                                             }
-                                            hero.useSkill(skill.name, targetedHeroes);
+                                            if (targetedHeroes.size() == 0) {
+                                                Display.printInEachLine("Your target was not recognized!");
+                                                break;
+                                            }
+                                            else if (isTargetInBlackList) {
+                                                Display.printInEachLine("Your target isn't valid");
+                                                break;
+                                            }
+                                            else {
+                                                hero.useSkill(skill.name, targetedHeroes);
+                                            }
                                         }
                                     } else {
                                         hero.useSkill(skill.name, null);
                                     }
                                     Display.printInEachLine(hero.getName() + " casts Successfully " + skill.getName());
+                                    this.updateAllSkills("NumberOfTurns");
                                     break;
                                 }
                             }
                         }
                     }
-                    this.updateAllSkills("NumberOfTurns");
                     if (command.contains(hero.getName() + " use ")) {
                         for (ItemProperties itemProperties : Shop.listOfItems) {
                             if (command.contains(hero.getName() + " use " + itemProperties.getItem().getName() + " on ")) {
@@ -1340,7 +1395,7 @@ public class GameEngine {
     public void showEnemyTeamDescription(){
         Display.printInEachLine("Enemy Team:");
         for(Enemy enemy: this.listOfEnemies){
-            Display.printInEachLine(enemy.getName());
+            Display.printInEachLine(enemy.getName() + " , Health: " + enemy.getCurrentHealth() + " / " + enemy.getMaximumHealth());
         }
     }
 
@@ -1428,7 +1483,10 @@ public class GameEngine {
         }
         else{
             for(int i = 0;i < 5;i++) {
+                this.NumberOfBattle = i + 1;
                 this.doCampaign(i);
+                player.setXp(player.getXp() + this.rewardedXP[this.getNumberOfBattle() - 1]);
+                player.setMoney(player.getMoney() + this.rewardedMoney[this.getNumberOfBattle() - 1]);
                 this.updateAllSkills("NumberOfClashes");
             }
         }

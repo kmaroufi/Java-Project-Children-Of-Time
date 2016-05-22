@@ -66,38 +66,45 @@ public class Skill<E> extends Ability implements Cloneable{
         if (this.remainingCooldown != 0) {
             return;
         }
+
+        boolean cond = false;
+
         for (E soldier: relatedSoldiers) {
             if (this.effectedSoldiers.contains(soldier) && (this.canStackUp == false))
                 continue;
+            cond = true;
             for (Property property: this.propertiesOfRelatedSoldiers) {
                 property.effect(soldier, Hero.mapOfHeroes.get(this.ownerName), userHero);
             }
-            this.effectedSoldiers.add(soldier);
+            if (this.effectedSoldiers.contains(soldier) == false)
+                this.effectedSoldiers.add(soldier);
             this.mapOfEffectedSoldiers.put(soldier, new Time(this.timeOfEffecting));
         }
+
+        if (cond == false)
+            return;
+
         if (this.propertiesOfUser != null)
             this.propertiesOfUser.effect(userHero, Hero.mapOfHeroes.get(this.ownerName), userHero);
-        this.remainingCooldown = this.cooldown[this.currentGrade];
+        this.remainingCooldown = this.cooldown[this.currentGrade - 1];
         userHero.setCurrentEnergyPoint(userHero.getCurrentEnergyPoint() - this.requiredEnergyPoint[this.currentGrade - 1]);
         userHero.setCurrentMagic(userHero.getCurrentMagic() - this.requiredMagicPoint[this.currentGrade - 1]);
 
     }
 
     public void removeEffect() {
-        ArrayList<Integer> indexOfRemovedSoldiers = new ArrayList<Integer>();
+        ArrayList<E> removedSoldiers = new ArrayList<>();
         for (int i = 0; i < this.effectedSoldiers.size(); i++) {
             E soldier = (E) this.effectedSoldiers.get(i);
             if (this.mapOfEffectedSoldiers.get(soldier).isTimePassed()) {
                 for (Property property: this.propertiesOfRelatedSoldiers) {
                     property.removeEffect(soldier);
                 }
-                indexOfRemovedSoldiers.add(new Integer(i));
+                removedSoldiers.add(soldier);
                 this.mapOfEffectedSoldiers.remove(soldier);
             }
         }
-        for (int index: indexOfRemovedSoldiers) {
-            this.effectedSoldiers.remove(index);
-        }
+        this.effectedSoldiers.removeAll(removedSoldiers);
     }
 
     public void reduceTime(String typeOfTime) {
@@ -160,7 +167,7 @@ public class Skill<E> extends Ability implements Cloneable{
                 }
             }
             else if (this.isDependsRelatedSoldiersSelectingOnPlayer()) {
-                this.relatedSoldiers.add(fromCommandLine);
+                this.relatedSoldiers.addAll(fromCommandLine);
             }
             else {
                 this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
@@ -170,22 +177,24 @@ public class Skill<E> extends Ability implements Cloneable{
 
     public boolean upgrade(Player player) {
 
-        for (String nameOfAbility: (ArrayList<String>)this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
-            if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
-                for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
-                    if (skill.getName().equals(nameOfAbility)) {
-                        if (skill.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(skill.getName()))
-                            return false;
-                        break;
+        if (this.nameOfNecessaryAbilities.get(this.currentGrade + 1) != null) {
+            for (String nameOfAbility: (ArrayList<String>)this.nameOfNecessaryAbilities.get(this.currentGrade + 1)) {
+                if (Ability.listOfAbilities.get(nameOfAbility).equals("skill")) {
+                    for (Skill skill: Hero.mapOfHeroes.get(this.ownerName).getSkills()) {
+                        if (skill.getName().equals(nameOfAbility)) {
+                            if (skill.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(skill.getName()))
+                                return false;
+                            break;
+                        }
                     }
                 }
-            }
-            if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
-                for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
-                    if (perk.getName().equals(nameOfAbility)) {
-                        if (perk.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(perk.getName()))
-                            return false;
-                        break;
+                if (Ability.listOfAbilities.get(nameOfAbility).equals("perk")) {
+                    for (Perk perk: Hero.mapOfHeroes.get(this.ownerName).getPerks()) {
+                        if (perk.getName().equals(nameOfAbility)) {
+                            if (perk.getCurrentGrade() < ((Map<String, Integer>)this.gradeOfNecessaryAbilities.get(this.currentGrade + 1)).get(perk.getName()))
+                                return false;
+                            break;
+                        }
                     }
                 }
             }
