@@ -216,6 +216,16 @@ public class Property<E> implements Cloneable{
                 cond = 1;
             }
         }
+        if (cond == 1) {
+            cond = 0;
+            classOfSoldier = classOfSoldier.getSuperclass();
+            try {
+                field = classOfSoldier.getDeclaredField(this.name);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+                cond = 1;
+            }
+        }
         String type = field.getGenericType().toString();
         try {
             if (type.equals("int")) {

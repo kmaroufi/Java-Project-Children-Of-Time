@@ -8,7 +8,7 @@ public class Shop {
     public static ArrayList<ItemProperties> listOfItems = new ArrayList<>();
 
     public static void showItems(){
-        Display.printInEachLine("This This shop offers you ");
+        Display.printInEachLine("This shop offers you ");
         for(ItemProperties itemProperties : listOfItems){
             Display.printInEachLine(itemProperties.getItem().getName() + " for " + itemProperties.getPrice() + " dollars ");
         }

@@ -35,6 +35,8 @@ public class Hero extends HeroClass {
     public void removeItem(Item item){
         if(hasItem(item)){
             this.items.remove(item);
+            this.listOfItems.remove(item);
+            this.sizeOfOccupiedInventory -= item.getSize();
         }
         else{
             Display.printInEachLine(this.getName() + " Has not This item");
@@ -42,7 +44,9 @@ public class Hero extends HeroClass {
     }
 
     public void addItem(Item item){
+        this.listOfItems.put(item.getName(), item);
         this.items.add(item);
+        this.sizeOfOccupiedInventory += item.getSize();
     }
 
     public void addSkill(Skill skill){
@@ -130,10 +134,10 @@ public class Hero extends HeroClass {
         return false;
     }
 
-    public void useItem(String itemName){
+    public void useItem(String itemName, ArrayList<Hero> soldiers){
         for(int i = 0;i < this.items.size();i++){                  //finding item with itemName
             if(this.items.get(i).getName().equals(itemName)){
-                this.items.get(i).useItem();                        // using that item
+                this.items.get(i).useItem(soldiers);                        // using that item
                 return;
             }
         }
@@ -184,7 +188,7 @@ public class Hero extends HeroClass {
             return;
         }
         for(Item item : this.items){
-            Display.printf(item.getName() + " worth " + (item.getWorth()/2.0) + " dollars ,");
+            Display.printf(item.getName() + " worth " + (item.getWorth() / 2.0 * (item.getRemainingTimeOfUsed() / (double)item.getMaximumTimeOfUsed())) + " dollars ,");
         }
         Display.printInEachLine("");
     }
@@ -205,6 +209,10 @@ public class Hero extends HeroClass {
             }
         }
         return false;
+    }
+
+    public Item getItem(String name) {
+        return this.listOfItems.get(name);
     }
 
     //------------------------------------------ Getter && Setters

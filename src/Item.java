@@ -27,16 +27,19 @@ public class Item implements Cloneable{
     private double worth;
     private boolean isDisappearAfterFullUse;
     private boolean isAlive;
+    private boolean canGetSold;
+    private String timeOfRemoveEffect;
 
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary, int cooldown, boolean isDisappearAfterFullUse) {
+    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary, int cooldown, boolean isDisappearAfterFullUse, boolean canGetSold, String timeOfRemoveEffect) {
         this.name = name;
         this.ownerName = ownerName;
         this.size = size;
         this.isInstantlyUsed = isInstantlyUsed;
         this.maximumTimeOfUsed = maximumTimeOfUsed;
+        this.remainingTimeOfUsed = maximumTimeOfUsed;
         this.requiredEnergyPoint = requiredEnergyPoint;
         this.requiredMagicPoint = requiredMagicPoint;
         Description = description;
@@ -50,6 +53,8 @@ public class Item implements Cloneable{
         this.worth = 0; // in field bayad dar moghe tahvile item be hero meghdardehi shavad.
         this.isDisappearAfterFullUse = isDisappearAfterFullUse;
         this.isAlive = true;
+        this.canGetSold = canGetSold;
+        this.timeOfRemoveEffect = timeOfRemoveEffect;
     }
 
     //--------------------------------------------------- Functions
@@ -73,12 +78,13 @@ public class Item implements Cloneable{
         //TODO
     }
 
-    public void useItem() {
+    public void useItem(ArrayList<Hero> soldiers) {
+        this.choosingRelatedSoldiers(soldiers);
         if (this.remainingCooldown != 0)
             return;
         for (Hero hero: this.relatedSoldiers) {
             for (Property property: this.properties) {
-                property.effect(relatedSoldiers, Hero.mapOfHeroes.get(this.ownerName), Hero.mapOfHeroes.get(this.ownerName));
+                property.effect(hero, Hero.mapOfHeroes.get(this.ownerName), Hero.mapOfHeroes.get(this.ownerName));
             }
             this.effectedSoldiers.add(hero);
         }
@@ -89,19 +95,22 @@ public class Item implements Cloneable{
                     this.isAlive = false;
             }
         }
+        Hero owner = Hero.mapOfHeroes.get(this.ownerName);
+        owner.setCurrentEnergyPoint(owner.getCurrentEnergyPoint() - this.getRequiredEnergyPoint());
+        owner.setCurrentMagic(owner.getCurrentMagic() - this.getRequiredMagicPoint());
     }
 
     public void removeEffect() {
-        ArrayList<Integer> indexOfRemovedSoldiers = new ArrayList<Integer>();
+        ArrayList<Hero> RemovedSoldiers = new ArrayList<>();
         for (int i = 0; i < effectedSoldiers.size(); i++) {
-            Hero hero = effectedSoldiers.get(i);
+            Hero soldier = effectedSoldiers.get(i);
             for (Property property : this.properties) {
-                property.removeEffect(hero);
+                property.removeEffect(soldier);
             }
-            indexOfRemovedSoldiers.add(new Integer(i));
+            RemovedSoldiers.add(soldier);
         }
-        for (int index: indexOfRemovedSoldiers) {
-            this.effectedSoldiers.remove(index);
+        for (Hero soldier: RemovedSoldiers) {
+            this.effectedSoldiers.remove(soldier);
         }
 
         if (this.remainingTimeOfUsed == 0) {
@@ -119,9 +128,9 @@ public class Item implements Cloneable{
         return false;
     }
 
-    public void choosingRelatedSoldiers() {
+    public void choosingRelatedSoldiers(ArrayList<Hero> soldiers) {
         this.relatedSoldiers.clear();
-        if (this.numberOfRelatedSoldiers == GameEngine.listOfHeroes.size())
+        if (this.numberOfRelatedSoldiers == -5)
             this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
         else if (this.isRandomSoldierSelecting) {
             ArrayList<Hero> heroes = new ArrayList<Hero>();
@@ -134,10 +143,7 @@ public class Item implements Cloneable{
             }
         }
         else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-            ArrayList<String> nameOfHeroes = Display.getAbilityDetailsBeforeUsing(null);
-            for (String nameOfHero: nameOfHeroes) {
-                this.relatedSoldiers.add(Hero.mapOfHeroes.get(nameOfHero));
-            }
+            this.relatedSoldiers.addAll(soldiers);
         }
         else {
             this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
@@ -146,6 +152,14 @@ public class Item implements Cloneable{
 
     //--------------------------------------------------- Getter && Setters
 
+
+    public boolean isCanGetSold() {
+        return canGetSold;
+    }
+
+    public void setCanGetSold(boolean canGetSold) {
+        this.canGetSold = canGetSold;
+    }
 
     public ArrayList<Hero> getEffectedSoldiers() {
         return effectedSoldiers;
@@ -315,4 +329,11 @@ public class Item implements Cloneable{
         this.properties = properties;
     }
 
+    public String getTimeOfRemoveEffect() {
+        return timeOfRemoveEffect;
+    }
+
+    public void setTimeOfRemoveEffect(String timeOfRemoveEffect) {
+        this.timeOfRemoveEffect = timeOfRemoveEffect;
+    }
 }

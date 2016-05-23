@@ -24,6 +24,7 @@ public class HeroClass extends Soldier {
     protected int maximumEnergyPoint;
     protected int currentEnergyPoint;
     protected int inventorySize;
+    protected int sizeOfOccupiedInventory;
     protected int maximumMagic;
     protected int currentMagic;
     protected double armor;
@@ -72,6 +73,8 @@ public class HeroClass extends Soldier {
         this.setCurrentEnergyPoint(this.getMaximumEnergyPoint());
         this.setCurrentHealth(this.getMaximumHealth());
         this.setAttackPower(heroClassHandler.getAttackPower());
+        this.setSizeOfOccupiedInventory(0);
+
     }
 
     public HeroClass(HeroClass heroClass){
@@ -103,8 +106,7 @@ public class HeroClass extends Soldier {
         this.setCurrentEnergyPoint(this.getMaximumEnergyPoint());
         this.setCurrentHealth(this.getMaximumHealth());
         this.setAttackPower(heroClass.getAttackPower());
-
-
+        this.setSizeOfOccupiedInventory(0);
     }
 
     //-------------------------------------------------- Functions
@@ -112,6 +114,15 @@ public class HeroClass extends Soldier {
         Display.printInEachLine("");
     }
     //-------------------------------------------------- Getter && Setters
+
+
+    public int getSizeOfOccupiedInventory() {
+        return sizeOfOccupiedInventory;
+    }
+
+    public void setSizeOfOccupiedInventory(int sizeOfOccupiedInventory) {
+        this.sizeOfOccupiedInventory = sizeOfOccupiedInventory;
+    }
 
     public static HashMap<String, HeroClass> getMapOfHeroClasses() {
         return mapOfHeroClasses;

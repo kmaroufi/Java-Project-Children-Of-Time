@@ -88,7 +88,7 @@ public class GameEngine {
             }
             else if (numberEntered == 3) {
                 Display.printInEachLine("Your current wealth is:" + this.player.getMoney() + "dollars");
-                Display.printInEachLine("Enter Your Command:(type 'Next' For Next Step!)");
+                Display.printInEachLine("Enter Your Command:(type \"Next\" For Next Step!)");
                 String command = Display.getString();
                 for (ItemProperties itemProperties : Shop.listOfItems) {
                     if (command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")) {                 //(item name) + “?”
@@ -98,29 +98,47 @@ public class GameEngine {
                     if (command.contains("Buy " + itemProperties.getItem().getName() + " for ") || command.contains("Sell " + itemProperties.getItem().getName() + " of ")) {
                         for (Hero hero : this.listOfHeroes) {
                             if (command.equalsIgnoreCase("Buy " + itemProperties.getItem().getName() + " for " + hero.getName())) { //“Buy “ + (item name) + “ for “ + (hero name)
-                                if (hero.getInventorySize() < itemProperties.getItem().getSize()) {
+                                if ((hero.getInventorySize() - hero.getSizeOfOccupiedInventory()) < itemProperties.getItem().getSize()) {
                                     Display.printInEachLine(hero.getName() + "'s inventory is full");
-                                } else if (this.player.getMoney() >= itemProperties.getPrice() && hero.getInventorySize() >= itemProperties.getItem().getSize()) {                                 //(item name) “ bought successfully, your current wealth is: ” + (current money)
+                                } else if (this.player.getMoney() < itemProperties.getPrice()) {
+                                    Display.printInEachLine("You don’t have enough money");
+                                } else {
                                     try{
                                         Item item = itemProperties.getItem().clone();
                                         item.setWorth(itemProperties.getPrice());
                                         item.setOwnerName(hero.getName());
                                         hero.addItem(item);
+                                        if (item.isInstantlyUsed()) {
+                                            item.useItem(null);
+                                        }
                                         this.player.setMoney(this.player.getMoney() - itemProperties.getPrice());
                                         itemProperties.updatePrice();
-                                        Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());
+                                        Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());    //(item name) “ bought successfully, your current wealth is: ” + (current money)
                                     }
                                     catch (CloneNotSupportedException e){
                                         e.getStackTrace();
                                     }
-                                } else if (this.player.getMoney() < itemProperties.getPrice() && hero.getInventorySize() >= itemProperties.getItem().getSize()) {
-                                    Display.printInEachLine("You don’t have enough money");
                                 }
                             } else if (command.equalsIgnoreCase("Sell " + itemProperties.getItem().getName() + " of " + hero.getName())) {//“Sell “ + (item name) + “ of” + (hero name)
                                 if (hero.hasItem(itemProperties.getItem())) {
-                                    hero.removeItem(itemProperties.getItem());
-                                    this.player.setMoney(this.player.getMoney() + (itemProperties.getPrice() / 2));
-                                    Display.printInEachLine(itemProperties.getItem().getName() + " successfully sold, your current wealth is: " + player.getMoney());//(item name) + “ successfully sold, your current wealth is: “ + (current money)
+                                    Item selectedItem = hero.getItem(itemProperties.getItem().getName());
+                                    if (selectedItem.isCanGetSold()) {
+                                        hero.removeItem(selectedItem);
+                                        selectedItem.removeEffect();
+                                        if (selectedItem.isInstantlyUsed()) {
+                                            this.player.setMoney(this.player.getMoney() + selectedItem.getWorth() / 2);
+                                        }
+                                        else {
+                                            this.player.setMoney(this.player.getMoney() + selectedItem.getWorth() / 2 * (selectedItem.getRemainingTimeOfUsed() / (double)selectedItem.getMaximumTimeOfUsed()));
+                                        }
+                                        Display.printInEachLine(itemProperties.getItem().getName() + " successfully sold, your current wealth is: " + player.getMoney());//(item name) + “ successfully sold, your current wealth is: “ + (current money)
+                                    }
+                                    else {
+                                        Display.printInEachLine("You can't sell this item!");
+                                    }
+                                }
+                                else {
+                                    Display.printInEachLine(hero.getName() + " has not this item!");
                                 }
                             }
                         }
@@ -395,10 +413,11 @@ public class GameEngine {
             double[] arr = {20,0,0};
             PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health";
-            Item item = new Item("thoughan", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false);
+            Item item = new Item("Thoughen", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
             ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
@@ -408,23 +427,25 @@ public class GameEngine {
             double[] arr = {20,0,0};
             PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic";
-            Item item = new Item("Guide", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false);
+            Item item = new Item("Guide", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
             ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
         {
-            // Guide
+            // Defy
             double[] tmp = {0,0,0};
             double[] arr = {8,0,0};
             PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power";
-            Item item = new Item("Defy", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false);
+            Item item = new Item("Defy", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
             ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
@@ -432,12 +453,13 @@ public class GameEngine {
             // Sword
             double[] tmp = {0,0,0};
             double[] arr = {80,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars";
-            Item item = new Item("Sword", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false);
+            Item item = new Item("Sword", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
             shop.listOfItems.add(itemProperties);
         }
@@ -445,12 +467,13 @@ public class GameEngine {
             // Energy Boots
             double[] tmp = {0,0,0};
             double[] arr = {1,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars";
-            Item item = new Item("Energy Boots", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false);
+            Item item = new Item("Energy Boots", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 20);
             shop.listOfItems.add(itemProperties);
         }
@@ -458,12 +481,13 @@ public class GameEngine {
             // Armor Boots
             double[] tmp = {0,0,0};
             double[] arr = {200,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars";
-            Item item = new Item("Armor", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false);
+            Item item = new Item("Armor", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
             shop.listOfItems.add(itemProperties);
         }
@@ -471,12 +495,13 @@ public class GameEngine {
             // Magic stick
             double[] tmp = {0,0,0};
             double[] arr = {150,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars";
-            Item item = new Item("Magic stick", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false);
+            Item item = new Item("Magic stick", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 28);
             shop.listOfItems.add(itemProperties);
         }
@@ -486,10 +511,11 @@ public class GameEngine {
             double[] arr = {100,0,0};
             PropertyHandler propertyHandler = new PropertyHandler("currentHealth", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars";
-            Item item = new Item("Health potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true);
+            Item item = new Item("Health potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
             shop.listOfItems.add(itemProperties);
         }
@@ -499,10 +525,11 @@ public class GameEngine {
             double[] arr = {50,0,0};
             PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
             Property<Hero> property = new Property<>(propertyHandler);
+            property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars";
-            Item item = new Item("Magic potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true);
+            Item item = new Item("Magic potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
             ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
             shop.listOfItems.add(itemProperties);
         }
@@ -1063,6 +1090,15 @@ public class GameEngine {
         }
     }
 
+    public void updateAllItems() {
+        for (Hero hero: this.listOfHeroes) {
+            for (Item item: hero.getItems()) {
+                if (item.getTimeOfRemoveEffect().equals("EachActivity"))
+                    item.removeEffect();
+            }
+        }
+    }
+
     public void doCampaign(int battleNumber) {                                               // do Campaign Game (not Custom Game)
         setEnemies(battleNumber + 1);
         this.updateAllPerks();
@@ -1229,7 +1265,7 @@ public class GameEngine {
                                                 break;
                                             }
                                             else {
-                                                hero.useSkill(skill.name, targetedEnemies);
+                                                hero.useSkill(skill.getName(), targetedEnemies);
                                             }
                                         } else {
                                             ArrayList<Hero> targetedHeroes = new ArrayList<>();
@@ -1254,11 +1290,11 @@ public class GameEngine {
                                                 break;
                                             }
                                             else {
-                                                hero.useSkill(skill.name, targetedHeroes);
+                                                hero.useSkill(skill.getName(), targetedHeroes);
                                             }
                                         }
                                     } else {
-                                        hero.useSkill(skill.name, null);
+                                        hero.useSkill(skill.getName(), null);
                                     }
                                     Display.printInEachLine(hero.getName() + " casts Successfully " + skill.getName());
                                     this.updateAllSkills("NumberOfTurns");
@@ -1268,9 +1304,9 @@ public class GameEngine {
                         }
                     }
                     if (command.contains(hero.getName() + " use ")) {
-                        for (ItemProperties itemProperties : Shop.listOfItems) {
-                            if (command.contains(hero.getName() + " use " + itemProperties.getItem().getName() + " on ")) {
-                                if (!hero.hasItem(itemProperties.getItem())) {
+                        for (Item item: hero.getItems()) {
+                            if (command.contains(hero.getName() + " use " + item.getName() + " on ")) {
+                                if (!hero.hasItem(item)) {
                                     Display.printInEachLine("You don’t have this item");
                                     break;
                                 }
@@ -1278,18 +1314,39 @@ public class GameEngine {
 //                                    Display.printInEachLine("Your desired item is still in cooldown");
 //                                    break;
 //                                }
-                                if (hero.getCurrentEnergyPoint() >= itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() >= itemProperties.getItem().getRequiredMagicPoint()) {
-                                    hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - itemProperties.getItem().getRequiredEnergyPoint());
-                                    hero.setCurrentMagic(hero.getCurrentMagic() - itemProperties.getItem().getRequiredMagicPoint());
-                                    Display.printInEachLine(hero.getName() + "used Successfully " + itemProperties.getItem().getName());
+                                if (hero.getCurrentEnergyPoint() >= item.getRequiredEnergyPoint() && hero.getCurrentMagic() >= item.getRequiredMagicPoint()) {
+                                    if (item.isDependsRelatedSoldiersSelectingOnPlayer()) {
+                                        ArrayList<Hero> targetedHeroes = new ArrayList<>();
+                                        for (Hero targetHero : this.listOfHeroes) {
+                                            if (command.contains("on " + targetHero.getName())) {
+                                                targetedHeroes.add(targetHero);
+                                                break;
+                                            }
+                                        }
+                                        if (targetedHeroes.size() == 0) {
+                                            Display.printInEachLine("Your target was not recognized!");
+                                            break;
+                                        }
+                                        else {
+                                            hero.useItem(item.getName(), targetedHeroes);
+                                        }
+                                    }
+                                    else {
+                                        hero.useItem(item.getName(), null);
+                                    }
+                                    this.updateAllItems();
+                                    if (item.isAlive() == false) {
+                                        hero.removeItem(item);
+                                    }
+                                    Display.printInEachLine(hero.getName() + " used Successfully " + item.getName());
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() >= itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() < itemProperties.getItem().getRequiredMagicPoint()) {
+                                } else if (hero.getCurrentEnergyPoint() >= item.getRequiredEnergyPoint() && hero.getCurrentMagic() < item.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() >= itemProperties.getItem().getRequiredMagicPoint()) {
+                                } else if (hero.getCurrentEnergyPoint() < item.getRequiredEnergyPoint() && hero.getCurrentMagic() >= item.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < itemProperties.getItem().getRequiredEnergyPoint() && hero.getCurrentMagic() < itemProperties.getItem().getRequiredMagicPoint()) {
+                                } else if (hero.getCurrentEnergyPoint() < item.getRequiredEnergyPoint() && hero.getCurrentMagic() < item.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
@@ -1536,6 +1593,7 @@ public class GameEngine {
             }
             else{
                 Display.printInEachLine("Wrong Number! Try Again!");
+                choose = Display.getInteger();
             }
         }
     }
