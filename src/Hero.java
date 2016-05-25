@@ -188,7 +188,12 @@ public class Hero extends HeroClass {
             return;
         }
         for(Item item : this.items){
-            Display.printf(item.getName() + " worth " + (item.getWorth() / 2.0 * (item.getRemainingTimeOfUsed() / (double)item.getMaximumTimeOfUsed())) + " dollars ,");
+            if (item.isInstantlyUsed()) {
+                Display.printf(item.getName() + " worth " + (item.getWorth() / 2.0) + "dollars , ");
+            }
+            else {
+                Display.printf(item.getName() + " worth " + (item.getWorth() / 2.0 * (item.getRemainingTimeOfUsed() / (double)item.getMaximumTimeOfUsed())) + " dollars , ");
+            }
         }
         Display.printInEachLine("");
     }

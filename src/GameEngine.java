@@ -404,6 +404,8 @@ public class GameEngine {
         this.rewardedMoney[1] = 60;
         this.rewardedMoney[2] = 70;
         this.rewardedMoney[3] = 80;
+
+        Player.imortalityPotion = 3;
     }
 
     private void creatingDefaultItems(Shop shop) {
@@ -780,7 +782,7 @@ public class GameEngine {
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {0,0,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
-            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
+            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, null, 0, false, new Time(), new ArrayList<String>(), cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,4,6};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -817,7 +819,7 @@ public class GameEngine {
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
             properties.add(property1);
             int[] cooldown = {1,1,1}; int[] requiredEnergyPoint = {3,3,3}; int[] requiredMagicPoint = {60,60,60};
-            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, property2, 0, false, new Time(), null, cooldown, false, false, requiredEnergyPoint, requiredMagicPoint);
+            SkillHandler<Enemy> skillHandler = new SkillHandler<Enemy>(properties, property2, 0, false, new Time(), new ArrayList<String>(), cooldown, false, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,4};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -851,7 +853,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {60,60,60};
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(), null, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(), new ArrayList<String>(), cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,5};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -919,7 +921,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {2,2,2}; int[] requiredMagicPoint = {50,50,50};
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 1), null, cooldown, true, true, requiredEnergyPoint, requiredMagicPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 1), new ArrayList<String>(), cooldown, true, true, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,5};
 //            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
 //            ArrayList<String> tmpArr = new ArrayList<>();
@@ -951,7 +953,7 @@ public class GameEngine {
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             int[] cooldown = {1,1,0}; int[] requiredEnergyPoint = {1,1,1}; int[] requiredMagicPoint = {50,50,50};
-            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 0), null, cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
+            SkillHandler<Hero> skillHandler = new SkillHandler<Hero>(properties, null, 0, false, new Time(0, 0, 0), new ArrayList<String>(), cooldown, true, false, requiredEnergyPoint, requiredMagicPoint);
             int[] costOfUpgrade = {2,3,4};
             Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
             ArrayList<String> tmpArr = new ArrayList<>();
@@ -1058,6 +1060,10 @@ public class GameEngine {
             for (Enemy enemy: listOfEnemies) {
                 Enemy.mapOfEnemies.put(enemy.getName(), enemy);
             }
+        }
+        else if(numberOfBattle == 5) {
+            this.listOfEnemies.add(new FinalBoss());
+            Enemy.mapOfEnemies.put(listOfEnemies.get(0).getName(), listOfEnemies.get(0));
         }
     }
 
@@ -1171,6 +1177,11 @@ public class GameEngine {
             else if(numberEntered == 3){
                 Display.printInEachLine("Enter Your Command:");
                 String command = Display.getString();
+                if (command.equals("cheat")) {
+                    for (Enemy enemy: listOfEnemies) {
+                        enemy.setCurrentHealth(0);
+                    }
+                }
                 for (Hero hero : this.listOfHeroes) {
                     if (command.equalsIgnoreCase(hero.getName() + "?")) {
                         hero.showDescription();
@@ -1396,17 +1407,21 @@ public class GameEngine {
                 }
             }
             else if(numberEntered == 4){
-                for (Enemy enemy : listOfEnemies) {
+                for(Hero hero : this.listOfHeroes){
+                    hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
+                }
+                for (Enemy enemy : GameEngine.listOfEnemies) {
                     enemy.doTurn();
-                    for (Hero hero : listOfHeroes) {
+                    for (Hero hero : GameEngine.listOfHeroes) {
                         if (hero.isDead()) {
                             if (Player.imortalityPotion > 0) {
                                 Player.imortalityPotion--;
                                 hero.setCurrentHealth(hero.getMaximumHealth());
-                                Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + "immortality potions left");
+                                Display.printInEachLine(hero.getName() + " is dying, immortality potion was used for reincarnation process, you now have " + Player.imortalityPotion + " immortality potions left");
                             } else {
                                 this.listOfHeroes.remove(hero);
                                 Display.printInEachLine(hero.getName() + " is dead and so is the spirit of this adventure, Game Over!");
+                                System.exit(0);
                             }
                         }
                     }
@@ -1418,7 +1433,6 @@ public class GameEngine {
                 }
                 this.updateAllSkills("NumberOfCycles");
                 for(Hero hero : this.listOfHeroes){
-                    hero.setCurrentEnergyPoint(hero.getMaximumEnergyPoint());
                     if((hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) < hero.getMaximumHealth()) {
                         hero.setCurrentHealth(hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate() * hero.getHealthRefillRateRatio());
                     }
@@ -1542,8 +1556,10 @@ public class GameEngine {
             for(int i = 0;i < 5;i++) {
                 this.NumberOfBattle = i + 1;
                 this.doCampaign(i);
-                player.setXp(player.getXp() + this.rewardedXP[this.getNumberOfBattle() - 1]);
-                player.setMoney(player.getMoney() + this.rewardedMoney[this.getNumberOfBattle() - 1]);
+                if (i != 4) {
+                    player.setXp(player.getXp() + this.rewardedXP[this.getNumberOfBattle() - 1]);
+                    player.setMoney(player.getMoney() + this.rewardedMoney[this.getNumberOfBattle() - 1]);
+                }
                 this.updateAllSkills("NumberOfClashes");
             }
         }

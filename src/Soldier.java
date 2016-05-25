@@ -72,4 +72,8 @@ public class Soldier {
     public void setClassName(String className) {
         this.className = className;
     }
+
+    public String getName(){
+        return null;
+    }
 }

@@ -77,7 +77,7 @@ public class Property<E> implements Cloneable{
         }
     }
 
-    public <T> void effect(T relatedSoldier, Hero owner, Hero userHero) {
+    public <T> double effect(T relatedSoldier, Hero owner, Hero userHero) {
         Class classOfSoldier = relatedSoldier.getClass();
         Field field = null;
         int cond = 0;
@@ -194,6 +194,7 @@ public class Property<E> implements Cloneable{
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return this.totalEffectOnProperty;
     }
 
     public <T> void removeEffect(T relatedSoldier) {

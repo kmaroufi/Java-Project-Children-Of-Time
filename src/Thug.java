@@ -26,12 +26,11 @@ public class Thug extends Enemy {
     }
     public void doTurn() {                          // Chooses Random Hero From All Heroes
         Random random = new Random();
-        int randomIndex = random.nextInt(GameEngine.listOfHeroes.size());
+        int randomIndex = 0;
+        if (GameEngine.listOfHeroes.size() != 0)
+            randomIndex = random.nextInt(GameEngine.listOfHeroes.size());
         Hero targetedHero = GameEngine.listOfHeroes.get(randomIndex);
         targetedHero.getDamage(this.attackPower);
         Display.printInEachLine("Thug just attacked " + targetedHero.getName() + " with " + this.getAttackPower() + " power");
-        if(targetedHero.isDead()){
-            GameEngine.listOfHeroes.remove(targetedHero);
-        }
     }
 }

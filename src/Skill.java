@@ -74,7 +74,8 @@ public class Skill<E> extends Ability implements Cloneable{
                 continue;
             cond = true;
             for (Property property: this.propertiesOfRelatedSoldiers) {
-                property.effect(soldier, Hero.mapOfHeroes.get(this.ownerName), userHero);
+                double effect = property.effect(soldier, Hero.mapOfHeroes.get(this.ownerName), userHero);
+                Display.printInEachLine(userHero.getName() + " just used " + this.name + " on " + ((Soldier) soldier).getName() +  " and effecting on " + property.getName() + " with " + Math.abs(effect));
             }
             if (this.effectedSoldiers.contains(soldier) == false)
                 this.effectedSoldiers.add(soldier);
