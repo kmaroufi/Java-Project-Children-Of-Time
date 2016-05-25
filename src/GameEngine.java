@@ -87,7 +87,7 @@ public class GameEngine {
                 }
             }
             else if (numberEntered == 3) {
-                Display.printInEachLine("Your current wealth is:" + this.player.getMoney() + "dollars");
+                Display.printInEachLine("Your current wealth is: " + this.player.getMoney() + " dollars");
                 Display.printInEachLine("Enter Your Command:(type \"Next\" For Next Step!)");
                 String command = Display.getString();
                 for (ItemProperties itemProperties : Shop.listOfItems) {
@@ -1123,6 +1123,7 @@ public class GameEngine {
             Display.printInEachLine("4 - Aquire Or Update Abilities");
             Display.printInEachLine("5 - Go For Fight");
             Display.printInEachLine("6 - Help!");
+            Display.printInEachLine("7 - Again!");
             int numberEntered = Display.getInteger();
             if (numberEntered == 1) {
                 this.heroesAnnouncement();
@@ -1154,6 +1155,9 @@ public class GameEngine {
                 Display.printInEachLine("We Have Menu For You in All Activities And It's Very Very Simple!    (:D)");
                 continue;
             }
+            else if (numberEntered == 7) {
+                this.showBattleMessage(getNumberOfBattle());
+            }
             else {
                 Display.printInEachLine("Wrong Number!Try Again!");
                 continue;
@@ -1177,10 +1181,13 @@ public class GameEngine {
             else if(numberEntered == 3){
                 Display.printInEachLine("Enter Your Command:");
                 String command = Display.getString();
-                if (command.equals("cheat")) {
+                if (command.equals("dead cheat")) {
                     for (Enemy enemy: listOfEnemies) {
                         enemy.setCurrentHealth(0);
                     }
+                }
+                if (command.equalsIgnoreCase("Again")) {
+                    this.showBattleMessage(this.getNumberOfBattle());
                 }
                 for (Hero hero : this.listOfHeroes) {
                     if (command.equalsIgnoreCase(hero.getName() + "?")) {
