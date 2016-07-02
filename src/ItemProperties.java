@@ -3,14 +3,28 @@
  */
 public class ItemProperties {
     private Item item;
+    private int numberOfThisItem;
+    private boolean countLess;
     private int timeOfBuyThisItem;
     private double increasePriceValue;
     private double coefficientOfPriceIncrease;
     private double price;
 
-    public ItemProperties(Item item, int timeOfBuyThisItem, double increasePriceValue, double coefficientOfPriceIncrease, double price) {
+    public ItemProperties(Item item, int numberOfThisItem, double increasePriceValue, double coefficientOfPriceIncrease, double price) {
         this.item = item;
-        this.timeOfBuyThisItem = timeOfBuyThisItem;
+        this.numberOfThisItem = numberOfThisItem;
+        this.countLess = false;
+        this.timeOfBuyThisItem = 0;
+        this.increasePriceValue = increasePriceValue;
+        this.coefficientOfPriceIncrease = coefficientOfPriceIncrease;
+        this.price = price;
+    }
+
+    public ItemProperties(Item item, double increasePriceValue, double coefficientOfPriceIncrease, double price) {
+        this.item = item;
+        this.numberOfThisItem = 1;
+        this.countLess = true;
+        this.timeOfBuyThisItem = 0;
         this.increasePriceValue = increasePriceValue;
         this.coefficientOfPriceIncrease = coefficientOfPriceIncrease;
         this.price = price;
@@ -56,11 +70,31 @@ public class ItemProperties {
         this.price = price;
     }
 
-    public void updatePrice() {
+    public int getNumberOfThisItem() {
+        return numberOfThisItem;
+    }
+
+    public void setNumberOfThisItem(int numberOfThisItem) {
+        this.numberOfThisItem = numberOfThisItem;
+    }
+
+    public boolean isCountLess() {
+        return countLess;
+    }
+
+    public void setCountLess(boolean countLess) {
+        this.countLess = countLess;
+    }
+
+    public void update() {
         if (this.coefficientOfPriceIncrease == 0)
             this.price += this.increasePriceValue;
         else {
             this.price *= this.coefficientOfPriceIncrease;
+        }
+        this.timeOfBuyThisItem++;
+        if (!this.countLess) {
+            this.numberOfThisItem--;
         }
     }
 }

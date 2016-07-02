@@ -112,8 +112,12 @@ public class GameEngine {
                                             item.useItem(null);
                                         }
                                         this.player.setMoney(this.player.getMoney() - itemProperties.getPrice());
-                                        itemProperties.updatePrice();
+                                        itemProperties.update();
                                         Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());    //(item name) “ bought successfully, your current wealth is: ” + (current money)
+                                        if (itemProperties.getNumberOfThisItem() == 0) {
+                                            Shop.listOfItems.remove(itemProperties);
+                                            Display.printInEachLine("This item is no longer Available in this shop");
+                                        }
                                     }
                                     catch (CloneNotSupportedException e){
                                         e.getStackTrace();
@@ -420,7 +424,7 @@ public class GameEngine {
             properties.add(property);
             String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health";
             Item item = new Item("Thoughen", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
+            ItemProperties itemProperties = new ItemProperties(item, 2, 0, 4);
             shop.listOfItems.add(itemProperties);
         }
         {
