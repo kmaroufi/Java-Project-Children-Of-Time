@@ -25,9 +25,9 @@ public class Skill<E> extends Ability implements Cloneable{
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;
 
-    //---------------------------------------------------------------- Functions
+    //---------------------------------------------------------------- Constructors
 
-    Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
+    public Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
         super(abilityHandler);
         setPropertiesOfRelatedSoldiers(skillHandler.getPropertiesOfRelatedSoldiers());
         setPropertiesOfUser(skillHandler.getPropertiesOfUser());
@@ -44,6 +44,8 @@ public class Skill<E> extends Ability implements Cloneable{
         setRequiredMagicPoint(skillHandler.getRequiredMagicPoint());
     }
 
+    //---------------------------------------------------------------- Functions
+
     protected Skill<E> clone() throws CloneNotSupportedException {
         Skill<E> skill = (Skill<E>) super.clone();
         ArrayList<Property<E>> cloneOfPropertiesOfRelatedSoldiers = new ArrayList<>();
@@ -55,7 +57,7 @@ public class Skill<E> extends Ability implements Cloneable{
             skill.setPropertiesOfUser(this.propertiesOfUser.clone());
         skill.setMapOfEffectedSoldiers(new HashMap<>());
         return skill;
-    }
+    }       // Creates A Copy of This Object (Skill)
 
     public boolean isActivated() {
        return false;
