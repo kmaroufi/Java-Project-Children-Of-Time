@@ -1,4 +1,5 @@
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,9 @@ public class Property<E> implements Cloneable{
     private boolean isDependOnEffectedSoldier;
     private boolean isDependOnUserHero;
     private boolean isPermanently;
+
+    private ArrayList<String> variables;
+    private Map<String, Double[]> variablesCoefficient;
 
     private double[] constantProperty;
     private double[] attackPowerCoefficient;

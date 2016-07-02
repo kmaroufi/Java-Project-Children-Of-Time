@@ -1,5 +1,7 @@
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Future on 5/6/2016.
@@ -34,7 +36,9 @@ public class HeroClass extends Soldier {
     protected double criticalDamageResistance;
     protected double headShotChance; // when you headShot an enemy, you kill it immediately!
 
+
     //-------------------------------------------------- Constructors
+
 
     public HeroClass(){
         for(int i = 0;i < this.skills.size();i++){
@@ -74,7 +78,6 @@ public class HeroClass extends Soldier {
         this.setCurrentHealth(this.getMaximumHealth());
         this.setAttackPower(heroClassHandler.getAttackPower());
         this.setSizeOfOccupiedInventory(0);
-
     }
 
     public HeroClass(HeroClass heroClass){

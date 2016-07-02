@@ -1,6 +1,7 @@
 /**
  * Created by Future on 5/6/2016.
  */
+import java.lang.reflect.Field;
 import java.util.*;
 public class Hero extends HeroClass {
     public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
@@ -10,7 +11,21 @@ public class Hero extends HeroClass {
     private ArrayList<Item> items = new ArrayList<Item>();
     private String name;
 
+    private static Map<String, Field> fieldsMap = new HashMap<>();
+
     //------------------------------------------ Constructors
+
+    static {
+        Class clazz = Hero.class;
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                fieldsMap.put(field.getName(), field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+    }
+
     public Hero(){
 
     }
