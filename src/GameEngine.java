@@ -1,3 +1,4 @@
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -417,7 +418,7 @@ public class GameEngine {
             // toughen
             double[] tmp = {0,0,0};
             double[] arr = {20,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -431,7 +432,7 @@ public class GameEngine {
             // Guide
             double[] tmp = {0,0,0};
             double[] arr = {20,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -445,7 +446,7 @@ public class GameEngine {
             // Defy
             double[] tmp = {0,0,0};
             double[] arr = {8,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -459,7 +460,7 @@ public class GameEngine {
             // Sword
             double[] tmp = {0,0,0};
             double[] arr = {80,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -473,7 +474,7 @@ public class GameEngine {
             // Energy Boots
             double[] tmp = {0,0,0};
             double[] arr = {1,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -487,7 +488,7 @@ public class GameEngine {
             // Armor Boots
             double[] tmp = {0,0,0};
             double[] arr = {200,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -501,7 +502,7 @@ public class GameEngine {
             // Magic stick
             double[] tmp = {0,0,0};
             double[] arr = {150,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, false, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -515,7 +516,7 @@ public class GameEngine {
             // Health potion
             double[] tmp = {0,0,0};
             double[] arr = {100,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentHealth", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("currentHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -529,7 +530,7 @@ public class GameEngine {
             // Magic potion
             double[] tmp = {0,0,0};
             double[] arr = {50,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             property.setCurrentGrade(1);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
@@ -546,7 +547,9 @@ public class GameEngine {
             //Fighter Class's Perk: Fight training
             double[] tmp = {0,0,0};
             double[] arr = {30,30,30};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            ArrayList<Field> variables = new ArrayList<>();
+            Map<String, Double[]> variablesCoefficient = new HashMap<>();
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
@@ -584,7 +587,7 @@ public class GameEngine {
             //Fighter Class's Perk: Work out
             double[] tmp = {0,0,0};
             double[] arr = {50,50,50};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
@@ -622,7 +625,7 @@ public class GameEngine {
             //Supporter Class's Perk: Quick as a bunny
             double[] tmp = {0,0,0};
             double[] arr = {1,1,1};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumEnergyPoint",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumEnergyPoint",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
@@ -660,7 +663,7 @@ public class GameEngine {
             //Supporter Class's Perk: Magic lessons
             double[] tmp = {0,0,0};
             double[] arr = {50,50,50};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
@@ -698,12 +701,12 @@ public class GameEngine {
             //Eley's Perk: Swirling attack
             double[] tmp = {0,0,0};
             double[] arr = {.1,.1,.1};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioOnNonTargetedEnemy",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("attackPowerRatioOnNonTargetedEnemy",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             double[] arr2 = {-5, 0, 0};
-            PropertyHandler propertyHandler2 = new PropertyHandler("numberOfNonTargetedEnemyEffected",3, false, true, true, arr2, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler2 = new PropertyHandler("numberOfNonTargetedEnemyEffected",3, false, true, true, arr2, new HashMap<>(), new HashMap<>());
             Property<Hero> property2 = new Property<>(propertyHandler2);
             properties.add(property2);
             PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
@@ -738,10 +741,10 @@ public class GameEngine {
             //Eley's Perk: Critical strike
             double[] tmp = {0,0,0};
             double[] arr = {0.2,0.1,0.1};
-            PropertyHandler propertyHandler = new PropertyHandler("criticalHitChance",3, false, true, true, arr, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler = new PropertyHandler("criticalHitChance",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
             Property<Hero> property = new Property<>(propertyHandler);
             double[] arr2 = {2,0,0};
-            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr2, tmp, tmp, tmp, tmp, tmp, tmp, tmp);
+            PropertyHandler propertyHandler2 = new PropertyHandler("criticalHitDamage",3, false, true, true, arr2, new HashMap<>(), new HashMap<>());
             Property<Hero> property2 = new Property<>(propertyHandler2);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
@@ -780,8 +783,16 @@ public class GameEngine {
         {
             //Eley's Skill: Overpowered attack
             double[] tmp = {0,0,0};
-            double[] arr = {-1.2,-1.2,-1.2};
-            PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, arr, tmp, tmp, tmp, tmp, tmp, tmp);
+            Double[] arr = {-1.2,-1.2,-1.2};
+            Map<String, ArrayList<String>> variablesOfObjects = new HashMap<>();
+            Map<String, Map<String, Double[]>> variablesCoefficientOfObjects = new HashMap<>();
+            ArrayList<String> variables = new ArrayList<>();
+            variables.add("attackPower");
+            variablesOfObjects.put("Eley", variables);
+            Map<String, Double[]> variableCoefficients = new HashMap<>();
+            variableCoefficients.put("attackPower", arr);
+            variablesCoefficientOfObjects.put("Eley", variableCoefficients);
+            PropertyHandler propertyHandler = new PropertyHandler("currentHealth",3, false, true, true, tmp, variablesOfObjects, variablesCoefficientOfObjects);
             Property<Enemy> property = new Property<>(propertyHandler);
             ArrayList<Property<Enemy>> properties = new ArrayList<>();
             properties.add(property);

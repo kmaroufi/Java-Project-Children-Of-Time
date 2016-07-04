@@ -9,24 +9,27 @@ import java.util.Map;
 public class Property<E> implements Cloneable{
     private Double totalEffectOnProperty = new Double(0);               // az che noii e??????
     private String name;
-    private String fieldOfEffecting;
+//    private Class classOfEffectedField;
     private int currentGrade;
     private int numberOfUpgrades;
     private boolean isDependOnEffectedSoldier;
     private boolean isDependOnUserHero;
     private boolean isPermanently;
 
-    private ArrayList<String> variables;
-    private Map<String, Double[]> variablesCoefficient;
+    private Map<String, ArrayList<String>> variablesOfObjects;
+    private Map<String, Map<String, Double[]>> variablesCoefficientOfObjects;
 
+//    private ArrayList<String> variables;
+//    private Map<String, Double[]> variablesCoefficient;
     private double[] constantProperty;
-    private double[] attackPowerCoefficient;
-    private double[] maximumHealthCoefficient;
-    private double[] maximumMagicCoefficient;
-    private double[] healthCoefficient;
-    private double[] magicCoefficient;
-    private double[] healthRefillRateCoefficient;
-    private double[] magicRefillRateCoefficient;
+
+//    private double[] attackPowerCoefficient;
+//    private double[] maximumHealthCoefficient;
+//    private double[] maximumMagicCoefficient;
+//    private double[] healthCoefficient;
+//    private double[] magicCoefficient;
+//    private double[] healthRefillRateCoefficient;
+//    private double[] magicRefillRateCoefficient;
 
     private Map<E, Double> valueOfEffectingOnEffectedSoldiers = new HashMap<>();
 
@@ -40,13 +43,8 @@ public class Property<E> implements Cloneable{
         setDependOnUserHero(propertyHandler.isDependOnUserHero());
         setPermanently(propertyHandler.isPermanently());
         setConstantProperty(propertyHandler.getConstantProperty());
-        setAttackPowerCoefficient(propertyHandler.getAttackPowerCoefficient());
-        setMaximumHealthCoefficient(propertyHandler.getMaximumHealthCoefficient());
-        setMaximumMagicCoefficient(propertyHandler.getMaximumMagicCoefficient());
-        setHealthCoefficient(propertyHandler.getHealthCoefficient());
-        setMagicCoefficient(propertyHandler.getMagicCoefficient());
-        setHealthRefillRateCoefficient(propertyHandler.getHealthRefillRateCoefficient());
-        setMagicRefillRateCoefficient(propertyHandler.getMagicRefillRateCoefficient());
+        setVariablesOfObjects(propertyHandler.getVariablesOfObjects());
+        setVariablesCoefficientOfObjects(propertyHandler.getVariablesCoefficientOfObjects());
     }
 
     public String getName() {
@@ -287,62 +285,6 @@ public class Property<E> implements Cloneable{
         this.name = name;
     }
 
-    public double[] getAttackPowerCoefficient() {
-        return attackPowerCoefficient;
-    }
-
-    public void setAttackPowerCoefficient(double[] attackPowerCoefficient) {
-        this.attackPowerCoefficient = attackPowerCoefficient;
-    }
-
-    public double[] getMaximumHealthCoefficient() {
-        return maximumHealthCoefficient;
-    }
-
-    public void setMaximumHealthCoefficient(double[] maximumHealthCoefficient) {
-        this.maximumHealthCoefficient = maximumHealthCoefficient;
-    }
-
-    public double[] getMaximumMagicCoefficient() {
-        return maximumMagicCoefficient;
-    }
-
-    public void setMaximumMagicCoefficient(double[] maximumMagicCoefficient) {
-        this.maximumMagicCoefficient = maximumMagicCoefficient;
-    }
-
-    public double[] getHealthCoefficient() {
-        return healthCoefficient;
-    }
-
-    public void setHealthCoefficient(double[] healthCoefficient) {
-        this.healthCoefficient = healthCoefficient;
-    }
-
-    public double[] getMagicCoefficient() {
-        return magicCoefficient;
-    }
-
-    public void setMagicCoefficient(double[] magicCoefficient) {
-        this.magicCoefficient = magicCoefficient;
-    }
-
-    public double[] getHealthRefillRateCoefficient() {
-        return healthRefillRateCoefficient;
-    }
-
-    public void setHealthRefillRateCoefficient(double[] healthRefillRateCoefficient) {
-        this.healthRefillRateCoefficient = healthRefillRateCoefficient;
-    }
-
-    public double[] getMagicRefillRateCoefficient() {
-        return magicRefillRateCoefficient;
-    }
-
-    public void setMagicRefillRateCoefficient(double[] magicRefillRateCoefficient) {
-        this.magicRefillRateCoefficient = magicRefillRateCoefficient;
-    }
-
     public int getCurrentGrade() {
         return currentGrade;
     }
@@ -353,14 +295,6 @@ public class Property<E> implements Cloneable{
 
     public void setTotalEffectOnProperty(Double totalEffectOnProperty) {
         this.totalEffectOnProperty = totalEffectOnProperty;
-    }
-
-    public String getFieldOfEffecting() {
-        return fieldOfEffecting;
-    }
-
-    public void setFieldOfEffecting(String fieldOfEffecting) {
-        this.fieldOfEffecting = fieldOfEffecting;
     }
 
     public boolean isDependOnEffectedSoldier() {
@@ -393,5 +327,21 @@ public class Property<E> implements Cloneable{
 
     public void setPermanently(boolean permanently) {
         isPermanently = permanently;
+    }
+
+    public Map<String, Map<String, Double[]>> getVariablesCoefficientOfObjects() {
+        return variablesCoefficientOfObjects;
+    }
+
+    public void setVariablesCoefficientOfObjects(Map<String, Map<String, Double[]>> variablesCoefficientOfObjects) {
+        this.variablesCoefficientOfObjects = variablesCoefficientOfObjects;
+    }
+
+    public Map<String, ArrayList<String>> getVariablesOfObjects() {
+        return variablesOfObjects;
+    }
+
+    public void setVariablesOfObjects(Map<String, ArrayList<String>> variablesOfObjects) {
+        this.variablesOfObjects = variablesOfObjects;
     }
 }

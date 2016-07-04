@@ -1,3 +1,4 @@
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,19 @@ public class Skill<E> extends Ability implements Cloneable{
     private boolean isUsed;
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;
+
+    private static Map<String, Field> fieldsMap = new HashMap<>();
+
+    static {
+        Class clazz = Hero.class;
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                fieldsMap.put(field.getName(), field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+    }
 
     //---------------------------------------------------------------- Constructors
 

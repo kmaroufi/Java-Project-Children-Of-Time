@@ -1,3 +1,4 @@
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -12,6 +13,19 @@ public class Perk<E> extends Ability implements Cloneable{
     private boolean isConditionDependOnRelatedSoldier;
     private boolean isConditionDependOnUserHero;
     private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
+
+    private static Map<String, Field> fieldsMap = new HashMap<>();
+
+    static {
+        Class clazz = Hero.class;
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                fieldsMap.put(field.getName(), field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+    }
 
     //---------------------------------------------------------- Constructors
 
