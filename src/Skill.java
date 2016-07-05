@@ -39,6 +39,23 @@ public class Skill<E> extends Ability implements Cloneable{
         }
     }
 
+    public double getFieldValue(String fieldName) {
+        try {
+            return Skill.fieldsMap.get(fieldName).getDouble(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void setFieldValue(String fieldName, double value) {
+        try {
+            Skill.fieldsMap.get(fieldName).set(this, value);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
     //---------------------------------------------------------------- Constructors
 
     public Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
@@ -346,4 +363,11 @@ public class Skill<E> extends Ability implements Cloneable{
         this.canStackUp = canStackUp;
     }
 
+    public static Map<String, Field> getFieldsMap() {
+        return fieldsMap;
+    }
+
+    public static void setFieldsMap(Map<String, Field> fieldsMap) {
+        Skill.fieldsMap = fieldsMap;
+    }
 }
