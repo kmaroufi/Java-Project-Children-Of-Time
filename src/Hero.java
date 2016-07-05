@@ -13,8 +13,6 @@ public class Hero extends HeroClass {
 
     private static Map<String, Field> fieldsMap = new HashMap<>();
 
-    //------------------------------------------ Constructors
-
     static {
         Class clazz = Hero.class;
         while (clazz != null) {
@@ -25,6 +23,25 @@ public class Hero extends HeroClass {
             clazz = clazz.getSuperclass();
         }
     }
+
+    public double getFieldValue(String fieldName) {
+        try {
+            return Hero.fieldsMap.get(fieldName).getDouble(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void setFieldValue(String fieldName, double value) {
+        try {
+            Hero.fieldsMap.get(fieldName).set(this, value);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //------------------------------------------ Constructors
 
     public Hero(){
 
@@ -259,6 +276,14 @@ public class Hero extends HeroClass {
 
     public void setItems(ArrayList<Item> items) {
         this.items = items;
+    }
+
+    public static Map<String, Field> getFieldsMap() {
+        return fieldsMap;
+    }
+
+    public static void setFieldsMap(Map<String, Field> fieldsMap) {
+        Hero.fieldsMap = fieldsMap;
     }
 
 

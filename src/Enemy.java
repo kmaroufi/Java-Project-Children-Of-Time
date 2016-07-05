@@ -1,6 +1,7 @@
 /**
  * Created by Future on 5/6/2016.
  */
+import java.lang.reflect.Field;
 import java.util.*;
 public abstract class Enemy extends Soldier{
     public static HashMap<String , Enemy> mapOfEnemies = new HashMap<>();        // ArrayList is Wrong
@@ -8,6 +9,19 @@ public abstract class Enemy extends Soldier{
     private Double attackPowerRatio;
     private Integer isAstounded;
     protected String name;                            // Full name of An Enemy   ----->     (ClassName is Like Thug)
+
+    private static Map<String, Field> fieldsMap = new HashMap<>();
+
+    static {
+        Class clazz = Hero.class;
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                fieldsMap.put(field.getName(), field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+    }
 
     //---------------------------------------------------- Constructors
 
@@ -60,5 +74,11 @@ public abstract class Enemy extends Soldier{
         this.name = name;
     }
 
+    public static Map<String, Field> getFieldsMap() {
+        return fieldsMap;
+    }
 
+    public static void setFieldsMap(Map<String, Field> fieldsMap) {
+        Enemy.fieldsMap = fieldsMap;
+    }
 }

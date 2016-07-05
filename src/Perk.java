@@ -27,6 +27,23 @@ public class Perk<E> extends Ability implements Cloneable{
         }
     }
 
+    public double getFieldValue(String fieldName) {
+        try {
+            return Perk.fieldsMap.get(fieldName).getDouble(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public void setFieldValue(String fieldName, double value) {
+        try {
+            Perk.fieldsMap.get(fieldName).set(this, value);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
     //---------------------------------------------------------- Constructors
 
 
@@ -247,5 +264,13 @@ public class Perk<E> extends Ability implements Cloneable{
 
     public void setTimeOfCheck(String timeOfCheck) {
         this.timeOfCheck = timeOfCheck;
+    }
+
+    public static Map<String, Field> getFieldsMap() {
+        return fieldsMap;
+    }
+
+    public static void setFieldsMap(Map<String, Field> fieldsMap) {
+        Perk.fieldsMap = fieldsMap;
     }
 }
