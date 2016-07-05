@@ -8,7 +8,15 @@ public class Tile {
     private Image icon;
     private Hero heroInHere;    // if There is No Hero There it's null
     //--------------------------------------------------------------------- Constructor
+
+    public Tile(String mode, Image icon, Hero heroInHere) {
+        this.mode = mode;
+        this.icon = icon;
+        this.heroInHere = heroInHere;
+    }
+
     //--------------------------------------------------------------------- Fucntion
+
     //--------------------------------------------------------------------- Getter && Setter
 
     public String getMode() {
