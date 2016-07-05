@@ -26,35 +26,6 @@ public class Skill<E> extends Ability implements Cloneable{
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;
 
-    private static Map<String, Field> fieldsMap = new HashMap<>();
-
-    static {
-        Class clazz = Hero.class;
-        while (clazz != null) {
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field field : fields) {
-                fieldsMap.put(field.getName(), field);
-            }
-            clazz = clazz.getSuperclass();
-        }
-    }
-
-    public double getFieldValue(String fieldName) {
-        try {
-            return Skill.fieldsMap.get(fieldName).getDouble(this);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    public void setFieldValue(String fieldName, double value) {
-        try {
-            Skill.fieldsMap.get(fieldName).set(this, value);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
 
     //---------------------------------------------------------------- Constructors
 

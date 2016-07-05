@@ -11,7 +11,6 @@ import java.util.Map;
 public class Property<E, T> implements Cloneable {
     private Double totalEffectOnProperty = new Double(0);               // az che noii e??????
     private String name;
-    //    private Class classOfEffectedField;
     private int currentGrade;
     private int numberOfUpgrades;
     private boolean isDependOnEffectedSoldier;
@@ -23,13 +22,6 @@ public class Property<E, T> implements Cloneable {
 
     private double[] constantProperty;
 
-//    private double[] attackPowerCoefficient;
-//    private double[] maximumHealthCoefficient;
-//    private double[] maximumMagicCoefficient;
-//    private double[] healthCoefficient;
-//    private double[] magicCoefficient;
-//    private double[] healthRefillRateCoefficient;
-//    private double[] magicRefillRateCoefficient;
 
     private Map<E, Double> valueOfEffectingOnEffectedSoldiers = new HashMap<>();
 
@@ -98,7 +90,7 @@ public class Property<E, T> implements Cloneable {
         }
     }
 
-    private <T> void calculateProperty(ArrayList<T> effectingObjects) {
+    private void calculateProperty(ArrayList<T> effectingObjects) {
         this.totalEffectOnProperty = this.constantProperty[this.currentGrade - 1];
         for (T effectingObject : effectingObjects) {
             for (String variablesName : this.variablesOfObjects.get(this.getFieldValue(effectingObject, "name"))) {
@@ -106,105 +98,19 @@ public class Property<E, T> implements Cloneable {
                 double variableCoefficient = this.variablesCoefficientOfObjects.get(this.getFieldValue(effectingObject, "name")).get(variablesName)[currentGrade - 1];
                 this.totalEffectOnProperty += variableCoefficient * variableValue;
             }
-//            if (effectingObject instanceof Hero) {
-//                Hero effectingHero = (Hero) effectingObject;
-//                for (String variablesName : this.variablesOfObjects.get(effectingHero.getName())) {
-//                    double variableValue = effectingHero.getFieldValue(variablesName);
-//                    double variableCoefficient = this.variablesCoefficientOfObjects.get(effectingHero.getName()).get(variablesName)[currentGrade - 1];
-//                    this.totalEffectOnProperty += variableCoefficient * variableValue;
-//                }
-//            }
-//            if (effectingObject instanceof Skill) {
-//                Skill effectingSkill = (Skill) effectingObject;
-//                for (String variablesName : this.variablesOfObjects.get(effectingSkill.getName())) {
-//                    double variableValue = effectingSkill.getFieldValue(variablesName);
-//                    double variableCoefficient = this.variablesCoefficientOfObjects.get(effectingSkill.getName()).get(variablesName)[currentGrade - 1];
-//                    this.totalEffectOnProperty += variableCoefficient * variableValue;
-//                }
-//            }
-//            if (effectingObject instanceof Perk) {
-//                Perk effectingPerk = (Perk) effectingObject;
-//                for (String variablesName : this.variablesOfObjects.get(effectingPerk.getName())) {
-//                    double variableValue = effectingPerk.getFieldValue(variablesName);
-//                    double variableCoefficient = this.variablesCoefficientOfObjects.get(effectingPerk.getName()).get(variablesName)[currentGrade - 1];
-//                    this.totalEffectOnProperty += variableCoefficient * variableValue;
-//                }
-//            }
         }
     }
 
-//    private void calculateProperty(ArrayList<Hero> effectingHeroes) {
-//        this.totalEffectOnProperty = this.constantProperty[this.currentGrade - 1];
-//        for (Hero effectingHero: effectingHeroes) {
-//            for (String variablesName: this.variablesOfObjects.get(effectingHero.getName())) {
-//                double variableValue = effectingHero.getFieldValue(variablesName);
-//                double variableCoefficient = this.variablesCoefficientOfObjects.get(effectingHero.getName()).get(variablesName)[currentGrade - 1];
-//                this.totalEffectOnProperty = variableCoefficient * variableValue;
-//            }
-//        }
-//    }
-
     public double effect(E effectedObject, َArrayList<T> effectingObjects) {
-        Class clazz = effectedObject.getClass();
-        Method setFieldValue = null;
-        Method getFieldValue = null;
-        try {
-            setFieldValue = clazz.getDeclaredMethod("setFieldValue", String.class, double.class);
-            getFieldValue = clazz.getDeclaredMethod("getFieldValue", String.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
         calculateProperty(effectingObjects);
-        try {
-            setFieldValue.invoke(effectedObject, this.name, (Double)getFieldValue.invoke(effectedObject, this.name) + this.totalEffectOnProperty);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-//        if (effectedObject instanceof Hero) {
-//            Hero effectedHero = (Hero) effectedObject;
-//            effectedHero.setFieldValue(this.name, effectedHero.getFieldValue(this.name) + this.totalEffectOnProperty);
-//        } else if (effectedObject instanceof Skill) {
-//            Skill effectedSkill = (Skill) effectedObject;
-//            effectedSkill.setFieldValue(this.name, effectedSkill.getFieldValue(this.name) + this.totalEffectOnProperty);
-//        } else if (effectedObject instanceof Perk) {
-//            Perk effectedPerk = (Perk) effectedObject;
-//            effectedPerk.setFieldValue(this.name, effectedPerk.getFieldValue(this.name) + this.totalEffectOnProperty);
-//        }
+        Double previousValue = (Double) this.getFieldValue(effectedObject, this.name);
+        this.setFieldValue(effectedObject, this.name, new Double(previousValue + this.totalEffectOnProperty));
         if (this.valueOfEffectingOnEffectedSoldiers.containsKey(effectedObject)) {
             this.valueOfEffectingOnEffectedSoldiers.put(effectedObject, this.valueOfEffectingOnEffectedSoldiers.get(effectedObject) + this.totalEffectOnProperty);
         } else {
             this.valueOfEffectingOnEffectedSoldiers.put(effectedObject, this.totalEffectOnProperty);
         }
         return this.totalEffectOnProperty;
-//        Class classOfSoldier = relatedSoldier.getClass();
-//        Field field = null;
-//        int cond = 0;
-//        try {
-//            field = classOfSoldier.getDeclaredField(this.name);
-//        } catch (NoSuchFieldException e) {
-//            cond = 1;
-//        }
-//        if (cond == 1) {
-//            cond = 0;
-//            classOfSoldier = classOfSoldier.getSuperclass();
-//            try {
-//                field = classOfSoldier.getDeclaredField(this.name);
-//            } catch (NoSuchFieldException e) {
-//                cond = 1;
-//            }
-//        }
-//        if (cond == 1) {
-//            cond = 0;
-//            classOfSoldier = classOfSoldier.getSuperclass();
-//            try {
-//                field = classOfSoldier.getDeclaredField(this.name);
-//            } catch (NoSuchFieldException e) {
-//                e.printStackTrace();
-//                cond = 1;
-//            }
-//        }
 //        String type = field.getGenericType().toString();
 //        Class classOfSoldier2 = relatedSoldier.getClass();
 //        Field field2 = null;
@@ -293,46 +199,8 @@ public class Property<E, T> implements Cloneable {
     public void removeEffect(E effectedObject) {
         if (isPermanently)
             return;
-//        String type = field.getGenericType().toString();
-//        try {
-//            if (type.equals("int")) {
-//                field.set(relatedSoldier, (Integer) field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).intValue());
-//            }
-//            if (type.equals("double")) {
-//                field.set(relatedSoldier, (Double) field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier));
-//            }
-//            if (type.equals("float")) {
-//                field.set(relatedSoldier, (Float) field.get(relatedSoldier) - this.valueOfEffectingOnEffectedSoldiers.get(relatedSoldier).floatValue());
-//            }
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-        Class clazz = effectedObject.getClass();
-        Method setFieldValue = null;
-        Method getFieldValue = null;
-        try {
-            setFieldValue = clazz.getDeclaredMethod("setFieldValue", String.class, double.class);
-            getFieldValue = clazz.getDeclaredMethod("getFieldValue", String.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        try {
-            setFieldValue.invoke(effectedObject, this.name, (Double)getFieldValue.invoke(effectedObject, this.name) - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-//        if (effectedObject instanceof Hero) {
-//            Hero effectedHero = (Hero) effectedObject;
-//            effectedHero.setFieldValue(this.name, effectedHero.getFieldValue(this.name) - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
-//        } else if (effectedObject instanceof Skill) {
-//            Skill effectedSkill = (Skill) effectedObject;
-//            effectedSkill.setFieldValue(this.name, effectedSkill.getFieldValue(this.name) - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
-//        } else if (effectedObject instanceof Perk) {
-//            Perk effectedPerk = (Perk) effectedObject;
-//            effectedPerk.setFieldValue(this.name, effectedPerk.getFieldValue(this.name) - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
-//        }
+        Double previousValue = (Double) this.getFieldValue(effectedObject, this.name);
+        this.setFieldValue(effectedObject, this.name, previousValue - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
         this.valueOfEffectingOnEffectedSoldiers.remove(effectedObject);
     }
 

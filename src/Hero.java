@@ -3,6 +3,10 @@
  */
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class Hero extends HeroClass {
     public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
     public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
@@ -11,35 +15,35 @@ public class Hero extends HeroClass {
     private ArrayList<Item> items = new ArrayList<Item>();
     private String name;
 
-    private static Map<String, Field> fieldsMap = new HashMap<>();
-
-    static {
-        Class clazz = Hero.class;
-        while (clazz != null) {
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field field : fields) {
-                fieldsMap.put(field.getName(), field);
-            }
-            clazz = clazz.getSuperclass();
-        }
-    }
-
-    public double getFieldValue(String fieldName) {
-        try {
-            return Hero.fieldsMap.get(fieldName).getDouble(this);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    public void setFieldValue(String fieldName, double value) {
-        try {
-            Hero.fieldsMap.get(fieldName).set(this, value);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
+//    private static Map<String, Field> fieldsMap = new HashMap<>();
+//
+//    static {
+//        Class clazz = Hero.class;
+//        while (clazz != null) {
+//            Field[] fields = clazz.getDeclaredFields();
+//            for (Field field : fields) {
+//                fieldsMap.put(field.getName(), field);
+//            }
+//            clazz = clazz.getSuperclass();
+//        }
+//    }
+//
+//    public double getFieldValue(String fieldName) {
+//        try {
+//            return Hero.fieldsMap.get(fieldName).getDouble(this);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//        return -1;
+//    }
+//
+//    public void setFieldValue(String fieldName, double value) {
+//        try {
+//            Hero.fieldsMap.get(fieldName).set(this, value);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //------------------------------------------ Constructors
 
@@ -277,14 +281,5 @@ public class Hero extends HeroClass {
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
-
-    public static Map<String, Field> getFieldsMap() {
-        return fieldsMap;
-    }
-
-    public static void setFieldsMap(Map<String, Field> fieldsMap) {
-        Hero.fieldsMap = fieldsMap;
-    }
-
 
 }

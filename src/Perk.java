@@ -1,5 +1,7 @@
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by asus-pc on 5/5/2016.
@@ -13,36 +15,6 @@ public class Perk<E> extends Ability implements Cloneable{
     private boolean isConditionDependOnRelatedSoldier;
     private boolean isConditionDependOnUserHero;
     private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
-
-    private static Map<String, Field> fieldsMap = new HashMap<>();
-
-    static {
-        Class clazz = Hero.class;
-        while (clazz != null) {
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field field : fields) {
-                fieldsMap.put(field.getName(), field);
-            }
-            clazz = clazz.getSuperclass();
-        }
-    }
-
-    public double getFieldValue(String fieldName) {
-        try {
-            return Perk.fieldsMap.get(fieldName).getDouble(this);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    public void setFieldValue(String fieldName, double value) {
-        try {
-            Perk.fieldsMap.get(fieldName).set(this, value);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
 
     //---------------------------------------------------------- Constructors
 
