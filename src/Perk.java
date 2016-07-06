@@ -180,6 +180,8 @@ public class Perk<E> extends Ability implements Cloneable{
         }
         this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
     }
+
+    public void
     //---------------------------------------------------------- Getter && Setters
 
     public ArrayList<Condition> getListOfCondition() {

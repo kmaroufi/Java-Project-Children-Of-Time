@@ -13,7 +13,6 @@ public abstract class Ability<T> {
     protected String name;
     protected String ownerName;
     protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
-    protected ArrayList<T> relatedSoldiers = new ArrayList<T>();
     protected boolean isGlobal; // Just clear that other heroes can use this Ability or no.
     protected boolean hasEffectedOnEnemy;
     protected boolean isRandomSoldierSelecting;
@@ -155,14 +154,6 @@ public abstract class Ability<T> {
 
     public void setEffectedSoldiers(ArrayList<T> effectedSoldiers) {
         this.effectedSoldiers = effectedSoldiers;
-    }
-
-    public ArrayList<T> getRelatedSoldiers() {
-        return relatedSoldiers;
-    }
-
-    public void setRelatedSoldiers(ArrayList<T> relatedSoldiers) {
-        this.relatedSoldiers = relatedSoldiers;
     }
 
     public boolean isRandomSoldierSelecting() {

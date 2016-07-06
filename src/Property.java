@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,6 +21,8 @@ public class Property<E, T> implements Cloneable {
 
     private Map<String, ArrayList<String>> variablesOfObjects;
     private Map<String, Map<String, Double[]>> variablesCoefficientOfObjects;
+
+    private Tree<Pair<ArrayList<String>, Map<String, Double[]>>> trieCondition;
 
     private double[] constantProperty;
 
@@ -93,9 +97,12 @@ public class Property<E, T> implements Cloneable {
     private void calculateProperty(ArrayList<T> effectingObjects) {
         this.totalEffectOnProperty = this.constantProperty[this.currentGrade - 1];
         for (T effectingObject : effectingObjects) {
-            for (String variablesName : this.variablesOfObjects.get(this.getFieldValue(effectingObject, "name"))) {
-                double variableValue = (double) this.getFieldValue(effectingObject, variablesName);
-                double variableCoefficient = this.variablesCoefficientOfObjects.get(this.getFieldValue(effectingObject, "name")).get(variablesName)[currentGrade - 1];
+            Pair<ArrayList<String>, Map<String, Double[]>> result = this.trieCondition.findCorrectNode(effectingObject);
+            ArrayList<String> variablesName = result.getKey();
+            Map<String, Double[]> variablesCoefficient = result.getValue();
+            for (String variableName : variablesName) {
+                double variableValue = (double) this.getFieldValue(effectingObject, variableName);
+                double variableCoefficient = variablesCoefficient.get(variableName)[currentGrade - 1];
                 this.totalEffectOnProperty += variableCoefficient * variableValue;
             }
         }
