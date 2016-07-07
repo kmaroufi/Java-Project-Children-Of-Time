@@ -112,7 +112,7 @@ public class Property<E, T> implements Cloneable {
         }
     }
 
-    public double effect(E effectedObject, َArrayList<T> effectingObjects) {
+    public double effect(E effectedObject, ArrayList<T> effectingObjects) {
         calculateProperty(effectingObjects);
         Double previousValue = (Double) this.getFieldValue(effectedObject, this.name);
         this.setFieldValue(effectedObject, this.name, new Double(previousValue + this.totalEffectOnProperty));
