@@ -8,32 +8,28 @@ import java.util.Random;
  */
 public class Skill extends Ability implements Cloneable{
     public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
-//    private ArrayList<Property<E>> propertiesOfRelatedSoldiers;
-//    private Property<Hero> propertiesOfUser;
-//    protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<E, Time>();
     private int nonTargetedEnemy;
     private boolean isRepeated;
     private Time timeOfEffecting;
     private ArrayList<String> blackList;
     private int[] cooldown;
     private int remainingCooldown;
-    private boolean isDependsRelatedSoldiersSelectingOnPlayer;
     private boolean canStackUp;
     private boolean isUsed;
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;
 
-    private ArrayList<String> classOfEffectedSoldiers = new ArrayList<>();
-    private Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>();
-    private Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>();
-    private Map<Property, SelectingObjectsDetail> selectingEffectingObjectsDetails = new HashMap<>();
+    private Map<String, Map> mapOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = Time of how much this effect will be remain
 
-    private Map<String, Map> mapOfEffectedObjectsByClass = new HashMap<>();
-    private Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>();
-    private Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>();
+    protected ArrayList<String> classOfEffectedObjects = new ArrayList<>(); // Array of className
+    protected Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
+    protected Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
+    protected Map<Property, SelectingObjectsDetail> selectingEffectingObjectsDetails = new HashMap<>(); // Key = Property, Value = Details about how effecting objects are selected
 
-    private ArrayList<Property> properties = new ArrayList<>();
+    protected Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
+    protected Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
 
+    protected ArrayList<Property> properties = new ArrayList<>(); // array of all properties that included in treeConditions
 
 
     //---------------------------------------------------------------- Constructors
@@ -82,7 +78,7 @@ public class Skill extends Ability implements Cloneable{
 
         boolean isEffectedOnAtLeastOnObject = false;
 
-        for (String className: this.classOfEffectedSoldiers) {
+        for (String className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.choosingEffectedObjects(new ArrayList<>(), className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp == false)) {
@@ -112,7 +108,7 @@ public class Skill extends Ability implements Cloneable{
     }
 
     public void removeEffect() {
-        for (String className: this.classOfEffectedSoldiers) {
+        for (String className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
             ArrayList removedEffectedObjects = new ArrayList();
             for (int i = 0; i < effectedObjects.size(); i++) {
@@ -130,9 +126,11 @@ public class Skill extends Ability implements Cloneable{
     }
 
     public void reduceTime(String typeOfTime) {
-        for (int i = 0; i < this.effectedSoldiers.size(); i++) {
-            E soldier = (E) this.effectedSoldiers.get(i);
-            this.mapOfEffectedSoldiers.get(soldier).reduceTime(typeOfTime);
+        for (String className: this.classOfEffectedObjects) {
+            ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
+            for (int i = 0; i < effectedObjects.size(); i++) {
+                ((Time)this.mapOfEffectedObjectsByClass.get(className).get(effectedObjects.get(i))).reduceTime(typeOfTime);
+            }
         }
     }
 
@@ -140,7 +138,7 @@ public class Skill extends Ability implements Cloneable{
         Display.printInEachLine(this.getDescription());
     }
 
-    public ArrayList<?> choosingRelatedSoldiers(Enemy enemy,Hero hero) {
+    public ArrayList<?> choosingEffectedSoldiers(Enemy enemy,Hero hero) {
         return null;
     }
 
@@ -155,23 +153,24 @@ public class Skill extends Ability implements Cloneable{
         if (classOfEffectedSoldiers.equals("Hero") && this.selectingEffectedObjectsDetails.containsKey("Hero")) {
             SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Hero");
             ArrayList<Hero> effectedHeroes = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectedHeroes.addAll(GameEngine.listOfHeroes);
+                return effectedHeroes;
+            }
             if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
                 effectedHeroes.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
             }
-            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
-                effectedHeroes.addAll(GameEngine.listOfHeroes);
-            }
-            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
                 ArrayList<Hero> heroes = new ArrayList<Hero>();
                 heroes.addAll(GameEngine.listOfHeroes);
-                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
                     Random random = new Random();
                     int randomIndex = random.nextInt(heroes.size());
                     effectedHeroes.add(heroes.get(randomIndex));
                     heroes.remove(randomIndex);
                 }
             }
-            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+            if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
                 // TODO
             }
             return effectedHeroes;
@@ -179,23 +178,24 @@ public class Skill extends Ability implements Cloneable{
         else if (classOfEffectedSoldiers.equals("Enemy") && this.selectingEffectedObjectsDetails.containsKey("Enemy")) {
             SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Enemy");
             ArrayList<Enemy> effectedEnemies = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectedEnemies.addAll(GameEngine.listOfEnemies);
+                return effectedEnemies;
+            }
             if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
                 effectedEnemies.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
             }
-            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
-                effectedEnemies.addAll(GameEngine.listOfEnemies);
-            }
-            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
                 ArrayList<Enemy> Enemies = new ArrayList<>();
                 Enemies.addAll(GameEngine.listOfEnemies);
-                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
                     Random random = new Random();
                     int randomIndex = random.nextInt(Enemies.size());
                     effectedEnemies.add(Enemies.get(randomIndex));
                     Enemies.remove(randomIndex);
                 }
             }
-            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+            if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
                 // TODO
             }
             return effectedEnemies;
@@ -207,23 +207,24 @@ public class Skill extends Ability implements Cloneable{
         if (property.getClassOfEffectingObjects().equals("Hero")) {
             SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectingObjectsDetails.get(property);
             ArrayList<Hero> effectingHeroes = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectingHeroes.addAll(GameEngine.listOfHeroes);
+                return effectingHeroes;
+            }
             if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
                 effectingHeroes.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
             }
-            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
-                effectingHeroes.addAll(GameEngine.listOfHeroes);
-            }
-            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
                 ArrayList<Hero> heroes = new ArrayList<Hero>();
                 heroes.addAll(GameEngine.listOfHeroes);
-                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
                     Random random = new Random();
                     int randomIndex = random.nextInt(heroes.size());
                     effectingHeroes.add(heroes.get(randomIndex));
                     heroes.remove(randomIndex);
                 }
             }
-            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+            if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
                 // TODO
             }
             return effectingHeroes;
@@ -231,23 +232,24 @@ public class Skill extends Ability implements Cloneable{
         else if (property.getClassOfEffectingObjects().equals("Enemy")) {
             SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectingObjectsDetails.get(property);
             ArrayList<Enemy> effectingEnemies = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectingEnemies.addAll(GameEngine.listOfEnemies);
+                return effectingEnemies;
+            }
             if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
                 effectingEnemies.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
             }
-            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
-                effectingEnemies.addAll(GameEngine.listOfEnemies);
-            }
-            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
                 ArrayList<Enemy> Enemies = new ArrayList<>();
                 Enemies.addAll(GameEngine.listOfEnemies);
-                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
                     Random random = new Random();
                     int randomIndex = random.nextInt(Enemies.size());
                     effectingEnemies.add(Enemies.get(randomIndex));
                     Enemies.remove(randomIndex);
                 }
             }
-            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+            if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
                 // TODO
             }
             return effectingEnemies;
@@ -292,7 +294,7 @@ public class Skill extends Ability implements Cloneable{
 
     }
     //---------------------------------------------------- Getter && Setters
-    
+
 
     public ArrayList<String> getBlackList() {
         return blackList;
@@ -364,14 +366,6 @@ public class Skill extends Ability implements Cloneable{
 
     public void setTimeOfEffecting(Time timeOfEffecting) {
         this.timeOfEffecting = timeOfEffecting;
-    }
-
-    public boolean isDependsRelatedSoldiersSelectingOnPlayer() {
-        return isDependsRelatedSoldiersSelectingOnPlayer;
-    }
-
-    public void setDependsRelatedSoldiersSelectingOnPlayer(boolean dependsRelatedSoldiersSelectingOnPlayer) {
-        isDependsRelatedSoldiersSelectingOnPlayer = dependsRelatedSoldiersSelectingOnPlayer;
     }
 
     public boolean isCanStackUp() {

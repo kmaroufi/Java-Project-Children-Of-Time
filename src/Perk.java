@@ -1,6 +1,3 @@
-import javafx.util.Pair;
-
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,16 +5,17 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Perk<E> extends Ability implements Cloneable{
+public class Perk extends Ability implements Cloneable{
     public static Map<String, Perk> listOfPerks = new HashMap<>();
     private ArrayList<Condition> listOfCondition;
-    private ArrayList<PerkMode<E>> listOfModes;
-    private Map<Condition, PerkMode<E>> mapOfCondition;
-    private Tree<PerkMode<E>> trieCondition;
-    private Map<E, PerkMode<E>> mapOfEffectedSoldiers = new HashMap<>();
     private boolean isConditionDependOnRelatedSoldier;
     private boolean isConditionDependOnUserHero;
-    private String timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
+    private TimeOfCheck timeOfCheck; // Can equals "duringAttack", "duringDefend" and "eachActivity"
+
+    private enum TimeOfCheck {
+        duringAttackDefend, eachActivity
+    }
+
 
     //---------------------------------------------------------- Constructors
 
@@ -66,20 +64,13 @@ public class Perk<E> extends Ability implements Cloneable{
         if (this.isAcquire == false)
             this.isAcquire = true;
 
-        for (PerkMode<E> perkMode: this.listOfModes) {
-            for (Property<E> property: perkMode.getProperties()) {
-                property.setCurrentGrade(this.currentGrade);
-            }
+        for (Property property: this.properties) {
+            property.setCurrentGrade(this.currentGrade);
         }
 
-        for (E effectedSoldier: ((ArrayList<E>)this.effectedSoldiers)) {
-            this.mapOfEffectedSoldiers.get(effectedSoldier).removeEffect(effectedSoldier);
+        if (this.timeOfCheck != TimeOfCheck.duringAttackDefend) {
+            this.updatePerkEffect(Hero.mapOfHeroes.get(this.ownerName));
         }
-
-        this.effectedSoldiers.clear();
-        this.mapOfEffectedSoldiers.clear();
-        this.choosingRelatedSoldiers();
-        this.updatePerkEffect(this.relatedSoldiers, Hero.mapOfHeroes.get(this.ownerName));
 
         return true;
     }
@@ -108,87 +99,156 @@ public class Perk<E> extends Ability implements Cloneable{
         return false;
     }
 
-    private Condition validCondition(E relatedSoldier) {
-        for (Condition condition: this.listOfCondition) {
-            if (condition.checkCondition(relatedSoldier)) {
-                return condition;
+    public void removeEffect() {
+        for (String className: this.classOfEffectedObjects) {
+            ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
+            for (int i = 0; i < effectedObjects.size(); i++) {
+                for (Property property: (ArrayList<Property>)this.mapOfEffectedPropertiesByClass.get(className).get(effectedObjects.get(i))) {
+                    property.removeEffect(effectedObjects.get(i));
+                }
             }
+            this.listOfEffectedObjectsByClass.get(className).clear();
+            this.mapOfEffectedPropertiesByClass.get(className).clear();
+        }
+    }
+
+    public void updatePerkEffect(Hero userHero) {
+        this.updatePerkEffect(null, null, userHero);
+    }
+
+    public void updatePerkEffect(Enemy enemy, Hero hero, Hero userHero) {
+        removeEffect();
+        for (String className: this.classOfEffectedObjects) {
+            ArrayList<?> effectedObjects = this.choosingEffectedObjects(enemy, hero, className);
+            for (int i = 0; i < effectedObjects.size(); i++) {
+                this.mapOfEffectedPropertiesByClass.get(className).put(effectedObjects.get(i), this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i)));
+                for (Property property: this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i))) {
+                    ArrayList<?> effectingObjects = this.choosingEffectingObjects(enemy, hero, property);
+                    property.effect(effectedObjects.get(i), effectingObjects);
+                }
+                this.listOfEffectedObjectsByClass.get(className).add(effectedObjects.get(i));
+            }
+        }
+    }
+
+    public ArrayList<?> choosingEffectingObjects(Enemy enemy, Hero hero, Property property) {
+        if (property.getClassOfEffectingObjects().equals("Hero")) {
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectingObjectsDetails.get(property);
+            ArrayList<Hero> effectingHeroes = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectingHeroes.addAll(GameEngine.listOfHeroes);
+                return effectingHeroes;
+            }
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectingHeroes.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Hero> heroes = new ArrayList<Hero>();
+                heroes.addAll(GameEngine.listOfHeroes);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(heroes.size());
+                    effectingHeroes.add(heroes.get(randomIndex));
+                    heroes.remove(randomIndex);
+                }
+            }
+            if (selectingObjectsDetail.isRelatedToAttackDefend()) {
+                if (selectingObjectsDetail.isHeroEffecting()) {
+                    effectingHeroes.add(hero);
+                }
+            }
+            return effectingHeroes;
+        } else if (property.getClassOfEffectingObjects().equals("Enemy")) {
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectingObjectsDetails.get(property);
+            ArrayList<Enemy> effectingEnemies = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectingEnemies.addAll(GameEngine.listOfEnemies);
+                return effectingEnemies;
+            }
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectingEnemies.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Enemy> Enemies = new ArrayList<>();
+                Enemies.addAll(GameEngine.listOfEnemies);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(Enemies.size());
+                    effectingEnemies.add(Enemies.get(randomIndex));
+                    Enemies.remove(randomIndex);
+                }
+            }
+            if (selectingObjectsDetail.isRelatedToAttackDefend()) {
+                if (selectingObjectsDetail.isEnemyEffecting()) {
+                    effectingEnemies.add(enemy);
+                }
+            }
+            return effectingEnemies;
         }
         return null;
-    }
-
-    public void updatePerkEffect(ArrayList<E> relatedSoldiers, Hero userHero) {
-        Hero owner = Hero.mapOfHeroes.get(this.ownerName);
-        for (E effectedObject: relatedSoldiers) {
-            PerkMode perkMode = this.trieCondition.findCorrectNode(effectedObject);
-        }
-        trieCondition.findCorrectNode()
-        if (this.listOfCondition.size() == 1) {
-            for (E relatedSoldier: relatedSoldiers) {
-                if (this.mapOfEffectedSoldiers.containsKey(relatedSoldier))
-                    continue;
-                else {
-                    this.mapOfEffectedSoldiers.put(relatedSoldier, this.listOfModes.get(0));
-                    this.listOfModes.get(0).effect(relatedSoldier, owner, userHero);
-                    this.effectedSoldiers.add(relatedSoldier);
-                }
-
-            }
-            return;
-        }
-        for (E soldier: relatedSoldiers) {
-            PerkMode perkMode;
-            if (this.isConditionDependOnRelatedSoldier)
-                perkMode = this.mapOfCondition.get(this.validCondition((E) relatedSoldiers));
-            else if (this.isConditionDependOnUserHero)
-                perkMode = this.mapOfCondition.get(this.validCondition((E) userHero));
-            else {
-                perkMode = this.mapOfCondition.get(this.validCondition((E) owner));
-            }
-            if (this.mapOfEffectedSoldiers.containsKey(soldier) == false) {
-                this.mapOfEffectedSoldiers.put(soldier, perkMode);
-                perkMode.effect(relatedSoldiers, owner, userHero);
-                this.effectedSoldiers.add(soldier);
-                continue;
-            }
-            if (this.mapOfEffectedSoldiers.get(soldier) == perkMode)
-                continue;
-            else {
-                this.mapOfEffectedSoldiers.get(soldier).removeEffect(soldier);
-                this.mapOfEffectedSoldiers.put(soldier, perkMode);
-                perkMode.effect(relatedSoldiers, owner, userHero);
-            }
-        }
-
-    }
-
-    public void choosingRelatedSoldiers(Enemy enemy,Hero hero) {  // in method dar moghe attack ya defend call mishavad;
-        this.relatedSoldiers.clear();
-        if (this.hasEffectedOnEnemy) {
-            this.relatedSoldiers.add(enemy);
-            return;
-        }
-        this.relatedSoldiers.add(hero);
     }
 
     public void showDescription(){
         Display.printInEachLine(this.getDescription());
     }
 
-    public void choosingRelatedSoldiers() {
-        this.relatedSoldiers.clear();
-        if (this.hasEffectedOnEnemy) {
-            this.relatedSoldiers.addAll(GameEngine.listOfEnemies);
-            return;
+    public ArrayList<?> choosingEffectedObjects(Enemy enemy, Hero hero, String classOfEffectedSoldiers) {       // in method dar moghe attack ya defend call mishavad;
+        if (classOfEffectedSoldiers.equals("Hero") && this.selectingEffectedObjectsDetails.containsKey("Hero")) {
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Hero");
+            ArrayList<Hero> effectedHeroes = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectedHeroes.addAll(GameEngine.listOfHeroes);
+                return effectedHeroes;
+            }
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectedHeroes.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Hero> heroes = new ArrayList<Hero>();
+                heroes.addAll(GameEngine.listOfHeroes);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(heroes.size());
+                    effectedHeroes.add(heroes.get(randomIndex));
+                    heroes.remove(randomIndex);
+                }
+            }
+            if (selectingObjectsDetail.isRelatedToAttackDefend()) {
+                if (selectingObjectsDetail.isHeroEffected()) {
+                    effectedHeroes.add(hero);
+                }
+            }
+            return effectedHeroes;
         }
-        if (this.numberOfRelatedSoldiers == 1) {
-            this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
-            return;
+        else if (classOfEffectedSoldiers.equals("Enemy") && this.selectingEffectedObjectsDetails.containsKey("Enemy")) {
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Enemy");
+            ArrayList<Enemy> effectedEnemies = new ArrayList<>();
+            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectedEnemies.addAll(GameEngine.listOfEnemies);
+                return effectedEnemies;
+            }
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectedEnemies.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Enemy> Enemies = new ArrayList<>();
+                Enemies.addAll(GameEngine.listOfEnemies);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(Enemies.size());
+                    effectedEnemies.add(Enemies.get(randomIndex));
+                    Enemies.remove(randomIndex);
+                }
+            }
+            if (selectingObjectsDetail.isRelatedToAttackDefend()) {
+                if (selectingObjectsDetail.isEnemyEffected()) {
+                    effectedEnemies.add(enemy);
+                }
+            }
+            return effectedEnemies;
         }
-        this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
+        return null;
     }
-
-    public void
     //---------------------------------------------------------- Getter && Setters
 
     public ArrayList<Condition> getListOfCondition() {
@@ -197,30 +257,6 @@ public class Perk<E> extends Ability implements Cloneable{
 
     public void setListOfCondition(ArrayList<Condition> listOfCondition) {
         this.listOfCondition = listOfCondition;
-    }
-
-    public ArrayList<PerkMode<E>> getListOfModes() {
-        return listOfModes;
-    }
-
-    public void setListOfModes(ArrayList<PerkMode<E>> listOfModes) {
-        this.listOfModes = listOfModes;
-    }
-
-    public Map<Condition, PerkMode<E>> getMapOfCondition() {
-        return mapOfCondition;
-    }
-
-    public void setMapOfCondition(Map<Condition, PerkMode<E>> mapOfCondition) {
-        this.mapOfCondition = mapOfCondition;
-    }
-
-    public Map<E, PerkMode<E>> getMapOfEffectedSoldiers() {
-        return mapOfEffectedSoldiers;
-    }
-
-    public void setMapOfEffectedSoldiers(Map<E, PerkMode<E>> mapOfEffectedSoldiers) {
-
     }
 
     public boolean isConditionDependOnRelatedSoldier() {
@@ -239,19 +275,4 @@ public class Perk<E> extends Ability implements Cloneable{
         isConditionDependOnUserHero = conditionDependOnUserHero;
     }
 
-    public String getTimeOfCheck() {
-        return timeOfCheck;
-    }
-
-    public void setTimeOfCheck(String timeOfCheck) {
-        this.timeOfCheck = timeOfCheck;
-    }
-
-    public static Map<String, Field> getFieldsMap() {
-        return fieldsMap;
-    }
-
-    public static void setFieldsMap(Map<String, Field> fieldsMap) {
-        Perk.fieldsMap = fieldsMap;
-    }
 }

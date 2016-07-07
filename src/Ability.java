@@ -6,26 +6,31 @@ import java.util.Random;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public abstract class Ability<T> {
+public abstract class Ability {
 
     public static Map<String, String> listOfAbilities = new HashMap<>();
 
     protected String name;
     protected String ownerName;
-//    protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
     protected boolean isGlobal; // Just clear that other heroes can use this Ability or no.
-//    protected boolean hasEffectedOnEnemy;
-//    protected boolean isRandomSoldierSelecting;
-//    protected int numberOfRelatedSoldiers;
     protected int numberOfGrades;
     protected int currentGrade;
-//    protected boolean hasCondition;
     protected int[] costOfUpgrade;
     protected Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
     protected Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities
     protected String[] upgradeDescription;
     protected String description;
     protected boolean isAcquire;
+
+    protected ArrayList<String> classOfEffectedObjects = new ArrayList<>(); // Array of className
+    protected Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
+    protected Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
+    protected Map<Property, SelectingObjectsDetail> selectingEffectingObjectsDetails = new HashMap<>(); // Key = Property, Value = Details about how effecting objects are selected
+
+    protected Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
+    protected Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
+
+    protected ArrayList<Property> properties = new ArrayList<>(); // array of all properties that included in treeConditions
 
     //-------------------------------------------------------- Constructors
     public Ability(AbilityHandler abilityHandler) {
@@ -106,14 +111,6 @@ public abstract class Ability<T> {
         isGlobal = global;
     }
 
-    public boolean isHasEffectedOnEnemy() {
-        return hasEffectedOnEnemy;
-    }
-
-    public void setHasEffectedOnEnemy(boolean hasEffectedOnEnemy) {
-        this.hasEffectedOnEnemy = hasEffectedOnEnemy;
-    }
-
     public String getOwnerName() {
         return ownerName;
     }
@@ -144,47 +141,6 @@ public abstract class Ability<T> {
 
     public void setCurrentGrade(int currentGrade) {
         this.currentGrade = currentGrade;
-    }
-
-
-    public ArrayList<T> getEffectedSoldiers() {
-        return effectedSoldiers;
-    }
-
-    public void setEffectedSoldiers(ArrayList<T> effectedSoldiers) {
-        this.effectedSoldiers = effectedSoldiers;
-    }
-
-    public boolean isRandomSoldierSelecting() {
-        return isRandomSoldierSelecting;
-    }
-
-    public void setRandomSoldierSelecting(boolean randomSoldierSelecting) {
-        isRandomSoldierSelecting = randomSoldierSelecting;
-    }
-
-    public int getNumberOfRelatedSoldiers() {
-        return numberOfRelatedSoldiers;
-    }
-
-    public void setNumberOfRelatedSoldiers(int numberOfRelatedSoldiers) {
-        this.numberOfRelatedSoldiers = numberOfRelatedSoldiers;
-    }
-
-    public String getFieldOfEffecting() {
-        return fieldOfEffecting;
-    }
-
-    public void setFieldOfEffecting(String fieldOfEffecting) {
-        this.fieldOfEffecting = fieldOfEffecting;
-    }
-
-    public boolean isHasCondition() {
-        return hasCondition;
-    }
-
-    public void setHasCondition(boolean hasCondition) {
-        this.hasCondition = hasCondition;
     }
 
     public int[] getCostOfUpgrade() {
