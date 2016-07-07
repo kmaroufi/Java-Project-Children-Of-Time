@@ -8,33 +8,23 @@ import java.util.Random;
  */
 public class Skill extends Ability implements Cloneable{
     public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
-    private int nonTargetedEnemy;
-    private boolean isRepeated;
-    private Time timeOfEffecting;
-    private ArrayList<String> blackList;
+    private boolean[] isRepeated;
+    private Time[] timeOfEffecting;
     private int[] cooldown;
     private int remainingCooldown;
-    private boolean canStackUp;
+    private boolean[] canStackUp;
     private boolean isUsed;
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;
 
     private Map<String, Map> mapOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = Time of how much this effect will be remain
 
-    protected ArrayList<String> classOfEffectedObjects = new ArrayList<>(); // Array of className
-    protected Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
-    protected Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
-    protected Map<Property, SelectingObjectsDetail> selectingEffectingObjectsDetails = new HashMap<>(); // Key = Property, Value = Details about how effecting objects are selected
-
-    protected Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
-    protected Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
-
-    protected ArrayList<Property> properties = new ArrayList<>(); // array of all properties that included in treeConditions
-
 
     //---------------------------------------------------------------- Constructors
 
-    public Skill(SkillHandler skillHandler, AbilityHandler<E> abilityHandler) {
+
+
+    public Skill(SkillHandler skillHandler, AbilityHandler abilityHandler) {
         super(abilityHandler);
         setPropertiesOfRelatedSoldiers(skillHandler.getPropertiesOfRelatedSoldiers());
         setPropertiesOfUser(skillHandler.getPropertiesOfUser());
@@ -81,7 +71,7 @@ public class Skill extends Ability implements Cloneable{
         for (String className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.choosingEffectedObjects(new ArrayList<>(), className);
             for (int i = 0; i < effectedObjects.size(); i++) {
-                if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp == false)) {
+                if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp[currentGrade - 1] == false)) {
                     continue;
                 }
                 isEffectedOnAtLeastOnObject = true;
@@ -94,7 +84,7 @@ public class Skill extends Ability implements Cloneable{
                 if (this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i)) == false) {
                     this.listOfEffectedObjectsByClass.get(className).add(effectedObjects.get(i));
                 }
-                this.mapOfEffectedObjectsByClass.get(className).put(effectedObjects.get(i), new Time(this.timeOfEffecting));
+                this.mapOfEffectedObjectsByClass.get(className).put(effectedObjects.get(i), new Time(this.timeOfEffecting[currentGrade - 1]));
             }
         }
 
@@ -295,85 +285,5 @@ public class Skill extends Ability implements Cloneable{
     }
     //---------------------------------------------------- Getter && Setters
 
-
-    public ArrayList<String> getBlackList() {
-        return blackList;
-    }
-
-    public void setBlackList(ArrayList<String> blackList) {
-        this.blackList = blackList;
-    }
-
-    public int getNonTargetedEnemy() {
-        return nonTargetedEnemy;
-    }
-
-    public void setNonTargetedEnemy(int nonTargetedEnemy) {
-        this.nonTargetedEnemy = nonTargetedEnemy;
-    }
-
-    public boolean isRepeated() {
-        return isRepeated;
-    }
-
-    public void setRepeated(boolean repeated) {
-        isRepeated = repeated;
-    }
-
-    public int[] getCooldown() {
-        return cooldown;
-    }
-
-    public void setCooldown(int[] cooldown) {
-        this.cooldown = cooldown;
-    }
-
-    public int getRemainingCooldown() {
-        return remainingCooldown;
-    }
-
-    public void setRemainingCooldown(int remainingCooldown) {
-        this.remainingCooldown = remainingCooldown;
-    }
-
-    public boolean isUsed() {
-        return isUsed;
-    }
-
-    public void setUsed(boolean used) {
-        isUsed = used;
-    }
-
-    public int[] getRequiredEnergyPoint() {
-        return requiredEnergyPoint;
-    }
-
-    public void setRequiredEnergyPoint(int[] requiredEnergyPoint) {
-        this.requiredEnergyPoint = requiredEnergyPoint;
-    }
-
-    public int[] getRequiredMagicPoint() {
-        return requiredMagicPoint;
-    }
-
-    public void setRequiredMagicPoint(int[] requiredMagicPoint) {
-        this.requiredMagicPoint = requiredMagicPoint;
-    }
-
-    public Time getTimeOfEffecting() {
-        return timeOfEffecting;
-    }
-
-    public void setTimeOfEffecting(Time timeOfEffecting) {
-        this.timeOfEffecting = timeOfEffecting;
-    }
-
-    public boolean isCanStackUp() {
-        return canStackUp;
-    }
-
-    public void setCanStackUp(boolean canStackUp) {
-        this.canStackUp = canStackUp;
-    }
 
 }

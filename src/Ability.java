@@ -37,21 +37,22 @@ public abstract class Ability {
         this.setName(abilityHandler.getName());
         this.setOwnerName(abilityHandler.getOwnerName());
         this.setGlobal(abilityHandler.isGlobal());
-        this.setHasEffectedOnEnemy(abilityHandler.isHasEffectedOnEnemy());
-        this.setRandomSoldierSelecting(abilityHandler.isRandomSoldierSelecting());
-        this.setNumberOfRelatedSoldiers(abilityHandler.getNumberOfRelatedSoldiers());
         this.setNumberOfGrades(abilityHandler.getNumberOfGrades());
         this.setCurrentGrade(0);
-        this.setFieldOfEffecting(abilityHandler.getFieldOfEffecting());
-        this.setHasCondition(abilityHandler.isHasCondition());
         this.setCostOfUpgrade(abilityHandler.getCostOfUpgrade());
         this.setNameOfNecessaryAbilities(abilityHandler.getNameOfNecessaryAbilities());
         this.setGradeOfNecessaryAbilities(abilityHandler.getGradeOfNecessaryAbilities());
         this.setUpgradeDescription(abilityHandler.getUpgradeDescription());
         this.setDescription(abilityHandler.getDescription());
-        this.setAcquire(abilityHandler.isAcquire());
+        this.setAcquire(false);
+        this.setClassOfEffectedObjects(abilityHandler.getClassOfEffectedObjects());
+        this.setMapOfConditionsByClass(abilityHandler.getMapOfConditionsByClass());
+        this.setSelectingEffectedObjectsDetails(abilityHandler.getSelectingEffectedObjectsDetails());
+        this.setSelectingEffectingObjectsDetails(abilityHandler.getSelectingEffectingObjectsDetails());
+        this.setListOfEffectedObjectsByClass(abilityHandler.getListOfEffectedObjectsByClass());
+        this.setMapOfEffectedPropertiesByClass(abilityHandler.getMapOfEffectedPropertiesByClass());
+        this.setProperties(abilityHandler.getProperties());
     }
-
 
     public Ability() {
 
@@ -151,4 +152,59 @@ public abstract class Ability {
         this.costOfUpgrade = costOfUpgrade;
     }
 
+    public ArrayList<String> getClassOfEffectedObjects() {
+        return classOfEffectedObjects;
+    }
+
+    public void setClassOfEffectedObjects(ArrayList<String> classOfEffectedObjects) {
+        this.classOfEffectedObjects = classOfEffectedObjects;
+    }
+
+    public Map<String, Tree<ArrayList<Property>>> getMapOfConditionsByClass() {
+        return mapOfConditionsByClass;
+    }
+
+    public void setMapOfConditionsByClass(Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass) {
+        this.mapOfConditionsByClass = mapOfConditionsByClass;
+    }
+
+    public Map<String, SelectingObjectsDetail> getSelectingEffectedObjectsDetails() {
+        return selectingEffectedObjectsDetails;
+    }
+
+    public void setSelectingEffectedObjectsDetails(Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails) {
+        this.selectingEffectedObjectsDetails = selectingEffectedObjectsDetails;
+    }
+
+    public Map<Property, SelectingObjectsDetail> getSelectingEffectingObjectsDetails() {
+        return selectingEffectingObjectsDetails;
+    }
+
+    public void setSelectingEffectingObjectsDetails(Map<Property, SelectingObjectsDetail> selectingEffectingObjectsDetails) {
+        this.selectingEffectingObjectsDetails = selectingEffectingObjectsDetails;
+    }
+
+    public Map<String, ArrayList> getListOfEffectedObjectsByClass() {
+        return listOfEffectedObjectsByClass;
+    }
+
+    public void setListOfEffectedObjectsByClass(Map<String, ArrayList> listOfEffectedObjectsByClass) {
+        this.listOfEffectedObjectsByClass = listOfEffectedObjectsByClass;
+    }
+
+    public Map<String, Map> getMapOfEffectedPropertiesByClass() {
+        return mapOfEffectedPropertiesByClass;
+    }
+
+    public void setMapOfEffectedPropertiesByClass(Map<String, Map> mapOfEffectedPropertiesByClass) {
+        this.mapOfEffectedPropertiesByClass = mapOfEffectedPropertiesByClass;
+    }
+
+    public ArrayList<Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(ArrayList<Property> properties) {
+        this.properties = properties;
+    }
 }
