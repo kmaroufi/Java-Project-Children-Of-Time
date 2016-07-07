@@ -19,6 +19,10 @@ public class Property<E, T> implements Cloneable {
     private boolean isDependOnUserHero;
     private boolean isPermanently;
 
+    private String classOfEffectingObjects;
+
+    private String classOfEffectedObject;
+
     private Map<String, ArrayList<String>> variablesOfObjects;
     private Map<String, Map<String, Double[]>> variablesCoefficientOfObjects;
 
@@ -55,7 +59,7 @@ public class Property<E, T> implements Cloneable {
         return property;
     }
 
-    private <U> Object getFieldValue(U object, String fieldName) {
+    public static <U> Object getFieldValue(U object, String fieldName) {
         Class clazz = object.getClass();
         Field field = null;
         while (clazz != null) {
@@ -75,7 +79,7 @@ public class Property<E, T> implements Cloneable {
         return null;
     }
 
-    private <U> void setFieldValue(U object, String fieldName, Object value) {
+    public static <U> void setFieldValue(U object, String fieldName, Object value) {
         Class clazz = object.getClass();
         Field field = null;
         while (clazz != null) {
@@ -307,5 +311,21 @@ public class Property<E, T> implements Cloneable {
 
     public void setVariablesOfObjects(Map<String, ArrayList<String>> variablesOfObjects) {
         this.variablesOfObjects = variablesOfObjects;
+    }
+
+    public String getClassOfEffectingObjects() {
+        return classOfEffectingObjects;
+    }
+
+    public void setClassOfEffectingObjects(String classOfEffectingObjects) {
+        this.classOfEffectingObjects = classOfEffectingObjects;
+    }
+
+    public String getClassOfEffectedObject() {
+        return classOfEffectedObject;
+    }
+
+    public void setClassOfEffectedObject(String classOfEffectedObject) {
+        this.classOfEffectedObject = classOfEffectedObject;
     }
 }

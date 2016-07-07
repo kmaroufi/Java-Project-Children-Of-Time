@@ -12,15 +12,14 @@ public abstract class Ability<T> {
 
     protected String name;
     protected String ownerName;
-    protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
+//    protected ArrayList<T> effectedSoldiers = new ArrayList<T>();
     protected boolean isGlobal; // Just clear that other heroes can use this Ability or no.
-    protected boolean hasEffectedOnEnemy;
-    protected boolean isRandomSoldierSelecting;
-    protected int numberOfRelatedSoldiers;
+//    protected boolean hasEffectedOnEnemy;
+//    protected boolean isRandomSoldierSelecting;
+//    protected int numberOfRelatedSoldiers;
     protected int numberOfGrades;
     protected int currentGrade;
-    protected String fieldOfEffecting; // this field can get Hero, Enemy, Ability, item, Shop and ... value.
-    protected boolean hasCondition;
+//    protected boolean hasCondition;
     protected int[] costOfUpgrade;
     protected Map<Integer, ArrayList<String>> nameOfNecessaryAbilities; // Key = currentGrade, Value = list Of necessary abilities
     protected Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities; // Key = currentGrade, Value = map Of necessary abilities

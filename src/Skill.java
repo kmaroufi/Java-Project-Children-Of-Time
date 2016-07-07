@@ -1,19 +1,16 @@
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static javafx.scene.input.KeyCode.T;
-
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Skill<E> extends Ability implements Cloneable{
+public class Skill extends Ability implements Cloneable{
     public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
-    private ArrayList<Property<E>> propertiesOfRelatedSoldiers;
-    private Property<Hero> propertiesOfUser;
-    protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<E, Time>();
+//    private ArrayList<Property<E>> propertiesOfRelatedSoldiers;
+//    private Property<Hero> propertiesOfUser;
+//    protected Map<E, Time> mapOfEffectedSoldiers = new HashMap<E, Time>();
     private int nonTargetedEnemy;
     private boolean isRepeated;
     private Time timeOfEffecting;
@@ -25,6 +22,18 @@ public class Skill<E> extends Ability implements Cloneable{
     private boolean isUsed;
     private int[] requiredEnergyPoint;
     private int[] requiredMagicPoint;
+
+    private ArrayList<String> classOfEffectedSoldiers = new ArrayList<>();
+    private Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>();
+    private Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>();
+    private Map<Property, SelectingObjectsDetail> selectingEffectingObjectsDetails = new HashMap<>();
+
+    private Map<String, Map> mapOfEffectedObjectsByClass = new HashMap<>();
+    private Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>();
+    private Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>();
+
+    private ArrayList<Property> properties = new ArrayList<>();
+
 
 
     //---------------------------------------------------------------- Constructors
@@ -65,51 +74,59 @@ public class Skill<E> extends Ability implements Cloneable{
        return false;
     }
 
-    public void useSkill(ArrayList<E> relatedSoldiers, Hero userHero, ArrayList<E> soldiers) {
-        this.choosingRelatedSoldiers(soldiers);
+    public void useSkill(Hero userHero) {
+
         if (this.remainingCooldown != 0) {
             return;
         }
 
-        boolean cond = false;
+        boolean isEffectedOnAtLeastOnObject = false;
 
-        for (E soldier: relatedSoldiers) {
-            if (this.effectedSoldiers.contains(soldier) && (this.canStackUp == false))
-                continue;
-            cond = true;
-            for (Property property: this.propertiesOfRelatedSoldiers) {
-                double effect = property.effect(soldier, Hero.mapOfHeroes.get(this.ownerName), userHero);
-                Display.printInEachLine(userHero.getName() + " just used " + this.name + " on " + ((Soldier) soldier).getName() +  " and effecting on " + property.getName() + " with " + Math.abs(effect));
+        for (String className: this.classOfEffectedSoldiers) {
+            ArrayList<?> effectedObjects = this.choosingEffectedObjects(new ArrayList<>(), className);
+            for (int i = 0; i < effectedObjects.size(); i++) {
+                if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp == false)) {
+                    continue;
+                }
+                isEffectedOnAtLeastOnObject = true;
+                this.mapOfEffectedPropertiesByClass.get(className).put(effectedObjects.get(i), this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i)));
+                for (Property property: this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i))) {
+                    ArrayList<?> effectingObjects = this.choosingEffectingObjects(new ArrayList<>(), property);
+                    double effectValue = property.effect(effectedObjects.get(i), effectingObjects);
+                    Display.printInEachLine(userHero.getName() + " just used " + this.name + " on " + effectedObjects.get(i).toString() +  " and effecting on " + property.getName() + " with " + Math.abs(effectValue));
+                }
+                if (this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i)) == false) {
+                    this.listOfEffectedObjectsByClass.get(className).add(effectedObjects.get(i));
+                }
+                this.mapOfEffectedObjectsByClass.get(className).put(effectedObjects.get(i), new Time(this.timeOfEffecting));
             }
-            if (this.effectedSoldiers.contains(soldier) == false)
-                this.effectedSoldiers.add(soldier);
-            this.mapOfEffectedSoldiers.put(soldier, new Time(this.timeOfEffecting));
         }
 
-        if (cond == false)
+        if (isEffectedOnAtLeastOnObject == false) {
             return;
+        }
 
-        if (this.propertiesOfUser != null)
-            this.propertiesOfUser.effect(userHero, Hero.mapOfHeroes.get(this.ownerName), userHero);
         this.remainingCooldown = this.cooldown[this.currentGrade - 1];
         userHero.setCurrentEnergyPoint(userHero.getCurrentEnergyPoint() - this.requiredEnergyPoint[this.currentGrade - 1]);
         userHero.setCurrentMagic(userHero.getCurrentMagic() - this.requiredMagicPoint[this.currentGrade - 1]);
-
     }
 
     public void removeEffect() {
-        ArrayList<E> removedSoldiers = new ArrayList<>();
-        for (int i = 0; i < this.effectedSoldiers.size(); i++) {
-            E soldier = (E) this.effectedSoldiers.get(i);
-            if (this.mapOfEffectedSoldiers.get(soldier).isTimePassed()) {
-                for (Property property: this.propertiesOfRelatedSoldiers) {
-                    property.removeEffect(soldier);
+        for (String className: this.classOfEffectedSoldiers) {
+            ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
+            ArrayList removedEffectedObjects = new ArrayList();
+            for (int i = 0; i < effectedObjects.size(); i++) {
+                if (((Time)this.mapOfEffectedObjectsByClass.get(className).get(effectedObjects.get(i))).isTimePassed()) {
+                    for (Property property: (ArrayList<Property>)this.mapOfEffectedPropertiesByClass.get(className).get(effectedObjects.get(i))) {
+                        property.removeEffect(effectedObjects.get(i));
+                    }
+                    removedEffectedObjects.add(effectedObjects.get(i));
+                    this.mapOfEffectedObjectsByClass.get(className).remove(effectedObjects.get(i));
+                    this.mapOfEffectedPropertiesByClass.get(className).remove(effectedObjects.get(i));
                 }
-                removedSoldiers.add(soldier);
-                this.mapOfEffectedSoldiers.remove(soldier);
             }
+            this.listOfEffectedObjectsByClass.get(className).removeAll(removedEffectedObjects);
         }
-        this.effectedSoldiers.removeAll(removedSoldiers);
     }
 
     public void reduceTime(String typeOfTime) {
@@ -123,13 +140,8 @@ public class Skill<E> extends Ability implements Cloneable{
         Display.printInEachLine(this.getDescription());
     }
 
-    public void choosingRelatedSoldiers(Enemy enemy,Hero hero) {
-        this.relatedSoldiers.clear();
-        if (this.hasEffectedOnEnemy) {
-            this.relatedSoldiers.add(enemy);
-            return;
-        }
-        this.relatedSoldiers.add(hero);
+    public ArrayList<?> choosingRelatedSoldiers(Enemy enemy,Hero hero) {
+        return null;
     }
 
     public boolean equals(Skill skill){
@@ -139,45 +151,108 @@ public class Skill<E> extends Ability implements Cloneable{
         return false;
     }
 
-    public void choosingRelatedSoldiers(ArrayList<E> fromCommandLine) {
-        this.relatedSoldiers.clear();
-        if (this.hasEffectedOnEnemy) {
-            if (this.numberOfRelatedSoldiers == -5)
-                this.relatedSoldiers.addAll(GameEngine.listOfEnemies);
-            else if (this.isRandomSoldierSelecting) {
-                ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-                enemies.addAll(GameEngine.listOfEnemies);
-                for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
-                    Random random = new Random();
-                    int randomIndex = random.nextInt(enemies.size());
-                    this.relatedSoldiers.add(enemies.get(randomIndex));
-                    enemies.remove(randomIndex);
-                }
+    public ArrayList<?> choosingEffectedObjects(ArrayList<String> fromCommandLine, String classOfEffectedSoldiers) {
+        if (classOfEffectedSoldiers.equals("Hero") && this.selectingEffectedObjectsDetails.containsKey("Hero")) {
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Hero");
+            ArrayList<Hero> effectedHeroes = new ArrayList<>();
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectedHeroes.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
             }
-            else if (this.isDependsRelatedSoldiersSelectingOnPlayer()) {
-                this.relatedSoldiers.addAll(fromCommandLine);
+            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectedHeroes.addAll(GameEngine.listOfHeroes);
             }
-        }
-        else {
-            if (this.numberOfRelatedSoldiers == -5)
-                this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
-            else if (this.isRandomSoldierSelecting) {
+            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
                 ArrayList<Hero> heroes = new ArrayList<Hero>();
                 heroes.addAll(GameEngine.listOfHeroes);
-                for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
                     Random random = new Random();
                     int randomIndex = random.nextInt(heroes.size());
-                    this.relatedSoldiers.add(heroes.get(randomIndex));
+                    effectedHeroes.add(heroes.get(randomIndex));
                     heroes.remove(randomIndex);
                 }
             }
-            else if (this.isDependsRelatedSoldiersSelectingOnPlayer()) {
-                this.relatedSoldiers.addAll(fromCommandLine);
+            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+                // TODO
             }
-            else {
-                this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
-            }
+            return effectedHeroes;
         }
+        else if (classOfEffectedSoldiers.equals("Enemy") && this.selectingEffectedObjectsDetails.containsKey("Enemy")) {
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Enemy");
+            ArrayList<Enemy> effectedEnemies = new ArrayList<>();
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectedEnemies.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectedEnemies.addAll(GameEngine.listOfEnemies);
+            }
+            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Enemy> Enemies = new ArrayList<>();
+                Enemies.addAll(GameEngine.listOfEnemies);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(Enemies.size());
+                    effectedEnemies.add(Enemies.get(randomIndex));
+                    Enemies.remove(randomIndex);
+                }
+            }
+            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+                // TODO
+            }
+            return effectedEnemies;
+        }
+        return null;
+    }
+
+    public ArrayList<?> choosingEffectingObjects(ArrayList<String> fromCommandLine, Property property) {
+        if (property.getClassOfEffectingObjects().equals("Hero")) {
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectingObjectsDetails.get(property);
+            ArrayList<Hero> effectingHeroes = new ArrayList<>();
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectingHeroes.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectingHeroes.addAll(GameEngine.listOfHeroes);
+            }
+            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Hero> heroes = new ArrayList<Hero>();
+                heroes.addAll(GameEngine.listOfHeroes);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(heroes.size());
+                    effectingHeroes.add(heroes.get(randomIndex));
+                    heroes.remove(randomIndex);
+                }
+            }
+            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+                // TODO
+            }
+            return effectingHeroes;
+        }
+        else if (property.getClassOfEffectingObjects().equals("Enemy")) {
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectingObjectsDetails.get(property);
+            ArrayList<Enemy> effectingEnemies = new ArrayList<>();
+            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
+                effectingEnemies.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
+            }
+            else if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
+                effectingEnemies.addAll(GameEngine.listOfEnemies);
+            }
+            else if (selectingObjectsDetail.isRandomObjectsSelecting()) {
+                ArrayList<Enemy> Enemies = new ArrayList<>();
+                Enemies.addAll(GameEngine.listOfEnemies);
+                for (int i = 0; i < selectingObjectsDetail.getNumberOfSelectedObjects(); i++) {
+                    Random random = new Random();
+                    int randomIndex = random.nextInt(Enemies.size());
+                    effectingEnemies.add(Enemies.get(randomIndex));
+                    Enemies.remove(randomIndex);
+                }
+            }
+            else if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
+                // TODO
+            }
+            return effectingEnemies;
+        }
+        return null;
     }
 
     public boolean upgrade(Player player) {
@@ -209,34 +284,15 @@ public class Skill<E> extends Ability implements Cloneable{
         if (this.isAcquire == false)
             this.isAcquire = true;
 
-        for (Property<E> property: this.propertiesOfRelatedSoldiers) {
+        for (Property property: this.properties) {
             property.setCurrentGrade(this.currentGrade);
         }
-
-        if (this.propertiesOfUser != null)
-            this.propertiesOfUser.setCurrentGrade(this.currentGrade);
 
         return true;
 
     }
     //---------------------------------------------------- Getter && Setters
-
-
-    public Property getPropertiesOfUser() {
-        return propertiesOfUser;
-    }
-
-    public void setPropertiesOfUser(Property propertiesOfUser) {
-        this.propertiesOfUser = propertiesOfUser;
-    }
-
-    public Map<E, Time> getMapOfEffectedSoldiers() {
-        return mapOfEffectedSoldiers;
-    }
-
-    public void setMapOfEffectedSoldiers(Map<E, Time> mapOfEffectedSoldiers) {
-        this.mapOfEffectedSoldiers = mapOfEffectedSoldiers;
-    }
+    
 
     public ArrayList<String> getBlackList() {
         return blackList;
@@ -244,14 +300,6 @@ public class Skill<E> extends Ability implements Cloneable{
 
     public void setBlackList(ArrayList<String> blackList) {
         this.blackList = blackList;
-    }
-
-    public ArrayList<Property<E>> getPropertiesOfRelatedSoldiers() {
-        return propertiesOfRelatedSoldiers;
-    }
-
-    public void setPropertiesOfRelatedSoldiers(ArrayList<Property<E>> propertiesOfRelatedSoldiers) {
-        this.propertiesOfRelatedSoldiers = propertiesOfRelatedSoldiers;
     }
 
     public int getNonTargetedEnemy() {
@@ -334,11 +382,4 @@ public class Skill<E> extends Ability implements Cloneable{
         this.canStackUp = canStackUp;
     }
 
-    public static Map<String, Field> getFieldsMap() {
-        return fieldsMap;
-    }
-
-    public static void setFieldsMap(Map<String, Field> fieldsMap) {
-        Skill.fieldsMap = fieldsMap;
-    }
 }

@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ public class Perk<E> extends Ability implements Cloneable{
     private ArrayList<Condition> listOfCondition;
     private ArrayList<PerkMode<E>> listOfModes;
     private Map<Condition, PerkMode<E>> mapOfCondition;
+    private Tree<PerkMode<E>> trieCondition;
     private Map<E, PerkMode<E>> mapOfEffectedSoldiers = new HashMap<>();
     private boolean isConditionDependOnRelatedSoldier;
     private boolean isConditionDependOnUserHero;
@@ -116,6 +119,10 @@ public class Perk<E> extends Ability implements Cloneable{
 
     public void updatePerkEffect(ArrayList<E> relatedSoldiers, Hero userHero) {
         Hero owner = Hero.mapOfHeroes.get(this.ownerName);
+        for (E effectedObject: relatedSoldiers) {
+            PerkMode perkMode = this.trieCondition.findCorrectNode(effectedObject);
+        }
+        trieCondition.findCorrectNode()
         if (this.listOfCondition.size() == 1) {
             for (E relatedSoldier: relatedSoldiers) {
                 if (this.mapOfEffectedSoldiers.containsKey(relatedSoldier))

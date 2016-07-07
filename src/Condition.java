@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,21 +32,41 @@ public class Condition {
 //    private int numberOfNonTargetedEnemyEffectedStatus;
 //    private double maximumEnergyPoints; // change to maximumEnergyPoint
 //    private int maximumEnergyPointsStatus;
-    private Map<String, Double> mapOfFields;
-    private Map<String, Double> mapOfStatusOfFields;
+    private ArrayList<String> nameOfFields = new ArrayList<>();
+    private Map<String, Double> mapOfFields = new HashMap<>();
+    private Map<String, Double> mapOfStatusOfFields = new HashMap<>();
     private boolean isAlwaysTrue;
 //    private boolean isDependsOnEnemy;
 //    private String checkThisConditionOn; // This condition on who will be checked?
 //    private String isDependOnEffectedSoldier;
 
+
+    public Condition(Map<String, Double> mapOfStatusOfFields, Map<String, Double> mapOfFields, ArrayList<String> nameOfFields) {
+        this.mapOfStatusOfFields = mapOfStatusOfFields;
+        this.mapOfFields = mapOfFields;
+        this.nameOfFields = nameOfFields;
+    }
+
     Condition() {
         setAlwaysTrue(true);
     }
 
-    public <T> boolean checkCondition(T relatedSoldier) {
+    public <T> boolean checkCondition(T object) {
         if (this.isAlwaysTrue)
             return true;
-        return false;
+        for (String nameOfField: this.nameOfFields) {
+            double currentFieldValue = (double) Property.getFieldValue(object, nameOfField);
+            double conditionFieldValue = this.mapOfFields.get(nameOfField);
+            if ((this.mapOfStatusOfFields.get(nameOfField) == 1) && (currentFieldValue > conditionFieldValue)) {
+                return true;
+            }
+            if ((this.mapOfStatusOfFields.get(nameOfField) == 0) && (currentFieldValue == conditionFieldValue)) {
+                return true;
+            }
+            if ((this.mapOfStatusOfFields.get(nameOfField) == -1) && (currentFieldValue < conditionFieldValue)) {
+                return true;
+            }
+        }
     }
 
     public boolean isAlwaysTrue() {

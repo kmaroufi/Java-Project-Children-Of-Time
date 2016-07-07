@@ -13,7 +13,7 @@ public class Tree<T> {
         root = new Node<T>(rootData);
     }
 
-    public <U> Pair<ArrayList<String>, Map<String, Double[]>> findCorrectNode(U object) {
+    public <U> T findCorrectNode(U object) {
         Node<T> node = this.root;
         while (node.conditions != null) {
             for (Condition condition: node.conditions) {
@@ -23,7 +23,7 @@ public class Tree<T> {
                 }
             }
         }
-        return (Pair<ArrayList<String>, Map<String, Double[]>>) node.data;
+        return (T) node.data;
     }
 
     public static class Node<T> {
