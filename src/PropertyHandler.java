@@ -1,99 +1,62 @@
+import javafx.util.Pair;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class PropertyHandler {
+public class PropertyHandler<T> {
     private String name;
-    private Class classOfField;
-    private final int NumberOfUpgrades;
-    private boolean isDependOnEffectedSoldier;
-    private boolean isDependOnUserHero;
     private boolean isPermanently;
-
-    private Map<String, ArrayList<String>> variablesOfObjects;
-    private Map<String, Map<String, Double[]>> variablesCoefficientOfObjects;
-
-    private double[] constantProperty ;
+    private String classOfEffectingObjects;
+    private String classOfEffectedObject;
+    private double constantProperty;
+    private SelectingObjectsDetail<T> selectingEffectingObjectsDetails;
+    private Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition;
 
 
     //-------------------------------------------------------------- Constructors
 
-    public PropertyHandler(String name, int numberOfUpgrades, boolean isDependOnEffectedSoldier, boolean isDependOnUserHero, boolean isPermanently, double[] constantProperty, Map<String, ArrayList<String>> variablesOfObjects, Map<String, Map<String, Double[]>> variablesCoefficientOfObjects) {
+    public PropertyHandler(String name, boolean isPermanently, String classOfEffectingObjects, String classOfEffectedObject, double constantProperty, SelectingObjectsDetail<T> selectingEffectingObjectsDetails, Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition) {
         this.name = name;
-        NumberOfUpgrades = numberOfUpgrades;
-        this.isDependOnEffectedSoldier = isDependOnEffectedSoldier;
-        this.isDependOnUserHero = isDependOnUserHero;
         this.isPermanently = isPermanently;
+        this.classOfEffectingObjects = classOfEffectingObjects;
+        this.classOfEffectedObject = classOfEffectedObject;
         this.constantProperty = constantProperty;
-        this.variablesOfObjects = variablesOfObjects;
-        this.variablesCoefficientOfObjects = variablesCoefficientOfObjects;
+        this.selectingEffectingObjectsDetails = selectingEffectingObjectsDetails;
+        this.trieCondition = trieCondition;
     }
 
-    public PropertyHandler(){
-        this.NumberOfUpgrades = 0;
-    }
     //--------------------------------------------------------------- Getter && Setters
 
 
-    public boolean isDependOnEffectedSoldier() {
-        return isDependOnEffectedSoldier;
-    }
-
-    public void setDependOnEffectedSoldier(boolean dependOnEffectedSoldier) {
-        isDependOnEffectedSoldier = dependOnEffectedSoldier;
-    }
-
-    public boolean isDependOnUserHero() {
-        return isDependOnUserHero;
-    }
-
-    public void setDependOnUserHero(boolean dependOnUserHero) {
-        isDependOnUserHero = dependOnUserHero;
+    public String getName() {
+        return name;
     }
 
     public boolean isPermanently() {
         return isPermanently;
     }
 
-    public void setPermanently(boolean permanently) {
-        isPermanently = permanently;
+    public String getClassOfEffectingObjects() {
+        return classOfEffectingObjects;
     }
 
-    public String getName() {
-        return name;
+    public String getClassOfEffectedObject() {
+        return classOfEffectedObject;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double[] getConstantProperty() {
+    public double getConstantProperty() {
         return constantProperty;
     }
 
-    public void setConstantProperty(double[] constantProperty) {
-        this.constantProperty = constantProperty;
+    public Tree<Pair<ArrayList<String>, Map<String, Double>>> getTrieCondition() {
+        return trieCondition;
     }
 
-    public int getNumberOfUpgrades() {
-        return NumberOfUpgrades;
-    }
-
-    public Map<String, ArrayList<String>> getVariablesOfObjects() {
-        return variablesOfObjects;
-    }
-
-    public void setVariablesOfObjects(Map<String, ArrayList<String>> variablesOfObjects) {
-        this.variablesOfObjects = variablesOfObjects;
-    }
-
-    public Map<String, Map<String, Double[]>> getVariablesCoefficientOfObjects() {
-        return variablesCoefficientOfObjects;
-    }
-
-    public void setVariablesCoefficientOfObjects(Map<String, Map<String, Double[]>> variablesCoefficientOfObjects) {
-        this.variablesCoefficientOfObjects = variablesCoefficientOfObjects;
+    public SelectingObjectsDetail<T> getSelectingEffectingObjectsDetails() {
+        return selectingEffectingObjectsDetails;
     }
 }

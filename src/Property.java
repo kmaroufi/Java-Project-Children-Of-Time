@@ -13,23 +13,16 @@ import java.util.Map;
 public class Property<E, T> implements Cloneable {
     private Double totalEffectOnProperty = new Double(0);               // az che noii e??????
     private String name;
-    private int currentGrade;
-    private int numberOfUpgrades;
-    private boolean isDependOnEffectedSoldier;
-    private boolean isDependOnUserHero;
     private boolean isPermanently;
 
     private String classOfEffectingObjects;
-
     private String classOfEffectedObject;
 
-    private Map<String, ArrayList<String>> variablesOfObjects;
-    private Map<String, Map<String, Double[]>> variablesCoefficientOfObjects;
+    private double constantProperty;
 
-    private Tree<Pair<ArrayList<String>, Map<String, Double[]>>> trieCondition;
+    private Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition;
 
-    private double[] constantProperty;
-
+    private SelectingObjectsDetail<T> selectingEffectingObjectsDetails; // Key = Property, Value = Details about how effecting objects are selected
 
     private Map<E, Double> valueOfEffectingOnEffectedSoldiers = new HashMap<>();
 
@@ -37,14 +30,12 @@ public class Property<E, T> implements Cloneable {
 
     public Property(PropertyHandler propertyHandler) {
         setName(propertyHandler.getName());
-        setNumberOfUpgrades(propertyHandler.getNumberOfUpgrades());
-        setCurrentGrade(0);
-        setDependOnEffectedSoldier(propertyHandler.isDependOnEffectedSoldier());
-        setDependOnUserHero(propertyHandler.isDependOnUserHero());
         setPermanently(propertyHandler.isPermanently());
+        setClassOfEffectingObjects(propertyHandler.getClassOfEffectingObjects());
+        setClassOfEffectedObject(propertyHandler.getClassOfEffectedObject());
         setConstantProperty(propertyHandler.getConstantProperty());
-        setVariablesOfObjects(propertyHandler.getVariablesOfObjects());
-        setVariablesCoefficientOfObjects(propertyHandler.getVariablesCoefficientOfObjects());
+        setTrieCondition(propertyHandler.getTrieCondition());
+        setSelectingEffectingObjectsDetails(propertyHandler.getSelectingEffectingObjectsDetails());
     }
 
     public String getName() {
@@ -53,8 +44,13 @@ public class Property<E, T> implements Cloneable {
 
     //---------------------------------------    Functions
 
-    protected Property<E, T> clone() throws CloneNotSupportedException {
-        Property<E, T> property = (Property<E, T>) super.clone();
+    protected Property<E, T> clone() {
+        Property<E, T> property = null;
+        try {
+            property = (Property<E, T>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         property.setValueOfEffectingOnEffectedSoldiers(new HashMap<>());
         return property;
     }
@@ -99,14 +95,14 @@ public class Property<E, T> implements Cloneable {
     }
 
     private void calculateProperty(ArrayList<T> effectingObjects) {
-        this.totalEffectOnProperty = this.constantProperty[this.currentGrade - 1];
+        this.totalEffectOnProperty = this.constantProperty;
         for (T effectingObject : effectingObjects) {
-            Pair<ArrayList<String>, Map<String, Double[]>> result = this.trieCondition.findCorrectNode(effectingObject);
+            Pair<ArrayList<String>, Map<String, Double>> result = this.trieCondition.findCorrectNode(effectingObject);
             ArrayList<String> variablesName = result.getKey();
-            Map<String, Double[]> variablesCoefficient = result.getValue();
+            Map<String, Double> variablesCoefficient = result.getValue();
             for (String variableName : variablesName) {
                 double variableValue = (double) this.getFieldValue(effectingObject, variableName);
-                double variableCoefficient = variablesCoefficient.get(variableName)[currentGrade - 1];
+                double variableCoefficient = variablesCoefficient.get(variableName);
                 this.totalEffectOnProperty += variableCoefficient * variableValue;
             }
         }
@@ -215,78 +211,19 @@ public class Property<E, T> implements Cloneable {
         this.valueOfEffectingOnEffectedSoldiers.remove(effectedObject);
     }
 
-    public String showCurrentUpgradeNumber() {
-        if (this.numberOfUpgrades == 0) {
-            return "not acquired";
-        } else {
-            String sentence = "Upgrade Number : " + this.currentGrade;
-            return sentence;
-        }
-    }
-
     //--------------------------------------------------------------      Getter & Setter
-    public int getNumberOfUpgrades() {
-        return numberOfUpgrades;
-    }
 
-    public void setNumberOfUpgrades(int numberOfUpgrades) {
-        this.numberOfUpgrades = numberOfUpgrades;
-    }
 
-    public double[] getConstantProperty() {
-        return constantProperty;
-    }
-
-    public void setConstantProperty(double[] constantProperty) {
-        this.constantProperty = constantProperty;
-    }
-
-    public double getTotalEffectOnProperty() {
+    public Double getTotalEffectOnProperty() {
         return totalEffectOnProperty;
-    }
-
-    public void setTotalEffectOnProperty(double totalEffectOnProperty) {
-        this.totalEffectOnProperty = totalEffectOnProperty;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getCurrentGrade() {
-        return currentGrade;
-    }
-
-    public void setCurrentGrade(int currentGrade) {
-        this.currentGrade = currentGrade;
     }
 
     public void setTotalEffectOnProperty(Double totalEffectOnProperty) {
         this.totalEffectOnProperty = totalEffectOnProperty;
     }
 
-    public boolean isDependOnEffectedSoldier() {
-        return isDependOnEffectedSoldier;
-    }
-
-    public void setDependOnEffectedSoldier(boolean dependOnEffectedSoldier) {
-        isDependOnEffectedSoldier = dependOnEffectedSoldier;
-    }
-
-    public Map<E, Double> getValueOfEffectingOnEffectedSoldiers() {
-        return valueOfEffectingOnEffectedSoldiers;
-    }
-
-    public void setValueOfEffectingOnEffectedSoldiers(Map<E, Double> valueOfEffectingOnEffectedSoldiers) {
-        this.valueOfEffectingOnEffectedSoldiers = valueOfEffectingOnEffectedSoldiers;
-    }
-
-    public boolean isDependOnUserHero() {
-        return isDependOnUserHero;
-    }
-
-    public void setDependOnUserHero(boolean dependOnUserHero) {
-        isDependOnUserHero = dependOnUserHero;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isPermanently() {
@@ -295,22 +232,6 @@ public class Property<E, T> implements Cloneable {
 
     public void setPermanently(boolean permanently) {
         isPermanently = permanently;
-    }
-
-    public Map<String, Map<String, Double[]>> getVariablesCoefficientOfObjects() {
-        return variablesCoefficientOfObjects;
-    }
-
-    public void setVariablesCoefficientOfObjects(Map<String, Map<String, Double[]>> variablesCoefficientOfObjects) {
-        this.variablesCoefficientOfObjects = variablesCoefficientOfObjects;
-    }
-
-    public Map<String, ArrayList<String>> getVariablesOfObjects() {
-        return variablesOfObjects;
-    }
-
-    public void setVariablesOfObjects(Map<String, ArrayList<String>> variablesOfObjects) {
-        this.variablesOfObjects = variablesOfObjects;
     }
 
     public String getClassOfEffectingObjects() {
@@ -327,5 +248,37 @@ public class Property<E, T> implements Cloneable {
 
     public void setClassOfEffectedObject(String classOfEffectedObject) {
         this.classOfEffectedObject = classOfEffectedObject;
+    }
+
+    public Tree<Pair<ArrayList<String>, Map<String, Double>>> getTrieCondition() {
+        return trieCondition;
+    }
+
+    public void setTrieCondition(Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition) {
+        this.trieCondition = trieCondition;
+    }
+
+    public double getConstantProperty() {
+        return constantProperty;
+    }
+
+    public void setConstantProperty(double constantProperty) {
+        this.constantProperty = constantProperty;
+    }
+
+    public Map<E, Double> getValueOfEffectingOnEffectedSoldiers() {
+        return valueOfEffectingOnEffectedSoldiers;
+    }
+
+    public void setValueOfEffectingOnEffectedSoldiers(Map<E, Double> valueOfEffectingOnEffectedSoldiers) {
+        this.valueOfEffectingOnEffectedSoldiers = valueOfEffectingOnEffectedSoldiers;
+    }
+
+    public SelectingObjectsDetail<T> getSelectingEffectingObjectsDetails() {
+        return selectingEffectingObjectsDetails;
+    }
+
+    public void setSelectingEffectingObjectsDetails(SelectingObjectsDetail<T> selectingEffectingObjectsDetails) {
+        this.selectingEffectingObjectsDetails = selectingEffectingObjectsDetails;
     }
 }
