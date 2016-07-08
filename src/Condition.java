@@ -32,19 +32,16 @@ public class Condition {
 //    private int numberOfNonTargetedEnemyEffectedStatus;
 //    private double maximumEnergyPoints; // change to maximumEnergyPoint
 //    private int maximumEnergyPointsStatus;
-    private ArrayList<String> nameOfFields = new ArrayList<>();
-    private Map<String, Double> mapOfFields = new HashMap<>();
-    private Map<String, Double> mapOfStatusOfFields = new HashMap<>();
+    private String nameOfField;
+    private double valueOfField;
+    private double statusOfFields;
     private boolean isAlwaysTrue;
-//    private boolean isDependsOnEnemy;
-//    private String checkThisConditionOn; // This condition on who will be checked?
-//    private String isDependOnEffectedSoldier;
 
-
-    public Condition(Map<String, Double> mapOfStatusOfFields, Map<String, Double> mapOfFields, ArrayList<String> nameOfFields) {
-        this.mapOfStatusOfFields = mapOfStatusOfFields;
-        this.mapOfFields = mapOfFields;
-        this.nameOfFields = nameOfFields;
+    public Condition(String nameOfField, double valueOfField, double statusOfFields, boolean isAlwaysTrue) {
+        this.nameOfField = nameOfField;
+        this.valueOfField = valueOfField;
+        this.statusOfFields = statusOfFields;
+        this.isAlwaysTrue = isAlwaysTrue;
     }
 
     Condition() {
@@ -54,19 +51,18 @@ public class Condition {
     public <T> boolean checkCondition(T object) {
         if (this.isAlwaysTrue)
             return true;
-        for (String nameOfField: this.nameOfFields) {
-            double currentFieldValue = (double) Property.getFieldValue(object, nameOfField);
-            double conditionFieldValue = this.mapOfFields.get(nameOfField);
-            if ((this.mapOfStatusOfFields.get(nameOfField) == 1) && (currentFieldValue > conditionFieldValue)) {
-                return true;
-            }
-            if ((this.mapOfStatusOfFields.get(nameOfField) == 0) && (currentFieldValue == conditionFieldValue)) {
-                return true;
-            }
-            if ((this.mapOfStatusOfFields.get(nameOfField) == -1) && (currentFieldValue < conditionFieldValue)) {
-                return true;
-            }
+        double currentFieldValue = (double) Property.getFieldValue(object, this.nameOfField);
+        double conditionFieldValue = this.valueOfField;
+        if ((this.statusOfFields == 1) && (currentFieldValue > conditionFieldValue)) {
+            return true;
         }
+        if ((this.statusOfFields == 0) && (currentFieldValue == conditionFieldValue)) {
+            return true;
+        }
+        if ((this.statusOfFields == -1) && (currentFieldValue < conditionFieldValue)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isAlwaysTrue() {
@@ -77,70 +73,6 @@ public class Condition {
         isAlwaysTrue = alwaysTrue;
     }
 
-    private boolean checkCriticalHitChance() {
-        //TODO
-        return false;
-    }
-
-    private boolean checkCriticalHitDamage() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkMaximumHealth() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkHealthRefillRate() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkCurrentHealth() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkMaximumMagic() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkMagicRefillRate() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkCurrentMagic() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkAttackPower() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkAttackPowerRatio() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkAttackPowerRatioOnNonTargetedEnemy() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkNumberOfNonTargetedEnemyEffected() {
-        //ToDO
-        return false;
-    }
-
-    private boolean checkEnergyPoints() {
-        //ToDO
-        return false;
-    }
 }
 
 // add health and attackPower
