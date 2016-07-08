@@ -1201,12 +1201,12 @@ public class GameEngine {
                                 skill.showDescription();
                                 if (skill.getCurrentGrade() == 0) {
                                     Display.printInEachLine("This Ability is not acquires!");
-                                    Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points to acquire it.");
+                                    Display.printInEachLine("You need " + skill.getCostOfUpgrade() + " experience points to acquire it.");
                                 }
                                 else {
-                                    Display.printInEachLine(skill.getUpgradeDescription()[skill.getCurrentGrade() - 1]);
+                                    Display.printInEachLine(skill.getThisGradeDescription());
                                     if (skill.getCurrentGrade() != skill.getNumberOfGrades())
-                                        Display.printInEachLine("You need " + skill.getCostOfUpgrade()[skill.getCurrentGrade()] + " experience points to upgrade it.");
+                                        Display.printInEachLine("You need " + skill.getCostOfUpgrade() + " experience points to upgrade it.");
                                 }
                                 break;
                             }
@@ -1245,76 +1245,21 @@ public class GameEngine {
                                 if (skill.isAcquire == false) {
                                     Display.printInEachLine("This Skill isn't acquires!");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
+                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint() && hero.getCurrentMagic() < skill.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
+                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint() && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() < skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
+                                } else if (hero.getCurrentEnergyPoint() < skill.getRequiredEnergyPoint() && hero.getCurrentMagic() < skill.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
                                 } else if (skill.getRemainingCooldown() != 0) {
                                     Display.printInEachLine("Your desired ability is still in cooldown." + "remaining cooldown is " + skill.getRemainingCooldown());
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint()[skill.getCurrentGrade() - 1] && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()[skill.getCurrentGrade() - 1]) {
-                                    if (skill.isDependsRelatedSoldiersSelectingOnPlayer()) {
-                                        boolean isTargetInBlackList = false;
-                                        if (skill.hasEffectedOnEnemy) {
-                                            ArrayList<Enemy> targetedEnemies = new ArrayList<>();
-                                            for (Enemy enemy : this.listOfEnemies) {
-                                                if (command.contains(enemy.getName())) {
-                                                    for (String name: (ArrayList<String>)skill.getBlackList()) {
-                                                        if (name.equals(enemy.getName())) {
-                                                            isTargetInBlackList = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                    targetedEnemies.add(enemy);
-                                                    break;
-                                                }
-                                            }
-                                            if (targetedEnemies.size() == 0) {
-                                                Display.printInEachLine("Your target was not recognized!");
-                                                break;
-                                            }
-                                            else if (isTargetInBlackList) {
-                                                Display.printInEachLine("Your target isn't valid");
-                                                break;
-                                            }
-                                            else {
-                                                hero.useSkill(skill.getName(), targetedEnemies);
-                                            }
-                                        } else {
-                                            ArrayList<Hero> targetedHeroes = new ArrayList<>();
-                                            for (Hero targetHero : this.listOfHeroes) {
-                                                if (command.contains("on " + targetHero.getName())) {
-                                                    for (String name: (ArrayList<String>)skill.getBlackList()) {
-                                                        if (name.equals(targetHero.getName())) {
-                                                            isTargetInBlackList = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                    targetedHeroes.add(targetHero);
-                                                    break;
-                                                }
-                                            }
-                                            if (targetedHeroes.size() == 0) {
-                                                Display.printInEachLine("Your target was not recognized!");
-                                                break;
-                                            }
-                                            else if (isTargetInBlackList) {
-                                                Display.printInEachLine("Your target isn't valid");
-                                                break;
-                                            }
-                                            else {
-                                                hero.useSkill(skill.getName(), targetedHeroes);
-                                            }
-                                        }
-                                    } else {
-                                        hero.useSkill(skill.getName(), null);
-                                    }
+                                } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint() && hero.getCurrentMagic() >= skill.getRequiredMagicPoint()) {
+                                    hero.useSkill(skill.getName());
                                     Display.printInEachLine(hero.getName() + " casts Successfully " + skill.getName());
                                     this.updateAllSkills("NumberOfTurns");
                                     break;

@@ -148,10 +148,10 @@ public class Hero extends HeroClass {
         }
     }
 
-    public void useSkill(String skillName, ArrayList<String> fromCommandLine){
+    public void useSkill(String skillName){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with SkillName
             if(this.skills.get(i).getName().equals(skillName)){
-                this.skills.get(i).useSkill(this, fromCommandLine);
+                this.skills.get(i).useSkill(this);
             }
         }
     }

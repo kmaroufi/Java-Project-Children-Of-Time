@@ -87,6 +87,10 @@ public class Perk extends Ability implements Cloneable{
         }
     }
 
+    public String getThisGradeDescription(){
+        return (this.subPerks.get(this.currentGrade - 1).getUpgradeDescription());
+    }
+
     public int getCostOfUpgrade() {
         return this.subPerks.get(this.currentGrade).getCostOfUpgrade();
     }

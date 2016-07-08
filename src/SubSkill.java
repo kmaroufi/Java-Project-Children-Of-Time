@@ -55,7 +55,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         return subSkill;
     }       // Creates A Copy of This Object (Skill)
 
-    public void useSkill(Hero userHero, ArrayList<String> fromCommandLine) {
+    public void useSkill(Hero userHero) {
 
         if (this.remainingCooldown != 0) {
             return;
@@ -64,7 +64,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         boolean isEffectedOnAtLeastOnObject = false;
 
         for (String className: this.classOfEffectedObjects) {
-            ArrayList<?> effectedObjects = this.choosingEffectedObjects(fromCommandLine, className);
+            ArrayList<?> effectedObjects = this.choosingEffectedObjects(className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp == false)) {
                     continue;
@@ -119,7 +119,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         }
     }
 
-    private ArrayList<?> choosingEffectedObjects(ArrayList<String> fromCommandLine, String classOfEffectedSoldiers) {
+    private ArrayList<?> choosingEffectedObjects(String classOfEffectedSoldiers) {
         if (classOfEffectedSoldiers.equals("Hero") && this.selectingEffectedObjectsDetails.containsKey("Hero")) {
             SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Hero");
             ArrayList<Hero> effectedHeroes = new ArrayList<>();
@@ -141,11 +141,28 @@ public class SubSkill extends SubAbility implements Cloneable{
                 }
             }
             if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
-                for (String nameOfObject: fromCommandLine) {
-                    if (Hero.mapOfHeroes.containsKey(nameOfObject)) {
-                        Hero hero = Hero.mapOfHeroes.get(nameOfObject);
-                        if (!effectedHeroes.contains(hero)) {
-                            effectedHeroes.add(hero);
+                int counter = selectingObjectsDetail.getNumberOfSelectedObjectsByPlayer();
+                while (counter != 0) {
+                    if (effectedHeroes.size() == GameEngine.listOfHeroes.size())
+                        break;
+                    Display.printf("Please enter your targeted heroes: ");
+                    String command = Display.getString();
+                    String[] nameOfHeroes = command.split(" ");
+                    for (String nameOfHero : nameOfHeroes) {
+                        boolean isTargetRecognized = false;
+                        for (Hero hero : GameEngine.listOfHeroes) {
+                            if (nameOfHero.equalsIgnoreCase(hero.getName())) {
+                                if (!effectedHeroes.contains(hero)) {
+                                    effectedHeroes.add(hero);
+                                    counter--;
+                                    isTargetRecognized = true;
+                                } else {
+                                    Display.printInEachLine(hero.getName() + " was selected in the past! Please enter another hero");
+                                }
+                            }
+                        }
+                        if (isTargetRecognized == false) {
+                            Display.printInEachLine(nameOfHero + " was not recognized. Please enter another hero");
                         }
                     }
                 }
@@ -173,11 +190,28 @@ public class SubSkill extends SubAbility implements Cloneable{
                 }
             }
             if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
-                for (String nameOfObject: fromCommandLine) {
-                    if (Enemy.mapOfEnemies.containsKey(nameOfObject)) {
-                        Enemy enemy = Enemy.mapOfEnemies.get(nameOfObject);
-                        if (!effectedEnemies.contains(enemy)) {
-                            effectedEnemies.add(enemy);
+                int counter = selectingObjectsDetail.getNumberOfSelectedObjectsByPlayer();
+                while (counter != 0) {
+                    if (effectedEnemies.size() == GameEngine.listOfEnemies.size())
+                        break;
+                    Display.printf("Please enter your targeted Enemies: ");
+                    String command = Display.getString();
+                    String[] nameOfEnemies = command.split(" ");
+                    for (String nameOfEnemy : nameOfEnemies) {
+                        boolean isTargetRecognized = false;
+                        for (Enemy enemy : GameEngine.listOfEnemies) {
+                            if (nameOfEnemy.equalsIgnoreCase(enemy.getName())) {
+                                if (!effectedEnemies.contains(enemy)) {
+                                    effectedEnemies.add(enemy);
+                                    counter--;
+                                    isTargetRecognized = true;
+                                } else {
+                                    Display.printInEachLine(enemy.getName() + " was selected in the past! Please enter another Enemy");
+                                }
+                            }
+                        }
+                        if (isTargetRecognized == false) {
+                            Display.printInEachLine(nameOfEnemy + " was not recognized. Please enter another Enemy");
                         }
                     }
                 }

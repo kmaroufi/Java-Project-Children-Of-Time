@@ -35,8 +35,8 @@ public class Skill extends Ability implements Cloneable{
         return skill;
     }       // Creates A Copy of This Object (Skill)
 
-    public void useSkill(Hero userHero, ArrayList<String> fromCommandLine) {
-        this.subSkills.get(currentGrade - 1).useSkill(userHero, fromCommandLine);
+    public void useSkill(Hero userHero) {
+        this.subSkills.get(currentGrade - 1).useSkill(userHero);
     }
 
     public void removeEffect() {
@@ -57,6 +57,10 @@ public class Skill extends Ability implements Cloneable{
 
     public double getCooldown() {
         return this.subSkills.get(this.currentGrade - 1).getCooldown();
+    }
+
+    public int getRemainingCooldown() {
+        return this.subSkills.get(this.currentGrade - 1).getRemainingCooldown();
     }
 
     public boolean isGlobal() {
@@ -80,6 +84,10 @@ public class Skill extends Ability implements Cloneable{
         for (SubSkill subSkill: this.subSkills) {
             Display.printInEachLine(subSkill.getUpgradeDescription());
         }
+    }
+
+    public String getThisGradeDescription(){
+        return (this.subSkills.get(this.currentGrade - 1).getUpgradeDescription());
     }
 
     public boolean equals(Skill skill){

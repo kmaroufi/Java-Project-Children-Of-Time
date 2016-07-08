@@ -8,10 +8,10 @@ public class SelectingObjectsDetail<T> {
     private boolean isAllRelatedObjectsInvolved;
     private boolean isObjectsWereSelectedByDefault;
     private ArrayList<T> SelectedObjectsByDefault;
-    private int numberOfSelectedObjects;
     private boolean isRandomObjectsSelecting;
     private int numberOfRandomSelectedObjects;
     private boolean isSelectedObjectsDependsOnPlayer;
+    private int numberOfSelectedObjectsByPlayer;
     private boolean isRelatedToAttackDefend;
     private boolean isHeroEffected;
     private boolean isHeroEffecting;
@@ -50,14 +50,6 @@ public class SelectingObjectsDetail<T> {
         isAllRelatedObjectsInvolved = allRelatedObjectsInvolved;
     }
 
-    public int getNumberOfSelectedObjects() {
-        return numberOfSelectedObjects;
-    }
-
-    public void setNumberOfSelectedObjects(int numberOfSelectedObjects) {
-        this.numberOfSelectedObjects = numberOfSelectedObjects;
-    }
-
     public boolean isRandomObjectsSelecting() {
         return isRandomObjectsSelecting;
     }
@@ -72,6 +64,14 @@ public class SelectingObjectsDetail<T> {
 
     public void setSelectedObjectsDependsOnPlayer(boolean selectedObjectsDependsOnPlayer) {
         isSelectedObjectsDependsOnPlayer = selectedObjectsDependsOnPlayer;
+    }
+
+    public int getNumberOfSelectedObjectsByPlayer() {
+        return numberOfSelectedObjectsByPlayer;
+    }
+
+    public void setNumberOfSelectedObjectsByPlayer(int numberOfSelectedObjectsByPlayer) {
+        this.numberOfSelectedObjectsByPlayer = numberOfSelectedObjectsByPlayer;
     }
 
     public int getNumberOfRandomSelectedObjects() {
