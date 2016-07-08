@@ -82,6 +82,21 @@ public class Perk extends Ability implements Cloneable{
 
     public void showDescription(){
         Display.printInEachLine(this.getDescription());
+        for (SubPerk subPerk: this.subPerks) {
+            Display.printInEachLine(subPerk.upgradeDescription);
+        }
+    }
+
+    public int getCostOfUpgrade() {
+        return this.subPerks.get(this.currentGrade).getCostOfUpgrade();
+    }
+
+    public int getCostOfUpgrade(int grade) {
+        if (grade > this.numberOfGrades) {
+            Display.printInEachLine("Out of bound grade!");
+            return -1;
+        }
+        return this.subPerks.get(grade - 1).getCostOfUpgrade();
     }
 
     //---------------------------------------------------------- Getter && Setters

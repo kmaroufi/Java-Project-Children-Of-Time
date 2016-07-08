@@ -148,10 +148,10 @@ public class Hero extends HeroClass {
         }
     }
 
-    public <E> void useSkill(String skillName, ArrayList<E> soldiers){
+    public void useSkill(String skillName, ArrayList<String> fromCommandLine){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with SkillName
             if(this.skills.get(i).getName().equals(skillName)){
-                this.skills.get(i).useSkill(this.skills.get(i).relatedSoldiers,this, soldiers);
+                this.skills.get(i).useSkill(this, fromCommandLine);
             }
         }
     }
@@ -197,7 +197,7 @@ public class Hero extends HeroClass {
         for(int i = 0;i < this.skills.size();i++){
             if (this.skills.get(i).getCurrentGrade() == 0)
                 continue;
-            Display.printInEachLine("Can Cast " + this.skills.get(i).getName() + " for " + this.skills.get(i).getRequiredEnergyPoint()[this.skills.get(i).currentGrade - 1] + " energy points, " + this.skills.get(i).getRequiredMagicPoint()[this.skills.get(i).currentGrade - 1] + " magic points and a " + this.skills.get(i).getCooldown()[this.skills.get(i).currentGrade - 1] + " turn cooldown");
+            Display.printInEachLine("Can Cast " + this.skills.get(i).getName() + " for " + this.skills.get(i).getRequiredEnergyPoint() + " energy points, " + this.skills.get(i).getRequiredMagicPoint() + " magic points and a " + this.skills.get(i).getCooldown() + " turn cooldown");
         }
         for(int i = 0;i < this.items.size();i++){
             try {

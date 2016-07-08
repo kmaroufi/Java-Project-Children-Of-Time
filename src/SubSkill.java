@@ -55,7 +55,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         return subSkill;
     }       // Creates A Copy of This Object (Skill)
 
-    public void useSkill(Hero userHero) {
+    public void useSkill(Hero userHero, ArrayList<String> fromCommandLine) {
 
         if (this.remainingCooldown != 0) {
             return;
@@ -64,7 +64,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         boolean isEffectedOnAtLeastOnObject = false;
 
         for (String className: this.classOfEffectedObjects) {
-            ArrayList<?> effectedObjects = this.choosingEffectedObjects(new ArrayList<>(), className);
+            ArrayList<?> effectedObjects = this.choosingEffectedObjects(fromCommandLine, className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp == false)) {
                     continue;
@@ -141,7 +141,14 @@ public class SubSkill extends SubAbility implements Cloneable{
                 }
             }
             if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
-                // TODO
+                for (String nameOfObject: fromCommandLine) {
+                    if (Hero.mapOfHeroes.containsKey(nameOfObject)) {
+                        Hero hero = Hero.mapOfHeroes.get(nameOfObject);
+                        if (!effectedHeroes.contains(hero)) {
+                            effectedHeroes.add(hero);
+                        }
+                    }
+                }
             }
             return effectedHeroes;
         }
@@ -166,7 +173,14 @@ public class SubSkill extends SubAbility implements Cloneable{
                 }
             }
             if (selectingObjectsDetail.isSelectedObjectsDependsOnPlayer()) {
-                // TODO
+                for (String nameOfObject: fromCommandLine) {
+                    if (Enemy.mapOfEnemies.containsKey(nameOfObject)) {
+                        Enemy enemy = Enemy.mapOfEnemies.get(nameOfObject);
+                        if (!effectedEnemies.contains(enemy)) {
+                            effectedEnemies.add(enemy);
+                        }
+                    }
+                }
             }
             return effectedEnemies;
         }

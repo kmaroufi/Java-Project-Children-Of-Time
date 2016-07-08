@@ -38,13 +38,6 @@ public class GameEngine {
                     try {
                         Display.printInEachLine(skill.getName() + "; current grade: " + skill.getCurrentGrade());
                         skill.showDescription();
-                        for (int i = 0; i < skill.getNumberOfGrades(); i++) {
-                            try {
-                                Display.printInEachLine(skill.getUpgradeDescription()[i]);
-                            } catch (Exception e) {
-                                continue;
-                            }
-                        }
                     } catch (Exception e) {
                         continue;
                     }
@@ -53,13 +46,6 @@ public class GameEngine {
                     try {
                         Display.printInEachLine(perk.getName() + "; current grade: " + perk.getCurrentGrade());
                         perk.showDescription();
-                        for (int i = 0; i < perk.getNumberOfGrades(); i++) {
-                            try {
-                                Display.printInEachLine(perk.getUpgradeDescription()[i]);
-                            } catch (Exception e) {
-                                continue;
-                            }
-                        }
                     } catch (Exception e) {
                         continue;
                     }
@@ -204,11 +190,11 @@ public class GameEngine {
                                     if (command.contains(perk.getName())) {
                                         if (perk.getCurrentGrade() == perk.getNumberOfGrades()) {
                                             Display.printInEachLine("This ability cannot be upgraded anymore");
-                                        } else if (perk.getCostOfUpgrade()[perk.getCurrentGrade()] > this.player.getXp()) {
+                                        } else if (perk.getCostOfUpgrade() > this.player.getXp()) {
                                             Display.printInEachLine("Your experience is insufficient");
                                         } else if (perk.isAcquire() == false) {
                                             if (hero.upgradeAbility(this.player, perk.getName())) {
-                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1]);
+                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade(1));
                                                 Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
                                             }
                                             else {
@@ -216,7 +202,7 @@ public class GameEngine {
                                             }
                                         } else {
                                             if (hero.upgradeAbility(this.player, perk.getName())) {
-                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade()[perk.getCurrentGrade() - 1]);
+                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade(perk.getCurrentGrade()));
                                                 Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
                                             }
                                             else {
@@ -231,11 +217,11 @@ public class GameEngine {
                                     if (command.contains(skill.getName())) {
                                         if (skill.getCurrentGrade() == skill.getNumberOfGrades()) {
                                             Display.printInEachLine("This ability cannot be upgraded anymore");
-                                        } else if (skill.getCostOfUpgrade()[skill.getCurrentGrade()] > this.player.getXp()) {
+                                        } else if (skill.getCostOfUpgrade() > this.player.getXp()) {
                                             Display.printInEachLine("Your experience is insufficient");
                                         } else if (skill.isAcquire == false) {
                                             if (hero.upgradeAbility(this.player, skill.getName())) {
-                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
+                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade(1));
                                                 Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
                                             }
                                             else {
@@ -243,7 +229,7 @@ public class GameEngine {
                                             }
                                         } else {
                                             if (hero.upgradeAbility(this.player, skill.getName())) {
-                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade()[skill.getCurrentGrade() - 1]);
+                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade(skill.getCurrentGrade()));
                                                 Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
                                             }
                                             else {

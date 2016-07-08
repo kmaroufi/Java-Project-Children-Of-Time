@@ -35,8 +35,8 @@ public class Skill extends Ability implements Cloneable{
         return skill;
     }       // Creates A Copy of This Object (Skill)
 
-    public void useSkill(Hero userHero) {
-        this.subSkills.get(currentGrade - 1).useSkill(userHero);
+    public void useSkill(Hero userHero, ArrayList<String> fromCommandLine) {
+        this.subSkills.get(currentGrade - 1).useSkill(userHero, fromCommandLine);
     }
 
     public void removeEffect() {
@@ -47,8 +47,39 @@ public class Skill extends Ability implements Cloneable{
         this.subSkills.get(currentGrade - 1).reduceTime(typeOfTime);
     }
 
+    public double getRequiredEnergyPoint() {
+        return this.subSkills.get(this.currentGrade - 1).getRequiredEnergyPoint();
+    }
+
+    public double getRequiredMagicPoint() {
+        return this.subSkills.get(this.currentGrade - 1).getRequiredMagicPoint();
+    }
+
+    public double getCooldown() {
+        return this.subSkills.get(this.currentGrade - 1).getCooldown();
+    }
+
+    public boolean isGlobal() {
+        return this.subSkills.get(this.currentGrade - 1).isGlobal();
+    }
+
+    public int getCostOfUpgrade() {
+        return this.subSkills.get(this.currentGrade).getCostOfUpgrade();
+    }
+
+    public int getCostOfUpgrade(int grade) {
+        if (grade > this.numberOfGrades) {
+            Display.printInEachLine("Out of bound grade!");
+            return -1;
+        }
+        return this.subSkills.get(grade - 1).getCostOfUpgrade();
+    }
+
     public void showDescription(){
         Display.printInEachLine(this.getDescription());
+        for (SubSkill subSkill: this.subSkills) {
+            Display.printInEachLine(subSkill.getUpgradeDescription());
+        }
     }
 
     public boolean equals(Skill skill){
