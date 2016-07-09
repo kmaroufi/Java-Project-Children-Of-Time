@@ -12,26 +12,24 @@ public abstract class SubAbility {
     protected Map<String, Integer> gradeOfNecessaryAbilities; // map Of necessary abilities
     protected String upgradeDescription;
 
-    protected ArrayList<ClassName> classOfEffectedObjects = new ArrayList<>(); // Array of className
-    protected Map<ClassName, Tree<?>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
-    protected Map<ClassName, SelectingObjectsDetail<?>> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
-
-    protected Map<ClassName, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
-    protected Map<ClassName, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
-
     //-------------------------------------------------------- Constructors
+
+    public SubAbility(boolean isGlobal, int costOfUpgrade, ArrayList<String> nameOfNecessaryAbilities, Map<String, Integer> gradeOfNecessaryAbilities, String upgradeDescription) {
+        this.isGlobal = isGlobal;
+        this.costOfUpgrade = costOfUpgrade;
+        this.nameOfNecessaryAbilities = nameOfNecessaryAbilities;
+        this.gradeOfNecessaryAbilities = gradeOfNecessaryAbilities;
+        this.upgradeDescription = upgradeDescription;
+    }
+
     public SubAbility(SubAbilityHandler subAbilityHandler) {
         this.setGlobal(subAbilityHandler.isGlobal());
         this.setCostOfUpgrade(subAbilityHandler.getCostOfUpgrade());
         this.setNameOfNecessaryAbilities(subAbilityHandler.getNameOfNecessaryAbilities());
         this.setGradeOfNecessaryAbilities(subAbilityHandler.getGradeOfNecessaryAbilities());
         this.setUpgradeDescription(subAbilityHandler.getUpgradeDescription());
-        this.setClassOfEffectedObjects(subAbilityHandler.getClassOfEffectedObjects());
-        this.setMapOfConditionsByClass(subAbilityHandler.getMapOfConditionsByClass());
-        this.setSelectingEffectedObjectsDetails(subAbilityHandler.getSelectingEffectedObjectsDetails());
-        this.setListOfEffectedObjectsByClass(subAbilityHandler.getListOfEffectedObjectsByClass());
-        this.setMapOfEffectedPropertiesByClass(subAbilityHandler.getMapOfEffectedPropertiesByClass());
     }
+
 
     //-------------------------------------------------------- Functions
 
@@ -78,45 +76,5 @@ public abstract class SubAbility {
 
     public void setUpgradeDescription(String upgradeDescription) {
         this.upgradeDescription = upgradeDescription;
-    }
-
-    public ArrayList<ClassName> getClassOfEffectedObjects() {
-        return classOfEffectedObjects;
-    }
-
-    public void setClassOfEffectedObjects(ArrayList<ClassName> classOfEffectedObjects) {
-        this.classOfEffectedObjects = classOfEffectedObjects;
-    }
-
-    public Map<ClassName, Tree<?>> getMapOfConditionsByClass() {
-        return mapOfConditionsByClass;
-    }
-
-    public void setMapOfConditionsByClass(Map<ClassName, Tree<?>> mapOfConditionsByClass) {
-        this.mapOfConditionsByClass = mapOfConditionsByClass;
-    }
-
-    public Map<ClassName, SelectingObjectsDetail<?>> getSelectingEffectedObjectsDetails() {
-        return selectingEffectedObjectsDetails;
-    }
-
-    public void setSelectingEffectedObjectsDetails(Map<ClassName, SelectingObjectsDetail<?>> selectingEffectedObjectsDetails) {
-        this.selectingEffectedObjectsDetails = selectingEffectedObjectsDetails;
-    }
-
-    public Map<ClassName, ArrayList> getListOfEffectedObjectsByClass() {
-        return listOfEffectedObjectsByClass;
-    }
-
-    public void setListOfEffectedObjectsByClass(Map<ClassName, ArrayList> listOfEffectedObjectsByClass) {
-        this.listOfEffectedObjectsByClass = listOfEffectedObjectsByClass;
-    }
-
-    public Map<ClassName, Map> getMapOfEffectedPropertiesByClass() {
-        return mapOfEffectedPropertiesByClass;
-    }
-
-    public void setMapOfEffectedPropertiesByClass(Map<ClassName, Map> mapOfEffectedPropertiesByClass) {
-        this.mapOfEffectedPropertiesByClass = mapOfEffectedPropertiesByClass;
     }
 }
