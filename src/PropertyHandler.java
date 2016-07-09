@@ -10,8 +10,8 @@ import java.util.Map;
 public class PropertyHandler<T> {
     private String name;
     private boolean isPermanently;
-    private String classOfEffectingObjects;
-    private String classOfEffectedObject;
+    private ClassName classOfEffectingObjects;
+    private ClassName classOfEffectedObject;
     private double constantProperty;
     private SelectingObjectsDetail<T> selectingEffectingObjectsDetails;
     private Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition;
@@ -19,7 +19,7 @@ public class PropertyHandler<T> {
 
     //-------------------------------------------------------------- Constructors
 
-    public PropertyHandler(String name, boolean isPermanently, String classOfEffectingObjects, String classOfEffectedObject, double constantProperty, SelectingObjectsDetail<T> selectingEffectingObjectsDetails, Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition) {
+    public PropertyHandler(String name, boolean isPermanently, ClassName classOfEffectingObjects, ClassName classOfEffectedObject, double constantProperty, SelectingObjectsDetail<T> selectingEffectingObjectsDetails, Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition) {
         this.name = name;
         this.isPermanently = isPermanently;
         this.classOfEffectingObjects = classOfEffectingObjects;
@@ -40,11 +40,11 @@ public class PropertyHandler<T> {
         return isPermanently;
     }
 
-    public String getClassOfEffectingObjects() {
+    public ClassName getClassOfEffectingObjects() {
         return classOfEffectingObjects;
     }
 
-    public String getClassOfEffectedObject() {
+    public ClassName getClassOfEffectedObject() {
         return classOfEffectedObject;
     }
 

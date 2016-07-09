@@ -14,7 +14,7 @@ public class SubSkill extends SubAbility implements Cloneable{
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
 
-    private Map<String, Map> mapOfRemainTimeOfEffectByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = Time of how much this effect will be remain
+    private Map<ClassName, Map> mapOfRemainTimeOfEffectByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = Time of how much this effect will be remain
 
 
     //---------------------------------------------------------------- Constructors
@@ -46,7 +46,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         subSkill.mapOfConditionsByClass = new HashMap<>();
         subSkill.listOfEffectedObjectsByClass = new HashMap<>();
         subSkill.mapOfEffectedPropertiesByClass = new HashMap<>();
-        for (String className: subSkill.classOfEffectedObjects) {
+        for (ClassName className: subSkill.classOfEffectedObjects) {
             subSkill.mapOfRemainTimeOfEffectByClass.put(className, new HashMap<>());
             subSkill.mapOfConditionsByClass.put(className, this.mapOfConditionsByClass.get(className).clone());
             subSkill.listOfEffectedObjectsByClass.put(className, new ArrayList());
@@ -63,7 +63,7 @@ public class SubSkill extends SubAbility implements Cloneable{
 
         boolean isEffectedOnAtLeastOnObject = false;
 
-        for (String className: this.classOfEffectedObjects) {
+        for (ClassName className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.choosingEffectedObjects(className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 if ((this.listOfEffectedObjectsByClass.get(className).contains(effectedObjects.get(i))) && (this.canStackUp == false)) {
@@ -71,7 +71,7 @@ public class SubSkill extends SubAbility implements Cloneable{
                 }
                 isEffectedOnAtLeastOnObject = true;
                 this.mapOfEffectedPropertiesByClass.get(className).put(effectedObjects.get(i), this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i)));
-                for (Property property: this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i))) {
+                for (Property property: (ArrayList<Property>)this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i))) {
                     ArrayList<?> effectingObjects = this.choosingEffectingObjects(new ArrayList<>(), property);
                     double effectValue = property.effect(effectedObjects.get(i), effectingObjects);
                     Display.printInEachLine(userHero.getName() + " just used " + this.relatedSkill.getName() + " on " + effectedObjects.get(i).toString() +  " and effecting on " + property.getName() + " with " + Math.abs(effectValue));
@@ -93,7 +93,7 @@ public class SubSkill extends SubAbility implements Cloneable{
     }
 
     public void removeEffect() {
-        for (String className: this.classOfEffectedObjects) {
+        for (ClassName className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
             ArrayList removedEffectedObjects = new ArrayList();
             for (int i = 0; i < effectedObjects.size(); i++) {
@@ -111,7 +111,7 @@ public class SubSkill extends SubAbility implements Cloneable{
     }
 
     public void reduceTime(String typeOfTime) {
-        for (String className: this.classOfEffectedObjects) {
+        for (ClassName className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 ((Time)this.mapOfRemainTimeOfEffectByClass.get(className).get(effectedObjects.get(i))).reduceTime(typeOfTime);
@@ -119,9 +119,9 @@ public class SubSkill extends SubAbility implements Cloneable{
         }
     }
 
-    private ArrayList<?> choosingEffectedObjects(String classOfEffectedSoldiers) {
-        if (classOfEffectedSoldiers.equals("Hero") && this.selectingEffectedObjectsDetails.containsKey("Hero")) {
-            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Hero");
+    private ArrayList<?> choosingEffectedObjects(ClassName classOfEffectedObjects) {
+        if ((classOfEffectedObjects == ClassName.Hero) && this.selectingEffectedObjectsDetails.containsKey(classOfEffectedObjects)) {
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = (SelectingObjectsDetail<Hero>) this.selectingEffectedObjectsDetails.get(classOfEffectedObjects);
             ArrayList<Hero> effectedHeroes = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
                 effectedHeroes.addAll(GameEngine.listOfHeroes);
@@ -169,8 +169,8 @@ public class SubSkill extends SubAbility implements Cloneable{
             }
             return effectedHeroes;
         }
-        else if (classOfEffectedSoldiers.equals("Enemy") && this.selectingEffectedObjectsDetails.containsKey("Enemy")) {
-            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Enemy");
+        else if ((classOfEffectedObjects == ClassName.Enemy) && this.selectingEffectedObjectsDetails.containsKey(classOfEffectedObjects)) {
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = (SelectingObjectsDetail<Enemy>) this.selectingEffectedObjectsDetails.get(classOfEffectedObjects);
             ArrayList<Enemy> effectedEnemies = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
                 effectedEnemies.addAll(GameEngine.listOfEnemies);
@@ -222,7 +222,7 @@ public class SubSkill extends SubAbility implements Cloneable{
     }
 
     private ArrayList<?> choosingEffectingObjects(ArrayList<String> fromCommandLine, Property property) {
-        if (property.getClassOfEffectingObjects().equals("Hero")) {
+        if (property.getClassOfEffectingObjects() == ClassName.Hero) {
             SelectingObjectsDetail<Hero> selectingObjectsDetail = property.getSelectingEffectingObjectsDetails();
             ArrayList<Hero> effectingHeroes = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
@@ -247,7 +247,7 @@ public class SubSkill extends SubAbility implements Cloneable{
             }
             return effectingHeroes;
         }
-        else if (property.getClassOfEffectingObjects().equals("Enemy")) {
+        else if (property.getClassOfEffectingObjects() == ClassName.Enemy) {
             SelectingObjectsDetail<Enemy> selectingObjectsDetail = property.getSelectingEffectingObjectsDetails();
             ArrayList<Enemy> effectingEnemies = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
@@ -374,11 +374,11 @@ public class SubSkill extends SubAbility implements Cloneable{
         this.requiredMagicPoint = requiredMagicPoint;
     }
 
-    public Map<String, Map> getMapOfRemainTimeOfEffectByClass() {
+    public Map<ClassName, Map> getMapOfRemainTimeOfEffectByClass() {
         return mapOfRemainTimeOfEffectByClass;
     }
 
-    public void setMapOfRemainTimeOfEffectByClass(Map<String, Map> mapOfRemainTimeOfEffectByClass) {
+    public void setMapOfRemainTimeOfEffectByClass(Map<ClassName, Map> mapOfRemainTimeOfEffectByClass) {
         this.mapOfRemainTimeOfEffectByClass = mapOfRemainTimeOfEffectByClass;
     }
 }

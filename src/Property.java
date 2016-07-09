@@ -15,8 +15,8 @@ public class Property<E, T> implements Cloneable {
     private String name;
     private boolean isPermanently;
 
-    private String classOfEffectingObjects;
-    private String classOfEffectedObject;
+    private ClassName classOfEffectingObjects;
+    private ClassName classOfEffectedObject;
 
     private double constantProperty;
 
@@ -234,19 +234,19 @@ public class Property<E, T> implements Cloneable {
         isPermanently = permanently;
     }
 
-    public String getClassOfEffectingObjects() {
+    public ClassName getClassOfEffectingObjects() {
         return classOfEffectingObjects;
     }
 
-    public void setClassOfEffectingObjects(String classOfEffectingObjects) {
+    public void setClassOfEffectingObjects(ClassName classOfEffectingObjects) {
         this.classOfEffectingObjects = classOfEffectingObjects;
     }
 
-    public String getClassOfEffectedObject() {
+    public ClassName getClassOfEffectedObject() {
         return classOfEffectedObject;
     }
 
-    public void setClassOfEffectedObject(String classOfEffectedObject) {
+    public void setClassOfEffectedObject(ClassName classOfEffectedObject) {
         this.classOfEffectedObject = classOfEffectedObject;
     }
 

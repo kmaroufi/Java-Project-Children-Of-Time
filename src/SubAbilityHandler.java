@@ -11,17 +11,17 @@ public class SubAbilityHandler {
     protected Map<String, Integer> gradeOfNecessaryAbilities; // map Of necessary abilities
     protected String upgradeDescription;
 
-    protected ArrayList<String> classOfEffectedObjects = new ArrayList<>(); // Array of className
-    protected Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
-    protected Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
+    protected ArrayList<ClassName> classOfEffectedObjects = new ArrayList<>(); // Array of className
+    protected Map<ClassName, Tree<?>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
+    protected Map<ClassName, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
 
-    protected Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
-    protected Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
+    protected Map<ClassName, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
+    protected Map<ClassName, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
 //    nabayad bezarim null be SubAbility berese!
 
     //-------------------------------------------------------- Constructors
 
-    public SubAbilityHandler(boolean isGlobal, int costOfUpgrade, ArrayList<String> nameOfNecessaryAbilities, Map<String, Integer> gradeOfNecessaryAbilities, String upgradeDescription, ArrayList<String> classOfEffectedObjects, Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass, Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails, Map<String, ArrayList> listOfEffectedObjectsByClass, Map<String, Map> mapOfEffectedPropertiesByClass) {
+    public SubAbilityHandler(boolean isGlobal, int costOfUpgrade, ArrayList<String> nameOfNecessaryAbilities, Map<String, Integer> gradeOfNecessaryAbilities, String upgradeDescription, ArrayList<ClassName> classOfEffectedObjects, Map<ClassName, Tree<?>> mapOfConditionsByClass, Map<ClassName, SelectingObjectsDetail> selectingEffectedObjectsDetails, Map<ClassName, ArrayList> listOfEffectedObjectsByClass, Map<ClassName, Map> mapOfEffectedPropertiesByClass) {
         this.isGlobal = isGlobal;
         this.costOfUpgrade = costOfUpgrade;
         this.nameOfNecessaryAbilities = nameOfNecessaryAbilities;
@@ -35,6 +35,7 @@ public class SubAbilityHandler {
     }
 
     //-------------------------------------------------------- Getter And Setters
+
 
     public boolean isGlobal() {
         return isGlobal;
@@ -56,24 +57,23 @@ public class SubAbilityHandler {
         return upgradeDescription;
     }
 
-    public ArrayList<String> getClassOfEffectedObjects() {
+    public ArrayList<ClassName> getClassOfEffectedObjects() {
         return classOfEffectedObjects;
     }
 
-    public Map<String, Tree<ArrayList<Property>>> getMapOfConditionsByClass() {
+    public Map<ClassName, Tree<?>> getMapOfConditionsByClass() {
         return mapOfConditionsByClass;
     }
 
-    public Map<String, SelectingObjectsDetail> getSelectingEffectedObjectsDetails() {
+    public Map<ClassName, SelectingObjectsDetail> getSelectingEffectedObjectsDetails() {
         return selectingEffectedObjectsDetails;
     }
 
-    public Map<String, ArrayList> getListOfEffectedObjectsByClass() {
+    public Map<ClassName, ArrayList> getListOfEffectedObjectsByClass() {
         return listOfEffectedObjectsByClass;
     }
 
-    public Map<String, Map> getMapOfEffectedPropertiesByClass() {
+    public Map<ClassName, Map> getMapOfEffectedPropertiesByClass() {
         return mapOfEffectedPropertiesByClass;
     }
-
 }

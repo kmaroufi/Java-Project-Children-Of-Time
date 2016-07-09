@@ -48,10 +48,18 @@ public class Tree<T> implements Cloneable{
             return;
         }
         for (Condition condition: node.conditions) {
-            if (node.mapOfConditions.get(condition).data instanceof Property) {
-                newNode.addChild(((T)((Property)node.mapOfConditions.get(condition).data).clone()), condition);
+            T childData = node.mapOfConditions.get(condition).data;
+            if (childData instanceof ArrayList) {
+                ArrayList<Property> array = (ArrayList<Property>) childData;
+                ArrayList<Property> newArray = new ArrayList<>();
+                for (Property property: array) {
+                    newArray.add(property.clone());
+                }
+                newNode.addChild((T) newArray, condition);
             }
-            newNode.addChild(node.mapOfConditions.get(condition).data, condition);
+            else {
+                newNode.addChild(node.mapOfConditions.get(condition).data, condition);
+            }
         }
         for (Condition condition: node.conditions) {
             cloneHelper(node.mapOfConditions.get(condition), newNode.mapOfConditions.get(condition));

@@ -12,12 +12,12 @@ public abstract class SubAbility {
     protected Map<String, Integer> gradeOfNecessaryAbilities; // map Of necessary abilities
     protected String upgradeDescription;
 
-    protected ArrayList<String> classOfEffectedObjects = new ArrayList<>(); // Array of className
-    protected Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
-    protected Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
+    protected ArrayList<ClassName> classOfEffectedObjects = new ArrayList<>(); // Array of className
+    protected Map<ClassName, Tree<?>> mapOfConditionsByClass = new HashMap<>(); // Key = className, Value = treeCondition
+    protected Map<ClassName, SelectingObjectsDetail<?>> selectingEffectedObjectsDetails = new HashMap<>(); // Key = className, Value = Details about how effected objects are selected
 
-    protected Map<String, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
-    protected Map<String, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
+    protected Map<ClassName, ArrayList> listOfEffectedObjectsByClass = new HashMap<>(); // Key = className, Value = list of effected objects
+    protected Map<ClassName, Map> mapOfEffectedPropertiesByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
 
     //-------------------------------------------------------- Constructors
     public SubAbility(SubAbilityHandler subAbilityHandler) {
@@ -80,44 +80,43 @@ public abstract class SubAbility {
         this.upgradeDescription = upgradeDescription;
     }
 
-    public ArrayList<String> getClassOfEffectedObjects() {
+    public ArrayList<ClassName> getClassOfEffectedObjects() {
         return classOfEffectedObjects;
     }
 
-    public void setClassOfEffectedObjects(ArrayList<String> classOfEffectedObjects) {
+    public void setClassOfEffectedObjects(ArrayList<ClassName> classOfEffectedObjects) {
         this.classOfEffectedObjects = classOfEffectedObjects;
     }
 
-    public Map<String, Tree<ArrayList<Property>>> getMapOfConditionsByClass() {
+    public Map<ClassName, Tree<?>> getMapOfConditionsByClass() {
         return mapOfConditionsByClass;
     }
 
-    public void setMapOfConditionsByClass(Map<String, Tree<ArrayList<Property>>> mapOfConditionsByClass) {
+    public void setMapOfConditionsByClass(Map<ClassName, Tree<?>> mapOfConditionsByClass) {
         this.mapOfConditionsByClass = mapOfConditionsByClass;
     }
 
-    public Map<String, SelectingObjectsDetail> getSelectingEffectedObjectsDetails() {
+    public Map<ClassName, SelectingObjectsDetail<?>> getSelectingEffectedObjectsDetails() {
         return selectingEffectedObjectsDetails;
     }
 
-    public void setSelectingEffectedObjectsDetails(Map<String, SelectingObjectsDetail> selectingEffectedObjectsDetails) {
+    public void setSelectingEffectedObjectsDetails(Map<ClassName, SelectingObjectsDetail<?>> selectingEffectedObjectsDetails) {
         this.selectingEffectedObjectsDetails = selectingEffectedObjectsDetails;
     }
 
-    public Map<String, ArrayList> getListOfEffectedObjectsByClass() {
+    public Map<ClassName, ArrayList> getListOfEffectedObjectsByClass() {
         return listOfEffectedObjectsByClass;
     }
 
-    public void setListOfEffectedObjectsByClass(Map<String, ArrayList> listOfEffectedObjectsByClass) {
+    public void setListOfEffectedObjectsByClass(Map<ClassName, ArrayList> listOfEffectedObjectsByClass) {
         this.listOfEffectedObjectsByClass = listOfEffectedObjectsByClass;
     }
 
-    public Map<String, Map> getMapOfEffectedPropertiesByClass() {
+    public Map<ClassName, Map> getMapOfEffectedPropertiesByClass() {
         return mapOfEffectedPropertiesByClass;
     }
 
-    public void setMapOfEffectedPropertiesByClass(Map<String, Map> mapOfEffectedPropertiesByClass) {
+    public void setMapOfEffectedPropertiesByClass(Map<ClassName, Map> mapOfEffectedPropertiesByClass) {
         this.mapOfEffectedPropertiesByClass = mapOfEffectedPropertiesByClass;
     }
-
 }

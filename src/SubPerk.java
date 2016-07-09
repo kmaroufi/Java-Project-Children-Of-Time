@@ -56,7 +56,7 @@ public class SubPerk extends SubAbility{
         subPerk.mapOfConditionsByClass = new HashMap<>();
         subPerk.listOfEffectedObjectsByClass = new HashMap<>();
         subPerk.mapOfEffectedPropertiesByClass = new HashMap<>();
-        for (String className: subPerk.classOfEffectedObjects) {
+        for (ClassName className: subPerk.classOfEffectedObjects) {
             subPerk.mapOfConditionsByClass.put(className, this.mapOfConditionsByClass.get(className).clone());
             subPerk.listOfEffectedObjectsByClass.put(className, new ArrayList());
             subPerk.mapOfEffectedPropertiesByClass.put(className, new HashMap<>());
@@ -72,7 +72,7 @@ public class SubPerk extends SubAbility{
     }
 
     public void removeEffect() {
-        for (String className: this.classOfEffectedObjects) {
+        for (ClassName className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.listOfEffectedObjectsByClass.get(className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 for (Property property: (ArrayList<Property>)this.mapOfEffectedPropertiesByClass.get(className).get(effectedObjects.get(i))) {
@@ -86,7 +86,7 @@ public class SubPerk extends SubAbility{
 
     public void updatePerkEffect(Enemy enemy, Hero hero, Hero userHero) {
         removeEffect();
-        for (String className: this.classOfEffectedObjects) {
+        for (ClassName className: this.classOfEffectedObjects) {
             ArrayList<?> effectedObjects = this.choosingEffectedObjects(enemy, hero, className);
             for (int i = 0; i < effectedObjects.size(); i++) {
                 this.mapOfEffectedPropertiesByClass.get(className).put(effectedObjects.get(i), this.mapOfConditionsByClass.get(className).findCorrectNode(effectedObjects.get(i)));
@@ -100,7 +100,7 @@ public class SubPerk extends SubAbility{
     }
 
     public ArrayList<?> choosingEffectingObjects(Enemy enemy, Hero hero, Property property) {
-        if (property.getClassOfEffectingObjects().equals("Hero")) {
+        if (property.getClassOfEffectingObjects() == ClassName.Hero) {
             SelectingObjectsDetail<Hero> selectingObjectsDetail = property.getSelectingEffectingObjectsDetails();
             ArrayList<Hero> effectingHeroes = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
@@ -126,7 +126,7 @@ public class SubPerk extends SubAbility{
                 }
             }
             return effectingHeroes;
-        } else if (property.getClassOfEffectingObjects().equals("Enemy")) {
+        } else if (property.getClassOfEffectingObjects() == ClassName.Enemy) {
             SelectingObjectsDetail<Enemy> selectingObjectsDetail = property.getSelectingEffectingObjectsDetails();
             ArrayList<Enemy> effectingEnemies = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
@@ -156,9 +156,9 @@ public class SubPerk extends SubAbility{
         return null;
     }
 
-    public ArrayList<?> choosingEffectedObjects(Enemy enemy, Hero hero, String classOfEffectedSoldiers) {       // in method dar moghe attack ya defend call mishavad;
-        if (classOfEffectedSoldiers.equals("Hero") && this.selectingEffectedObjectsDetails.containsKey("Hero")) {
-            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Hero");
+    public ArrayList<?> choosingEffectedObjects(Enemy enemy, Hero hero, ClassName classOfEffectedSoldiers) {       // in method dar moghe attack ya defend call mishavad;
+        if ((classOfEffectedSoldiers == ClassName.Hero) && this.selectingEffectedObjectsDetails.containsKey(ClassName.Hero)) {
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get(ClassName.Hero);
             ArrayList<Hero> effectedHeroes = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
                 effectedHeroes.addAll(GameEngine.listOfHeroes);
@@ -184,8 +184,8 @@ public class SubPerk extends SubAbility{
             }
             return effectedHeroes;
         }
-        else if (classOfEffectedSoldiers.equals("Enemy") && this.selectingEffectedObjectsDetails.containsKey("Enemy")) {
-            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get("Enemy");
+        else if ((classOfEffectedSoldiers == ClassName.Enemy) && this.selectingEffectedObjectsDetails.containsKey(ClassName.Enemy)) {
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = this.selectingEffectedObjectsDetails.get(ClassName.Enemy);
             ArrayList<Enemy> effectedEnemies = new ArrayList<>();
             if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
                 effectedEnemies.addAll(GameEngine.listOfEnemies);

@@ -14,11 +14,11 @@ public class SubSkillHandler {
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
 
-    private Map<String, Map> mapOfRemainTimeOfEffectByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = Time of how much this effect will be remain
+    private Map<ClassName, Map> mapOfRemainTimeOfEffectByClass = new HashMap<>(); // Key = className, Value = { Key = object, Value = Time of how much this effect will be remain
 
     //---------------------------------------------------------------- Constructors
 
-    public SubSkillHandler(Skill relatedSkill, boolean isRepeated, Time timeOfEffecting, int cooldown, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint, Map<String, Map> mapOfRemainTimeOfEffectByClass) {
+    public SubSkillHandler(Skill relatedSkill, boolean isRepeated, Time timeOfEffecting, int cooldown, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint, Map<ClassName, Map> mapOfRemainTimeOfEffectByClass) {
         this.relatedSkill = relatedSkill;
         this.isRepeated = isRepeated;
         this.timeOfEffecting = timeOfEffecting;
@@ -60,7 +60,7 @@ public class SubSkillHandler {
         return requiredMagicPoint;
     }
 
-    public Map<String, Map> getMapOfRemainTimeOfEffectByClass() {
+    public Map<ClassName, Map> getMapOfRemainTimeOfEffectByClass() {
         return mapOfRemainTimeOfEffectByClass;
     }
 }

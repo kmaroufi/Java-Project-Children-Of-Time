@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,6 @@ public class GameEngine {
     private String levelOfGame;                     // level of Game(Easy-Medium-Hard)
     private int[] rewardedXP = new int[4];
     private int[] rewardedMoney = new int[4];
-
 
     //------------------------------------------ Functions
     public void showHeroesTraits(String name){
@@ -533,10 +534,18 @@ public class GameEngine {
             //Fighter Class's Perk: Fight training
             double[] tmp = {0,0,0};
             double[] arr = {30,30,30};
-            ArrayList<Field> variables = new ArrayList<>();
-            Map<String, Double[]> variablesCoefficient = new HashMap<>();
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower",3, false, true, true, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
+            Pair<ArrayList<String>, Map<String, Double>> pair = new Pair<>(new ArrayList<>(), new HashMap<>());
+            Tree<Pair<ArrayList<String>, Map<String, Double>>> effectingObjectsTrieCondition = new Tree<>(pair);
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower",true, null, ClassName.Hero, 30, null, effectingObjectsTrieCondition);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, Object>> properties = new ArrayList<>();
+            properties.add(property);
+            ArrayList<ClassName> classOfEffectedObjects = new ArrayList<>();
+            classOfEffectedObjects.add(ClassName.Hero);
+            Map<ClassName, Tree<?>> mapOfConditionsByClass = new HashMap<>();
+            Tree<ArrayList<Property<Hero, Object>>> heroTrieCondition = new Tree<>(properties);
+            mapOfConditionsByClass.put(ClassName.Hero, heroTrieCondition);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points", classOfEffectedObjects)
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
