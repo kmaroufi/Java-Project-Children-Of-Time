@@ -28,5 +28,67 @@ public class Cell {
         this.center = new Point(this.x + (this.width / 2), this.y + (this.height / 2));
     }
 
+    public void render(Graphics graphics) {
+        this.texture.render(graphics, this.x, this.y);
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+        update();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Point getCenter() {
+        return center;
+    }
+
+    public boolean containsPoint(double x, double y) {
+        Rectangle cellRectangle = new Rectangle(this.x, this.y, this.width, this.height);
+        return cellRectangle.contains(x, y);
+    }
+
 
 }
