@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,9 @@ public class Display {
         System.out.println(sentence);
     }
 
-
+    public static void displayMessage(String message) {
+        JOptionPane.showConfirmDialog(null, message);
+    }
 //    public static PropertyHandler getProperty() {
 //        PropertyHandler propertyHandler = new PropertyHandler();
 //
@@ -100,5 +103,9 @@ public class Display {
         ArrayList<String> inputs = new ArrayList<String>();
         inputs.add(Display.getString());
         return  inputs;
+    }
+
+    public static void main(String[] args) {
+        Display.displayMessage("Hello!");
     }
 }

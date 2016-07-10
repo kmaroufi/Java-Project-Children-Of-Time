@@ -545,7 +545,7 @@ public class GameEngine {
             Map<ClassName, Tree<?>> mapOfConditionsByClass = new HashMap<>();
             Tree<ArrayList<Property<Hero, Object>>> heroTrieCondition = new Tree<>(properties);
             mapOfConditionsByClass.put(ClassName.Hero, heroTrieCondition);
-            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points", classOfEffectedObjects)
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points", classOfEffectedObjects);
             ArrayList<Property<Hero>> properties = new ArrayList<>();
             properties.add(property);
             PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
