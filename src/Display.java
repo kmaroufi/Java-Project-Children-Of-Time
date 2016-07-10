@@ -57,7 +57,7 @@ public class Display {
     }
 
     public static void displayMessage(String message) {
-        JOptionPane.showConfirmDialog(null, message);
+        JOptionPane.showMessageDialog(null, message);
     }
 //    public static PropertyHandler getProperty() {
 //        PropertyHandler propertyHandler = new PropertyHandler();
@@ -105,7 +105,5 @@ public class Display {
         return  inputs;
     }
 
-    public static void main(String[] args) {
-        Display.displayMessage("Hello!");
-    }
+
 }
