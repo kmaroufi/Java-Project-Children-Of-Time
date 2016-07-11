@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -189,6 +190,22 @@ public class ShopFrame extends JFrame implements ActionListener{
         frame.dispose();
     }
 
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.buyButton) {
+//            this.buy();
+            System.out.println("BUY BUTTON");
+        } else if (e.getSource() == this.sellButton) {
+//            this.sellItem;
+        } else if (e.getSource() == this.showMyItemsButton) {
+//            this.showPlayerItems()
+        } else if (e.getSource() == this.addNewItemButton) {
+//            this.addNewItemButton;
+        }
+
+    }
 
 
 }
