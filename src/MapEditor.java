@@ -160,5 +160,60 @@ public class MapEditor extends JPanel{
     }
 
 
+    public void updateTileMap(Graphics graphics){
+        if (this.newMap == null) {
+            return;
+        }
+        this.newMap.render(graphics);
+        this.newMap.paintPlaid(graphics);
+    }
+
+    @Override
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+        updateTileMap(graphics);
+    }
+
+    public void getMapSize(){
+        String size = JOptionPane.showInputDialog(this, "Set Size of The Map(600 - 800 - 1000)");
+        try {
+            this.mapSize = Integer.parseInt(size);
+            if (mapSize != 600 && mapSize != 800 && mapSize != 1000) {
+                JOptionPane.showMessageDialog(null, "Wrong Size");
+                getMapSize();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Wrong Input");
+            getMapSize();
+        }
+    }
+
+
+    public void showFrames(){
+        this.mapName = JOptionPane.showInputDialog(this, "Choose The Name Of Map");
+        //------------------------------------------------------------
+        this.getMapSize();
+        //------------------------------------------------------------
+//        this.checkFrame.addMouseListener(new MouseInput());
+//        this.checkFrame.addKeyListener(new KeyInput());
+//        requestFocus();
+//        this.checkFrame.setSize(500, 80);
+//        this.checkFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.checkFrame.setVisible(true);
+        //------------------------------------------------------------
+        this.newMap = new TileMap("MAP NAME", mapSize);      // NOTICE
+        requestFocus();
+        this.mapFrame.addMouseListener(new MouseInput());
+        requestFocus();
+        this.mapFrame.setSize(mapSize, mapSize);
+        this.setSize(mapSize - 100, mapSize - 100);
+        this.mapFrame.add(this);
+        this.mapFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.mapFrame.setVisible(true);
+    }
+
+
+
+
 
 }
