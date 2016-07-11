@@ -9,6 +9,7 @@ public class SelectingObjectsDetail<T> {
     private boolean isUserSelected;
     private boolean isDependsOnCondition;
     private Tree<Boolean> trieConditions;
+    private int numberOfSelectedObjectsByConditions;
     private boolean isRandomObjectsSelecting;
     private int numberOfRandomSelectedObjects;
     private boolean isSelectedObjectsDependsOnPlayer;
@@ -31,6 +32,7 @@ public class SelectingObjectsDetail<T> {
         setRelatedToAttackDefend(selectingObjectsDetailHandler.isRelatedToAttackDefend());
         setHeroSelected(selectingObjectsDetailHandler.isHeroSelected());
         setEnemySelected(selectingObjectsDetailHandler.isEnemySelected());
+        setNumberOfSelectedObjectsByConditions(selectingObjectsDetailHandler.getNumberOfSelectedObjectsByConditions());
     }
 
 
@@ -52,9 +54,14 @@ public class SelectingObjectsDetail<T> {
         }
         if (this.isDependsOnCondition) {
             ArrayList<T> listOfAllObjects = (ArrayList<T>) this.classOfObjects.getListOfObjects();
+            int counter = 0;
             for (T object: listOfAllObjects) {
                 if (this.trieConditions.findCorrectNode(object)) {
                     selectedObjects.add(object);
+                    counter++;
+                }
+                if (counter == this.numberOfSelectedObjectsByConditions) {
+                    break;
                 }
             }
         }
@@ -206,5 +213,13 @@ public class SelectingObjectsDetail<T> {
 
     public void setUserSelected(boolean userSelected) {
         isUserSelected = userSelected;
+    }
+
+    public int getNumberOfSelectedObjectsByConditions() {
+        return numberOfSelectedObjectsByConditions;
+    }
+
+    public void setNumberOfSelectedObjectsByConditions(int numberOfSelectedObjectsByConditions) {
+        this.numberOfSelectedObjectsByConditions = numberOfSelectedObjectsByConditions;
     }
 }

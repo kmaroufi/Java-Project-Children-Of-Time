@@ -12,9 +12,9 @@ public class SubSkillComponent<T> extends SubAbilityComponent<T> {
 
     //---------------------------------------------------------------- Constructors
 
-    public SubSkillComponent(SubSkill relatedSubSkill, SubAbilityComponentHandler subAbilityComponentHandler) {
+    public SubSkillComponent(SubAbilityComponentHandler subAbilityComponentHandler) {
         super(subAbilityComponentHandler);
-        this.relatedSubSkill = relatedSubSkill;
+
     }
 
     //---------------------------------------------------------------- Functions

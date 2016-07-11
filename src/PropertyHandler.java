@@ -14,12 +14,12 @@ public class PropertyHandler<T> {
     private ClassName classOfEffectedObject;
     private double constantProperty;
     private SelectingObjectsDetail<T> selectingEffectingObjectsDetails;
-    private Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition;
+    private Tree<ArrayList<Pair<String, Double>>> trieCondition;
 
 
     //-------------------------------------------------------------- Constructors
 
-    public PropertyHandler(String name, boolean isPermanently, ClassName classOfEffectingObjects, ClassName classOfEffectedObject, double constantProperty, SelectingObjectsDetail<T> selectingEffectingObjectsDetails, Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition) {
+    public PropertyHandler(String name, boolean isPermanently, ClassName classOfEffectingObjects, ClassName classOfEffectedObject, double constantProperty, SelectingObjectsDetail<T> selectingEffectingObjectsDetails, Tree<ArrayList<Pair<String, Double>>> trieCondition) {
         this.name = name;
         this.isPermanently = isPermanently;
         this.classOfEffectingObjects = classOfEffectingObjects;
@@ -52,7 +52,7 @@ public class PropertyHandler<T> {
         return constantProperty;
     }
 
-    public Tree<Pair<ArrayList<String>, Map<String, Double>>> getTrieCondition() {
+    public Tree<ArrayList<Pair<String, Double>>> getTrieCondition() {
         return trieCondition;
     }
 

@@ -6,7 +6,6 @@ import java.util.Map;
  */
 public class SubSkillHandler {
 
-    private Skill relatedSkill;
     private boolean isRepeated;
     private Time timeOfEffecting;
     private int cooldown;
@@ -18,8 +17,7 @@ public class SubSkillHandler {
 
     //---------------------------------------------------------------- Constructors
 
-    public SubSkillHandler(Skill relatedSkill, boolean isRepeated, Time timeOfEffecting, int cooldown, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint, ArrayList<SubSkillComponent<?>> subSkillComponents) {
-        this.relatedSkill = relatedSkill;
+    public SubSkillHandler(boolean isRepeated, Time timeOfEffecting, int cooldown, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint, ArrayList<SubSkillComponent<?>> subSkillComponents) {
         this.isRepeated = isRepeated;
         this.timeOfEffecting = timeOfEffecting;
         this.cooldown = cooldown;
@@ -32,10 +30,6 @@ public class SubSkillHandler {
 
     //---------------------------------------------------- Getter && Setters
 
-
-    public Skill getRelatedSkill() {
-        return relatedSkill;
-    }
 
     public boolean isRepeated() {
         return isRepeated;

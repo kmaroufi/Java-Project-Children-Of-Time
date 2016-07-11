@@ -9,6 +9,7 @@ public class SelectingObjectsDetailHandler<T> {
     private boolean isUserSelected;
     private boolean isDependsOnCondition;
     private Tree<Boolean> trieConditions;
+    private int numberOfSelectedObjectsByConditions;
     private boolean isRandomObjectsSelecting;
     private int numberOfRandomSelectedObjects;
     private boolean isSelectedObjectsDependsOnPlayer;
@@ -19,12 +20,13 @@ public class SelectingObjectsDetailHandler<T> {
 
     //---------------------------------------------------------------- Constructors
 
-    public SelectingObjectsDetailHandler(ClassName classOfObjects, boolean isAllRelatedObjectsInvolved, boolean isUserSelected, boolean isDependsOnCondition, Tree<Boolean> trieConditions, boolean isRandomObjectsSelecting, int numberOfRandomSelectedObjects, boolean isSelectedObjectsDependsOnPlayer, int numberOfSelectedObjectsByPlayer, boolean isRelatedToAttackDefend, boolean isHeroSelected, boolean isEnemySelected) {
+    public SelectingObjectsDetailHandler(ClassName classOfObjects, boolean isAllRelatedObjectsInvolved, boolean isUserSelected, boolean isDependsOnCondition, Tree<Boolean> trieConditions, int numberOfSelectedObjectsByConditions, boolean isRandomObjectsSelecting, int numberOfRandomSelectedObjects, boolean isSelectedObjectsDependsOnPlayer, int numberOfSelectedObjectsByPlayer, boolean isRelatedToAttackDefend, boolean isHeroSelected, boolean isEnemySelected) {
         this.classOfObjects = classOfObjects;
         this.isAllRelatedObjectsInvolved = isAllRelatedObjectsInvolved;
         this.isUserSelected = isUserSelected;
         this.isDependsOnCondition = isDependsOnCondition;
         this.trieConditions = trieConditions;
+        this.numberOfSelectedObjectsByConditions = numberOfSelectedObjectsByConditions;
         this.isRandomObjectsSelecting = isRandomObjectsSelecting;
         this.numberOfRandomSelectedObjects = numberOfRandomSelectedObjects;
         this.isSelectedObjectsDependsOnPlayer = isSelectedObjectsDependsOnPlayer;
@@ -82,5 +84,9 @@ public class SelectingObjectsDetailHandler<T> {
 
     public boolean isUserSelected() {
         return isUserSelected;
+    }
+
+    public int getNumberOfSelectedObjectsByConditions() {
+        return numberOfSelectedObjectsByConditions;
     }
 }

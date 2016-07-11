@@ -19,7 +19,6 @@ public class SubSkill extends SubAbility implements Cloneable{
 
     public SubSkill(SubSkillHandler subSkillHandler, SubAbilityHandler subAbilityHandler) {
         super(subAbilityHandler);
-        setRelatedSkill(subSkillHandler.getRelatedSkill());
         setRepeated(subSkillHandler.isRepeated());
         setTimeOfEffecting(subSkillHandler.getTimeOfEffecting());
         setCooldown(subSkillHandler.getCooldown());
@@ -115,17 +114,6 @@ public class SubSkill extends SubAbility implements Cloneable{
         Display.printInEachLine(this.upgradeDescription);
     }
 
-    @Override
-    public String toString() {
-        return "SubSkill{" +
-                "timeOfEffecting=" + timeOfEffecting +
-                ", cooldown=" + cooldown +
-                ", requiredEnergyPoint=" + requiredEnergyPoint +
-                ", requiredMagicPoint=" + requiredMagicPoint +
-                ", canStackUp=" + canStackUp +
-                '}';
-    }
-
     //---------------------------------------------------- Getter && Setters
 
 
@@ -199,5 +187,8 @@ public class SubSkill extends SubAbility implements Cloneable{
 
     public void setSubSkillComponents(ArrayList<SubSkillComponent<?>> subSkillComponents) {
         this.subSkillComponents = subSkillComponents;
+        for (SubSkillComponent subSkillComponent: this.subSkillComponents) {
+            subSkillComponent.setRelatedSubSkill(this);
+        }
     }
 }

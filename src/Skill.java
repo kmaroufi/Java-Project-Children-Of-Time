@@ -75,6 +75,10 @@ public class Skill extends Ability implements Cloneable{
         return this.currentNode.getData().getRemainingCooldown();
     }
 
+    public void setRemainingCooldown(int cooldown) {
+        this.currentNode.getData().setCooldown(cooldown);
+    }
+
     public boolean isGlobal() {
 //        return this.subSkills.get(this.currentGrade - 1).isGlobal();
         return this.currentNode.getData().isGlobal();
@@ -144,6 +148,9 @@ public class Skill extends Ability implements Cloneable{
 
     public void setSubSkills(Tree<SubSkill> subSkills) {
         this.subSkills = subSkills;
+        for (SubSkill subSkill: this.subSkills.getDataSet()) {
+            subSkill.setRelatedSkill(this);
+        }
     }
 
     public Tree.Node<SubSkill> getCurrentNode() {

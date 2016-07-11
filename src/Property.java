@@ -20,7 +20,7 @@ public class Property<E, T> implements Cloneable {
 
     private double constantProperty;
 
-    private Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition;
+    private Tree<ArrayList<Pair<String, Double>>> trieCondition;
 
     private SelectingObjectsDetail<T> selectingEffectingObjectsDetails; // Key = Property, Value = Details about how effecting objects are selected
 
@@ -97,12 +97,10 @@ public class Property<E, T> implements Cloneable {
     private void calculateProperty(ArrayList<T> effectingObjects) {
         this.totalEffectOnProperty = this.constantProperty;
         for (T effectingObject : effectingObjects) {
-            Pair<ArrayList<String>, Map<String, Double>> result = this.trieCondition.findCorrectNode(effectingObject);
-            ArrayList<String> variablesName = result.getKey();
-            Map<String, Double> variablesCoefficient = result.getValue();
-            for (String variableName : variablesName) {
-                double variableValue = (double) this.getFieldValue(effectingObject, variableName);
-                double variableCoefficient = variablesCoefficient.get(variableName);
+            ArrayList<Pair<String, Double>> result = this.trieCondition.findCorrectNode(effectingObject);
+            for (Pair<String, Double> variableDetail : result) {
+                double variableValue = (double) this.getFieldValue(effectingObject, variableDetail.getKey());
+                double variableCoefficient = variableDetail.getValue();
                 this.totalEffectOnProperty += variableCoefficient * variableValue;
             }
         }
@@ -250,11 +248,11 @@ public class Property<E, T> implements Cloneable {
         this.classOfEffectedObject = classOfEffectedObject;
     }
 
-    public Tree<Pair<ArrayList<String>, Map<String, Double>>> getTrieCondition() {
+    public Tree<ArrayList<Pair<String, Double>>> getTrieCondition() {
         return trieCondition;
     }
 
-    public void setTrieCondition(Tree<Pair<ArrayList<String>, Map<String, Double>>> trieCondition) {
+    public void setTrieCondition(Tree<ArrayList<Pair<String, Double>>> trieCondition) {
         this.trieCondition = trieCondition;
     }
 

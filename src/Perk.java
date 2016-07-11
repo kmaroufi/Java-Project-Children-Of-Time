@@ -15,7 +15,7 @@ public class Perk extends Ability implements Cloneable{
     private TimeOfCheck timeOfCheck; // Can equals "duringAttackDefend" and "eachActivity"
 
     public enum TimeOfCheck {
-        duringAttackDefend, eachActivity
+        duringAttack, duringDefend, duringAttackDefend, eachActivity
     }
 
     //---------------------------------------------------------- Constructors
