@@ -218,5 +218,20 @@ public class TileMap implements Serializable{
         cell.setMode("StoryBook");
     }
 
+    //---------------------------------------------------------------------- Getter And Setters
+    public Player getPlayer() {
+        return player;
+    }
 
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }
