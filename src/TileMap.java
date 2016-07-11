@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
 import java.io.Serializable;
 
 /**
@@ -106,6 +107,60 @@ public class TileMap implements Serializable{
     }
 
     public void paintMapFeatures(Graphics graphics) {
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                this.cells[i][j].render(graphics);
+            }
+        }
+    }
+
+
+    public boolean hasCollisionwithAllBarriers(Player player) {
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                if (this.cells[i][j].getMode().equals("Barrier") && hasCollision(player, cells[i][j])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasCollision(Player player, Cell barrier) {
+        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getTexture().getWidth(),player.getTexture().getHeight());
+        Area area1 = new Area(playerBounds);
+        Rectangle barrierBounds = new Rectangle(barrier.getX(), barrier.getY(), barrier.getWidth(), barrier.getHeight());
+        Area area2 = new Area(barrierBounds);
+        area1.intersect(area2);
+        if (area1.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void paintPlaid(Graphics graphics) {
+        for(int i = 0;i < SIZE_OF_TABLE;i += SIZE_OF_BARRIER) {
+            for(int j = 0;j < SIZE_OF_TABLE;j += SIZE_OF_BARRIER) {
+                graphics.drawLine(i, j, i, j + SIZE_OF_TABLE);
+                graphics.drawLine(i, j, i + SIZE_OF_TABLE, j);
+            }
+        }
+    }
+
+    public Cell findPlayerCell(Player player) {
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                Rectangle cellRectangle = new Rectangle(cells[i][j].getX(), cells[i][j].getY(), cells[i][j].getWidth(), cells[i][j].getHeight());
+                if (cellRectangle.contains(player.getCenter().getX(), player.getY())) {
+                    return cells[i][j];
+                }
+            }
+        }
+        return null;
+    }
+
+    public void render(Graphics graphics) {
         for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
             for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
                 this.cells[i][j].render(graphics);
