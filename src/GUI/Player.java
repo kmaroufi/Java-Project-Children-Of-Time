@@ -113,6 +113,53 @@ public class Player {
             this.animationMap.get(this.direction).render(graphics, x, y);
         }
     }
+    //------------------------------------------------------------- Getter And Setters
+    public Texture getTexture() {
+        return texture;
+    }
+
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+        this.update();
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+        this.update();
+    }
+
+    public Rectangle getBoundRectangle() {
+        return boundRectangle;
+    }
+
+    public Point getCenter() {
+        return center;
+    }
+
+    public double getVelX() {
+        return velX;
+    }
+
+    public void setVelX(double velX) {
+        this.velX = velX;
+    }
+
+    public double getVelY() {
+        return velY;
+    }
+
+    public void setVelY(double velY) {
+        this.velY = velY;
+    }
 
 
 }
