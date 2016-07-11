@@ -8,7 +8,9 @@ import java.util.Map;
 public class Perk extends Ability implements Cloneable{
     public static Map<String, Perk> listOfPerks = new HashMap<>();
 
-    private ArrayList<SubPerk> subPerks = new ArrayList<>();
+    private Tree<SubPerk> subPerks;
+
+    private Tree.Node<SubPerk> currentNode;
 
     private TimeOfCheck timeOfCheck; // Can equals "duringAttackDefend" and "eachActivity"
 
@@ -18,25 +20,42 @@ public class Perk extends Ability implements Cloneable{
 
     //---------------------------------------------------------- Constructors
 
-    public Perk(AbilityHandler abilityHandler, TimeOfCheck timeOfCheck) {
+    public Perk(AbilityHandler abilityHandler, TimeOfCheck timeOfCheck, Tree<SubPerk> subPerks) {
         super(abilityHandler);
         setTimeOfCheck(timeOfCheck);
+        setSubPerks(subPerks);
+        setCurrentNode(this.subPerks.getRoot());
     }
 
     //---------------------------------------------------------- Functions
 
-    public boolean upgrade(Player player) {
-        boolean canAcquireThisGrade = this.subPerks.get(this.currentGrade).canAcquireThisGrade();
+    public boolean upgrade(Player player, SubPerk subPerk) {
+        boolean canAcquireThisGrade = subPerk.canAcquireThisGrade();
         if (canAcquireThisGrade) {
             this.currentGrade += 1;
             if (this.isAcquire == false) {
                 this.isAcquire = true;
             }
+
             if (this.timeOfCheck != TimeOfCheck.duringAttackDefend) {
                 if (this.currentGrade != 1) {
                     this.removeEffect();
                 }
+                for (Tree.Node<SubPerk> node: this.currentNode.getChildren()) {
+                    if (subPerk == node.getData()) {
+                        this.currentNode = node;
+                        break;
+                    }
+                }
                 this.updatePerkEffect(Hero.mapOfHeroes.get(this.ownerName));
+            }
+            else {
+                for (Tree.Node<SubPerk> node: this.currentNode.getChildren()) {
+                    if (subPerk == node.getData()) {
+                        this.currentNode = node;
+                        break;
+                    }
+                }
             }
             return true;
         }
@@ -52,12 +71,11 @@ public class Perk extends Ability implements Cloneable{
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        perk.subPerks = new ArrayList<>();
-        for (SubPerk subPerk: this.subPerks) {
-            SubPerk newSubPerk = subPerk.clone();
-            newSubPerk.setRelatedPerk(perk);
-            perk.subPerks.add(newSubPerk);
+        Tree<SubPerk> newSubPerks = this.subPerks.clone();
+        for (SubPerk subPerk: newSubPerks.getDataSet()) {
+            subPerk.setRelatedPerk(perk);
         }
+        perk.currentNode = newSubPerks.getRoot();
         return perk;
     }
 
@@ -69,38 +87,46 @@ public class Perk extends Ability implements Cloneable{
     }
 
     public void removeEffect() {
-        this.subPerks.get(this.currentGrade - 1).removeEffect();
+//        this.subPerks.get(this.currentGrade - 1).removeEffect();
+        this.currentNode.getData().removeEffect();
     }
 
-    public void updatePerkEffect(Hero userHero) {
-        this.updatePerkEffect(null, null, userHero);
+    public <T> void updatePerkEffect(T user) {
+        this.updatePerkEffect(null, null, user);
     }
 
-    public void updatePerkEffect(Enemy enemy, Hero hero, Hero userHero) {
-        this.subPerks.get(this.currentGrade - 1).updatePerkEffect(enemy, hero, userHero);
+    public <T> void updatePerkEffect(Enemy enemy, Hero hero, T user) {
+//        this.subPerks.get(this.currentGrade - 1).updatePerkEffect(enemy, hero, userHero);
+        this.currentNode.getData().updatePerkEffect(enemy, hero, user);
     }
 
     public void showDescription(){
-        Display.printInEachLine(this.getDescription());
-        for (SubPerk subPerk: this.subPerks) {
-            Display.printInEachLine(subPerk.upgradeDescription);
-        }
+        Display.printInEachLine("Perk description: " + this.getDescription());
+        Display.printInEachLine("Current grade description: " + this.currentNode.getData().getUpgradeDescription());
     }
 
     public String getThisGradeDescription(){
-        return (this.subPerks.get(this.currentGrade - 1).getUpgradeDescription());
+        return this.currentNode.getData().getUpgradeDescription();
     }
 
-    public int getCostOfUpgrade() {
-        return this.subPerks.get(this.currentGrade).getCostOfUpgrade();
-    }
+//    public int getCostOfUpgrade() {
+//        return this.subPerks.get(this.currentGrade).getCostOfUpgrade();
+//    }
+//
+//    public int getCostOfUpgrade(int grade) {
+//        if (grade > this.numberOfGrades) {
+//            Display.printInEachLine("Out of bound grade!");
+//            return -1;
+//        }
+//        return this.subPerks.get(grade - 1).getCostOfUpgrade();
+//    }
 
-    public int getCostOfUpgrade(int grade) {
-        if (grade > this.numberOfGrades) {
-            Display.printInEachLine("Out of bound grade!");
-            return -1;
+    public ArrayList<SubPerk> getNextGradeSubPerks() {
+        ArrayList<SubPerk> nextGradeSubPerks = new ArrayList<>();
+        for (Tree.Node<SubPerk> node: this.currentNode.getChildren()) {
+            nextGradeSubPerks.add(node.getData());
         }
-        return this.subPerks.get(grade - 1).getCostOfUpgrade();
+        return nextGradeSubPerks;
     }
 
     //---------------------------------------------------------- Getter && Setters
@@ -113,4 +139,22 @@ public class Perk extends Ability implements Cloneable{
         this.timeOfCheck = timeOfCheck;
     }
 
+    public Tree<SubPerk> getSubPerks() {
+        return subPerks;
+    }
+
+    public void setSubPerks(Tree<SubPerk> subPerks) {
+        this.subPerks = subPerks;
+        for (SubPerk subPerk: this.subPerks.getDataSet()) {
+            subPerk.setRelatedPerk(this);
+        }
+    }
+
+    public Tree.Node<SubPerk> getCurrentNode() {
+        return currentNode;
+    }
+
+    public void setCurrentNode(Tree.Node<SubPerk> currentNode) {
+        this.currentNode = currentNode;
+    }
 }

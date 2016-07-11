@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,12 +11,16 @@ import java.util.Random;
 public class Skill extends Ability implements Cloneable{
     public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
 
-    private ArrayList<SubSkill> subSkills = new ArrayList<>();
+    private Tree<SubSkill> subSkills;
+
+    private Tree.Node<SubSkill> currentNode;
 
     //---------------------------------------------------------------- Constructors
 
-    public Skill(AbilityHandler abilityHandler) {
+    public Skill(AbilityHandler abilityHandler, Tree<SubSkill> subSkills) {
         super(abilityHandler);
+        setSubSkills(subSkills);
+        setCurrentNode(subSkills.getRoot());
     }
 
     //---------------------------------------------------------------- Functions
@@ -26,68 +32,82 @@ public class Skill extends Ability implements Cloneable{
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        skill.subSkills = new ArrayList<>();
-        for (SubSkill subSkill: this.subSkills) {
-            SubSkill newSubSkill = subSkill.clone();
-            newSubSkill.setRelatedSkill(skill);
-            skill.subSkills.add(newSubSkill);
+        Tree<SubSkill> newSubSkills = this.subSkills.clone();
+        for (SubSkill subSkill: newSubSkills.getDataSet()) {
+            subSkill.setRelatedSkill(skill);
         }
+        skill.currentNode = newSubSkills.getRoot();
         return skill;
-    }       // Creates A Copy of This Object (Skill)
+    }
 
     public void useSkill(Hero userHero) {
-        this.subSkills.get(currentGrade - 1).useSkill(userHero);
+//        this.subSkills.get(currentGrade - 1).useSkill(userHero);
+        this.currentNode.getData().useSkill(userHero);
     }
 
     public void removeEffect() {
-        this.subSkills.get(currentGrade - 1).removeEffect();
+//        this.subSkills.get(currentGrade - 1).removeEffect();
+        this.currentNode.getData().removeEffect();
     }
 
     public void reduceTime(String typeOfTime) {
-        this.subSkills.get(currentGrade - 1).reduceTime(typeOfTime);
+//        this.subSkills.get(currentGrade - 1).reduceTime(typeOfTime);
+        this.currentNode.getData().reduceTime(typeOfTime);
     }
 
     public double getRequiredEnergyPoint() {
-        return this.subSkills.get(this.currentGrade - 1).getRequiredEnergyPoint();
+//        return this.subSkills.get(this.currentGrade - 1).getRequiredEnergyPoint();
+        return this.currentNode.getData().getRequiredEnergyPoint();
     }
 
     public double getRequiredMagicPoint() {
-        return this.subSkills.get(this.currentGrade - 1).getRequiredMagicPoint();
+//        return this.subSkills.get(this.currentGrade - 1).getRequiredMagicPoint();
+        return this.currentNode.getData().getRequiredMagicPoint();
     }
 
     public double getCooldown() {
-        return this.subSkills.get(this.currentGrade - 1).getCooldown();
+//        return this.subSkills.get(this.currentGrade - 1).getCooldown();
+        return this.currentNode.getData().getCooldown();
     }
 
     public int getRemainingCooldown() {
-        return this.subSkills.get(this.currentGrade - 1).getRemainingCooldown();
+//        return this.subSkills.get(this.currentGrade - 1).getRemainingCooldown();
+        return this.currentNode.getData().getRemainingCooldown();
     }
 
     public boolean isGlobal() {
-        return this.subSkills.get(this.currentGrade - 1).isGlobal();
+//        return this.subSkills.get(this.currentGrade - 1).isGlobal();
+        return this.currentNode.getData().isGlobal();
     }
 
-    public int getCostOfUpgrade() {
-        return this.subSkills.get(this.currentGrade).getCostOfUpgrade();
-    }
+//    public int getCostOfUpgrade() {
+//        return this.subSkills.get(this.currentGrade).getCostOfUpgrade();
+//    }
+//
+//    public int getCostOfUpgrade(int grade) {
+//        if (grade > this.numberOfGrades) {
+//            Display.printInEachLine("Out of bound grade!");
+//            return -1;
+//        }
+//        return this.subSkills.get(grade - 1).getCostOfUpgrade();
+//    }
 
-    public int getCostOfUpgrade(int grade) {
-        if (grade > this.numberOfGrades) {
-            Display.printInEachLine("Out of bound grade!");
-            return -1;
+    public ArrayList<SubSkill> getNextGradeSubSkills() {
+        ArrayList<SubSkill> nextGradeSubSkills = new ArrayList<>();
+        for (Tree.Node<SubSkill> node: this.currentNode.getChildren()) {
+            nextGradeSubSkills.add(node.getData());
         }
-        return this.subSkills.get(grade - 1).getCostOfUpgrade();
+        return nextGradeSubSkills;
     }
 
     public void showDescription(){
-        Display.printInEachLine(this.getDescription());
-        for (SubSkill subSkill: this.subSkills) {
-            Display.printInEachLine(subSkill.getUpgradeDescription());
-        }
+        Display.printInEachLine("Skill description: " + this.getDescription());
+        Display.printInEachLine("Current grade description: " + this.currentNode.getData().getUpgradeDescription());
     }
 
     public String getThisGradeDescription(){
-        return (this.subSkills.get(this.currentGrade - 1).getUpgradeDescription());
+//        return this.subSkills.get(this.currentGrade - 1).getUpgradeDescription();
+        return this.currentNode.getData().getUpgradeDescription();
     }
 
     public boolean equals(Skill skill){
@@ -97,12 +117,18 @@ public class Skill extends Ability implements Cloneable{
         return false;
     }
 
-    public boolean upgrade(Player player) {
-        boolean canAcquireThisGrade = this.subSkills.get(currentGrade).canAcquireThisGrade();
+    public boolean upgrade(Player player, SubSkill subSkill) {
+        boolean canAcquireThisGrade = subSkill.canAcquireThisGrade();
         if (canAcquireThisGrade) {
             this.currentGrade += 1;
             if (this.isAcquire == false)
                 this.isAcquire = true;
+            for (Tree.Node<SubSkill> node: this.currentNode.getChildren()) {
+                if (subSkill == node.getData()) {
+                    this.currentNode = node;
+                    break;
+                }
+            }
             return true;
         }
         else {
@@ -112,11 +138,19 @@ public class Skill extends Ability implements Cloneable{
     //---------------------------------------------------- Getter && Setters
 
 
-    public ArrayList<SubSkill> getSubSkills() {
+    public Tree<SubSkill> getSubSkills() {
         return subSkills;
     }
 
-    public void setSubSkills(ArrayList<SubSkill> subSkills) {
+    public void setSubSkills(Tree<SubSkill> subSkills) {
         this.subSkills = subSkills;
+    }
+
+    public Tree.Node<SubSkill> getCurrentNode() {
+        return currentNode;
+    }
+
+    public void setCurrentNode(Tree.Node<SubSkill> currentNode) {
+        this.currentNode = currentNode;
     }
 }

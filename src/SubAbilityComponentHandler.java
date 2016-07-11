@@ -6,7 +6,7 @@ import java.util.Map;
  */
 public class SubAbilityComponentHandler<T> {
     protected ClassName classOfEffectedObjects;
-    protected Tree<ArrayList<Property<T, ?>>> mapOfConditions;
+    protected Tree<ArrayList<Property<T, ?>>> trieConditions;
     protected SelectingObjectsDetail<T> selectingEffectedObjectsDetails;
 
     protected ArrayList<T> listOfEffectedObjects;
@@ -14,9 +14,9 @@ public class SubAbilityComponentHandler<T> {
 
     //-------------------------------------------------------- Constructors
 
-    public SubAbilityComponentHandler(ClassName classOfEffectedObjects, Tree<ArrayList<Property<T, ?>>> mapOfConditions, SelectingObjectsDetail<T> selectingEffectedObjectsDetails, ArrayList<T> listOfEffectedObjects, Map<T, ArrayList<Property<T, ?>>> mapOfEffectedProperties) {
+    public SubAbilityComponentHandler(ClassName classOfEffectedObjects, Tree<ArrayList<Property<T, ?>>> trieConditions, SelectingObjectsDetail<T> selectingEffectedObjectsDetails, ArrayList<T> listOfEffectedObjects, Map<T, ArrayList<Property<T, ?>>> mapOfEffectedProperties) {
         this.classOfEffectedObjects = classOfEffectedObjects;
-        this.mapOfConditions = mapOfConditions;
+        this.trieConditions = trieConditions;
         this.selectingEffectedObjectsDetails = selectingEffectedObjectsDetails;
         this.listOfEffectedObjects = listOfEffectedObjects;
         this.mapOfEffectedProperties = mapOfEffectedProperties;
@@ -30,8 +30,8 @@ public class SubAbilityComponentHandler<T> {
         return classOfEffectedObjects;
     }
 
-    public Tree<ArrayList<Property<T, ?>>> getMapOfConditions() {
-        return mapOfConditions;
+    public Tree<ArrayList<Property<T, ?>>> getTrieConditions() {
+        return trieConditions;
     }
 
     public SelectingObjectsDetail<T> getSelectingEffectedObjectsDetails() {

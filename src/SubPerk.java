@@ -12,9 +12,8 @@ public class SubPerk extends SubAbility{
 
     //---------------------------------------------------------- Constructors
 
-    public SubPerk(SubAbilityHandler subAbilityHandler, Perk relatedPerk, ArrayList<SubPerkComponent<?>> subPerkComponents) {
+    public SubPerk(SubAbilityHandler subAbilityHandler, ArrayList<SubPerkComponent<?>> subPerkComponents) {
         super(subAbilityHandler);
-        setRelatedPerk(relatedPerk);
         setSubPerkComponents(subPerkComponents);
     }
 
@@ -79,10 +78,10 @@ public class SubPerk extends SubAbility{
         }
     }
 
-    public void updatePerkEffect(Enemy enemy, Hero hero, Hero userHero) {
+    public <T> void updatePerkEffect(Enemy enemy, Hero hero, T user) {
         removeEffect();
         for (SubPerkComponent subPerkComponent: this.subPerkComponents) {
-            subPerkComponent.effect(enemy, hero, userHero);
+            subPerkComponent.effect(enemy, hero, user);
         }
     }
 
@@ -106,5 +105,8 @@ public class SubPerk extends SubAbility{
 
     public void setSubPerkComponents(ArrayList<SubPerkComponent<?>> subPerkComponents) {
         this.subPerkComponents = subPerkComponents;
+        for (SubPerkComponent subPerkComponent: this.subPerkComponents) {
+            subPerkComponent.setRelatedSubPerk(this);
+        }
     }
 }

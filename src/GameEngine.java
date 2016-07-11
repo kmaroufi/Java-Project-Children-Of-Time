@@ -532,51 +532,41 @@ public class GameEngine {
     private void creatingDefaultPerks() {
         {
             //Fighter Class's Perk: Fight training
-            double[] tmp = {0,0,0};
-            double[] arr = {30,30,30};
-            Pair<ArrayList<String>, Map<String, Double>> pair = new Pair<>(new ArrayList<>(), new HashMap<>());
-            Tree<Pair<ArrayList<String>, Map<String, Double>>> effectingObjectsTrieCondition = new Tree<>(pair);
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower",true, null, ClassName.Hero, 30, null, effectingObjectsTrieCondition);
+//            Pair<ArrayList<String>, Map<String, Double>> pair = new Pair<>(new ArrayList<>(), new HashMap<>());
+//            Tree<Pair<ArrayList<String>, Map<String, Double>>> effectingObjectsTrieCondition = new Tree<>();
+            PropertyHandler propertyHandler = new PropertyHandler("attackPower",true, null, ClassName.Hero, 30, null, null);
             Property<Hero, Object> property = new Property<>(propertyHandler);
-            ArrayList<Property<Hero, Object>> properties = new ArrayList<>();
+            ArrayList<Property<Hero, ?>>  properties = new ArrayList<>();
             properties.add(property);
-            ArrayList<ClassName> classOfEffectedObjects = new ArrayList<>();
-            classOfEffectedObjects.add(ClassName.Hero);
-            Map<ClassName, Tree<?>> mapOfConditionsByClass = new HashMap<>();
-            Tree<ArrayList<Property<Hero, Object>>> heroTrieCondition = new Tree<>(properties);
-            mapOfConditionsByClass.put(ClassName.Hero, heroTrieCondition);
-            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points", classOfEffectedObjects)
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            PerkMode<Hero> perkMode = new PerkMode<>(properties, 0);
-            ArrayList<PerkMode<Hero>> listOfModes = new ArrayList<>();
-            listOfModes.add(perkMode);
-            Condition condition = new Condition();
-            ArrayList<Condition> listOfConditions = new ArrayList<>();
-            listOfConditions.add(condition);
-            Map<Condition, PerkMode<Hero>> mapOfCondition = new HashMap<>();
-            mapOfCondition.put(condition, perkMode);
-            int[] costOfUpgrade = {2,3,4};
-//            Map<Integer, ArrayList<String>> nameOfNecessaryAbilities = new HashMap<>();
-//            ArrayList<String> tmpArr = new ArrayList<>();
-//            tmpArr.add("Fight Training");
-//            nameOfNecessaryAbilities.put(1, tmpArr); nameOfNecessaryAbilities.put(2, tmpArr); nameOfNecessaryAbilities.put(3, tmpArr);
-//            Map<Integer, Map<String, Integer>> gradeOfNecessaryAbilities = new HashMap<>();
-//            Map<String, Integer> tmpMap = new HashMap<>();
-//            tmpMap.put("Fight Training", 1);
-//            gradeOfNecessaryAbilities.put(1, tmpMap);
-//            tmpMap.put("Fight Training", 2);
-//            gradeOfNecessaryAbilities.put(2, tmpMap);
-//            tmpMap.put("Fight Training", 3);
-//            gradeOfNecessaryAbilities.put(3, tmpMap);
-            String[] upgradeDescription = new String[3];
-            upgradeDescription[0] = "Upgrade1: +30 attack power for 2 xp points";
-            upgradeDescription[1] = "Upgrade2: +30 attack power for 3 xp points";
-            upgradeDescription[2] = "Upgrade3: +30 attack power for 4 xp points";
-            String description = "Permanently increases attack power";
-            AbilityHandler<Hero> abilityHandler = new AbilityHandler<>("Fight training", null, true, false, false, 1, 3, null, false, false, costOfUpgrade, new HashMap<>(), new HashMap<>(), upgradeDescription, description, false);
-            Perk<Hero> FightTraining = new Perk<>(abilityHandler, listOfConditions, listOfModes, mapOfCondition, false, false, "JustAfterUpgrading");
-            this.addNewPerk(FightTraining);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+//            Tree.Node<ArrayList<Property<Hero, ?>>> node = trieConditions.getRoot();
+//            Condition condition = new Condition();
+//            node.addChild(properties, condition);
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points");
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = subPerk1.clone();
+            subPerk2.setCostOfUpgrade(3);
+            subPerk2.setUpgradeDescription("Upgrade2: +30 attack power for 3 xp points");
+            SubPerk subPerk3 = subPerk1.clone();
+            subPerk3.setCostOfUpgrade(4);
+            subPerk3.setUpgradeDescription("Upgrade3: +30 attack power for 4 xp points");
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            node.addChild(subPerk2, new Condition());
+            node = node.getChildren().get(0);
+            node.addChild(subPerk3, new Condition());
+            AbilityHandler abilityHandler = new AbilityHandler("Fight training", null ,3, "Permanently increases attack power");
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            this.addNewPerk(perk);
         }
         {
             //Fighter Class's Perk: Work out

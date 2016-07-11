@@ -25,7 +25,7 @@ public class SubAbilityComponent<T> {
 
     public SubAbilityComponent(SubAbilityComponentHandler subAbilityComponentHandler) {
         this.setClassOfEffectedObjects(subAbilityComponentHandler.getClassOfEffectedObjects());
-        this.setTrieConditions(subAbilityComponentHandler.getMapOfConditions());
+        this.setTrieConditions(subAbilityComponentHandler.getTrieConditions());
         this.setSelectingEffectedObjectsDetails(subAbilityComponentHandler.getSelectingEffectedObjectsDetails());
         this.setListOfEffectedObjects(subAbilityComponentHandler.getListOfEffectedObjects());
         this.setMapOfEffectedProperties(subAbilityComponentHandler.getMapOfEffectedProperties());

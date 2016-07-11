@@ -115,6 +115,17 @@ public class SubSkill extends SubAbility implements Cloneable{
         Display.printInEachLine(this.upgradeDescription);
     }
 
+    @Override
+    public String toString() {
+        return "SubSkill{" +
+                "timeOfEffecting=" + timeOfEffecting +
+                ", cooldown=" + cooldown +
+                ", requiredEnergyPoint=" + requiredEnergyPoint +
+                ", requiredMagicPoint=" + requiredMagicPoint +
+                ", canStackUp=" + canStackUp +
+                '}';
+    }
+
     //---------------------------------------------------- Getter && Setters
 
 

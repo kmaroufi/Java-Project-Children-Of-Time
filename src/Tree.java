@@ -1,5 +1,3 @@
-import javafx.util.Pair;
-
 import java.util.*;
 import java.util.Map;
 
@@ -8,42 +6,49 @@ import java.util.Map;
  */
 public class Tree<T> implements Cloneable{
     private Node<T> root;
+    private ArrayList<T> dataSet = new ArrayList<>();
 
-    public Tree(T rootData) {
-        root = new Node<T>(rootData);
+    public Tree() {
+        root = new Node<T>(null, this);
     }
 
     public <U> T findCorrectNode(U object) {
         Node<T> node = this.root;
         while (node.conditions != null) {
+            boolean isOnOfConditionsTrue = false;
             for (Condition condition: node.conditions) {
                 if (condition.checkCondition(object)) {
                     node = node.mapOfConditions.get(condition);
+                    isOnOfConditionsTrue = true;
                     break;
                 }
             }
-            try {
-                throw new Exception();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (isOnOfConditionsTrue == false) {
+                break;
             }
+//            try {
+//                throw new Exception();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
         return (T) node.data;
     }
 
     public Tree<T> clone() {
-        Tree<T> tree = null;
+        Tree<T> newTree = null;
         try {
-            tree = (Tree<T>) super.clone();
+            newTree = (Tree<T>) super.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        tree.root = new Node<>(this.root.data);
-        cloneHelper(this.root, tree.root);
-        return tree;
+        newTree.root = new Node<>(null, newTree);
+        newTree.dataSet = new ArrayList<>();
+        cloneHelper(newTree, this.root, newTree.root);
+        return newTree;
     }
 
-    public void cloneHelper(Node<T> node, Node<T> newNode) {
+    public void cloneHelper(Tree<T> newTree, Node<T> node, Node<T> newNode) {
         if (node.conditions == null) {
             return;
         }
@@ -56,29 +61,51 @@ public class Tree<T> implements Cloneable{
                     newArray.add(property.clone());
                 }
                 newNode.addChild((T) newArray, condition);
-            }
-            else {
+                newTree.dataSet.add((T) newArray);
+            } else if (childData instanceof SubSkill) {
+                SubSkill subSkill = (SubSkill) childData;
+                subSkill = subSkill.clone();
+                newNode.addChild((T) subSkill, condition);
+                newTree.dataSet.add((T) subSkill);
+            } else if (childData instanceof SubPerk) {
+                SubPerk subPerk = (SubPerk) childData;
+                subPerk = subPerk.clone();
+                newNode.addChild((T) subPerk, condition);
+                newTree.dataSet.add((T) subPerk);
+            } else {
                 newNode.addChild(node.mapOfConditions.get(condition).data, condition);
+                newTree.dataSet.add(node.mapOfConditions.get(condition).data);
             }
         }
         for (Condition condition: node.conditions) {
-            cloneHelper(node.mapOfConditions.get(condition), newNode.mapOfConditions.get(condition));
+            cloneHelper(newTree, node.mapOfConditions.get(condition), newNode.mapOfConditions.get(condition));
         }
     }
 
-    public static class Node<T> implements Cloneable{
-        private T data;
-        private ArrayList<Condition> conditions = null;
-        private Map<Condition, Node<T>> mapOfConditions = null;
-        private Node<T> parent = null;
-        private ArrayList<Node<T>> children = null;
+    public ArrayList<T> getDataSet() {
+        return dataSet;
+    }
 
-        Node(T data) {
+    public Node<T> getRoot() {
+        return root;
+    }
+
+    public static class Node<E> implements Cloneable{
+        private E data;
+        private Tree<E> relatedTree;
+        private ArrayList<Condition> conditions = null;
+        private Map<Condition, Node<E>> mapOfConditions = null;
+        private Node<E> parent = null;
+        private ArrayList<Node<E>> children = null;
+
+        Node(E data, Tree<E> relatedTree) {
             this.data = data;
+            this.relatedTree = relatedTree;
+            this.relatedTree.dataSet.add(data);
         }
 
-        public void addChild(T data, Condition condition) {
-            Node<T> child = new Node<>(data);
+        public void addChild(E data, Condition condition) {
+            Node<E> child = new Node<>(data, this.relatedTree);
             child.parent = this;
             if (this.conditions == null) {
                 this.conditions = new ArrayList<>();
@@ -92,6 +119,18 @@ public class Tree<T> implements Cloneable{
             this.conditions.add(condition);
             this.mapOfConditions.put(condition, child);
             this.children.add(child);
+        }
+
+        public ArrayList<Node<E>> getChildren() {
+            return children;
+        }
+
+        public E getData() {
+            return data;
+        }
+
+        public void setData(E data) {
+            this.data = data;
         }
     }
 }

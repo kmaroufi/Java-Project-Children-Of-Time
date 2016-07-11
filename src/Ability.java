@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public abstract class Ability {
+public class Ability {
 
     public static Map<String, String> listOfAbilities = new HashMap<>();
 
@@ -30,7 +30,7 @@ public abstract class Ability {
 
     //-------------------------------------------------------- Functions
 
-    abstract public boolean upgrade(Player player);
+
 
     //-------------------------------------------------------- Getter And Setters
 

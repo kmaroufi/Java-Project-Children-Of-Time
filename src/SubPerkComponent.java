@@ -10,9 +10,8 @@ public class SubPerkComponent<T> extends SubAbilityComponent<T> {
 
     //---------------------------------------------------------------- Constructors
 
-    public SubPerkComponent(SubSkill relatedSubSkill, SubAbilityComponentHandler subAbilityComponentHandler) {
+    public SubPerkComponent(SubAbilityComponentHandler subAbilityComponentHandler) {
         super(subAbilityComponentHandler);
-        this.relatedSubPerk = relatedSubPerk;
     }
 
     //---------------------------------------------------------------- Functions
@@ -42,88 +41,16 @@ public class SubPerkComponent<T> extends SubAbilityComponent<T> {
         this.mapOfEffectedProperties.clear();
     }
 
-    public void effect(Enemy enemy, Hero hero, Hero userHero) {
-        ArrayList<T> effectedObjects = this.choosingEffectedObjects(enemy, hero);
+    public <E> void effect(Enemy enemy, Hero hero, E user) {
+        ArrayList<T> effectedObjects = this.selectingEffectedObjectsDetails.selectingObjects(enemy, hero, (T) user);
         for (int i = 0; i < effectedObjects.size(); i++) {
             this.mapOfEffectedProperties.put((T) effectedObjects.get(i), this.trieConditions.findCorrectNode(effectedObjects.get(i)));
             for (Property property : this.trieConditions.findCorrectNode(effectedObjects.get(i))) {
-                ArrayList<?> effectingObjects = this.choosingEffectingObjects(enemy, hero, property);
+                ArrayList<?> effectingObjects = property.getSelectingEffectingObjectsDetails().selectingObjects(enemy, hero, user);
                 property.effect(effectedObjects.get(i), effectingObjects);
             }
             this.listOfEffectedObjects.add(effectedObjects.get(i));
         }
-    }
-
-    public ArrayList<?> choosingEffectingObjects(Enemy enemy, Hero hero, Property property) {
-        return property.getSelectingEffectingObjectsDetails().selectingObjects(enemy, hero);
-//        if (property.getClassOfEffectingObjects() == ClassName.Hero) {
-//            SelectingObjectsDetail<?> selectingObjectsDetail = property.getSelectingEffectingObjectsDetails();
-//            ArrayList effectingObjects = new ArrayList<>();
-//            if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
-//                effectingObjects.addAll(selectingObjectsDetail.getClassOfObjects().getListOfObjects());
-//                return effectingObjects;
-//            }
-//            if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
-//                effectingObjects.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
-//            }
-//            if (selectingObjectsDetail.isRandomObjectsSelecting()) {
-//                ArrayList objects = new ArrayList<>();
-//                objects.addAll(selectingObjectsDetail.getClassOfObjects().getListOfObjects());
-//                for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
-//                    Random random = new Random();
-//                    int randomIndex = random.nextInt(objects.size());
-//                    effectingObjects.add(objects.get(randomIndex));
-//                    objects.remove(randomIndex);
-//                }
-//            }
-//            if (selectingObjectsDetail.isRelatedToAttackDefend()) {
-//                if (selectingObjectsDetail.getClassOfObjects() == ClassName.Hero) {
-//                    if (selectingObjectsDetail.isHeroEffecting()) {
-//                        effectingObjects.add((T) hero);
-//                    }
-//                } else if (selectingObjectsDetail.getClassOfObjects() == ClassName.Enemy) {
-//                    if (selectingObjectsDetail.isEnemyEffecting()) {
-//                        effectingObjects.add((T) enemy);
-//                    }
-//                }
-//            }
-//            return effectingObjects;
-//        }
-    }
-
-    public ArrayList<T> choosingEffectedObjects(Enemy enemy, Hero hero) {       // in method dar moghe attack ya defend call mishavad;
-        return this.selectingEffectedObjectsDetails.selectingObjects(enemy, hero);
-//        SelectingObjectsDetail<T> selectingObjectsDetail = this.selectingEffectedObjectsDetails;
-//        ArrayList<T> effectedObjects = new ArrayList<>();
-//        if (selectingObjectsDetail.isAllRelatedObjectsInvolved()) {
-//            effectedObjects.addAll((ArrayList<? extends T>) this.classOfEffectedObjects.getListOfObjects());
-//            return effectedObjects;
-//        }
-//        if (selectingObjectsDetail.isObjectsWereSelectedByDefault()) {
-//            effectedObjects.addAll(selectingObjectsDetail.getSelectedObjectsByDefault());
-//        }
-//        if (selectingObjectsDetail.isRandomObjectsSelecting()) {
-//            ArrayList<T> objects = new ArrayList<>();
-//            objects.addAll((ArrayList<? extends T>) this.classOfEffectedObjects.getListOfObjects());
-//            for (int i = 0; i < selectingObjectsDetail.getNumberOfRandomSelectedObjects(); i++) {
-//                Random random = new Random();
-//                int randomIndex = random.nextInt(objects.size());
-//                effectedObjects.add(objects.get(randomIndex));
-//                objects.remove(randomIndex);
-//            }
-//        }
-//        if (selectingObjectsDetail.isRelatedToAttackDefend()) {
-//            if (this.classOfEffectedObjects == ClassName.Hero) {
-//                if (selectingObjectsDetail.isHeroEffected()) {
-//                    effectedObjects.add((T) hero);
-//                }
-//            } else if (this.classOfEffectedObjects == ClassName.Enemy) {
-//                if (selectingObjectsDetail.isEnemyEffected()) {
-//                    effectedObjects.add((T) enemy);
-//                }
-//            }
-//        }
-//        return effectedObjects;
     }
 
     //---------------------------------------------------- Getter && Setters

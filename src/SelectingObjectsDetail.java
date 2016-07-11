@@ -6,40 +6,61 @@ import java.util.*;
 public class SelectingObjectsDetail<T> {
     private ClassName classOfObjects;
     private boolean isAllRelatedObjectsInvolved;
-    private boolean isObjectsWereSelectedByDefault;
-    private ArrayList<T> selectedObjectsByDefault;
+    private boolean isUserSelected;
+    private boolean isDependsOnCondition;
+    private Tree<Boolean> trieConditions;
     private boolean isRandomObjectsSelecting;
     private int numberOfRandomSelectedObjects;
     private boolean isSelectedObjectsDependsOnPlayer;
     private int numberOfSelectedObjectsByPlayer;
     private boolean isRelatedToAttackDefend;
-    private boolean isHeroEffected;
-    private boolean isHeroEffecting;
-    private boolean isEnemyEffected;
-    private boolean isEnemyEffecting;
+    private boolean isHeroSelected;
+    private boolean isEnemySelected;
 
     //---------------------------------------------------------------- Constructors
+
+    public SelectingObjectsDetail(SelectingObjectsDetailHandler selectingObjectsDetailHandler) {
+        setClassOfObjects(selectingObjectsDetailHandler.getClassOfObjects());
+        setAllRelatedObjectsInvolved(selectingObjectsDetailHandler.isAllRelatedObjectsInvolved());
+        setDependsOnCondition(selectingObjectsDetailHandler.isDependsOnCondition());
+        setTrieConditions(selectingObjectsDetailHandler.getTrieConditions());
+        setRandomObjectsSelecting(selectingObjectsDetailHandler.isRandomObjectsSelecting());
+        setNumberOfRandomSelectedObjects(selectingObjectsDetailHandler.getNumberOfRandomSelectedObjects());
+        setSelectedObjectsDependsOnPlayer(selectingObjectsDetailHandler.isSelectedObjectsDependsOnPlayer());
+        setNumberOfSelectedObjectsByPlayer(selectingObjectsDetailHandler.getNumberOfSelectedObjectsByPlayer());
+        setRelatedToAttackDefend(selectingObjectsDetailHandler.isRelatedToAttackDefend());
+        setHeroSelected(selectingObjectsDetailHandler.isHeroSelected());
+        setEnemySelected(selectingObjectsDetailHandler.isEnemySelected());
+    }
 
 
 
     //---------------------------------------------------------------- Functions
 
     public ArrayList<T> selectingObjects() {
-        return selectingObjects(null, null);
+        return selectingObjects(null, null, null);
     }
 
-    public ArrayList<T> selectingObjects(Enemy enemy, Hero hero) {
+    public ArrayList<T> selectingObjects(Enemy enemy, Hero hero, T user) {
         ArrayList<T> selectedObjects = new ArrayList<>();
         if (this.isAllRelatedObjectsInvolved) {
-            selectedObjects.addAll((ArrayList<? extends T>) this.classOfObjects.getListOfObjects());
+            selectedObjects.addAll((ArrayList<T>) this.classOfObjects.getListOfObjects());
             return selectedObjects;
         }
-        if (this.isObjectsWereSelectedByDefault()) {
-            selectedObjects.addAll(this.selectedObjectsByDefault);
+        if (isUserSelected) {
+            selectedObjects.add(user);
+        }
+        if (this.isDependsOnCondition) {
+            ArrayList<T> listOfAllObjects = (ArrayList<T>) this.classOfObjects.getListOfObjects();
+            for (T object: listOfAllObjects) {
+                if (this.trieConditions.findCorrectNode(object)) {
+                    selectedObjects.add(object);
+                }
+            }
         }
         if (this.isRandomObjectsSelecting) {
             ArrayList<T> objects = new ArrayList<>();
-            objects.addAll((ArrayList<? extends T>) this.classOfObjects.getListOfObjects());
+            objects.addAll((ArrayList<T>) this.classOfObjects.getListOfObjects());
             for (int i = 0; i < this.getNumberOfRandomSelectedObjects(); i++) {
                 Random random = new Random();
                 int randomIndex = random.nextInt(objects.size());
@@ -49,11 +70,11 @@ public class SelectingObjectsDetail<T> {
         }
         if (this.isRelatedToAttackDefend()) {
             if (this.classOfObjects == ClassName.Hero) {
-                if (this.isHeroEffected() || this.isHeroEffecting()) {
+                if (this.isHeroSelected) {
                     selectedObjects.add((T) hero);
                 }
             } else if (this.classOfObjects == ClassName.Enemy) {
-                if (this.isEnemyEffected() || this.isEnemyEffecting) {
+                if (this.isEnemySelected) {
                     selectedObjects.add((T) enemy);
                 }
             }
@@ -99,20 +120,20 @@ public class SelectingObjectsDetail<T> {
         this.classOfObjects = classOfObjects;
     }
 
-    public boolean isObjectsWereSelectedByDefault() {
-        return isObjectsWereSelectedByDefault;
+    public boolean isDependsOnCondition() {
+        return isDependsOnCondition;
     }
 
-    public void setObjectsWereSelectedByDefault(boolean objectsWereSelectedByDefault) {
-        isObjectsWereSelectedByDefault = objectsWereSelectedByDefault;
+    public void setDependsOnCondition(boolean dependsOnCondition) {
+        isDependsOnCondition = dependsOnCondition;
     }
 
-    public ArrayList<T> getSelectedObjectsByDefault() {
-        return selectedObjectsByDefault;
+    public Tree<Boolean> getTrieConditions() {
+        return trieConditions;
     }
 
-    public void setSelectedObjectsByDefault(ArrayList<T> selectedObjectsByDefault) {
-        this.selectedObjectsByDefault = selectedObjectsByDefault;
+    public void setTrieConditions(Tree<Boolean> trieConditions) {
+        this.trieConditions = trieConditions;
     }
 
     public boolean isAllRelatedObjectsInvolved() {
@@ -163,35 +184,27 @@ public class SelectingObjectsDetail<T> {
         isRelatedToAttackDefend = relatedToAttackDefend;
     }
 
-    public boolean isHeroEffected() {
-        return isHeroEffected;
+    public boolean isHeroSelected() {
+        return isHeroSelected;
     }
 
-    public void setHeroEffected(boolean heroEffected) {
-        isHeroEffected = heroEffected;
+    public void setHeroSelected(boolean heroSelected) {
+        isHeroSelected = heroSelected;
     }
 
-    public boolean isHeroEffecting() {
-        return isHeroEffecting;
+    public boolean isEnemySelected() {
+        return isEnemySelected;
     }
 
-    public void setHeroEffecting(boolean heroEffecting) {
-        isHeroEffecting = heroEffecting;
+    public void setEnemySelected(boolean enemySelected) {
+        isEnemySelected = enemySelected;
     }
 
-    public boolean isEnemyEffected() {
-        return isEnemyEffected;
+    public boolean isUserSelected() {
+        return isUserSelected;
     }
 
-    public void setEnemyEffected(boolean enemyEffected) {
-        isEnemyEffected = enemyEffected;
-    }
-
-    public boolean isEnemyEffecting() {
-        return isEnemyEffecting;
-    }
-
-    public void setEnemyEffecting(boolean enemyEffecting) {
-        isEnemyEffecting = enemyEffecting;
+    public void setUserSelected(boolean userSelected) {
+        isUserSelected = userSelected;
     }
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by asus-pc on 5/5/2016.
@@ -33,11 +34,11 @@ public class Condition {
 //    private double maximumEnergyPoints; // change to maximumEnergyPoint
 //    private int maximumEnergyPointsStatus;
     private String nameOfField;
-    private double valueOfField;
-    private double statusOfFields;
+    private Object valueOfField;
+    private int statusOfFields;
     private boolean isAlwaysTrue;
 
-    public Condition(String nameOfField, double valueOfField, double statusOfFields, boolean isAlwaysTrue) {
+    public Condition(String nameOfField, Object valueOfField, int statusOfFields, boolean isAlwaysTrue) {
         this.nameOfField = nameOfField;
         this.valueOfField = valueOfField;
         this.statusOfFields = statusOfFields;
@@ -51,15 +52,15 @@ public class Condition {
     public <T> boolean checkCondition(T object) {
         if (this.isAlwaysTrue)
             return true;
-        double currentFieldValue = (double) Property.getFieldValue(object, this.nameOfField);
-        double conditionFieldValue = this.valueOfField;
-        if ((this.statusOfFields == 1) && (currentFieldValue > conditionFieldValue)) {
+        Object currentFieldValue = Property.getFieldValue(object, this.nameOfField);
+        Object conditionFieldValue = this.valueOfField;
+        if ((this.statusOfFields == 1) && ((double)currentFieldValue > (double)conditionFieldValue)) {
             return true;
         }
-        if ((this.statusOfFields == 0) && (currentFieldValue == conditionFieldValue)) {
+        if ((this.statusOfFields == 0) && (currentFieldValue.equals(conditionFieldValue))) {
             return true;
         }
-        if ((this.statusOfFields == -1) && (currentFieldValue < conditionFieldValue)) {
+        if ((this.statusOfFields == -1) && ((double)currentFieldValue < (double)conditionFieldValue)) {
             return true;
         }
         return false;
