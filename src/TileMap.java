@@ -169,4 +169,54 @@ public class TileMap implements Serializable{
     }
 
 
+    public Cell findCellWithThisCoordinate (double x, double y) {
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                if (cells[i][j].containsPoint(x, y)) {
+                    return cells[i][j];
+                }
+            }
+        }
+        return null;
+    }
+
+    //--------------------------------------------------------------------- Add Features to map
+
+    public void addBarrier(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("Barrier");
+    }
+    public void addShop(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("Shop");
+    }
+    public void addWarRoom(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("WarRoom");
+    }
+    public void addSkillRoom(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("SkillRoom");
+    }
+    public void addDoor(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
+        cell.setMode("Door");
+    }
+    public void addFinalWar(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("FinalWar");
+    }
+    public void addEmptyTile(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("EmptyTile");
+    }
+    public void addBook(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        cell.setMode("StoryBook");
+    }
+
+
 }
