@@ -1,5 +1,7 @@
 package GUI;
 
+import Input.KeyInput;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
