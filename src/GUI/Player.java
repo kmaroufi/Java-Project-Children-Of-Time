@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class Player {
     private boolean isMoving;
     private String direction;
 
-
+    //------------------------------------------------------ Constructors
     public Player(String imageName, int x, int y) {
         this.texture = new Texture(imageName);
         this.x = x;
@@ -28,5 +29,90 @@ public class Player {
         this.boundRectangle = new Rectangle(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
         this.center = new Point((int) (boundRectangle.getX() + (boundRectangle.getWidth() / 2)), (int) (boundRectangle.getY() + (boundRectangle.getHeight() / 2)));
     }
+//    public Player(String imageName, int x, int y, Texture... textures) {
+//        this.texture = new Texture(imageName);
+//        this.x = x;
+//        this.y = y;
+//        this.animationMap = new HashMap<>();
+//        this.boundRectangle = new Rectangle(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
+//        this.animation = new Animation(5, textures);
+//    }
+    public Player(String imageName, int x, int y, Texture[] upTextures, Texture[] rightTextures, Texture[] leftTextures, Texture[] downTextures) {
+        this.texture = new Texture(imageName);
+        this.x = x;
+        this.y = y;
+        this.animationMap = new HashMap<>();
+        this.animationMap.put("Up", new Animation(5, upTextures));
+        this.animationMap.put("Right", new Animation(5, rightTextures));
+        this.animationMap.put("Down", new Animation(5, downTextures));
+        this.animationMap.put("Left", new Animation(5, leftTextures));
+        this.boundRectangle = new Rectangle(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
+    }
+
+    //------------------------------------------------------ Functions
+
+
+    public void tick(){
+
+        if (KeyInput.wasPressed(KeyEvent.VK_RIGHT)) {
+            right();
+        } else if (KeyInput.wasPressed(KeyEvent.VK_LEFT)) {
+            left();
+        } else if (KeyInput.wasPressed(KeyEvent.VK_UP)) {
+            up();
+        } else if (KeyInput.wasPressed(KeyEvent.VK_DOWN)) {
+            down();
+        }
+        if (velX != 0 || velY != 0) {
+            this.isMoving = true;
+        } else{
+            this.isMoving = false;
+        }
+//        else if (KeyInput.wasPressed(KeyEvent.VK_ENTER)) {
+//            enter();
+//        }
+        if(this.direction != null) {
+            this.animationMap.get(this.direction).run();
+        }
+    }
+
+    public void up() {
+        velX = 0;
+        velY = -1 * CONST_VELOCITY;
+        this.direction = "Up";
+    }
+
+    public void down() {
+        velX = 0;
+        velY = CONST_VELOCITY;
+        this.direction = "Down";
+    }
+
+    public void right() {
+        velX = CONST_VELOCITY;
+        velY = 0;
+        this.direction = "Right";
+    }
+
+    public void left() {
+        velX = -1 * CONST_VELOCITY;
+        velY = 0;
+        this.direction = "Left";
+    }
+
+    public void update(){
+        this.boundRectangle.setBounds(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
+        this.center = new Point((int) (boundRectangle.getX() + (boundRectangle.getWidth() / 2)), (int) (boundRectangle.getY() + (boundRectangle.getHeight() / 2)));
+    }
+
+    public void render(Graphics graphics, int x, int y) {
+        if (!isMoving){
+            this.texture.render(graphics, x, y);
+        }
+        else if(this.direction != null){
+            this.animationMap.get(this.direction).render(graphics, x, y);
+        }
+    }
+
 
 }
