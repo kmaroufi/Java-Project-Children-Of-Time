@@ -1,3 +1,5 @@
+import GUI.Display;
+
 import java.util.Random;
 
 /**

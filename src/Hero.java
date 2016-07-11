@@ -1,10 +1,10 @@
 /**
  * Created by Future on 5/6/2016.
  */
-import java.lang.reflect.Field;
+import GUI.Display;
+
 import java.util.*;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class Hero extends HeroClass {

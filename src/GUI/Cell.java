@@ -1,3 +1,7 @@
+package GUI;
+
+import GUI.Texture;
+
 import java.awt.*;
 
 /**

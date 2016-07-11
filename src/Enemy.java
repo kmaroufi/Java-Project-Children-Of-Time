@@ -1,6 +1,8 @@
 /**
  * Created by Future on 5/6/2016.
  */
+import GUI.Display;
+
 import java.lang.reflect.Field;
 import java.util.*;
 public abstract class Enemy extends Soldier{

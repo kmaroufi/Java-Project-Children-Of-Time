@@ -1,3 +1,5 @@
+package GUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -196,8 +198,8 @@ public class MapEditor extends JPanel implements ActionListener{
         //------------------------------------------------------------
         this.getMapSize();
         //------------------------------------------------------------
-//        this.checkFrame.addMouseListener(new MouseInput());
-//        this.checkFrame.addKeyListener(new KeyInput());
+//        this.checkFrame.addMouseListener(new Input.MouseInput());
+//        this.checkFrame.addKeyListener(new Input.KeyInput());
 //        requestFocus();
 //        this.checkFrame.setSize(500, 80);
 //        this.checkFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

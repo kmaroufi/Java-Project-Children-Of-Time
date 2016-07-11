@@ -1,10 +1,9 @@
+import GUI.Display;
 import javafx.util.Pair;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  * Created by asus-pc on 5/6/2016.
@@ -1284,7 +1283,7 @@ public class GameEngine {
                                     break;
                                 }
 //                                else if(itemProperties.getItem().getRemainingTime() > 0){
-//                                    Display.printInEachLine("Your desired item is still in cooldown");
+//                                    GUI.Display.printInEachLine("Your desired item is still in cooldown");
 //                                    break;
 //                                }
                                 if (hero.getCurrentEnergyPoint() >= item.getRequiredEnergyPoint() && hero.getCurrentMagic() >= item.getRequiredMagicPoint()) {
