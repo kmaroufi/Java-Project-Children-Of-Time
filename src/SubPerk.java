@@ -8,13 +8,16 @@ public class SubPerk extends SubAbility{
 
     private Perk relatedPerk;
 
+    private String name;
+
     private ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
 
     //---------------------------------------------------------- Constructors
 
-    public SubPerk(SubAbilityHandler subAbilityHandler, ArrayList<SubPerkComponent<?>> subPerkComponents) {
+    public SubPerk(SubAbilityHandler subAbilityHandler, ArrayList<SubPerkComponent<?>> subPerkComponents, String name) {
         super(subAbilityHandler);
         setSubPerkComponents(subPerkComponents);
+        setName(name);
     }
 
     //---------------------------------------------------------- Functions
@@ -108,5 +111,13 @@ public class SubPerk extends SubAbility{
         for (SubPerkComponent subPerkComponent: this.subPerkComponents) {
             subPerkComponent.setRelatedSubPerk(this);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

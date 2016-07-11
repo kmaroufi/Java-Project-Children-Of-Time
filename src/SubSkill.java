@@ -13,6 +13,8 @@ public class SubSkill extends SubAbility implements Cloneable{
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
 
+    private String name;
+
     private ArrayList<SubSkillComponent<?>> subSkillComponents = new ArrayList<>();
 
     //---------------------------------------------------------------- Constructors
@@ -27,6 +29,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         setRequiredEnergyPoint(subSkillHandler.getRequiredEnergyPoint());
         setRequiredMagicPoint(subSkillHandler.getRequiredMagicPoint());
         setSubSkillComponents(subSkillHandler.getSubSkillComponents());
+        setName(subSkillHandler.getName());
     }
 
     //---------------------------------------------------------------- Functions
@@ -190,5 +193,13 @@ public class SubSkill extends SubAbility implements Cloneable{
         for (SubSkillComponent subSkillComponent: this.subSkillComponents) {
             subSkillComponent.setRelatedSubSkill(this);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

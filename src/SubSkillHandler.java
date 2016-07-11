@@ -13,20 +13,22 @@ public class SubSkillHandler {
     private int requiredEnergyPoint;
     private int requiredMagicPoint;
 
+    private String name;
+
     private ArrayList<SubSkillComponent<?>> subSkillComponents = new ArrayList<>();
 
     //---------------------------------------------------------------- Constructors
 
-    public SubSkillHandler(boolean isRepeated, Time timeOfEffecting, int cooldown, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint, ArrayList<SubSkillComponent<?>> subSkillComponents) {
+    public SubSkillHandler(boolean isRepeated, Time timeOfEffecting, int cooldown, boolean canStackUp, int requiredEnergyPoint, int requiredMagicPoint, String name, ArrayList<SubSkillComponent<?>> subSkillComponents) {
         this.isRepeated = isRepeated;
         this.timeOfEffecting = timeOfEffecting;
         this.cooldown = cooldown;
         this.canStackUp = canStackUp;
         this.requiredEnergyPoint = requiredEnergyPoint;
         this.requiredMagicPoint = requiredMagicPoint;
+        this.name = name;
         this.subSkillComponents = subSkillComponents;
     }
-
 
     //---------------------------------------------------- Getter && Setters
 
@@ -57,5 +59,9 @@ public class SubSkillHandler {
 
     public ArrayList<SubSkillComponent<?>> getSubSkillComponents() {
         return subSkillComponents;
+    }
+
+    public String getName() {
+        return name;
     }
 }

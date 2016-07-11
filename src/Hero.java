@@ -156,15 +156,15 @@ public class Hero extends HeroClass {
         }
     }
 
-    public boolean upgradeAbility(Player player,String abilityName){
+    public <T> boolean upgradeAbility(Player player, String abilityName, T sub){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
             if(this.skills.get(i).getName().equals(abilityName)){
-                return this.skills.get(i).upgrade(player);
+                return this.skills.get(i).upgrade(player, (SubSkill) sub);
             }
         }
         for(int i = 0;i < this.perks.size();i++){                  //finding perk with abilityName
             if(this.perks.get(i).getName().equals(abilityName)){
-                return this.perks.get(i).upgrade(player);
+                return this.perks.get(i).upgrade(player, (SubPerk) sub);
             }
         }
         return false;

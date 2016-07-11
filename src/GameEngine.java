@@ -187,29 +187,42 @@ public class GameEngine {
                         boolean heroExistence = false;
                         boolean perkExistence = false;
                         boolean skillExistence = false;
+                        boolean subPerkExistence = false;
+                        boolean subSkillExistence = false;
+                        boolean isOnMaxLevel = false;
                         for (Hero hero : this.listOfHeroes) {
                             if (command.contains(hero.getName())) {
                                 for (Perk perk : hero.getPerks()) {
                                     if (command.contains(perk.getName())) {
                                         if (perk.getCurrentGrade() == perk.getNumberOfGrades()) {
                                             Display.printInEachLine("This ability cannot be upgraded anymore");
-                                        } else if (perk.getCostOfUpgrade() > this.player.getXp()) {
-                                            Display.printInEachLine("Your experience is insufficient");
-                                        } else if (perk.isAcquire() == false) {
-                                            if (hero.upgradeAbility(this.player, perk.getName())) {
-                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade(1));
-                                                Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                            }
-                                            else {
-                                                Display.printInEachLine("Required abilities aren't acquired");
-                                            }
-                                        } else {
-                                            if (hero.upgradeAbility(this.player, perk.getName())) {
-                                                this.player.setXp(this.player.getXp() - perk.getCostOfUpgrade(perk.getCurrentGrade()));
-                                                Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                            }
-                                            else {
-                                                Display.printInEachLine("Required abilities aren't acquired");
+                                            isOnMaxLevel = true;
+                                        }
+                                        else {
+                                            for (SubPerk subPerk: perk.getNextGradeSubPerks()) {
+                                                if (command.contains(subPerk.getName())) {
+                                                    if (subPerk.getCostOfUpgrade() > this.player.getXp()) {
+                                                        Display.printInEachLine("Your experience is insufficient");
+                                                    } else if (perk.isAcquire() == false) {
+                                                        if (hero.upgradeAbility(this.player, perk.getName(), subPerk)) {
+                                                            this.player.setXp(this.player.getXp() - subPerk.getCostOfUpgrade());
+                                                            Display.printInEachLine(perk.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                                        }
+                                                        else {
+                                                            Display.printInEachLine("Required abilities aren't acquired");
+                                                        }
+                                                    } else {
+                                                        if (hero.upgradeAbility(this.player, perk.getName(), subPerk)) {
+                                                            this.player.setXp(this.player.getXp() - subPerk.getCostOfUpgrade());
+                                                            Display.printInEachLine(perk.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                                        }
+                                                        else {
+                                                            Display.printInEachLine("Required abilities aren't acquired");
+                                                        }
+                                                    }
+                                                    subPerkExistence = true;
+                                                    break;
+                                                }
                                             }
                                         }
                                         perkExistence = true;
@@ -220,23 +233,33 @@ public class GameEngine {
                                     if (command.contains(skill.getName())) {
                                         if (skill.getCurrentGrade() == skill.getNumberOfGrades()) {
                                             Display.printInEachLine("This ability cannot be upgraded anymore");
-                                        } else if (skill.getCostOfUpgrade() > this.player.getXp()) {
-                                            Display.printInEachLine("Your experience is insufficient");
-                                        } else if (skill.isAcquire == false) {
-                                            if (hero.upgradeAbility(this.player, skill.getName())) {
-                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade(1));
-                                                Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
-                                            }
-                                            else {
-                                                Display.printInEachLine("Required abilities aren't acquired");
-                                            }
-                                        } else {
-                                            if (hero.upgradeAbility(this.player, skill.getName())) {
-                                                this.player.setXp(this.player.getXp() - skill.getCostOfUpgrade(skill.getCurrentGrade()));
-                                                Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
-                                            }
-                                            else {
-                                                Display.printInEachLine("Required abilities aren't acquired");
+                                            isOnMaxLevel = true;
+                                        }
+                                        else {
+                                            for (SubSkill subSkill: skill.getNextGradeSubSkills()) {
+                                                if (command.contains(subSkill.getName())) {
+                                                    if (subSkill.getCostOfUpgrade() > this.player.getXp()) {
+                                                        Display.printInEachLine("Your experience is insufficient");
+                                                    } else if (skill.isAcquire == false) {
+                                                        if (hero.upgradeAbility(this.player, skill.getName(), subSkill)) {
+                                                            this.player.setXp(this.player.getXp() - subSkill.getCostOfUpgrade());
+                                                            Display.printInEachLine(skill.getName() + " acquired " + "successfully, your current experience is: " + player.getXp());
+                                                        }
+                                                        else {
+                                                            Display.printInEachLine("Required abilities aren't acquired");
+                                                        }
+                                                    } else {
+                                                        if (hero.upgradeAbility(this.player, skill.getName(), subSkill)) {
+                                                            this.player.setXp(this.player.getXp() - subSkill.getCostOfUpgrade());
+                                                            Display.printInEachLine(skill.getName() + " upgraded " + "successfully, your current experience is: " + player.getXp());
+                                                        }
+                                                        else {
+                                                            Display.printInEachLine("Required abilities aren't acquired");
+                                                        }
+                                                    }
+                                                    subSkillExistence = true;
+                                                    break;
+                                                }
                                             }
                                         }
                                         skillExistence = true;
@@ -251,6 +274,8 @@ public class GameEngine {
                             Display.printInEachLine("This hero doesn't exist!");
                         } else if ((perkExistence == false) && (skillExistence == false)) {
                             Display.printInEachLine("This hero has't this ability!");
+                        } else if ((isOnMaxLevel == false) && (subPerkExistence == false) && (subSkillExistence == false)) {
+                            Display.printInEachLine("This ability has't grade with this name!");
                         }
                     }
 //                            if (command.contains("Acquire " + perk.getName() + " for ")) {
@@ -387,7 +412,7 @@ public class GameEngine {
         //Adding Items
         Shop shop = new Shop();
 
-        this.creatingDefaultItems(shop);
+//        this.creatingDefaultItems(shop);
 
         this.rewardedXP[0] = 20;
         this.rewardedXP[1] = 25;
@@ -401,135 +426,135 @@ public class GameEngine {
 
         Player.imortalityPotion = 3;
     }
-
-    private void creatingDefaultItems(Shop shop) {
-        {
-            // toughen
-            double[] tmp = {0,0,0};
-            double[] arr = {20,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health";
-            Item item = new Item("Thoughen", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-            ItemProperties itemProperties = new ItemProperties(item, 2, 0, 4);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Guide
-            double[] tmp = {0,0,0};
-            double[] arr = {20,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic";
-            Item item = new Item("Guide", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Defy
-            double[] tmp = {0,0,0};
-            double[] arr = {8,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power";
-            Item item = new Item("Defy", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Sword
-            double[] tmp = {0,0,0};
-            double[] arr = {80,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars";
-            Item item = new Item("Sword", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Energy Boots
-            double[] tmp = {0,0,0};
-            double[] arr = {1,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars";
-            Item item = new Item("Energy Boots", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 20);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Armor Boots
-            double[] tmp = {0,0,0};
-            double[] arr = {200,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars";
-            Item item = new Item("Armor", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Magic stick
-            double[] tmp = {0,0,0};
-            double[] arr = {150,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars";
-            Item item = new Item("Magic stick", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 28);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Health potion
-            double[] tmp = {0,0,0};
-            double[] arr = {100,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars";
-            Item item = new Item("Health potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
-            shop.listOfItems.add(itemProperties);
-        }
-        {
-            // Magic potion
-            double[] tmp = {0,0,0};
-            double[] arr = {50,0,0};
-            PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-            Property<Hero> property = new Property<>(propertyHandler);
-            property.setCurrentGrade(1);
-            ArrayList<Property<Hero>> properties = new ArrayList<>();
-            properties.add(property);
-            String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars";
-            Item item = new Item("Magic potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
-            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
-            shop.listOfItems.add(itemProperties);
-        }
-    }
+//
+//    private void creatingDefaultItems(Shop shop) {
+//        {
+//            // toughen
+//            double[] tmp = {0,0,0};
+//            double[] arr = {20,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health";
+//            Item item = new Item("Thoughen", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
+//            ItemProperties itemProperties = new ItemProperties(item, 2, 0, 4);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Guide
+//            double[] tmp = {0,0,0};
+//            double[] arr = {20,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic";
+//            Item item = new Item("Guide", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Defy
+//            double[] tmp = {0,0,0};
+//            double[] arr = {8,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power";
+//            Item item = new Item("Defy", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Sword
+//            double[] tmp = {0,0,0};
+//            double[] arr = {80,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars";
+//            Item item = new Item("Sword", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Energy Boots
+//            double[] tmp = {0,0,0};
+//            double[] arr = {1,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars";
+//            Item item = new Item("Energy Boots", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 20);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Armor Boots
+//            double[] tmp = {0,0,0};
+//            double[] arr = {200,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars";
+//            Item item = new Item("Armor", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Magic stick
+//            double[] tmp = {0,0,0};
+//            double[] arr = {150,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars";
+//            Item item = new Item("Magic stick", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 28);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Health potion
+//            double[] tmp = {0,0,0};
+//            double[] arr = {100,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("currentHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars";
+//            Item item = new Item("Health potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//        {
+//            // Magic potion
+//            double[] tmp = {0,0,0};
+//            double[] arr = {50,0,0};
+//            PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
+//            Property<Hero> property = new Property<>(propertyHandler);
+//            property.setCurrentGrade(1);
+//            ArrayList<Property<Hero>> properties = new ArrayList<>();
+//            properties.add(property);
+//            String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars";
+//            Item item = new Item("Magic potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
+//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
+//            shop.listOfItems.add(itemProperties);
+//        }
+//    }
 
     private void creatingDefaultPerks() {
         {
@@ -546,9 +571,9 @@ public class GameEngine {
             ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points");
-            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-                    propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 60, null, null);
+            propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 60, null, null);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -561,7 +586,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade2: +30 attack power for 3 xp points");
-            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
             propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 90, null, null);
             property = new Property<>(propertyHandler);
@@ -576,7 +601,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 4, new ArrayList<>(), new HashMap<>(), "Upgrade3: +30 attack power for 4 xp points");
-            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents, "3");
 
             Tree<SubPerk> subPerkTree = new Tree<>();
             Tree.Node<SubPerk> node = subPerkTree.getRoot();
@@ -605,7 +630,7 @@ public class GameEngine {
             ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade 1: +50 maximum health for 2 xp points");
-            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
             propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 100, null, null);
             property = new Property<>(propertyHandler);
@@ -620,7 +645,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: +50 maximum health for 3 xp points");
-            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
             propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 150, null, null);
             property = new Property<>(propertyHandler);
@@ -635,7 +660,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 4, new ArrayList<>(), new HashMap<>(), "Upgrade 3: +50 maximum health for 4 xp points");
-            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents, "3");
 
             Tree<SubPerk> subPerkTree = new Tree<>();
             Tree.Node<SubPerk> node = subPerkTree.getRoot();
@@ -664,7 +689,7 @@ public class GameEngine {
             ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +1 energy point for 2 xp points");
-            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
             propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 2, null, null);
             property = new Property<>(propertyHandler);
@@ -679,7 +704,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade2: +1 energy point for 3 xp points");
-            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
             propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 3, null, null);
             property = new Property<>(propertyHandler);
@@ -694,7 +719,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 4, new ArrayList<>(), new HashMap<>(), "Upgrade3: +1 energy point for 4 xp points");
-            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents, "3");
 
             Tree<SubPerk> subPerkTree = new Tree<>();
             Tree.Node<SubPerk> node = subPerkTree.getRoot();
@@ -723,7 +748,7 @@ public class GameEngine {
             ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade 1: +50 maximum magic for 2 xp points");
-            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
             propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 100, null, null);
             property = new Property<>(propertyHandler);
@@ -738,7 +763,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: +50 maximum magic for 3 xp points");
-            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
             propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 150, null, null);
             property = new Property<>(propertyHandler);
@@ -753,7 +778,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 4, new ArrayList<>(), new HashMap<>(), "Upgrade 3: +50 maximum magic for 4 xp points");
-            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents, "3");
 
             Tree<SubPerk> subPerkTree = new Tree<>();
             Tree.Node<SubPerk> node = subPerkTree.getRoot();
@@ -786,7 +811,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Work out");
             gradeOfNecessaryAbilities.put("Work out", 1);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: P=10 for 2 xp points, needs Work out upgrade 1");
-            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
             propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.2, null, null);
             property = new Property<>(propertyHandler);
@@ -801,7 +826,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: P=20 for 3 xp points");
-            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
             propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.3, null, null);
             property = new Property<>(propertyHandler);
@@ -816,7 +841,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 4, new ArrayList<>(), new HashMap<>(), "Upgrade 3: P=30 for 4 xp points");
-            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents, "3");
 
             Tree<SubPerk> subPerkTree = new Tree<>();
             Tree.Node<SubPerk> node = subPerkTree.getRoot();
@@ -852,7 +877,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Fight training");
             gradeOfNecessaryAbilities.put("Fight training", 1);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: P=20 for 2 xp points, needs Fight training upgrade 1");
-            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
             propertyHandler = new PropertyHandler<>("criticalHitChance", false, null, ClassName.Hero, 0.3, null, null);
             property = new Property<>(propertyHandler);
@@ -870,7 +895,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: P=30 for 3 xp points");
-            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
             propertyHandler = new PropertyHandler<>("criticalHitChance", false, null, ClassName.Hero, 0.4, null, null);
             property = new Property<>(propertyHandler);
@@ -888,7 +913,7 @@ public class GameEngine {
             subPerkComponents = new ArrayList<>();
             subPerkComponents.add(subPerkComponent);
             subAbilityHandler = new SubAbilityHandler(false, 4, new ArrayList<>(), new HashMap<>(), "Upgrade 3: P=40 for 4 xp points");
-            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents);
+            SubPerk subPerk3 = new SubPerk(subAbilityHandler, subPerkComponents, "3");
 
             Tree<SubPerk> subPerkTree = new Tree<>();
             Tree.Node<SubPerk> node = subPerkTree.getRoot();
@@ -930,7 +955,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Fight training");
             gradeOfNecessaryAbilities.put("Fight training", 1);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: N=1.2 for 2 xp points, needs Fight training upgrade 1");
-            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, subSkillComponents);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
@@ -956,7 +981,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Fight training");
             gradeOfNecessaryAbilities.put("Fight training", 2);
             subAbilityHandler = new SubAbilityHandler(false, 4, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 2: N=1.4 for 4 xp points, needs Fight training upgrade 2");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
@@ -982,7 +1007,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Fight training");
             gradeOfNecessaryAbilities.put("Fight training", 3);
             subAbilityHandler = new SubAbilityHandler(false, 6, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 3: N=1.6 for 6 xp points, needs Fight training upgrade 3");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, "3", subSkillComponents);
             SubSkill subSkill3 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             Tree<SubSkill> subSkillTree = new Tree<>();
@@ -1027,7 +1052,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Work out");
             gradeOfNecessaryAbilities.put("Work out", 1);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: H=40 for 2 xp points, needs Work out upgrade 1");
-            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 3, 60, subSkillComponents);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 3, 60, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Enemy, -150, null ,null);
@@ -1058,7 +1083,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Work out");
             gradeOfNecessaryAbilities.put("Work out", 2);
             subAbilityHandler = new SubAbilityHandler(false, 3, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 2: H=50 for 3 xp points, needs Work out upgrade 2");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 3, 60, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 3, 60, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Enemy, -180, null ,null);
@@ -1089,7 +1114,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Work out");
             gradeOfNecessaryAbilities.put("Work out", 3);
             subAbilityHandler = new SubAbilityHandler(false, 4, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 3: H=60 for 4 xp points, needs Work out upgrade 3");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 3, 60, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 3, 60, "3", subSkillComponents);
             SubSkill subSkill3 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             Tree<SubSkill> subSkillTree = new Tree<>();
@@ -1119,7 +1144,7 @@ public class GameEngine {
             ArrayList<SubSkillComponent<?>> subSkillComponents = new ArrayList<>();
             subSkillComponents.add(subSkillComponent);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade 1: H=100 for 2 xp points and takes 1 turn to cool down");
-            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 2, 60, subSkillComponents);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 2, 60, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Hero, 150, null ,null);
@@ -1139,7 +1164,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Magic lessons");
             gradeOfNecessaryAbilities.put("Magic lessons", 1);
             subAbilityHandler = new SubAbilityHandler(false, 3, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 2: H=150 for 3 xp points, takes 1 turn to cool down and needs Magic lessons upgrade 1");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 2, 60, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 2, 60, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Hero, 150, null ,null);
@@ -1159,7 +1184,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Magic lessons");
             gradeOfNecessaryAbilities.put("Magic lessons", 2);
             subAbilityHandler = new SubAbilityHandler(false, 5, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 3: H=150 for 5 xp points, cools down instantly and needs Magic lessons upgrade 2");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 60, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 60, "3", subSkillComponents);
             SubSkill subSkill3 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             Tree<SubSkill> subSkillTree = new Tree<>();
@@ -1193,7 +1218,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Quick as a bunny");
             gradeOfNecessaryAbilities.put("Quick as a bunny", 1);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: takes 2 energy points and has a 1 turn cooldown for 2 xp points, needs Quick as a bunny upgrade 1");
-            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(0, 1, 0), 1, false, 2, 30, subSkillComponents);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(0, 1, 0), 1, false, 2, 30, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentEnergyPoint", false, null, ClassName.Hero, 1, null ,null);
@@ -1213,7 +1238,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Quick as a bunny");
             gradeOfNecessaryAbilities.put("Quick as a bunny", 2);
             subAbilityHandler = new SubAbilityHandler(false, 3, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 2: takes 2 energy points and cools down instantly for 3 xp points, needs Quick as a bunny upgrade 2");
-            subSkillHandler = new SubSkillHandler(false, new Time(0, 1, 0), 0, false, 2, 30, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(0, 1, 0), 0, false, 2, 30, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentEnergyPoint", false, null, ClassName.Hero, 1, null ,null);
@@ -1233,7 +1258,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Quick as a bunny");
             gradeOfNecessaryAbilities.put("Quick as a bunny", 3);
             subAbilityHandler = new SubAbilityHandler(false, 5, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 3 takes 1 energy point and cools down instantly for 5 xp points, needs Quick as a bunny upgrade 3");
-            subSkillHandler = new SubSkillHandler(false, new Time(0, 1, 0), 0, false, 1, 30, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(0, 1, 0), 0, false, 1, 30, "3", subSkillComponents);
             SubSkill subSkill3 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             Tree<SubSkill> subSkillTree = new Tree<>();
@@ -1263,7 +1288,7 @@ public class GameEngine {
             ArrayList<SubSkillComponent<?>> subSkillComponents = new ArrayList<>();
             subSkillComponents.add(subSkillComponent);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade 1: A=20 for 2 xp points and takes 1 turn to cool down");
-            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(0, 0, 1), 1, true, 2, 50, subSkillComponents);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(0, 0, 1), 1, true, 2, 50, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("attackPowerRatioDuringAttack", false, null, ClassName.Hero, 0.3, null ,null);
@@ -1279,7 +1304,7 @@ public class GameEngine {
             subSkillComponents = new ArrayList<>();
             subSkillComponents.add(subSkillComponent);
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: A=30 for 3 xp points and takes 1 turn to cool down");
-            subSkillHandler = new SubSkillHandler(false, new Time(0, 0, 1), 1, true, 2, 50, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(0, 0, 1), 1, true, 2, 50, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("attackPowerRatioDuringAttack", false, null, ClassName.Hero, 0.3, null ,null);
@@ -1295,7 +1320,7 @@ public class GameEngine {
             subSkillComponents = new ArrayList<>();
             subSkillComponents.add(subSkillComponent);
             subAbilityHandler = new SubAbilityHandler(false, 5, new ArrayList<>(), new HashMap<>(), "Upgrade 3: A=30 for 5 xp points and cools down instantly");
-            subSkillHandler = new SubSkillHandler(false, new Time(0, 0, 1), 0, true, 2, 50, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(0, 0, 1), 0, true, 2, 50, "3", subSkillComponents);
             SubSkill subSkill3 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             Tree<SubSkill> subSkillTree = new Tree<>();
@@ -1329,7 +1354,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Magic lessons");
             gradeOfNecessaryAbilities.put("Magic lessons", 1);
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: M=50 for 2 xp points and takes 1 turn to cool down, needs magic lessons upgrade 1");
-            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 1, 50, subSkillComponents);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 1, 50, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentMagic", true, null, ClassName.Hero, 80, null ,null);
@@ -1349,7 +1374,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Magic lessons");
             gradeOfNecessaryAbilities.put("Magic lessons", 2);
             subAbilityHandler = new SubAbilityHandler(false, 3, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 2: M=80 for 3 xp points and takes 1 turn to cool down, needs magic lessons upgrade 2");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 1, 50, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 1, true, 1, 50, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             propertyHandler = new PropertyHandler<>("currentMagic", true, null, ClassName.Hero, 80, null ,null);
@@ -1369,7 +1394,7 @@ public class GameEngine {
             nameOfNecessaryAbilities.add("Magic lessons");
             gradeOfNecessaryAbilities.put("Magic lessons", 3);
             subAbilityHandler = new SubAbilityHandler(false, 4, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 3: M=80 for 4 xp points and cools down instantly, needs magic lessons upgrade 3");
-            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 1, 50, subSkillComponents);
+            subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 1, 50, "3", subSkillComponents);
             SubSkill subSkill3 = new SubSkill(subSkillHandler, subAbilityHandler);
 
             Tree<SubSkill> subSkillTree = new Tree<>();
