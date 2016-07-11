@@ -1,12 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.*;
 
 /**
  * Created by Future on 7/12/2016.
  */
-public class MapEditor extends JPanel{
+public class MapEditor extends JPanel implements ActionListener{
     private TileMap newMap;
     private JFrame mapFrame;
     private JMenuBar menuBar;
@@ -213,6 +215,16 @@ public class MapEditor extends JPanel{
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == saveMenu) {
+            this.saveMap();
+        } else if (e.getSource() == exitMenu) {
+            System.exit(0);
+        } else if (e.getSource() == restartMapMenu) {
+            this.restartMap();
+        }
+    }
 
 
 
