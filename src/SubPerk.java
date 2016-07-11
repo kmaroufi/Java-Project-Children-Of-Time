@@ -1,5 +1,6 @@
+import GUI.Display;
+
 import java.util.*;
-import java.util.Map;
 
 /**
  * Created by asus-pc on 7/8/2016.

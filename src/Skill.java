@@ -1,3 +1,5 @@
+import GUI.Display;
+
 import javafx.util.Pair;
 
 import java.util.ArrayList;

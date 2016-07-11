@@ -1,6 +1,7 @@
-import java.util.ArrayDeque;
+package GUI;
+
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -55,50 +56,19 @@ public class Display {
         System.out.println(sentence);
     }
 
-
-//    public static PropertyHandler getProperty() {
-//        PropertyHandler propertyHandler = new PropertyHandler();
-//
-//        return propertyHandler;
-//    }
-
-//    public static AbilityHandler getAbility() {
-//        AbilityHandler abilityHandler = new AbilityHandler();
-//
-//        return abilityHandler;
-//    }
-//
-//    public static SkillHandler getSkill() {
-//        SkillHandler skillHandler = new SkillHandler();
-//
-//        return skillHandler;
-//    }
-//
-//    public static PerkHandler getPerk() {
-//        PerkHandler perkHandler = new PerkHandler();
-//
-//        return perkHandler;
-//    }
-//
-//    public static PerkModeHandler getPerkMode() {
-//        PerkModeHandler perkModeHandler = new PerkModeHandler();
-//        return perkModeHandler;
-//    }
-//
-//    public static ConditionHandler getCondition() {
-//        ConditionHandler conditionHandler = new ConditionHandler();
-//
-//        return conditionHandler;
-//    }
+    public static void displayMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
 
     public static void printf(String sentence){
         System.out.printf(sentence);
     }
-
 
     public static ArrayList<String> getAbilityDetailsBeforeUsing(Object o) {
         ArrayList<String> inputs = new ArrayList<String>();
         inputs.add(Display.getString());
         return  inputs;
     }
+
+
 }

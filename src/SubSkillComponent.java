@@ -1,3 +1,5 @@
+import GUI.Display;
+
 import java.util.*;
 import java.util.Map;
 
@@ -112,8 +114,8 @@ public class SubSkillComponent<T> extends SubAbilityComponent<T> {
 //            while (counter != 0) {
 //                if (effectedObjects.size() == this.classOfEffectedObjects.getListOfObjects().size())
 //                    break;
-//                Display.printf("Please enter your targeted " + this.classOfEffectedObjects.getName() + ": ");
-//                String command = Display.getString();
+//                GUI.Display.printf("Please enter your targeted " + this.classOfEffectedObjects.getName() + ": ");
+//                String command = GUI.Display.getString();
 //                String[] nameOfObjects = command.split(" ");
 //                for (String nameOfObject : nameOfObjects) {
 //                    boolean isTargetRecognized = false;
@@ -124,12 +126,12 @@ public class SubSkillComponent<T> extends SubAbilityComponent<T> {
 //                                counter--;
 //                                isTargetRecognized = true;
 //                            } else {
-//                                Display.printInEachLine(object.toString() + " was selected in the past! Please enter another " + this.classOfEffectedObjects.getName());
+//                                GUI.Display.printInEachLine(object.toString() + " was selected in the past! Please enter another " + this.classOfEffectedObjects.getName());
 //                            }
 //                        }
 //                    }
 //                    if (isTargetRecognized == false) {
-//                        Display.printInEachLine(nameOfObject + " was not recognized. Please enter another " + this.classOfEffectedObjects.getName());
+//                        GUI.Display.printInEachLine(nameOfObject + " was not recognized. Please enter another " + this.classOfEffectedObjects.getName());
 //                    }
 //                }
 //            }

@@ -1,14 +1,21 @@
+package GUI;
+
+import GUI.Texture;
+
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Created by Future on 7/10/2016.
  */
-public class Cell {
+public class Cell implements Serializable{
     private Texture texture;
     private String mode;
     private Point center;
     private int x , y;
     private int width,height;
+
+    //--------------------------------------------------------------------------- Constructors
 
     public Cell(String mode, int x, int y) {// Shop(3) - Empty(1) - WarRoom(4) - Barrier(2) - SkillRoom(5) - Door(6)
         this.mode = mode;
@@ -20,17 +27,19 @@ public class Cell {
         this.center = new Point(this.x + (this.width / 2), this.y + (this.height / 2));
     }
 
-
+    //--------------------------------------------------------------------------- Functions
     public void update(){
         this.texture = new Texture(this.mode);
-        this.width = 75;
-        this.height = 75;
+        this.width = 50;
+        this.height = 50;
         this.center = new Point(this.x + (this.width / 2), this.y + (this.height / 2));
     }
 
     public void render(Graphics graphics) {
         this.texture.render(graphics, this.x, this.y);
     }
+
+    //--------------------------------------------------------------------------- Getter And Setters
 
     public Texture getTexture() {
         return texture;
@@ -89,6 +98,4 @@ public class Cell {
         Rectangle cellRectangle = new Rectangle(this.x, this.y, this.width, this.height);
         return cellRectangle.contains(x, y);
     }
-
-
 }

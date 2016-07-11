@@ -1,3 +1,4 @@
+import GUI.Display;
 import javafx.util.Pair;
 
 import java.lang.reflect.Field;
@@ -412,7 +413,7 @@ public class GameEngine {
         //Adding Items
         Shop shop = new Shop();
 
-//        this.creatingDefaultItems(shop);
+        this.creatingDefaultItems(shop);
 
         this.rewardedXP[0] = 20;
         this.rewardedXP[1] = 25;
@@ -426,135 +427,6 @@ public class GameEngine {
 
         Player.imortalityPotion = 3;
     }
-//
-//    private void creatingDefaultItems(Shop shop) {
-//        {
-//            // toughen
-//            double[] tmp = {0,0,0};
-//            double[] arr = {20,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health";
-//            Item item = new Item("Thoughen", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-//            ItemProperties itemProperties = new ItemProperties(item, 2, 0, 4);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Guide
-//            double[] tmp = {0,0,0};
-//            double[] arr = {20,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic";
-//            Item item = new Item("Guide", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Defy
-//            double[] tmp = {0,0,0};
-//            double[] arr = {8,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power";
-//            Item item = new Item("Defy", null, 0, true, 1, 0, 0, description, false, 1, false, properties, false, 0, false, false, "Never");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 2, 0, 4);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Sword
-//            double[] tmp = {0,0,0};
-//            double[] arr = {80,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("attackPower", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars";
-//            Item item = new Item("Sword", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Energy Boots
-//            double[] tmp = {0,0,0};
-//            double[] arr = {1,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("currentEnergyPoint", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars";
-//            Item item = new Item("Energy Boots", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 20);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Armor Boots
-//            double[] tmp = {0,0,0};
-//            double[] arr = {200,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("maximumHealth", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars";
-//            Item item = new Item("Armor", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 25);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Magic stick
-//            double[] tmp = {0,0,0};
-//            double[] arr = {150,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("maximumMagic", 0, false, true, false, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars";
-//            Item item = new Item("Magic stick", null, 0, true, 1, 0, 0, description, false, 1, false, properties, true, 0, false, true, "AfterSelling");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 28);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Health potion
-//            double[] tmp = {0,0,0};
-//            double[] arr = {100,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("currentHealth", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars";
-//            Item item = new Item("Health potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//        {
-//            // Magic potion
-//            double[] tmp = {0,0,0};
-//            double[] arr = {50,0,0};
-//            PropertyHandler propertyHandler = new PropertyHandler("currentMagic", 0, false, true, true, arr, new HashMap<>(), new HashMap<>());
-//            Property<Hero> property = new Property<>(propertyHandler);
-//            property.setCurrentGrade(1);
-//            ArrayList<Property<Hero>> properties = new ArrayList<>();
-//            properties.add(property);
-//            String description = "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars";
-//            Item item = new Item("Magic potion", null, 1, false, 3, 0, 0, description, true, 1, false, properties, false, 0, true, true, "EachActivity");
-//            ItemProperties itemProperties = new ItemProperties(item, 0, 0, 0, 15);
-//            shop.listOfItems.add(itemProperties);
-//        }
-//    }
 
     private void creatingDefaultPerks() {
         {
@@ -1708,7 +1580,7 @@ public class GameEngine {
                                     break;
                                 }
 //                                else if(itemProperties.getItem().getRemainingTime() > 0){
-//                                    Display.printInEachLine("Your desired item is still in cooldown");
+//                                    GUI.Display.printInEachLine("Your desired item is still in cooldown");
 //                                    break;
 //                                }
                                 if (hero.getCurrentEnergyPoint() >= item.getRequiredEnergyPoint() && hero.getCurrentMagic() >= item.getRequiredMagicPoint()) {
