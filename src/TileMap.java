@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.io.Serializable;
 
 /**
@@ -49,5 +51,67 @@ public class TileMap implements Serializable{
         this.cells = new Cell[NUMBER_OF_BARRIERS_PER_ROW][NUMBER_OF_BARRIERS_PER_COLUMN];
         buildMap();
     }
+
+    //----------------------------------------------------------------------- Functions
+    public void buildEmptyMap(){
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                this.cells[i][j] = new Cell("Empty", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+            }
+        }
+    }
+
+    public void buildMap() {
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                if(i == 0 || i == NUMBER_OF_BARRIERS_PER_ROW - 1 || j == 0 || j == NUMBER_OF_BARRIERS_PER_COLUMN - 1) {
+//                    System.out.println("y = " + i * SIZE_OF_BARRIER + " And x = " + j * SIZE_OF_BARRIER);
+                    this.cells[i][j] = new Cell("Barrier", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                } else{
+//                    System.out.println("y = " + i * SIZE_OF_BARRIER + " And x = " + j * SIZE_OF_BARRIER);
+                    int random = (int) Math.floor(7 * Math.random());
+                    switch (random) {
+                        case 0:
+                            this.cells[i][j] = new Cell("EmptyTile", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                        case 1:
+                            this.cells[i][j] = new Cell("Barrier", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                        case 2:
+                            this.cells[i][j] = new Cell("Shop", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                        case 3:
+                            this.cells[i][j] = new Cell("WarRoom", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                        case 4:
+                            this.cells[i][j] = new Cell("SkillRoom", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                        case 5:
+                            this.cells[i][j] = new Cell("Door", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                        case 6:
+                            this.cells[i][j] = new Cell("StoryBook", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                        default:
+                            this.cells[i][j] = new Cell("Nothing", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void buildNewMap(){
+        JFrame editor = new JFrame();
+
+    }
+
+    public void paintMapFeatures(Graphics graphics) {
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                this.cells[i][j].render(graphics);
+            }
+        }
+    }
+
 
 }
