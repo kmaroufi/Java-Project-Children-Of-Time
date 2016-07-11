@@ -5,14 +5,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Created by Future on 7/10/2016.
  */
-public class Texture {
+public class Texture implements Serializable{
     private transient BufferedImage image;
     private int width;
     private int height;
+
+    //------------------------------------------------------------------- Constructors
 
     public Texture() {
         this.width = 75;
@@ -29,13 +32,15 @@ public class Texture {
         this.height = image.getHeight();
     }
 
+    //-------------------------------------------------------------------- Functions
+
     public void render(Graphics graphics, int x, int y) {
         graphics.drawImage(this.image, x ,  y, this.width, this.height, null);
     }
     public void render(Graphics2D g, int destX1, int destX2, int srcX1, int srcX2, int y) {
         g.drawImage(image, destX1, y, destX2, y + height, srcX1, 0, srcX2, height, null);
     }
-
+    //-------------------------------------------------------------------- Getter And Setters
     public BufferedImage getImage() {
         return image;
     }
@@ -47,4 +52,5 @@ public class Texture {
     public int getHeight() {
         return height;
     }
+
 }
