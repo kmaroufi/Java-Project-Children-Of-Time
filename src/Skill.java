@@ -155,9 +155,9 @@ public class Skill extends Ability implements Cloneable{
 
     public void setSubSkills(Tree<SubSkill> subSkills) {
         this.subSkills = subSkills;
-        for (SubSkill subSkill: this.subSkills.getDataSet()) {
-            subSkill.setRelatedSkill(this);
-        }
+//        for (SubSkill subSkill: this.subSkills.getDataSet()) {
+//            subSkill.setRelatedSkill(this);
+//        }
     }
 
     public Tree.Node<SubSkill> getCurrentNode() {

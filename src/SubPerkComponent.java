@@ -4,7 +4,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 7/9/2016.
  */
-public class SubPerkComponent<T> extends SubAbilityComponent<T> {
+public class SubPerkComponent<T> extends SubAbilityComponent<T> implements Cloneable {
 
     private SubPerk relatedSubPerk;
 

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 7/9/2016.
  */
-public class SubSkillComponent<T> extends SubAbilityComponent<T> {
+public class SubSkillComponent<T> extends SubAbilityComponent<T> implements Cloneable {
 
     private SubSkill relatedSubSkill;
 

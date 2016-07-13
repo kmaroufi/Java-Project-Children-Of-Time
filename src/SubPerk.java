@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by asus-pc on 7/8/2016.
  */
-public class SubPerk extends SubAbility{
+public class SubPerk extends SubAbility implements Cloneable{
 
     private Perk relatedPerk;
 

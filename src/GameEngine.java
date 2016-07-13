@@ -452,6 +452,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Thoughen", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -484,6 +485,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Guide", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -516,6 +518,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Defy", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -548,6 +551,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Sword", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -580,6 +584,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Energy Boots", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -612,6 +617,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Armor", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -644,6 +650,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Magic stick", null ,1, null);
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
             perk.setCurrentGrade(1);
             perk.setCurrentNode(node);
             perk.setAcquire(true);
@@ -677,6 +684,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Health potion", null, 1, null);
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
             skill.setCurrentGrade(1);
             skill.setCurrentNode(node);
             skill.setAcquire(true);
@@ -710,6 +718,7 @@ public class GameEngine {
             node = node.getChildren().get(0);
             AbilityHandler abilityHandler = new AbilityHandler("Magic potion", null, 1, null);
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
             skill.setCurrentGrade(1);
             skill.setCurrentNode(node);
             skill.setAcquire(true);
@@ -777,6 +786,9 @@ public class GameEngine {
             node.addChild(subPerk3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Fight training", null ,3, "Permanently increases attack power");
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
+            subPerk2.setRelatedPerk(perk);
+            subPerk3.setRelatedPerk(perk);
             this.addNewPerk(perk);
         }
         {
@@ -836,6 +848,9 @@ public class GameEngine {
             node.addChild(subPerk3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Work out", null ,3, "Permanently increases maximum health");
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
+            subPerk2.setRelatedPerk(perk);
+            subPerk3.setRelatedPerk(perk);
             this.addNewPerk(perk);
         }
         {
@@ -895,6 +910,9 @@ public class GameEngine {
             node.addChild(subPerk3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Quick as a bunny", null ,3, "Permanently increases energy points");
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
+            subPerk2.setRelatedPerk(perk);
+            subPerk3.setRelatedPerk(perk);
             this.addNewPerk(perk);
         }
         {
@@ -954,6 +972,9 @@ public class GameEngine {
             node.addChild(subPerk3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Magic lessons", null ,3, "Permanently increases maximum magic");
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
+            subPerk2.setRelatedPerk(perk);
+            subPerk3.setRelatedPerk(perk);
             this.addNewPerk(perk);
         }
         {
@@ -1017,6 +1038,9 @@ public class GameEngine {
             node.addChild(subPerk3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Swirling attack", "Eley" ,3, "While attacking, non-targeted enemies also take P percent of its damage");
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
+            subPerk2.setRelatedPerk(perk);
+            subPerk3.setRelatedPerk(perk);
             this.addNewPerk(perk);
         }
         {
@@ -1089,6 +1113,9 @@ public class GameEngine {
             node.addChild(subPerk3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Critical strike", "Chrome" ,3, "Has a permanent P percent chance of doing an attack with double power (does not affect other abilities)");
             Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            subPerk1.setRelatedPerk(perk);
+            subPerk2.setRelatedPerk(perk);
+            subPerk3.setRelatedPerk(perk);
             this.addNewPerk(perk);
         }
     }
@@ -1184,6 +1211,9 @@ public class GameEngine {
             node.addChild(subSkill3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Overpowered attack", "Eley" ,3, "Attacks an enemy with N times power for 2 energy points and 50 magic points");
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
+            subSkill2.setRelatedSkill(skill);
+            subSkill3.setRelatedSkill(skill);
             this.addNewSkill(skill);
         }
         {
@@ -1291,6 +1321,9 @@ public class GameEngine {
             node.addChild(subSkill3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Sacrifice", "Chrome", 3, "Damages all the enemies with 3H power at the cost of H of his own health, needs 3 energy points, 60 magic points and has a 1 turn cooldown");
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
+            subSkill2.setRelatedSkill(skill);
+            subSkill3.setRelatedSkill(skill);
             this.addNewSkill(skill);
         }
         {
@@ -1361,6 +1394,9 @@ public class GameEngine {
             node.addChild(subSkill3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Elixir", "Meryl", 3, "Refills H points of her own health or an ally’s, for 2 energy points and 60 magic points");
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
+            subSkill2.setRelatedSkill(skill);
+            subSkill3.setRelatedSkill(skill);
             this.addNewSkill(skill);
         }
         {
@@ -1435,6 +1471,9 @@ public class GameEngine {
             node.addChild(subSkill3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Caretaker", "Meryl", 3, "Gives 1 energy point to an ally for 30 magic points (this ep does not last until the end of the battle and is only usable during the current turn)");
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
+            subSkill2.setRelatedSkill(skill);
+            subSkill3.setRelatedSkill(skill);
             this.addNewSkill(skill);
         }
         {
@@ -1497,6 +1536,9 @@ public class GameEngine {
             node.addChild(subSkill3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Boost", "Bolti", 3, "Gives A bonus attack power to himself or an ally, which lasts till the end of the battle, for 2 energy points and 50 magic points (this bonus attack power can stack up)");
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
+            subSkill2.setRelatedSkill(skill);
+            subSkill3.setRelatedSkill(skill);
             this.addNewSkill(skill);
         }
         {
@@ -1571,6 +1613,9 @@ public class GameEngine {
             node.addChild(subSkill3, new Condition());
             AbilityHandler abilityHandler = new AbilityHandler("Mana beam", "Bolti", 3, "Gives M magic points to himself or an ally for 1 energy point and 50 magic points");
             Skill skill = new Skill(abilityHandler, subSkillTree);
+            subSkill1.setRelatedSkill(skill);
+            subSkill2.setRelatedSkill(skill);
+            subSkill3.setRelatedSkill(skill);
             this.addNewSkill(skill);
         }
     }

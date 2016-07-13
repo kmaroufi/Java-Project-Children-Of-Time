@@ -135,9 +135,9 @@ public class Perk extends Ability implements Cloneable{
 
     public void setSubPerks(Tree<SubPerk> subPerks) {
         this.subPerks = subPerks;
-        for (SubPerk subPerk: this.subPerks.getDataSet()) {
-            subPerk.setRelatedPerk(this);
-        }
+//        for (SubPerk subPerk: this.subPerks.getDataSet()) {
+//            subPerk.setRelatedPerk(this);
+//        }
     }
 
     public Tree.Node<SubPerk> getCurrentNode() {
