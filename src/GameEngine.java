@@ -732,7 +732,10 @@ public class GameEngine {
 
     private void creatingDefaultPerks() {
         {
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 30, null, null);
+            //Fighter Class's Perk: Fight training
+
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 30, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -794,7 +797,8 @@ public class GameEngine {
         {
             //Fighter Class's Perk: Work out
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 50, null, null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 50, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -856,7 +860,8 @@ public class GameEngine {
         {
             //Supporter Class's Perk: Quick as a bunny
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumEnergyPoint",false, null, ClassName.Hero, 1, null, null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumEnergyPoint",false, null, ClassName.Hero, 1, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -918,7 +923,8 @@ public class GameEngine {
         {
             //Supporter Class's Perk: Magic lessons
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 50, null, null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 50, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -980,7 +986,8 @@ public class GameEngine {
         {
             //Eley's Perk: Swirling attack
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.1, null, null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.1, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -1046,7 +1053,8 @@ public class GameEngine {
         {
             //Chrome's Perk: Critical strike
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("criticalHitChance",false, null, ClassName.Hero, 0.2, null, null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("criticalHitChance",false, null, ClassName.Hero, 0.2, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             PropertyHandler<Object> propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 2, null, null);
             Property<Hero, Object> property2 = new Property<>(propertyHandler2);
@@ -1219,7 +1227,8 @@ public class GameEngine {
         {
             //Chrome's Skill: Sacrifice
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Enemy, -120, null ,null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Enemy, -120, new SelectingObjectsDetail<>(), tree);
             Property<Enemy, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Enemy, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -1329,7 +1338,8 @@ public class GameEngine {
         {
             //Meryl's Skill: Elixir
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Hero, 100, null ,null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Hero, 100, new SelectingObjectsDetail<>() , tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -1402,7 +1412,8 @@ public class GameEngine {
         {
             //Meryl's Skill: Caretaker
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentEnergyPoint", false, null, ClassName.Hero, 1, null ,null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentEnergyPoint", false, null, ClassName.Hero, 1, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -1479,7 +1490,8 @@ public class GameEngine {
         {
             //Bolti's Skill: Boost
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPowerRatioDuringAttack", false, null, ClassName.Hero, .20, null ,null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPowerRatioDuringAttack", false, null, ClassName.Hero, .20, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -1544,7 +1556,8 @@ public class GameEngine {
         {
             //Bolti's Skill: Mana beam
 
-            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentMagic", true, null, ClassName.Hero, 50, null ,null);
+            Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentMagic", true, null, ClassName.Hero, 50, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);

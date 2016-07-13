@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.DoubleUnaryOperator;
 
 /**
  * Created by asus-pc on 5/5/2016.
@@ -52,16 +50,42 @@ public class Condition {
     public <T> boolean checkCondition(T object) {
         if (this.isAlwaysTrue)
             return true;
-        Object currentFieldValue = Property.getFieldValue(object, this.nameOfField);
-        Object conditionFieldValue = this.valueOfField;
-        if ((this.statusOfFields == 1) && ((double)currentFieldValue > (double)conditionFieldValue)) {
-            return true;
-        }
-        if ((this.statusOfFields == 0) && (currentFieldValue.equals(conditionFieldValue))) {
-            return true;
-        }
-        if ((this.statusOfFields == -1) && ((double)currentFieldValue < (double)conditionFieldValue)) {
-            return true;
+        if (Property.getFieldValue(object, this.nameOfField) instanceof Integer) {
+            int currentFieldValue = (int) Property.getFieldValue(object, this.nameOfField);
+            int conditionFieldValue = (int) this.valueOfField;
+            if ((this.statusOfFields == 1) && (currentFieldValue > conditionFieldValue)) {
+                return true;
+            }
+            if ((this.statusOfFields == 0) && (currentFieldValue == (conditionFieldValue))) {
+                return true;
+            }
+            if ((this.statusOfFields == -1) && (currentFieldValue < conditionFieldValue)) {
+                return true;
+            }
+        } else if (Property.getFieldValue(object, this.nameOfField) instanceof Double) {
+            double currentFieldValue = (double) Property.getFieldValue(object, this.nameOfField);
+            double conditionFieldValue = (double) this.valueOfField;
+            if ((this.statusOfFields == 1) && (currentFieldValue > conditionFieldValue)) {
+                return true;
+            }
+            if ((this.statusOfFields == 0) && (currentFieldValue == (conditionFieldValue))) {
+                return true;
+            }
+            if ((this.statusOfFields == -1) && (currentFieldValue < conditionFieldValue)) {
+                return true;
+            }
+        } else if (Property.getFieldValue(object, this.nameOfField) instanceof String) {
+            String currentFieldValue = (String) Property.getFieldValue(object, this.nameOfField);
+            String conditionFieldValue = (String) this.valueOfField;
+            if ((this.statusOfFields == 1) && (currentFieldValue.compareTo(conditionFieldValue) == 1)) {
+                return true;
+            }
+            if ((this.statusOfFields == 0) && (currentFieldValue.compareTo(conditionFieldValue) == 0)) {
+                return true;
+            }
+            if ((this.statusOfFields == -1) && (currentFieldValue.compareTo(conditionFieldValue) == -1)) {
+                return true;
+            }
         }
         return false;
     }

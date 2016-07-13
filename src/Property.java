@@ -75,7 +75,7 @@ public class Property<E, T> implements Cloneable {
         return null;
     }
 
-    public static <U> void setFieldValue(U object, String fieldName, Object value) {
+    public static <U, S> void setFieldValue(U object, String fieldName, S value) {
         Class clazz = object.getClass();
         Field field = null;
         while (clazz != null) {
@@ -99,17 +99,28 @@ public class Property<E, T> implements Cloneable {
         for (T effectingObject : effectingObjects) {
             ArrayList<Pair<String, Double>> result = this.trieCondition.findCorrectNode(effectingObject);
             for (Pair<String, Double> variableDetail : result) {
-                double variableValue = (double) this.getFieldValue(effectingObject, variableDetail.getKey());
-                double variableCoefficient = variableDetail.getValue();
-                this.totalEffectOnProperty += variableCoefficient * variableValue;
+                if (Property.getFieldValue(effectingObject, variableDetail.getKey()) instanceof Integer) {
+                    int variableValue = (int) Property.getFieldValue(effectingObject, variableDetail.getKey());
+                    double variableCoefficient = variableDetail.getValue();
+                    this.totalEffectOnProperty += variableCoefficient * variableValue;
+                } else if (Property.getFieldValue(effectingObject, variableDetail.getKey()) instanceof Double) {
+                    double variableValue = (double) Property.getFieldValue(effectingObject, variableDetail.getKey());
+                    double variableCoefficient = variableDetail.getValue();
+                    this.totalEffectOnProperty += variableCoefficient * variableValue;
+                }
             }
         }
     }
 
     public double effect(E effectedObject, ArrayList<T> effectingObjects) {
         calculateProperty(effectingObjects);
-        Double previousValue = (Double) this.getFieldValue(effectedObject, this.name);
-        this.setFieldValue(effectedObject, this.name, new Double(previousValue + this.totalEffectOnProperty));
+        if (Property.getFieldValue(effectedObject, this.name) instanceof Integer) {
+            int previousValue = (int) Property.getFieldValue(effectedObject, this.name);
+            Property.setFieldValue(effectedObject, this.name, (int) (previousValue + this.totalEffectOnProperty));
+        } else if (Property.getFieldValue(effectedObject, this.name) instanceof Double) {
+            double previousValue = (double) Property.getFieldValue(effectedObject, this.name);
+            Property.setFieldValue(effectedObject, this.name, previousValue + this.totalEffectOnProperty);
+        }
         if (this.valueOfEffectingOnEffectedSoldiers.containsKey(effectedObject)) {
             this.valueOfEffectingOnEffectedSoldiers.put(effectedObject, this.valueOfEffectingOnEffectedSoldiers.get(effectedObject) + this.totalEffectOnProperty);
         } else {

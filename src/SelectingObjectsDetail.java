@@ -25,8 +25,10 @@ public class SelectingObjectsDetail<T> {
     public SelectingObjectsDetail(SelectingObjectsDetailHandler selectingObjectsDetailHandler) {
         setClassOfObjects(selectingObjectsDetailHandler.getClassOfObjects());
         setAllRelatedObjectsInvolved(selectingObjectsDetailHandler.isAllRelatedObjectsInvolved());
+        setUserSelected(selectingObjectsDetailHandler.isUserSelected());
         setDependsOnCondition(selectingObjectsDetailHandler.isDependsOnCondition());
         setTrieConditions(selectingObjectsDetailHandler.getTrieConditions());
+        setNumberOfSelectedObjectsByConditions(selectingObjectsDetailHandler.getNumberOfSelectedObjectsByConditions());
         setRandomObjectsSelecting(selectingObjectsDetailHandler.isRandomObjectsSelecting());
         setNumberOfRandomSelectedObjects(selectingObjectsDetailHandler.getNumberOfRandomSelectedObjects());
         setSelectedObjectsDependsOnPlayer(selectingObjectsDetailHandler.isSelectedObjectsDependsOnPlayer());
@@ -34,10 +36,23 @@ public class SelectingObjectsDetail<T> {
         setRelatedToAttackDefend(selectingObjectsDetailHandler.isRelatedToAttackDefend());
         setHeroSelected(selectingObjectsDetailHandler.isHeroSelected());
         setEnemySelected(selectingObjectsDetailHandler.isEnemySelected());
-        setNumberOfSelectedObjectsByConditions(selectingObjectsDetailHandler.getNumberOfSelectedObjectsByConditions());
     }
 
-
+    public SelectingObjectsDetail() {
+        this.classOfObjects = null;
+        this.isAllRelatedObjectsInvolved = false;
+        this.isUserSelected = false;
+        this.isDependsOnCondition = false;
+        this.trieConditions = null;
+        this.numberOfSelectedObjectsByConditions = 0;
+        this.isRandomObjectsSelecting = false;
+        this.numberOfRandomSelectedObjects = 0;
+        this.isSelectedObjectsDependsOnPlayer = false;
+        this.numberOfSelectedObjectsByPlayer = 0;
+        this.isRelatedToAttackDefend = false;
+        this.isHeroSelected = false;
+        this.isEnemySelected = false;
+    }
 
     //---------------------------------------------------------------- Functions
 
