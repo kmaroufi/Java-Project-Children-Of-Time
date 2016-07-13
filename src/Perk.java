@@ -111,18 +111,6 @@ public class Perk extends Ability implements Cloneable{
         return this.currentNode.getData().getUpgradeDescription();
     }
 
-//    public int getCostOfUpgrade() {
-//        return this.subPerks.get(this.currentGrade).getCostOfUpgrade();
-//    }
-//
-//    public int getCostOfUpgrade(int grade) {
-//        if (grade > this.numberOfGrades) {
-//            Display.printInEachLine("Out of bound grade!");
-//            return -1;
-//        }
-//        return this.subPerks.get(grade - 1).getCostOfUpgrade();
-//    }
-
     public ArrayList<SubPerk> getNextGradeSubPerks() {
         ArrayList<SubPerk> nextGradeSubPerks = new ArrayList<>();
         for (Tree.Node<SubPerk> node: this.currentNode.getChildren()) {

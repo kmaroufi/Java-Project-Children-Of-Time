@@ -11,8 +11,10 @@ public class Hero extends HeroClass {
     public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
     public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
     public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
-    private HashMap<String, Item> listOfItems = new HashMap<String, Item>();
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private Map<String, SkillItem> mapOfSkillItems = new HashMap<>();
+    private ArrayList<SkillItem> listOfSkillItems = new ArrayList<>();
+    private Map<String, PerkItem> mapOfPerkItems = new HashMap<>();
+    private ArrayList<PerkItem> listOfPerkItems = new ArrayList<>();
     private String name;
 
 //    private static Map<String, Field> fieldsMap = new HashMap<>();
@@ -68,21 +70,41 @@ public class Hero extends HeroClass {
     }
 
     //------------------------------------------ Functions
-    public void removeItem(Item item){
-        if(hasItem(item)){
-            this.items.remove(item);
-            this.listOfItems.remove(item);
-            this.sizeOfOccupiedInventory -= item.getSize();
+
+    public void removeItem(SkillItem skillItem){
+        if(hasItem(skillItem)){
+            this.mapOfSkillItems.remove(skillItem.getName());
+            this.listOfSkillItems.remove(skillItem);
+            this.sizeOfOccupiedInventory -= skillItem.getSize();
         }
         else{
             Display.printInEachLine(this.getName() + " Has not This item");
         }
     }
 
-    public void addItem(Item item){
-        this.listOfItems.put(item.getName(), item);
-        this.items.add(item);
-        this.sizeOfOccupiedInventory += item.getSize();
+    public void removeItem(PerkItem perkItem){
+        if(hasItem(perkItem)){
+            this.mapOfPerkItems.remove(perkItem.getName());
+            this.listOfPerkItems.remove(perkItem);
+            this.sizeOfOccupiedInventory -= perkItem.getSize();
+            perkItem.removeEffect();
+        }
+        else{
+            Display.printInEachLine(this.getName() + " Has not This item");
+        }
+    }
+
+    public void addItem(SkillItem skillItem){
+        this.mapOfSkillItems.put(skillItem.getName(), skillItem);
+        this.listOfSkillItems.add(skillItem);
+        this.sizeOfOccupiedInventory += skillItem.getSize();
+    }
+
+    public void addItem(PerkItem perkItem){
+        this.mapOfPerkItems.put(perkItem.getName(), perkItem);
+        this.listOfPerkItems.add(perkItem);
+        this.sizeOfOccupiedInventory += perkItem.getSize();
+        perkItem.updateItemEffect(this);
     }
 
     public void addSkill(Skill skill){
@@ -170,12 +192,11 @@ public class Hero extends HeroClass {
         return false;
     }
 
-    public void useItem(String itemName, ArrayList<Hero> soldiers){
-        for(int i = 0;i < this.items.size();i++){                  //finding item with itemName
-            if(this.items.get(i).getName().equals(itemName)){
-                this.items.get(i).useItem(soldiers);                        // using that item
-                return;
-            }
+    public void useSkillItem(String itemName){
+        SkillItem skillItem = this.mapOfSkillItems.get(itemName);
+        if (skillItem != null) {
+            skillItem.useItem();
+            return;
         }
         Display.printInEachLine("item Not Found!");
     }
@@ -199,13 +220,10 @@ public class Hero extends HeroClass {
                 continue;
             Display.printInEachLine("Can Cast " + this.skills.get(i).getName() + " for " + this.skills.get(i).getRequiredEnergyPoint() + " energy points, " + this.skills.get(i).getRequiredMagicPoint() + " magic points and a " + this.skills.get(i).getCooldown() + " turn cooldown");
         }
-        for(int i = 0;i < this.items.size();i++){
-            try {
-                Display.printInEachLine("Can Use " + this.items.get(i).getName() + " for " + this.items.get(i).getRequiredEnergyPoint() + " energy points, " + this.items.get(i).getRequiredMagicPoint() + " magic points and a " + this.items.get(i).getCooldown() + " turn cooldown");
-            }catch (Exception e){
-                continue;
-            }
+        for (SkillItem skillItem: this.listOfSkillItems) {
+            Display.printInEachLine("Can Use " + skillItem.getName() + " for " + skillItem.getRequiredEnergyPoint() + " energy points, " + skillItem.getRequiredMagicPoint() + " magic points and a " + skillItem.getCooldown() + " turn cooldown");
         }
+        //TODO
     }
 
     public boolean hasPerk(Perk perk){
@@ -219,28 +237,25 @@ public class Hero extends HeroClass {
 
     public void showItems(){
         Display.printf(this.name + " has :");
-        if(this.items.isEmpty()){
+        if(this.listOfSkillItems.isEmpty() && this.listOfPerkItems.isEmpty()){
             Display.printInEachLine(" Nothing!");
             return;
         }
-        for(Item item : this.items){
-            if (item.isInstantlyUsed()) {
-                Display.printf(item.getName() + " worth " + (item.getWorth() / 2.0) + "dollars , ");
-            }
-            else {
-                Display.printf(item.getName() + " worth " + (item.getWorth() / 2.0 * (item.getRemainingTimeOfUsed() / (double)item.getMaximumTimeOfUsed())) + " dollars , ");
-            }
+        for (PerkItem perkItem: this.listOfPerkItems) {
+            Display.printf(perkItem.getName() + " worth" + perkItem.getWorth() + "dollars , ");
+        }
+        for (SkillItem skillItem: this.listOfSkillItems) {
+            Display.printf(skillItem.getName() + " worth" + skillItem.getWorth() + "dollars , ");
         }
         Display.printInEachLine("");
     }
 
-    public boolean hasItem(Item item){
-        for(int i = 0;i < this.items.size();i++){
-            if(this.items.get(i).equals(item)){
-                return true;
-            }
-        }
-        return false;
+    public boolean hasItem(SkillItem skillItem){
+        return this.mapOfSkillItems.containsKey(skillItem.getName());
+    }
+
+    public boolean hasItem(PerkItem perkItem){
+        return this.mapOfPerkItems.containsKey(perkItem.getName());
     }
 
     public boolean hasSkill(Skill skill){
@@ -252,8 +267,14 @@ public class Hero extends HeroClass {
         return false;
     }
 
-    public Item getItem(String name) {
-        return this.listOfItems.get(name);
+    public <T> T getItem(String name) {
+        SkillItem skillItem = this.mapOfSkillItems.get(name);
+        if (skillItem != null) {
+            return (T) skillItem;
+        }
+        else {
+            return (T) this.mapOfPerkItems.get(name);
+        }
     }
 
     //------------------------------------------ Getter && Setters
@@ -266,20 +287,35 @@ public class Hero extends HeroClass {
         this.name = name;
     }
 
-    public HashMap<String, Item> getListOfItems() {
-        return listOfItems;
+    public Map<String, SkillItem> getMapOfSkillItems() {
+        return mapOfSkillItems;
     }
 
-    public void setListOfItems(HashMap<String, Item> listOfItems) {
-        this.listOfItems = listOfItems;
+    public void setMapOfSkillItems(Map<String, SkillItem> mapOfSkillItems) {
+        this.mapOfSkillItems = mapOfSkillItems;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public ArrayList<SkillItem> getListOfSkillItems() {
+        return listOfSkillItems;
     }
 
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
+    public void setListOfSkillItems(ArrayList<SkillItem> listOfSkillItems) {
+        this.listOfSkillItems = listOfSkillItems;
     }
 
+    public Map<String, PerkItem> getMapOfPerkItems() {
+        return mapOfPerkItems;
+    }
+
+    public void setMapOfPerkItems(Map<String, PerkItem> mapOfPerkItems) {
+        this.mapOfPerkItems = mapOfPerkItems;
+    }
+
+    public ArrayList<PerkItem> getListOfPerkItems() {
+        return listOfPerkItems;
+    }
+
+    public void setListOfPerkItems(ArrayList<PerkItem> listOfPerkItems) {
+        this.listOfPerkItems = listOfPerkItems;
+    }
 }

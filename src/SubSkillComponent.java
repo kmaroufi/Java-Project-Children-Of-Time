@@ -193,6 +193,10 @@ public class SubSkillComponent<T> extends SubAbilityComponent<T> {
 //        return null;
     }
 
+    public int numberOfEffectedObjects() {
+        return this.listOfEffectedObjects.size();
+    }
+
     //---------------------------------------------------- Getter && Setters
 
 

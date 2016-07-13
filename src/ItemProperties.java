@@ -1,16 +1,20 @@
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class ItemProperties {
-    private Item item;
+public class ItemProperties<T> {
+    private T item;
     private int numberOfThisItem;
     private boolean countLess;
     private int timeOfBuyThisItem;
     private double increasePriceValue;
     private double coefficientOfPriceIncrease;
     private double price;
+    private double coefficientOfDecreaseOfValueWhenReBuying;
+    private double decreasePriceValueWhenReBuying;
 
-    public ItemProperties(Item item, int numberOfThisItem, double increasePriceValue, double coefficientOfPriceIncrease, double price) {
+    //--------------------------------------------------- Constructors
+
+    public ItemProperties(T item, int numberOfThisItem, double increasePriceValue, double coefficientOfPriceIncrease, double price, double coefficientOfDecreaseOfValueWhenReBuying, double decreasePriceValueWhenReBuying) {
         this.item = item;
         this.numberOfThisItem = numberOfThisItem;
         this.countLess = false;
@@ -18,23 +22,43 @@ public class ItemProperties {
         this.increasePriceValue = increasePriceValue;
         this.coefficientOfPriceIncrease = coefficientOfPriceIncrease;
         this.price = price;
+        this.coefficientOfDecreaseOfValueWhenReBuying = coefficientOfDecreaseOfValueWhenReBuying;
+        this.decreasePriceValueWhenReBuying = decreasePriceValueWhenReBuying;
     }
 
-    public ItemProperties(Item item, double increasePriceValue, double coefficientOfPriceIncrease, double price) {
+    public ItemProperties(T item, double increasePriceValue, double coefficientOfPriceIncrease, double price, double coefficientOfDecreaseOfValueWhenReBuying, double decreasePriceValueWhenReBuying) {
         this.item = item;
-        this.numberOfThisItem = 1;
+        this.numberOfThisItem = 9999999;
         this.countLess = true;
         this.timeOfBuyThisItem = 0;
         this.increasePriceValue = increasePriceValue;
         this.coefficientOfPriceIncrease = coefficientOfPriceIncrease;
         this.price = price;
+        this.coefficientOfDecreaseOfValueWhenReBuying = coefficientOfDecreaseOfValueWhenReBuying;
+        this.decreasePriceValueWhenReBuying = decreasePriceValueWhenReBuying;
     }
 
-    public Item getItem() {
+    //--------------------------------------------------- Functions
+
+    public void update() {
+        if (this.coefficientOfPriceIncrease == 0)
+            this.price += this.increasePriceValue;
+        else {
+            this.price *= this.coefficientOfPriceIncrease;
+        }
+        this.timeOfBuyThisItem++;
+        if (!this.countLess) {
+            this.numberOfThisItem--;
+        }
+    }
+
+    //--------------------------------------------------- Getter && Setters
+
+    public T getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(T item) {
         this.item = item;
     }
 
@@ -86,15 +110,19 @@ public class ItemProperties {
         this.countLess = countLess;
     }
 
-    public void update() {
-        if (this.coefficientOfPriceIncrease == 0)
-            this.price += this.increasePriceValue;
-        else {
-            this.price *= this.coefficientOfPriceIncrease;
-        }
-        this.timeOfBuyThisItem++;
-        if (!this.countLess) {
-            this.numberOfThisItem--;
-        }
+    public double getCoefficientOfDecreaseOfValueWhenReBuying() {
+        return coefficientOfDecreaseOfValueWhenReBuying;
+    }
+
+    public void setCoefficientOfDecreaseOfValueWhenReBuying(double coefficientOfDecreaseOfValueWhenReBuying) {
+        this.coefficientOfDecreaseOfValueWhenReBuying = coefficientOfDecreaseOfValueWhenReBuying;
+    }
+
+    public double getDecreasePriceValueWhenReBuying() {
+        return decreasePriceValueWhenReBuying;
+    }
+
+    public void setDecreasePriceValueWhenReBuying(double decreasePriceValueWhenReBuying) {
+        this.decreasePriceValueWhenReBuying = decreasePriceValueWhenReBuying;
     }
 }

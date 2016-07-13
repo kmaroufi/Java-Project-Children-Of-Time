@@ -25,6 +25,7 @@ public class GameEngine {
     private int[] rewardedMoney = new int[4];
     private Hero currentHeroAttacker;
     private Enemy currentEnemyDefender;
+    public static ArrayList<SkillItem> listOfRemovedSkillItemsButHaveEffect;
 
     //------------------------------------------ Functions
     public void showHeroesTraits(String name){
@@ -81,7 +82,7 @@ public class GameEngine {
                 Display.printInEachLine("Your current wealth is: " + this.player.getMoney() + " dollars");
                 Display.printInEachLine("Enter Your Command:(type \"Next\" For Next Step!)");
                 String command = Display.getString();
-                for (ItemProperties itemProperties : Shop.listOfItems) {
+                for (ItemProperties<PerkItem> itemProperties : Shop.listOfPerkItems) {
                     if (command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")) {                 //(item name) + “?”
                         itemProperties.getItem().showDescription();
                         break;
@@ -94,43 +95,41 @@ public class GameEngine {
                                 } else if (this.player.getMoney() < itemProperties.getPrice()) {
                                     Display.printInEachLine("You don’t have enough money");
                                 } else {
-                                    try{
-                                        Item item = itemProperties.getItem().clone();
-                                        item.setWorth(itemProperties.getPrice());
-                                        item.setOwnerName(hero.getName());
-                                        hero.addItem(item);
-                                        if (item.isInstantlyUsed()) {
-                                            item.useItem(null);
-                                        }
-                                        this.player.setMoney(this.player.getMoney() - itemProperties.getPrice());
-                                        itemProperties.update();
-                                        Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());    //(item name) “ bought successfully, your current wealth is: ” + (current money)
-                                        if (itemProperties.getNumberOfThisItem() == 0) {
-                                            Shop.listOfItems.remove(itemProperties);
-                                            Display.printInEachLine("This item is no longer Available in this shop");
-                                        }
-                                    }
-                                    catch (CloneNotSupportedException e){
-                                        e.getStackTrace();
-                                    }
+                                    shops.get(0).sellPerkItemToHero(itemProperties, this.player, hero);
+                                    Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());    //(item name) “ bought successfully, your current wealth is: ” + (current money)
                                 }
                             } else if (command.equalsIgnoreCase("Sell " + itemProperties.getItem().getName() + " of " + hero.getName())) {//“Sell “ + (item name) + “ of” + (hero name)
                                 if (hero.hasItem(itemProperties.getItem())) {
-                                    Item selectedItem = hero.getItem(itemProperties.getItem().getName());
-                                    if (selectedItem.isCanGetSold()) {
-                                        hero.removeItem(selectedItem);
-                                        selectedItem.removeEffect();
-                                        if (selectedItem.isInstantlyUsed()) {
-                                            this.player.setMoney(this.player.getMoney() + selectedItem.getWorth() / 2);
-                                        }
-                                        else {
-                                            this.player.setMoney(this.player.getMoney() + selectedItem.getWorth() / 2 * (selectedItem.getRemainingTimeOfUsed() / (double)selectedItem.getMaximumTimeOfUsed()));
-                                        }
-                                        Display.printInEachLine(itemProperties.getItem().getName() + " successfully sold, your current wealth is: " + player.getMoney());//(item name) + “ successfully sold, your current wealth is: “ + (current money)
-                                    }
-                                    else {
-                                        Display.printInEachLine("You can't sell this item!");
-                                    }
+                                    shops.get(0).buyPerkItemFromHero(itemProperties, this.player, hero);
+                                    Display.printInEachLine(itemProperties.getItem().getName() + " successfully sold, your current wealth is: " + player.getMoney());//(item name) + “ successfully sold, your current wealth is: “ + (current money)
+                                }
+                                else {
+                                    Display.printInEachLine(hero.getName() + " has not this item!");
+                                }
+                            }
+                        }
+                    }
+                }
+                for (ItemProperties<SkillItem> itemProperties : Shop.listOfSkillItems) {
+                    if (command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")) {                 //(item name) + “?”
+                        itemProperties.getItem().showDescription();
+                        break;
+                    }
+                    if (command.contains("Buy " + itemProperties.getItem().getName() + " for ") || command.contains("Sell " + itemProperties.getItem().getName() + " of ")) {
+                        for (Hero hero : this.listOfHeroes) {
+                            if (command.equalsIgnoreCase("Buy " + itemProperties.getItem().getName() + " for " + hero.getName())) { //“Buy “ + (item name) + “ for “ + (hero name)
+                                if ((hero.getInventorySize() - hero.getSizeOfOccupiedInventory()) < itemProperties.getItem().getSize()) {
+                                    Display.printInEachLine(hero.getName() + "'s inventory is full");
+                                } else if (this.player.getMoney() < itemProperties.getPrice()) {
+                                    Display.printInEachLine("You don’t have enough money");
+                                } else {
+                                    shops.get(0).sellSkillItemToHero(itemProperties, this.player, hero);
+                                    Display.printInEachLine(itemProperties.getItem().getName() + " bought successfully, your current wealth is: " + this.player.getMoney());    //(item name) “ bought successfully, your current wealth is: ” + (current money)
+                                }
+                            } else if (command.equalsIgnoreCase("Sell " + itemProperties.getItem().getName() + " of " + hero.getName())) {//“Sell “ + (item name) + “ of” + (hero name)
+                                if (hero.hasItem(itemProperties.getItem())) {
+                                    shops.get(0).buySkillItemFromHero(itemProperties, this.player, hero);
+                                    Display.printInEachLine(itemProperties.getItem().getName() + " successfully sold, your current wealth is: " + player.getMoney());//(item name) + “ successfully sold, your current wealth is: “ + (current money)
                                 }
                                 else {
                                     Display.printInEachLine(hero.getName() + " has not this item!");
@@ -412,8 +411,9 @@ public class GameEngine {
 
         //Adding Items
         Shop shop = new Shop();
+        GameEngine.shops.add(shop);
 
-        this.creatingDefaultItems(shop);
+        this.creatingDefaultItems();
 
         this.rewardedXP[0] = 20;
         this.rewardedXP[1] = 25;
@@ -426,6 +426,299 @@ public class GameEngine {
         this.rewardedMoney[3] = 80;
 
         Player.imortalityPotion = 3;
+    }
+
+    private void creatingDefaultItems() {
+        {
+            // Thoughen
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumHealth",true, null, ClassName.Hero, 20, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Thoughen", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Thoughen", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, true);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 2, 0, 4, 0, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Guide
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumMagic",true, null, ClassName.Hero, 20, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Guide", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Guide", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, true);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 2, 0, 4, 0, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Defy
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPower",true, null, ClassName.Hero, 8, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Defy", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Defy", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, true);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 2, 0, 4, 0, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Sword
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 80, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Sword", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Sword", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, false);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 25, 0.5, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Energy Boots
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 1, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Energy Boots", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Energy Boots", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, false);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 20, 0.5, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Armor
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumHealth", false, null, ClassName.Hero, 200, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Armor", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Armor", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, false);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 25, 0.5, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Magic stick
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 150, null, null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
+            ArrayList<SubPerkComponent<?>> subPerkComponents = new ArrayList<>();
+            subPerkComponents.add(subPerkComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
+
+            Tree<SubPerk> subPerkTree = new Tree<>();
+            Tree.Node<SubPerk> node = subPerkTree.getRoot();
+            node.addChild(subPerk1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Magic stick", null ,1, null);
+            Perk perk = new Perk(abilityHandler, Perk.TimeOfCheck.eachActivity, subPerkTree);
+            perk.setCurrentGrade(1);
+            perk.setCurrentNode(node);
+            perk.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Magic stick", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars");
+            PerkItem perkItem = new PerkItem(itemHandler, perk, false);
+            ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 28, 0.5, 0);
+            Shop.listOfPerkItems.add(itemProperties);
+        }
+        {
+            // Health potion
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentHealth", true, null, ClassName.Hero, 100, null ,null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
+            ArrayList<SubSkillComponent<?>> subSkillComponents = new ArrayList<>();
+            subSkillComponents.add(subSkillComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 0, 0, "1", subSkillComponents);
+            SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
+
+            Tree<SubSkill> subSkillTree = new Tree<>();
+            Tree.Node<SubSkill> node = subSkillTree.getRoot();
+            node.addChild(subSkill1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Health potion", null, 1, null);
+            Skill skill = new Skill(abilityHandler, subSkillTree);
+            skill.setCurrentGrade(1);
+            skill.setCurrentNode(node);
+            skill.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Health potion", Item.Type.SkillItem, 1, "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars");
+            SkillItem skillItem = new SkillItem(itemHandler, skill, 3);
+            ItemProperties<SkillItem> itemProperties = new ItemProperties<>(skillItem, 0, 0, 15, 0.5, 0);
+            Shop.listOfSkillItems.add(itemProperties);
+        }
+        {
+            // Magic potion
+            PropertyHandler<Object> propertyHandler = new PropertyHandler<>("currentMagic", true, null, ClassName.Hero, 50, null ,null);
+            Property<Hero, Object> property = new Property<>(propertyHandler);
+            ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
+            properties.add(property);
+            Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
+            trieConditions.getRoot().addChild(properties, new Condition());
+            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
+            SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
+            ArrayList<SubSkillComponent<?>> subSkillComponents = new ArrayList<>();
+            subSkillComponents.add(subSkillComponent);
+            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 0, new ArrayList<>(), new HashMap<>(), null);
+            SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 0, 0, "1", subSkillComponents);
+            SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
+
+            Tree<SubSkill> subSkillTree = new Tree<>();
+            Tree.Node<SubSkill> node = subSkillTree.getRoot();
+            node.addChild(subSkill1, new Condition());
+            node = node.getChildren().get(0);
+            AbilityHandler abilityHandler = new AbilityHandler("Magic potion", null, 1, null);
+            Skill skill = new Skill(abilityHandler, subSkillTree);
+            skill.setCurrentGrade(1);
+            skill.setCurrentNode(node);
+            skill.setAcquire(true);
+
+            ItemHandler itemHandler = new ItemHandler("Magic potion", Item.Type.SkillItem, 1, "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars");
+            SkillItem skillItem = new SkillItem(itemHandler, skill, 3);
+            ItemProperties<SkillItem> itemProperties = new ItemProperties<>(skillItem, 0, 0, 15, 0.5, 0);
+            Shop.listOfSkillItems.add(itemProperties);
+        }
     }
 
     private void creatingDefaultPerks() {
@@ -1372,7 +1665,7 @@ public class GameEngine {
     public void updateAllPerks(){
         for (Hero hero: this.listOfHeroes) {
             for(Perk perk: hero.getPerks()){
-                if (perk.isAcquire == false)
+                if (perk.isAcquire() == false)
                     continue;
                 if (perk.getTimeOfCheck() == Perk.TimeOfCheck.duringAttack)
                     continue;
@@ -1384,7 +1677,7 @@ public class GameEngine {
     public void updateAllSkills(String typeOfTime){
         for (Hero hero: this.listOfHeroes) {
             for (Skill skill: hero.getSkills()) {
-                if (skill.isAcquire == false)
+                if (skill.isAcquire() == false)
                     continue;
                 if (typeOfTime.equals("NumberOfTurns") == false)
                     skill.reduceTime(typeOfTime);
@@ -1397,13 +1690,42 @@ public class GameEngine {
         }
     }
 
-    public void updateAllItems() {
+    public void updateAllPerkItems() {
         for (Hero hero: this.listOfHeroes) {
-            for (Item item: hero.getItems()) {
-                if (item.getTimeOfRemoveEffect().equals("EachActivity"))
-                    item.removeEffect();
+            for (PerkItem perkItem: hero.getListOfPerkItems()) {
+                if (perkItem.getPerk().isAcquire() == false)
+                    continue;
+                if (perkItem.getPerk().getTimeOfCheck() == Perk.TimeOfCheck.duringAttack)
+                    continue;
+                perkItem.updateItemEffect(Hero.mapOfHeroes.get(perkItem.getOwnerName()));
             }
         }
+    }
+
+    public void updateAllSkillItems(String typeOfTime) {
+        for (Hero hero: this.listOfHeroes) {
+            for (SkillItem skillItem: hero.getListOfSkillItems()) {
+                if (skillItem.getSkill().isAcquire() == false)
+                    continue;
+                if (typeOfTime.equals("NumberOfTurns") == false)
+                    skillItem.getSkill().reduceTime(typeOfTime);
+                skillItem.removeEffect();
+                if (skillItem.getRemainingCooldown() != 0 && typeOfTime.equals("NumberOfCycles"))
+                    skillItem.getSkill().setRemainingCooldown(skillItem.getRemainingCooldown() - 1);
+                if (typeOfTime.equals("NumberOfClashes"))
+                    skillItem.getSkill().setRemainingCooldown(0);
+            }
+        }
+        ArrayList<SkillItem> removedSkillItems = new ArrayList<>();
+        for (SkillItem skillItem: GameEngine.listOfRemovedSkillItemsButHaveEffect) {
+            if (typeOfTime.equals("NumberOfTurns") == false)
+                skillItem.getSkill().reduceTime(typeOfTime);
+            skillItem.removeEffect();
+            if (skillItem.getSkill().numberOfEffectedObjects() == 0) {
+                removedSkillItems.add(skillItem);
+            }
+        }
+        GameEngine.listOfRemovedSkillItemsButHaveEffect.removeAll(removedSkillItems);
     }
 
     public void doCampaign(int battleNumber) {                                               // do Campaign Game (not Custom Game)
@@ -1547,7 +1869,7 @@ public class GameEngine {
                     if (command.contains(hero.getName() + " cast ")) {
                         for (Skill skill : hero.getSkills()) {
                             if (command.contains(hero.getName() + " cast " + skill.getName())) {
-                                if (skill.isAcquire == false) {
+                                if (skill.isAcquire() == false) {
                                     Display.printInEachLine("This Skill isn't acquires!");
                                     break;
                                 } else if (hero.getCurrentEnergyPoint() >= skill.getRequiredEnergyPoint() && hero.getCurrentMagic() < skill.getRequiredMagicPoint()) {
@@ -1573,51 +1895,36 @@ public class GameEngine {
                         }
                     }
                     if (command.contains(hero.getName() + " use ")) {
-                        for (Item item: hero.getItems()) {
-                            if (command.contains(hero.getName() + " use " + item.getName() + " on ")) {
-                                if (!hero.hasItem(item)) {
+                        for (SkillItem skillItem: hero.getListOfSkillItems()) {
+                            if (command.contains(hero.getName() + " use " + skillItem.getName() + " on ")) {
+                                if (!hero.hasItem(skillItem)) {
                                     Display.printInEachLine("You don’t have this item");
                                     break;
                                 }
 //                                else if(itemProperties.getItem().getRemainingTime() > 0){
 //                                    GUI.Display.printInEachLine("Your desired item is still in cooldown");
 //                                    break;
-//                                }
-                                if (hero.getCurrentEnergyPoint() >= item.getRequiredEnergyPoint() && hero.getCurrentMagic() >= item.getRequiredMagicPoint()) {
-                                    if (item.isDependsRelatedSoldiersSelectingOnPlayer()) {
-                                        ArrayList<Hero> targetedHeroes = new ArrayList<>();
-                                        for (Hero targetHero : this.listOfHeroes) {
-                                            if (command.contains("on " + targetHero.getName())) {
-                                                targetedHeroes.add(targetHero);
-                                                break;
-                                            }
-                                        }
-                                        if (targetedHeroes.size() == 0) {
-                                            Display.printInEachLine("Your target was not recognized!");
-                                            break;
-                                        }
-                                        else {
-                                            hero.useItem(item.getName(), targetedHeroes);
-                                        }
-                                    }
-                                    else {
-                                        hero.useItem(item.getName(), null);
-                                    }
-                                    this.updateAllItems();
-                                    if (item.isAlive() == false) {
-                                        hero.removeItem(item);
-                                    }
-                                    Display.printInEachLine(hero.getName() + " used Successfully " + item.getName());
+//
+                                else if (skillItem.getSkill().isAcquire() == false) {
+                                    Display.printInEachLine("This Item isn't acquires!");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() >= item.getRequiredEnergyPoint() && hero.getCurrentMagic() < item.getRequiredMagicPoint()) {
+                                } else if (hero.getCurrentEnergyPoint() >= skillItem.getRequiredEnergyPoint() && hero.getCurrentMagic() < skillItem.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough magic points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < item.getRequiredEnergyPoint() && hero.getCurrentMagic() >= item.getRequiredMagicPoint()) {
+                                } else if (hero.getCurrentEnergyPoint() < skillItem.getRequiredEnergyPoint() && hero.getCurrentMagic() >= skillItem.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     break;
-                                } else if (hero.getCurrentEnergyPoint() < item.getRequiredEnergyPoint() && hero.getCurrentMagic() < item.getRequiredMagicPoint()) {
+                                } else if (hero.getCurrentEnergyPoint() < skillItem.getRequiredEnergyPoint() && hero.getCurrentMagic() < skillItem.getRequiredMagicPoint()) {
                                     Display.printInEachLine("You don’t have enough energy points");
                                     Display.printInEachLine("You don’t have enough magic points");
+                                    break;
+                                } else if (skillItem.getRemainingCooldown() != 0) {
+                                    Display.printInEachLine("Your desired Item is still in cooldown." + "remaining cooldown is " + skillItem.getRemainingCooldown());
+                                    break;
+                                } if (hero.getCurrentEnergyPoint() >= skillItem.getRequiredEnergyPoint() && hero.getCurrentMagic() >= skillItem.getRequiredMagicPoint()) {
+                                    hero.useSkillItem(skillItem.getName());
+                                    this.updateAllSkillItems("NumberOfTurns");
+                                    Display.printInEachLine(hero.getName() + " used Successfully " + skillItem.getName());
                                     break;
                                 }
                             }
@@ -1630,12 +1937,20 @@ public class GameEngine {
                         break;
                     }
                 }
-                for (ItemProperties itemProperties : Shop.listOfItems) {
+                for (ItemProperties<PerkItem> itemProperties : Shop.listOfPerkItems) {
                     if (command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")) {
                         Display.printInEachLine(itemProperties.getItem().getDescription());
                         break;
                     }
                 }
+
+                for (ItemProperties<SkillItem> itemProperties : Shop.listOfSkillItems) {
+                    if (command.equalsIgnoreCase(itemProperties.getItem().getName() + "?")) {
+                        Display.printInEachLine(itemProperties.getItem().getDescription());
+                        break;
+                    }
+                }
+
                 for (Skill skill : this.listOfSkills) {
                     if (command.equalsIgnoreCase(skill.getName() + "?")) {
                         skill.showDescription();

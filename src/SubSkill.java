@@ -119,6 +119,14 @@ public class SubSkill extends SubAbility implements Cloneable{
         Display.printInEachLine(this.upgradeDescription);
     }
 
+    public int numberOfEffectedObjects() {
+        int result = 0;
+        for (SubSkillComponent<?> subSkillComponent: this.subSkillComponents) {
+            result += subSkillComponent.numberOfEffectedObjects();
+        }
+        return result;
+    }
+
     //---------------------------------------------------- Getter && Setters
 
 

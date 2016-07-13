@@ -8,119 +8,32 @@ import java.util.Random;
  */
 public class Item implements Cloneable{
 
-    private String name;
-    private String ownerName;
-    private int size;
-    private boolean isInstantlyUsed;
-    private int maximumTimeOfUsed;
-    private int remainingTimeOfUsed;
-    private int requiredEnergyPoint;
-    private int requiredMagicPoint;
-    private String Description;
-    private ArrayList<Hero> effectedSoldiers = new ArrayList<>();
-    private ArrayList<Hero> relatedSoldiers = new ArrayList<>();
-    private boolean isDependsRelatedSoldiersSelectingOnPlayer;
-    private int numberOfRelatedSoldiers;
-    private boolean isRandomSoldierSelecting;
-    private ArrayList<Property<Hero>> properties;
-    private boolean isTemporary;
-    private int cooldown;
-    private int remainingCooldown;
-    private double worth;
-    private boolean isDisappearAfterFullUse;
-    private boolean isAlive;
-    private boolean canGetSold;
-    private String timeOfRemoveEffect;
+    protected String name;
+    protected Type type;
+    protected String ownerName;
+    protected int size;
+    protected String Description;
+    protected double worth;
+
+    public static enum Type {
+        SkillItem, PerkItem
+    }
 
     //--------------------------------------------------- Constructors
     public Item(){}
 
-    public Item(String name, String ownerName, int size, boolean isInstantlyUsed, int maximumTimeOfUsed, int requiredEnergyPoint, int requiredMagicPoint, String description, boolean isDependsRelatedSoldiersSelectingOnPlayer, int numberOfRelatedSoldiers, boolean isRandomSoldierSelecting, ArrayList<Property<Hero>> properties, boolean isTemporary, int cooldown, boolean isDisappearAfterFullUse, boolean canGetSold, String timeOfRemoveEffect) {
-        this.name = name;
-        this.ownerName = ownerName;
-        this.size = size;
-        this.isInstantlyUsed = isInstantlyUsed;
-        this.maximumTimeOfUsed = maximumTimeOfUsed;
-        this.remainingTimeOfUsed = maximumTimeOfUsed;
-        this.requiredEnergyPoint = requiredEnergyPoint;
-        this.requiredMagicPoint = requiredMagicPoint;
-        Description = description;
-        this.isDependsRelatedSoldiersSelectingOnPlayer = isDependsRelatedSoldiersSelectingOnPlayer;
-        this.numberOfRelatedSoldiers = numberOfRelatedSoldiers;
-        this.isRandomSoldierSelecting = isRandomSoldierSelecting;
-        this.properties = properties;
-        this.isTemporary = isTemporary;
-        this.cooldown = cooldown;
-        this.remainingCooldown = 0;
-        this.worth = 0; // in field bayad dar moghe tahvile item be hero meghdardehi shavad.
-        this.isDisappearAfterFullUse = isDisappearAfterFullUse;
-        this.isAlive = true;
-        this.canGetSold = canGetSold;
-        this.timeOfRemoveEffect = timeOfRemoveEffect;
+    public Item(ItemHandler itemHandler) {
+        setName(itemHandler.getName());
+        setType(itemHandler.getType());
+        setOwnerName(null);
+        setSize(itemHandler.getSize());
+        setDescription(itemHandler.getDescription());
+        setWorth(0);
     }
-
     //--------------------------------------------------- Functions
-
-    public Item clone() throws CloneNotSupportedException {
-        Item item = (Item) super.clone();
-        item.setEffectedSoldiers(new ArrayList<>());
-        item.setRelatedSoldiers(new ArrayList<>());
-        item.setProperties(new ArrayList<>());
-        for (Property<Hero> property: this.properties) {
-            item.getProperties().add(property.clone());
-        }
-        return item;
-    }
 
     public void showDescription(){
         Display.printInEachLine(this.getDescription());
-    }
-
-    public void isActivated() {
-        //TODO
-    }
-
-    public void useItem(ArrayList<Hero> soldiers) {
-        this.choosingRelatedSoldiers(soldiers);
-        if (this.remainingCooldown != 0)
-            return;
-        for (Hero hero: this.relatedSoldiers) {
-            for (Property property: this.properties) {
-                property.effect(hero, Hero.mapOfHeroes.get(this.ownerName), Hero.mapOfHeroes.get(this.ownerName));
-            }
-            this.effectedSoldiers.add(hero);
-        }
-        this.remainingTimeOfUsed--;
-        if (this.remainingTimeOfUsed == 0) {
-            if (this.isDisappearAfterFullUse) {
-                if (this.effectedSoldiers.size() == 0)
-                    this.isAlive = false;
-            }
-        }
-        Hero owner = Hero.mapOfHeroes.get(this.ownerName);
-        owner.setCurrentEnergyPoint(owner.getCurrentEnergyPoint() - this.getRequiredEnergyPoint());
-        owner.setCurrentMagic(owner.getCurrentMagic() - this.getRequiredMagicPoint());
-    }
-
-    public void removeEffect() {
-        ArrayList<Hero> RemovedSoldiers = new ArrayList<>();
-        for (int i = 0; i < effectedSoldiers.size(); i++) {
-            Hero soldier = effectedSoldiers.get(i);
-            for (Property property : this.properties) {
-                property.removeEffect(soldier);
-            }
-            RemovedSoldiers.add(soldier);
-        }
-        for (Hero soldier: RemovedSoldiers) {
-            this.effectedSoldiers.remove(soldier);
-        }
-
-        if (this.remainingTimeOfUsed == 0) {
-            if (this.isDisappearAfterFullUse) {
-                if (this.effectedSoldiers.size() == 0)
-                    this.isAlive = false;
-            }
-        }
     }
 
     public boolean equals(Item item){
@@ -130,150 +43,9 @@ public class Item implements Cloneable{
         return false;
     }
 
-    public void choosingRelatedSoldiers(ArrayList<Hero> soldiers) {
-        this.relatedSoldiers.clear();
-        if (this.numberOfRelatedSoldiers == -5)
-            this.relatedSoldiers.addAll(GameEngine.listOfHeroes);
-        else if (this.isRandomSoldierSelecting) {
-            ArrayList<Hero> heroes = new ArrayList<Hero>();
-            heroes.addAll(GameEngine.listOfHeroes);
-            for (int i = 0; i < this.numberOfRelatedSoldiers; i++) {
-                Random random = new Random();
-                int randomIndex = random.nextInt(heroes.size());
-                this.relatedSoldiers.add(heroes.get(randomIndex));
-                heroes.remove(randomIndex);
-            }
-        }
-        else if (this.isDependsRelatedSoldiersSelectingOnPlayer){
-            this.relatedSoldiers.addAll(soldiers);
-        }
-        else {
-            this.relatedSoldiers.add(Hero.mapOfHeroes.get(this.ownerName));
-        }
-    }
 
     //--------------------------------------------------- Getter && Setters
 
-
-    public boolean isCanGetSold() {
-        return canGetSold;
-    }
-
-    public void setCanGetSold(boolean canGetSold) {
-        this.canGetSold = canGetSold;
-    }
-
-    public ArrayList<Hero> getEffectedSoldiers() {
-        return effectedSoldiers;
-    }
-
-    public void setEffectedSoldiers(ArrayList<Hero> effectedSoldiers) {
-        this.effectedSoldiers = effectedSoldiers;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
-
-    public boolean isDisappearAfterFullUse() {
-        return isDisappearAfterFullUse;
-    }
-
-    public void setDisappearAfterFullUse(boolean disappearAfterFullUse) {
-        isDisappearAfterFullUse = disappearAfterFullUse;
-    }
-
-    public int getCooldown() {
-        return cooldown;
-    }
-
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
-    }
-
-    public int getRemainingCooldown() {
-        return remainingCooldown;
-    }
-
-    public void setRemainingCooldown(int remainingCooldown) {
-        this.remainingCooldown = remainingCooldown;
-    }
-
-    public double getWorth() {
-        return worth;
-    }
-
-    public void setWorth(double worth) {
-        this.worth = worth;
-    }
-
-    public boolean isTemporary() {
-        return isTemporary;
-    }
-
-    public void setTemporary(boolean temporary) {
-        isTemporary = temporary;
-    }
-
-    public ArrayList<Hero> getRelatedSoldiers() {
-        return relatedSoldiers;
-    }
-
-    public void setRelatedSoldiers(ArrayList<Hero> relatedSoldiers) {
-        this.relatedSoldiers = relatedSoldiers;
-    }
-
-    public boolean isDependsRelatedSoldiersSelectingOnPlayer() {
-        return isDependsRelatedSoldiersSelectingOnPlayer;
-    }
-
-    public void setDependsRelatedSoldiersSelectingOnPlayer(boolean dependsRelatedSoldiersSelectingOnPlayer) {
-        isDependsRelatedSoldiersSelectingOnPlayer = dependsRelatedSoldiersSelectingOnPlayer;
-    }
-
-    public int getNumberOfRelatedSoldiers() {
-        return numberOfRelatedSoldiers;
-    }
-
-    public void setNumberOfRelatedSoldiers(int numberOfRelatedSoldiers) {
-        this.numberOfRelatedSoldiers = numberOfRelatedSoldiers;
-    }
-
-    public boolean isRandomSoldierSelecting() {
-        return isRandomSoldierSelecting;
-    }
-
-    public void setRandomSoldierSelecting(boolean randomSoldierSelecting) {
-        isRandomSoldierSelecting = randomSoldierSelecting;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public int getRequiredEnergyPoint() {
-        return requiredEnergyPoint;
-    }
-
-    public void setRequiredEnergyPoint(int requiredEnergyPoint) {
-        this.requiredEnergyPoint = requiredEnergyPoint;
-    }
-
-    public int getRequiredMagicPoint() {
-        return requiredMagicPoint;
-    }
-
-    public void setRequiredMagicPoint(int requiredMagicPoint) {
-        this.requiredMagicPoint = requiredMagicPoint;
-    }
 
     public String getName() {
         return name;
@@ -299,43 +71,27 @@ public class Item implements Cloneable{
         this.size = size;
     }
 
-    public boolean isInstantlyUsed() {
-        return isInstantlyUsed;
+    public String getDescription() {
+        return Description;
     }
 
-    public void setInstantlyUsed(boolean instantlyUsed) {
-        isInstantlyUsed = instantlyUsed;
+    public void setDescription(String description) {
+        Description = description;
     }
 
-    public int getMaximumTimeOfUsed() {
-        return maximumTimeOfUsed;
+    public double getWorth() {
+        return worth;
     }
 
-    public void setMaximumTimeOfUsed(int maximumTimeOfUsed) {
-        this.maximumTimeOfUsed = maximumTimeOfUsed;
+    public void setWorth(double worth) {
+        this.worth = worth;
     }
 
-    public int getRemainingTimeOfUsed() {
-        return remainingTimeOfUsed;
+    public Type getType() {
+        return type;
     }
 
-    public void setRemainingTimeOfUsed(int remainingTimeOfUsed) {
-        this.remainingTimeOfUsed = remainingTimeOfUsed;
-    }
-
-    public ArrayList<Property<Hero>> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(ArrayList<Property<Hero>> properties) {
-        this.properties = properties;
-    }
-
-    public String getTimeOfRemoveEffect() {
-        return timeOfRemoveEffect;
-    }
-
-    public void setTimeOfRemoveEffect(String timeOfRemoveEffect) {
-        this.timeOfRemoveEffect = timeOfRemoveEffect;
+    public void setType(Type type) {
+        this.type = type;
     }
 }

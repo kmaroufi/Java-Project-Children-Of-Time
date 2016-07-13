@@ -141,6 +141,11 @@ public class Skill extends Ability implements Cloneable{
             return false;
         }
     }
+
+    public int numberOfEffectedObjects() {
+        return this.currentNode.getData().numberOfEffectedObjects();
+    }
+
     //---------------------------------------------------- Getter && Setters
 
 
