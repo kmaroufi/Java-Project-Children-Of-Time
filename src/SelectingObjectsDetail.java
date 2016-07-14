@@ -108,9 +108,9 @@ public class SelectingObjectsDetail<T> {
             while (counter != 0) {
                 if (selectedObjects.size() == this.classOfObjects.getListOfObjects().size())
                     break;
-                Display.printf("Please enter your targeted " + this.classOfObjects.getName() + ": ");
+                Display.printInEachLine("Please enter your targeted " + this.classOfObjects.getName() + ".Please split them with ',' .");
                 String command = Display.getString();
-                String[] nameOfObjects = command.split(" ");
+                String[] nameOfObjects = command.split(",");
                 for (String nameOfObject : nameOfObjects) {
                     boolean isTargetRecognized = false;
                     for (T object : (ArrayList<T>) this.classOfObjects.getListOfObjects()) {

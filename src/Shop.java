@@ -21,22 +21,6 @@ public class Shop {
         }
     }
 
-    public void sellItemToHero(String itemName) {                                       // hero buys an item
-//        for(int i = 0;i < this.listOfItems.size();i++){
-//            if(this.listOfItems.get(i).getItem().getName().equals(itemName)){
-//                this.listOfItems.remove(this.listOfItems.get(i));
-//                return;
-//            }
-//        }
-        for (ItemProperties<PerkItem> itemProperties: Shop.listOfPerkItems) {
-            if (itemProperties.getItem().getName().equals(itemName)) {
-
-            }
-        }
-        // if this item doesn't exist
-        Display.printInEachLine( itemName + " doesn't exist in Shop!" );
-    }
-
     public void byeItemFromHero(Hero hero,String itemName) {                      // hero sells an item
         SkillItem skillItem = hero.getMapOfSkillItems().get(itemName);
         if (skillItem != null) {
@@ -100,5 +84,55 @@ public class Shop {
         else {
             player.setMoney(player.getMoney() + skillItem.getWorth() * itemProperties.getCoefficientOfDecreaseOfValueWhenReBuying());
         }
+    }
+
+    public boolean craftSkillItem(ItemProperties<SkillItem> itemProperties, Hero hero) {
+        CraftingRequirement requirementSource = itemProperties.getItem().getCraftingRequirement();
+        if (requirementSource.getWater() > hero.getCraftingRequirement().getWater()) {
+            Display.printInEachLine("Water is not enough!");
+            return false;
+        }
+        if (requirementSource.getAether() > hero.getCraftingRequirement().getAether()) {
+            Display.printInEachLine("Aether is not enough!");
+            return false;
+        }
+        if (requirementSource.getAir() > hero.getCraftingRequirement().getAir()) {
+            Display.printInEachLine("Air is not enough!");
+            return false;
+        }
+        if (requirementSource.getFire() > hero.getCraftingRequirement().getFire()) {
+            Display.printInEachLine("Fire is not enough!");
+            return false;
+        }
+        SkillItem skillItem = itemProperties.getItem().clone();
+        skillItem.setWorth(itemProperties.getPrice());
+        skillItem.setOwnerName(hero.getName());
+        hero.addItem(skillItem);
+        return true;
+    }
+
+    public boolean craftPerkItem(ItemProperties<PerkItem> itemProperties, Hero hero) {
+        CraftingRequirement requirementSource = itemProperties.getItem().getCraftingRequirement();
+        if (requirementSource.getWater() > hero.getCraftingRequirement().getWater()) {
+            Display.printInEachLine("Water is not enough!");
+            return false;
+        }
+        if (requirementSource.getAether() > hero.getCraftingRequirement().getAether()) {
+            Display.printInEachLine("Aether is not enough!");
+            return false;
+        }
+        if (requirementSource.getAir() > hero.getCraftingRequirement().getAir()) {
+            Display.printInEachLine("Air is not enough!");
+            return false;
+        }
+        if (requirementSource.getFire() > hero.getCraftingRequirement().getFire()) {
+            Display.printInEachLine("Fire is not enough!");
+            return false;
+        }
+        PerkItem perkItem = itemProperties.getItem().clone();
+        perkItem.setWorth(itemProperties.getPrice());
+        perkItem.setOwnerName(hero.getName());
+        hero.addItem(perkItem);
+        return true;
     }
 }

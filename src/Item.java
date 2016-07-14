@@ -14,6 +14,7 @@ public class Item implements Cloneable{
     protected int size;
     protected String Description;
     protected double worth;
+    protected CraftingRequirement craftingRequirement;
 
     public static enum Type {
         SkillItem, PerkItem
@@ -29,6 +30,7 @@ public class Item implements Cloneable{
         setSize(itemHandler.getSize());
         setDescription(itemHandler.getDescription());
         setWorth(0);
+        setCraftingRequirement(itemHandler.getCraftingRequirement());
     }
     //--------------------------------------------------- Functions
 
@@ -93,5 +95,13 @@ public class Item implements Cloneable{
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public CraftingRequirement getCraftingRequirement() {
+        return craftingRequirement;
+    }
+
+    public void setCraftingRequirement(CraftingRequirement craftingRequirement) {
+        this.craftingRequirement = craftingRequirement;
     }
 }

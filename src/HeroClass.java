@@ -11,6 +11,7 @@ public class HeroClass extends Soldier {
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     protected ArrayList<Perk> perks = new ArrayList<Perk>();
     protected ArrayList<Skill> skills = new ArrayList<Skill>();
+    protected CraftingRequirement craftingRequirement;
     protected double criticalHitChance;
     protected double criticalHitChanceRatio;
     protected double criticalHitDamage;
@@ -22,6 +23,9 @@ public class HeroClass extends Soldier {
     protected double energyPointRatio;
     protected double attackPowerRatioOnNonTargetedEnemy;
     protected double attackPowerOnNonTargetedEnemy;
+    protected SelfImprovement selfImprovement;
+    protected boolean isAttackOnAllOfTheNon;
+    protected SelectingObjectsDetail<Enemy> selectingEnemyForAttack;
     protected int numberOfNonTargetedEnemyEffected;
     protected int maximumEnergyPoint;
     protected int currentEnergyPoint;
@@ -29,12 +33,12 @@ public class HeroClass extends Soldier {
     protected int sizeOfOccupiedInventory;
     protected int maximumMagic;
     protected int currentMagic;
-    protected double armor;
-    protected double armorRatio; // I know you have problem with this. just keep calm :))
-    protected double damageResistance;
-    protected double criticalDamageResistanceChance;
-    protected double criticalDamageResistance;
-    protected double headShotChance; // when you headShot an enemy, you kill it immediately!
+//    protected double armor;
+//    protected double armorRatio; // I know you have problem with this. just keep calm :))
+//    protected double damageResistance;
+//    protected double criticalDamageResistanceChance;
+//    protected double criticalDamageResistance;
+//    protected double headShotChance; // when you headShot an enemy, you kill it immediately!
 
 
     //-------------------------------------------------- Constructors
@@ -295,51 +299,19 @@ public class HeroClass extends Soldier {
         this.currentMagic = currentMagic;
     }
 
-    public double getArmor() {
-        return armor;
+    public CraftingRequirement getCraftingRequirement() {
+        return craftingRequirement;
     }
 
-    public void setArmor(double armor) {
-        this.armor = armor;
+    public void setCraftingRequirement(CraftingRequirement craftingRequirement) {
+        this.craftingRequirement = craftingRequirement;
     }
 
-    public double getArmorRatio() {
-        return armorRatio;
+    public SelfImprovement getSelfImprovement() {
+        return selfImprovement;
     }
 
-    public void setArmorRatio(double armorRatio) {
-        this.armorRatio = armorRatio;
-    }
-
-    public double getDamageResistance() {
-        return damageResistance;
-    }
-
-    public void setDamageResistance(double damageResistance) {
-        this.damageResistance = damageResistance;
-    }
-
-    public double getCriticalDamageResistanceChance() {
-        return criticalDamageResistanceChance;
-    }
-
-    public void setCriticalDamageResistanceChance(double criticalDamageResistanceChance) {
-        this.criticalDamageResistanceChance = criticalDamageResistanceChance;
-    }
-
-    public double getCriticalDamageResistance() {
-        return criticalDamageResistance;
-    }
-
-    public void setCriticalDamageResistance(double criticalDamageResistance) {
-        this.criticalDamageResistance = criticalDamageResistance;
-    }
-
-    public double getHeadShotChance() {
-        return headShotChance;
-    }
-
-    public void setHeadShotChance(double headShotChance) {
-        this.headShotChance = headShotChance;
+    public void setSelfImprovement(SelfImprovement selfImprovement) {
+        this.selfImprovement = selfImprovement;
     }
 }

@@ -83,4 +83,8 @@ public abstract class Enemy extends Soldier{
     public static void setFieldsMap(Map<String, Field> fieldsMap) {
         Enemy.fieldsMap = fieldsMap;
     }
+
+    public String toString() {
+        return this.name;
+    }
 }

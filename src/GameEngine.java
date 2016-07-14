@@ -327,12 +327,12 @@ public class GameEngine {
         this.creatingDefaultPerks();
 
         //Adding Fighter Class
-        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,0.1,"Fighter",0,1,0,1,0.05,1,1,1,1,0,0,120,0,6,2);
+        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,0.1,"Fighter",0,1,1,1,0.05,1,1,1,1,0,0,120,0,6,2);
         fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
         fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
         this.addNewHeroClass(new HeroClass(fighterHandler));
         //Adding Supporter Class
-        HeroClassHandler supporterHandler = new HeroClassHandler(220,80,0.05,"Supporter",0,1,0,1,0.1,1,1,1,1,0,0,200,0,5,3);
+        HeroClassHandler supporterHandler = new HeroClassHandler(220,80,0.05,"Supporter",0,1,1,1,0.1,1,1,1,1,0,0,200,0,5,3);
         supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
         supporterHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
         this.addNewHeroClass(new HeroClass(supporterHandler));
@@ -457,7 +457,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Thoughen", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health");
+            ItemHandler itemHandler = new ItemHandler("Thoughen", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum health", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, true);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 2, 0, 4, 0, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -490,7 +490,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Guide", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic");
+            ItemHandler itemHandler = new ItemHandler("Guide", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +20 maximum magic", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, true);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 2, 0, 4, 0, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -523,7 +523,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Defy", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power");
+            ItemHandler itemHandler = new ItemHandler("Defy", Item.Type.PerkItem, 0, "Items which alter a hero’s traits (don’t take up inventory’s space): +8 attack power", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, true);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 2, 0, 4, 0, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -556,7 +556,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Sword", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars");
+            ItemHandler itemHandler = new ItemHandler("Sword", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +80 attack power, costs 25 dollars", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, false);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 25, 0.5, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -589,7 +589,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Energy Boots", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars");
+            ItemHandler itemHandler = new ItemHandler("Energy Boots", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +1 energy point, costs 20 dollars", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, false);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 20, 0.5, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -622,7 +622,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Armor", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars");
+            ItemHandler itemHandler = new ItemHandler("Armor", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +200 maximum health, costs 25 dollars", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, false);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 25, 0.5, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -655,7 +655,7 @@ public class GameEngine {
             perk.setCurrentNode(node);
             perk.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Magic stick", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars");
+            ItemHandler itemHandler = new ItemHandler("Magic stick", Item.Type.PerkItem, 1, "Items which have a permanent effect on a hero: +150 maximum magic, costs 28 dollars", new CraftingRequirement(10,10, 10, 10));
             PerkItem perkItem = new PerkItem(itemHandler, perk, false);
             ItemProperties<PerkItem> itemProperties = new ItemProperties<>(perkItem, 0, 0, 28, 0.5, 0);
             Shop.listOfPerkItems.add(itemProperties);
@@ -689,7 +689,7 @@ public class GameEngine {
             skill.setCurrentNode(node);
             skill.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Health potion", Item.Type.SkillItem, 1, "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars");
+            ItemHandler itemHandler = new ItemHandler("Health potion", Item.Type.SkillItem, 1, "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +100 health points for the user or one of his/her allies, costs 15 dollars", new CraftingRequirement(10,10, 10, 10));
             SkillItem skillItem = new SkillItem(itemHandler, skill, 3);
             ItemProperties<SkillItem> itemProperties = new ItemProperties<>(skillItem, 0, 0, 15, 0.5, 0);
             Shop.listOfSkillItems.add(itemProperties);
@@ -723,7 +723,7 @@ public class GameEngine {
             skill.setCurrentNode(node);
             skill.setAcquire(true);
 
-            ItemHandler itemHandler = new ItemHandler("Magic potion", Item.Type.SkillItem, 1, "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars");
+            ItemHandler itemHandler = new ItemHandler("Magic potion", Item.Type.SkillItem, 1, "Items which you can use during the battle up to 3 times (they free the inventory after 3 uses): +50 magic points for the user or one of his/her allies, costs 15 dollars", new CraftingRequirement(10,10, 10, 10));
             SkillItem skillItem = new SkillItem(itemHandler, skill, 3);
             ItemProperties<SkillItem> itemProperties = new ItemProperties<>(skillItem, 0, 0, 15, 0.5, 0);
             Shop.listOfSkillItems.add(itemProperties);
@@ -750,7 +750,8 @@ public class GameEngine {
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +30 attack power for 2 xp points");
             SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-            propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 60, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 60, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -765,7 +766,8 @@ public class GameEngine {
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade2: +30 attack power for 3 xp points");
             SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
-            propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 90, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("attackPower",false, null, ClassName.Hero, 90, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -813,7 +815,8 @@ public class GameEngine {
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade 1: +50 maximum health for 2 xp points");
             SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-            propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 100, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 100, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -828,7 +831,8 @@ public class GameEngine {
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: +50 maximum health for 3 xp points");
             SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
-            propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 150, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("maximumHealth",false, null, ClassName.Hero, 150, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -876,7 +880,8 @@ public class GameEngine {
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade1: +1 energy point for 2 xp points");
             SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-            propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 2, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 2, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -891,7 +896,8 @@ public class GameEngine {
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade2: +1 energy point for 3 xp points");
             SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
-            propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 3, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("maximumEnergyPoint", false, null, ClassName.Hero, 3, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -939,7 +945,8 @@ public class GameEngine {
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, new ArrayList<>(), new HashMap<>(), "Upgrade 1: +50 maximum magic for 2 xp points");
             SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-            propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 100, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 100, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -954,7 +961,8 @@ public class GameEngine {
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: +50 maximum magic for 3 xp points");
             SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
-            propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 150, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("maximumMagic", false, null, ClassName.Hero, 150, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -1006,7 +1014,8 @@ public class GameEngine {
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: P=10 for 2 xp points, needs Work out upgrade 1");
             SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-            propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.2, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.2, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -1021,7 +1030,8 @@ public class GameEngine {
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: P=20 for 3 xp points");
             SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
-            propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.3, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("attackPowerRatioOnNonTargetedEnemy", false, null, ClassName.Hero, 0.3, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
             properties = new ArrayList<>();
             properties.add(property);
@@ -1056,7 +1066,8 @@ public class GameEngine {
             Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
             PropertyHandler<Object> propertyHandler = new PropertyHandler<>("criticalHitChance",false, null, ClassName.Hero, 0.2, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property = new Property<>(propertyHandler);
-            PropertyHandler<Object> propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 2, null, null);
+            tree = new Tree<>();
+            PropertyHandler<Object> propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 1, new SelectingObjectsDetail<>(), tree);
             Property<Hero, Object> property2 = new Property<>(propertyHandler2);
             ArrayList<Property<Hero, ?>> properties = new ArrayList<>();
             properties.add(property);
@@ -1076,9 +1087,11 @@ public class GameEngine {
             SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false, 2, nameOfNecessaryAbilities, gradeOfNecessaryAbilities, "Upgrade 1: P=20 for 2 xp points, needs Fight training upgrade 1");
             SubPerk subPerk1 = new SubPerk(subAbilityHandler, subPerkComponents, "1");
 
-            propertyHandler = new PropertyHandler<>("criticalHitChance", false, null, ClassName.Hero, 0.3, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("criticalHitChance", false, null, ClassName.Hero, 0.3, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
-            propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 2, null, null);
+            tree = new Tree<>();
+            propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 2, new SelectingObjectsDetail<>(), tree);
             property2 = new Property<>(propertyHandler2);
             properties = new ArrayList<>();
             properties.add(property);
@@ -1094,9 +1107,11 @@ public class GameEngine {
             subAbilityHandler = new SubAbilityHandler(false, 3, new ArrayList<>(), new HashMap<>(), "Upgrade 2: P=30 for 3 xp points");
             SubPerk subPerk2 = new SubPerk(subAbilityHandler, subPerkComponents, "2");
 
-            propertyHandler = new PropertyHandler<>("criticalHitChance", false, null, ClassName.Hero, 0.4, null, null);
+            tree = new Tree<>();
+            propertyHandler = new PropertyHandler<>("criticalHitChance", false, null, ClassName.Hero, 0.4, new SelectingObjectsDetail<>(), tree);
             property = new Property<>(propertyHandler);
-            propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 2, null, null);
+            tree = new Tree<>();
+            propertyHandler2 = new PropertyHandler<>("criticalHitDamage",false, null, ClassName.Hero, 2, new SelectingObjectsDetail<>(), tree);
             property2 = new Property<>(propertyHandler2);
             properties = new ArrayList<>();
             properties.add(property);
@@ -1725,11 +1740,13 @@ public class GameEngine {
             for(Perk perk: hero.getPerks()){
                 if (perk.isAcquire() == false)
                     continue;
-                if (perk.getTimeOfCheck() == Perk.TimeOfCheck.duringAttack)
+                if (perk.getTimeOfCheck() == Perk.TimeOfCheck.duringAttackDefend)
                     continue;
                 perk.updatePerkEffect(Hero.mapOfHeroes.get(perk.getOwnerName()));
             }
+            hero.getSelfImprovement().checkCondition(this.player);
         }
+        this.updateAllPerkItems();
     }
 
     public void updateAllSkills(String typeOfTime){
@@ -1746,6 +1763,7 @@ public class GameEngine {
                     skill.setRemainingCooldown(0);
             }
         }
+        this.updateAllSkillItems(typeOfTime);
     }
 
     public void updateAllPerkItems() {
@@ -1753,7 +1771,7 @@ public class GameEngine {
             for (PerkItem perkItem: hero.getListOfPerkItems()) {
                 if (perkItem.getPerk().isAcquire() == false)
                     continue;
-                if (perkItem.getPerk().getTimeOfCheck() == Perk.TimeOfCheck.duringAttack)
+                if (perkItem.getPerk().getTimeOfCheck() == Perk.TimeOfCheck.duringAttackDefend)
                     continue;
                 perkItem.updateItemEffect(Hero.mapOfHeroes.get(perkItem.getOwnerName()));
             }

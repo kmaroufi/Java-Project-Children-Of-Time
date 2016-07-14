@@ -10,7 +10,7 @@ public class SubAbilityComponent<T> {
     protected Tree<ArrayList<Property<T, ?>>> trieConditions;
     protected SelectingObjectsDetail<T> selectingEffectedObjectsDetails;
 
-    protected ArrayList<T> listOfEffectedObjects;
+    protected ArrayList<T> listOfEffectedObjects = new ArrayList<>();
     protected Map<T, ArrayList<Property<T, ?>>> mapOfEffectedProperties = new HashMap<>(); // Key = className, Value = { Key = object, Value = array of properties that affect the object
 
     //-------------------------------------------------------- Constructors

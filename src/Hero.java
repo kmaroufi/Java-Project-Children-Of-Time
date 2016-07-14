@@ -120,10 +120,10 @@ public class Hero extends HeroClass {
         Random random = new Random();
         int criticalHitChance = 0;
         if (this.criticalHitChance != 0) {
-            criticalHitChance = (int) (1 / this.criticalHitChance);
+            criticalHitChance = (int) (1 / this.criticalHitChance * this.criticalHitChanceRatio);
         }
         if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
-            finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage);
+            finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage * this.criticalHitDamageRatio);
             enemy.getDamage(finalAttackPower);
             System.out.println("Critical Attack!");
         }
@@ -158,6 +158,9 @@ public class Hero extends HeroClass {
             enemies.addAll(GameEngine.listOfEnemies);
             enemies.remove(enemy);
             for (int i = 0; i < this.numberOfNonTargetedEnemyEffected; i++) {
+                if (enemies.size() == 0) {
+                    break;
+                }
                 int randomIndex = random.nextInt(enemies.size());
                 if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
                     enemies.get(randomIndex).getDamage((this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
@@ -317,5 +320,9 @@ public class Hero extends HeroClass {
 
     public void setListOfPerkItems(ArrayList<PerkItem> listOfPerkItems) {
         this.listOfPerkItems = listOfPerkItems;
+    }
+
+    public String toString() {
+        return this.name;
     }
 }

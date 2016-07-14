@@ -215,8 +215,13 @@ public class Property<E, T> implements Cloneable {
     public void removeEffect(E effectedObject) {
         if (isPermanently)
             return;
-        Double previousValue = (Double) this.getFieldValue(effectedObject, this.name);
-        this.setFieldValue(effectedObject, this.name, previousValue - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
+        if (Property.getFieldValue(effectedObject, this.name) instanceof Integer) {
+            int previousValue = (int) Property.getFieldValue(effectedObject, this.name);
+            Property.setFieldValue(effectedObject, this.name, (int)(previousValue - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject)));
+        } else if (Property.getFieldValue(effectedObject, this.name) instanceof Double) {
+            double previousValue = (double) Property.getFieldValue(effectedObject, this.name);
+            Property.setFieldValue(effectedObject, this.name, previousValue - this.valueOfEffectingOnEffectedSoldiers.get(effectedObject));
+        }
         this.valueOfEffectingOnEffectedSoldiers.remove(effectedObject);
     }
 
