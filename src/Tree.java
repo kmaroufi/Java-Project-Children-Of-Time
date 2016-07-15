@@ -121,6 +121,15 @@ public class Tree<T> implements Cloneable{
             this.children.add(child);
         }
 
+        public Condition hasThisCondition(Condition condition) {
+            for (int i = 0; i < this.conditions.size(); i++) {
+                if (this.conditions.get(i).equals(condition)) {
+                    return this.conditions.get(i);
+                }
+            }
+            return null;
+        }
+
         public ArrayList<Node<E>> getChildren() {
             return children;
         }

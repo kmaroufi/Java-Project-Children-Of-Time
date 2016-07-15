@@ -1,12 +1,18 @@
+import java.util.ArrayList;
+
 /**
  * Created by Future on 5/6/2016.
  */
 public class Soldier {
+    protected String className;
     protected int maximumHealth;
-    protected int attackPower;
     protected double healthRefillRate;
     protected double currentHealth;
-    protected String className;
+    protected int attackPower;
+    protected int maximumEnergyPoint;
+    protected int currentEnergyPoint;
+    protected ArrayList<Perk> perks = new ArrayList<Perk>();
+    protected ArrayList<Skill> skills = new ArrayList<Skill>();
     //------------------------------------------- Constructors
     public Soldier(){}
 
@@ -75,5 +81,37 @@ public class Soldier {
 
     public String getName(){
         return null;
+    }
+
+    public int getMaximumEnergyPoint() {
+        return maximumEnergyPoint;
+    }
+
+    public void setMaximumEnergyPoint(int maximumEnergyPoint) {
+        this.maximumEnergyPoint = maximumEnergyPoint;
+    }
+
+    public int getCurrentEnergyPoint() {
+        return currentEnergyPoint;
+    }
+
+    public void setCurrentEnergyPoint(int currentEnergyPoint) {
+        this.currentEnergyPoint = currentEnergyPoint;
+    }
+
+    public ArrayList<Perk> getPerks() {
+        return perks;
+    }
+
+    public void setPerks(ArrayList<Perk> perks) {
+        this.perks = perks;
+    }
+
+    public ArrayList<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(ArrayList<Skill> skills) {
+        this.skills = skills;
     }
 }

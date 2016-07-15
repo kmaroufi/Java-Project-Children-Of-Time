@@ -2082,14 +2082,14 @@ public class GameEngine {
                 }
                 this.updateAllSkills("NumberOfCycles");
                 for(Hero hero : this.listOfHeroes){
-                    if((hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate() * hero.getHealthRefillRateRatio()) < hero.getMaximumHealth()) {
-                        hero.setCurrentHealth(hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate() * hero.getHealthRefillRateRatio());
+                    if((hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate()) < hero.getMaximumHealth()) {
+                        hero.setCurrentHealth(hero.getCurrentHealth() + hero.getMaximumHealth() * hero.getHealthRefillRate());
                     }
                     else{
                         hero.setCurrentHealth(hero.getMaximumHealth());
                     }
-                    if ((hero.getCurrentMagic() + hero.getMaximumMagic() *  hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()) < hero.getMaximumMagic()) {
-                        hero.setCurrentMagic(hero.getCurrentMagic() + (int) (hero.getMaximumMagic() * hero.getMagicRefillRate() * hero.getMagicRefillRateRatio()));
+                    if ((hero.getCurrentMagic() + hero.getMaximumMagic() *  hero.getMagicRefillRate()) < hero.getMaximumMagic()) {
+                        hero.setCurrentMagic(hero.getCurrentMagic() + (int) (hero.getMaximumMagic() * hero.getMagicRefillRate()));
                     }
                     else {
                         hero.setCurrentMagic(hero.getMaximumMagic());

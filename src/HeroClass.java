@@ -9,30 +9,21 @@ import java.util.HashMap;
 public class HeroClass extends Soldier {
     public static HashMap<String, HeroClass> mapOfHeroClasses = new HashMap<>();
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
-    protected ArrayList<Perk> perks = new ArrayList<Perk>();
-    protected ArrayList<Skill> skills = new ArrayList<Skill>();
     protected CraftingRequirement craftingRequirement;
     protected double criticalHitChance;
-    protected double criticalHitChanceRatio;
     protected double criticalHitDamage;
-    protected double criticalHitDamageRatio;
     protected double magicRefillRate;
+    protected int maximumMagic;
+    protected int currentMagic;
     protected double attackPowerRatioDuringAttack;
-    protected double healthRefillRateRatio;
-    protected double magicRefillRateRatio;
-    protected double energyPointRatio;
     protected double attackPowerRatioOnNonTargetedEnemy;
     protected double attackPowerOnNonTargetedEnemy;
     protected SelfImprovement selfImprovement;
     protected boolean isAttackOnAllOfTheNon;
     protected SelectingObjectsDetail<Enemy> selectingEnemyForAttack;
     protected int numberOfNonTargetedEnemyEffected;
-    protected int maximumEnergyPoint;
-    protected int currentEnergyPoint;
     protected int inventorySize;
     protected int sizeOfOccupiedInventory;
-    protected int maximumMagic;
-    protected int currentMagic;
 //    protected double armor;
 //    protected double armorRatio; // I know you have problem with this. just keep calm :))
 //    protected double damageResistance;
@@ -62,11 +53,7 @@ public class HeroClass extends Soldier {
         this.setAttackPowerRatioDuringAttack(heroClassHandler.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClassHandler.getAttackPowerRatioOnNonTargetedEnemy());
         this.setCriticalHitChance(heroClassHandler.getCriticalHitChance());
-        this.setCriticalHitChanceRatio(heroClassHandler.getCriticalHitChanceRatio());
         this.setCriticalHitDamage(heroClassHandler.getCriticalHitDamage());
-        this.setCriticalHitDamageRatio(heroClassHandler.getCriticalHitDamageRatio());
-        this.setEnergyPointRatio(heroClassHandler.getEnergyPointRatio());
-        this.setHealthRefillRateRatio(heroClassHandler.getHealthRefillRateRatio());
         this.setHealthRefillRate(heroClassHandler.getHealthRefillRate());
         this.setInventorySize(heroClassHandler.getInventorySize());
         this.setSkills(heroClassHandler.getSkills());
@@ -74,7 +61,6 @@ public class HeroClass extends Soldier {
         this.setMaximumEnergyPoint(heroClassHandler.getMaximumEnergyPoint());
         this.setMaximumMagic(heroClassHandler.getMaximumMagic());
         this.setNumberOfNonTargetedEnemyEffected(heroClassHandler.getNumberOfNonTargetedEnemyEffected());
-        this.setMagicRefillRateRatio(heroClassHandler.getMagicRefillRateRatio());
         this.setMagicRefillRate(heroClassHandler.getMagicRefillRate());
         this.setMaximumHealth(heroClassHandler.getMaximumHealth());
         this.setCurrentMagic(this.getMaximumMagic());
@@ -95,18 +81,13 @@ public class HeroClass extends Soldier {
         this.setAttackPowerRatioDuringAttack(heroClass.getAttackPowerRatioDuringAttack());
         this.setAttackPowerRatioOnNonTargetedEnemy(heroClass.getAttackPowerRatioOnNonTargetedEnemy());
         this.setCriticalHitChance(heroClass.getCriticalHitChance());
-        this.setCriticalHitChanceRatio(heroClass.getCriticalHitChanceRatio());
         this.setCriticalHitDamage(heroClass.getCriticalHitDamage());
-        this.setCriticalHitDamageRatio(heroClass.getCriticalHitDamageRatio());
-        this.setEnergyPointRatio(heroClass.getEnergyPointRatio());
-        this.setHealthRefillRateRatio(heroClass.getHealthRefillRateRatio());
         this.setInventorySize(heroClass.getInventorySize());
         this.setSkills(heroClass.getSkills());
         this.setPerks(heroClass.getPerks());
         this.setMaximumEnergyPoint(heroClass.getMaximumEnergyPoint());
         this.setMaximumMagic(heroClass.getMaximumMagic());
         this.setNumberOfNonTargetedEnemyEffected(heroClass.getNumberOfNonTargetedEnemyEffected());
-        this.setMagicRefillRateRatio(heroClass.getMagicRefillRateRatio());
         this.setMagicRefillRate(heroClass.getMagicRefillRate());
         this.setMaximumHealth(heroClass.getMaximumHealth());
         this.setCurrentMagic(this.getMaximumMagic());
@@ -147,22 +128,6 @@ public class HeroClass extends Soldier {
         HeroClass.listOfHeroClasses = listOfHeroClasses;
     }
 
-    public ArrayList<Perk> getPerks() {
-        return perks;
-    }
-
-    public void setPerks(ArrayList<Perk> perks) {
-        this.perks = perks;
-    }
-
-    public ArrayList<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(ArrayList<Skill> skills) {
-        this.skills = skills;
-    }
-
     public double getCriticalHitChance() {
         return criticalHitChance;
     }
@@ -171,28 +136,12 @@ public class HeroClass extends Soldier {
         this.criticalHitChance = criticalHitChance;
     }
 
-    public double getCriticalHitChanceRatio() {
-        return criticalHitChanceRatio;
-    }
-
-    public void setCriticalHitChanceRatio(double criticalHitChanceRatio) {
-        this.criticalHitChanceRatio = criticalHitChanceRatio;
-    }
-
     public double getCriticalHitDamage() {
         return criticalHitDamage;
     }
 
     public void setCriticalHitDamage(double criticalHitDamage) {
         this.criticalHitDamage = criticalHitDamage;
-    }
-
-    public double getCriticalHitDamageRatio() {
-        return criticalHitDamageRatio;
-    }
-
-    public void setCriticalHitDamageRatio(double criticalHitDamageRatio) {
-        this.criticalHitDamageRatio = criticalHitDamageRatio;
     }
 
     public double getMagicRefillRate() {
@@ -209,30 +158,6 @@ public class HeroClass extends Soldier {
 
     public void setAttackPowerRatioDuringAttack(double attackPowerRatioDuringAttack) {
         this.attackPowerRatioDuringAttack = attackPowerRatioDuringAttack;
-    }
-
-    public double getHealthRefillRateRatio() {
-        return healthRefillRateRatio;
-    }
-
-    public void setHealthRefillRateRatio(double healthRefillRateRatio) {
-        this.healthRefillRateRatio = healthRefillRateRatio;
-    }
-
-    public double getMagicRefillRateRatio() {
-        return magicRefillRateRatio;
-    }
-
-    public void setMagicRefillRateRatio(double magicRefillRateRatio) {
-        this.magicRefillRateRatio = magicRefillRateRatio;
-    }
-
-    public double getEnergyPointRatio() {
-        return energyPointRatio;
-    }
-
-    public void setEnergyPointRatio(double energyPointRatio) {
-        this.energyPointRatio = energyPointRatio;
     }
 
     public double getAttackPowerRatioOnNonTargetedEnemy() {
@@ -257,22 +182,6 @@ public class HeroClass extends Soldier {
 
     public void setNumberOfNonTargetedEnemyEffected(int numberOfNonTargetedEnemyEffected) {
         this.numberOfNonTargetedEnemyEffected = numberOfNonTargetedEnemyEffected;
-    }
-
-    public int getMaximumEnergyPoint() {
-        return maximumEnergyPoint;
-    }
-
-    public void setMaximumEnergyPoint(int maximumEnergyPoint) {
-        this.maximumEnergyPoint = maximumEnergyPoint;
-    }
-
-    public int getCurrentEnergyPoint() {
-        return currentEnergyPoint;
-    }
-
-    public void setCurrentEnergyPoint(int currentEnergyPoint) {
-        this.currentEnergyPoint = currentEnergyPoint;
     }
 
     public int getInventorySize() {

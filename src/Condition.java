@@ -5,36 +5,12 @@ import java.util.function.DoubleUnaryOperator;
  * Created by asus-pc on 5/5/2016.
  */
 public class Condition {
-//    private double criticalHitChance;
-//    private int criticalHitChanceStatus;
-//    private double criticalHitDamage;
-//    private int criticalHitDamageStatus;
-//    private double maximumHealth; // in uml, we missed health in condition
-//    private int maximumHealthStatus;
-//    private double healthRefillRate;
-//    private int healthRefillRateStatus;
-//    private double currentHealth;
-//    private int currentHealthStatus;
-//    private double maximumMagic; // is double true?!
-//    private int maximumMagicStatus;
-//    private double magicRefillRate;
-//    private int magicRefillRateStatus;
-//    private double currentMagic;
-//    private int currentMagicStatus;
-//    private double attackPower; // in uml, we missed attackPower
-//    private int attackPowerStatus;
-//    private double attackPowerRatio;
-//    private int attackPowerRatioStatus;
-//    private double attackPowerRatioOnNonTargetedEnemy;
-//    private int attackPowerRatioOnNonTargetedEnemyStatus;
-//    private double numberOfNonTargetedEnemyEffected;
-//    private int numberOfNonTargetedEnemyEffectedStatus;
-//    private double maximumEnergyPoints; // change to maximumEnergyPoint
-//    private int maximumEnergyPointsStatus;
     private String nameOfField;
     private Object valueOfField;
     private int statusOfFields;
     private boolean isAlwaysTrue;
+
+    //------------------------------------------ Constructors
 
     public Condition(String nameOfField, Object valueOfField, int statusOfFields, boolean isAlwaysTrue) {
         this.nameOfField = nameOfField;
@@ -46,6 +22,8 @@ public class Condition {
     Condition() {
         setAlwaysTrue(true);
     }
+
+    //------------------------------------------ Functions
 
     public <T> boolean checkCondition(T object) {
         if (this.isAlwaysTrue)
@@ -90,6 +68,27 @@ public class Condition {
         return false;
     }
 
+    public boolean equals(Object condition) {
+        if (this == condition) {
+            return true;
+        }
+        if (condition instanceof Condition) {
+            Condition secondCondition = (Condition) condition;
+            if (this.isAlwaysTrue != secondCondition.isAlwaysTrue)
+                return false;
+            if (!this.nameOfField.equals(secondCondition.nameOfField))
+                return false;
+            if (!this.valueOfField.equals(secondCondition.valueOfField))
+                return false;
+            if (this.statusOfFields != secondCondition.statusOfFields)
+                return false;
+            return true;
+        }
+        return false;
+    }
+
+    //------------------------------------------ Getter && Setters
+
     public boolean isAlwaysTrue() {
         return isAlwaysTrue;
     }
@@ -98,7 +97,32 @@ public class Condition {
         isAlwaysTrue = alwaysTrue;
     }
 
+    public String getNameOfField() {
+        return nameOfField;
+    }
+
+    public void setNameOfField(String nameOfField) {
+        this.nameOfField = nameOfField;
+    }
+
+    public Object getValueOfField() {
+        return valueOfField;
+    }
+
+    public void setValueOfField(Object valueOfField) {
+        this.valueOfField = valueOfField;
+    }
+
+    public int getStatusOfFields() {
+        return statusOfFields;
+    }
+
+    public void setStatusOfFields(int statusOfFields) {
+        this.statusOfFields = statusOfFields;
+    }
 }
+
+
 
 // add health and attackPower
 // change energyPoint field to maximumEnergyPoint.

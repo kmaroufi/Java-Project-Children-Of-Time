@@ -120,10 +120,10 @@ public class Hero extends HeroClass {
         Random random = new Random();
         int criticalHitChance = 0;
         if (this.criticalHitChance != 0) {
-            criticalHitChance = (int) (1 / this.criticalHitChance * this.criticalHitChanceRatio);
+            criticalHitChance = (int) (1 / this.criticalHitChance);
         }
         if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
-            finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage * this.criticalHitDamageRatio);
+            finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage);
             enemy.getDamage(finalAttackPower);
             System.out.println("Critical Attack!");
         }
@@ -181,6 +181,15 @@ public class Hero extends HeroClass {
         }
     }
 
+    public void useSkillItem(String itemName){
+        SkillItem skillItem = this.mapOfSkillItems.get(itemName);
+        if (skillItem != null) {
+            skillItem.useItem();
+            return;
+        }
+        Display.printInEachLine("item Not Found!");
+    }
+
     public <T> boolean upgradeAbility(Player player, String abilityName, T sub){
         for(int i = 0;i < this.skills.size();i++){                  //finding Skill with abilityName
             if(this.skills.get(i).getName().equals(abilityName)){
@@ -193,15 +202,6 @@ public class Hero extends HeroClass {
             }
         }
         return false;
-    }
-
-    public void useSkillItem(String itemName){
-        SkillItem skillItem = this.mapOfSkillItems.get(itemName);
-        if (skillItem != null) {
-            skillItem.useItem();
-            return;
-        }
-        Display.printInEachLine("item Not Found!");
     }
 
     public void showDescription(){
@@ -229,15 +229,6 @@ public class Hero extends HeroClass {
         //TODO
     }
 
-    public boolean hasPerk(Perk perk){
-        for(int i = 0;i < this.perks.size();i++){
-            if(perk.equals(this.perks.get(i))){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void showItems(){
         Display.printf(this.name + " has :");
         if(this.listOfSkillItems.isEmpty() && this.listOfPerkItems.isEmpty()){
@@ -251,6 +242,15 @@ public class Hero extends HeroClass {
             Display.printf(skillItem.getName() + " worth" + skillItem.getWorth() + "dollars , ");
         }
         Display.printInEachLine("");
+    }
+
+    public boolean hasPerk(Perk perk){
+        for(int i = 0;i < this.perks.size();i++){
+            if(perk.equals(this.perks.get(i))){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean hasItem(SkillItem skillItem){
