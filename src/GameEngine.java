@@ -429,107 +429,107 @@ public class GameEngine {
         Player.imortalityPotion = 3;
     }
 
-    public void addPerk(){
-        //First
-        String name;                        // #user
-        int numberOfGrades = 0;             // #user
-        String description;                 // #user
-        // AbilityHandler is OK to make
-        // 2
-        ArrayList<SubPerk> subPerks;
-        for (int i = 0; i < numberOfGrades; i++) {
-            //make SubAbilities
-            //isGlobal = false
-            int costOfUpgrades; // XP #user
-            ArrayList<String> nameOfNeccesaryAbilities;         // #user
-            Map<String, Integer> gradeOfNeccessaryAbilities;    // #user
-            while (true) {
-                // show the abilities to user and choose one of them    // #user
-                // add AbilityName to arrayList
-                // add AbilityLevel to gradeMap
-                break;
-            }
-            String upgradeDescription;  // #user
-            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false,costOfUpgrades,nameOfNeccesaryAbilities,gradeOfNeccessaryAbilities,upgradeDescription);
-            String subPerkName; // #user
-            ArrayList<SubPerkComponent> subPerkComponents;
-            while (true) {
-                // make SubAbilityComponent
-                ClassName classOfEffectedObjects = null;    // #user
-                // make Tree
-                if (classOfEffectedObjects == ClassName.Hero) {
-                    Tree<Property<Hero, ?>> propertyTree;
-                    while (true) {
-                        Tree.Node<ArrayList<Property<Hero, ?>>> node = propertyTree.getRoot();
-                        while (true) {
-                            Condition condition = null;
-                            //getting the condition     // #user (choose one of fields of hero)(> == <)(number)
-                            //add to tree
-                            node.addChild(null, condition);         //CHECK THE REPEATED CHILDS
-//                          node = node.getMapOfCondition().get(condition);
-                            break;
-                        }
-                        ArrayList<Property<Hero, ?>> properties;
-                        while (true) {
-                            ClassName classOfEffectingObjects = null;       // #user
-                            // set if else for it (Hero - Enemy - ...)
-                            if (classOfEffectingObjects == ClassName.Hero) {
-                                String nameOfEffectedField; //just one of them  // #user
-                                boolean isPermanently;// #user
-                                ClassName classOfEffectedObjects2 = ClassName.Hero;
-                                int constantProperty;   // #user
-                                SelectingObjectsDetail<Hero> selectingEffectingObjectsDetail; // #user
-                                Tree<ArrayList<Pair<String, Double>>> trieCondition = null;
-                                while (true) {
-                                    Tree.Node<ArrayList<Pair<String , Double>>> node1 = trieCondition.getRoot();
-                                    while (true) {
-                                        Condition condition = null; // #user like up
-                                        //getting the condition
-                                        //add to tree
-                                        node.addChild(null, condition);         //CHECK THE REPEATED CHILDS
-//                                      node = node.getMapOfCondition().get(condition);
-                                        break;
-                                    }
-                                    ArrayList<Pair<String , Double>> variables;
-                                    while (true) {
-                                        String nameOfEffectingFields; // some of them(here one)(check not repeated) // #user
-                                        Double ratio; // #user
-                                        Pair<String, Double> pair = new Pair<>(nameOfEffectingFields, ratio);
-                                        variables.add(pair);
-                                        break;
-                                    }
-                                    node1.addChild(variables, new Condition());
-                                    // Tree of Property had made
-                                    break;
-                                }
-                                PropertyHandler<Hero> heroPropertyHandler = new PropertyHandler<>(/*476 - 481*/);
-                            }
-                            break;
-                        }
-
-
-                        node.addChild(properties,new Condition());
-                        break;
-                    }
-                    SelectingObjectsDetail<Hero> selectingEffectedObjects; // #user
-                    SubAbilityComponentHandler<Hero> heroSubAbilityComponentHandler;    // made
-                    SubPerkComponent<Hero> heroSubPerkComponent = new SubPerkComponent<>(heroSubAbilityComponentHandler);
-                    subPerkComponents.add(heroSubPerkComponent);
-
-                } else if (classOfEffectedObjects == ClassName.Enemy){
-
-                } else if (classOfEffectedObjects == ClassName.Item) {
-
-                }//...
-            }
-            SubPerk subPerk = new SubPerk(subAbilityHandler, subPerkComponents, subPerkName);
-            subPerks.add(subPerk);
-        }
-        // we're ready to make a perk finally!
-        Perk.TimeOfCheck timeOfCheck;   // #user ( 1 - related to attack? 2 - related to Defend?)
-        AbilityHandler abilityHandler; // #user
-        Perk perk = new Perk(abilityHandler,timeOfCheck,subPerks);
-    }                   //GUIDE
+//    public void addPerk(){
+//        //First
+//        String name;                        // #user
+//        int numberOfGrades = 0;             // #user
+//        String description;                 // #user
+//        // AbilityHandler is OK to make
+//        // 2
+//        ArrayList<SubPerk> subPerks;
+//        for (int i = 0; i < numberOfGrades; i++) {
+//            //make SubAbilities
+//            //isGlobal = false
+//            int costOfUpgrades; // XP #user
+//            ArrayList<String> nameOfNeccesaryAbilities;         // #user
+//            Map<String, Integer> gradeOfNeccessaryAbilities;    // #user
+//            while (true) {
+//                // show the abilities to user and choose one of them    // #user
+//                // add AbilityName to arrayList
+//                // add AbilityLevel to gradeMap
+//                break;
+//            }
+//            String upgradeDescription;  // #user
+//            SubAbilityHandler subAbilityHandler = new SubAbilityHandler(false,costOfUpgrades,nameOfNeccesaryAbilities,gradeOfNeccessaryAbilities,upgradeDescription);
+//            String subPerkName; // #user
+//            ArrayList<SubPerkComponent> subPerkComponents;
+//            while (true) {
+//                // make SubAbilityComponent
+//                ClassName classOfEffectedObjects = null;    // #user
+//                // make Tree
+//                if (classOfEffectedObjects == ClassName.Hero) {
+//                    Tree<Property<Hero, ?>> propertyTree;
+//                    while (true) {
+////                        Tree.Node<ArrayList<Property<Hero, ?>>> node = propertyTree.getRoot();
+//                        while (true) {
+//                            Condition condition = null;
+//                            //getting the condition     // #user (choose one of fields of hero)(> == <)(number)
+//                            //add to tree
+////                            node.addChild(null, condition);         //CHECK THE REPEATED CHILDS
+////                          node = node.getMapOfCondition().get(condition);
+//                            break;
+//                        }
+//                        ArrayList<Property<Hero, ?>> properties;
+//                        while (true) {
+//                            ClassName classOfEffectingObjects = null;       // #user
+//                            // set if else for it (Hero - Enemy - ...)
+//                            if (classOfEffectingObjects == ClassName.Hero) {
+//                                String nameOfEffectedField; //just one of them  // #user
+//                                boolean isPermanently;// #user
+//                                ClassName classOfEffectedObjects2 = ClassName.Hero;
+//                                int constantProperty;   // #user
+//                                SelectingObjectsDetail<Hero> selectingEffectingObjectsDetail; // #user
+//                                Tree<ArrayList<Pair<String, Double>>> trieCondition = null;
+//                                while (true) {
+//                                    Tree.Node<ArrayList<Pair<String , Double>>> node1 = trieCondition.getRoot();
+//                                    while (true) {
+//                                        Condition condition = null; // #user like up
+//                                        //getting the condition
+//                                        //add to tree
+//                                        node.addChild(null, condition);         //CHECK THE REPEATED CHILDS
+////                                      node = node.getMapOfCondition().get(condition);
+//                                        break;
+//                                    }
+//                                    ArrayList<Pair<String , Double>> variables;
+//                                    while (true) {
+//                                        String nameOfEffectingFields; // some of them(here one)(check not repeated) // #user
+//                                        Double ratio; // #user
+//                                        Pair<String, Double> pair = new Pair<>(nameOfEffectingFields, ratio);
+//                                        variables.add(pair);
+//                                        break;
+//                                    }
+//                                    node1.addChild(variables, new Condition());
+//                                    // Tree of Property had made
+//                                    break;
+//                                }
+//                                PropertyHandler<Hero> heroPropertyHandler = new PropertyHandler<>(/*476 - 481*/);
+//                            }
+//                            break;
+//                        }
+//
+//
+//                        node.addChild(properties,new Condition());
+//                        break;
+//                    }
+//                    SelectingObjectsDetail<Hero> selectingEffectedObjects; // #user
+//                    SubAbilityComponentHandler<Hero> heroSubAbilityComponentHandler;    // made
+//                    SubPerkComponent<Hero> heroSubPerkComponent = new SubPerkComponent<>(heroSubAbilityComponentHandler);
+//                    subPerkComponents.add(heroSubPerkComponent);
+//
+//                } else if (classOfEffectedObjects == ClassName.Enemy){
+//
+//                } else if (classOfEffectedObjects == ClassName.Item) {
+//
+//                }//...
+//            }
+//            SubPerk subPerk = new SubPerk(subAbilityHandler, subPerkComponents, subPerkName);
+//            subPerks.add(subPerk);
+//        }
+//        // we're ready to make a perk finally!
+//        Perk.TimeOfCheck timeOfCheck;   // #user ( 1 - related to attack? 2 - related to Defend?)
+//        AbilityHandler abilityHandler; // #user
+//        Perk perk = new Perk(abilityHandler,timeOfCheck,subPerks);
+//    }                   //GUIDE
 
     private void creatingDefaultItems() {
         {
