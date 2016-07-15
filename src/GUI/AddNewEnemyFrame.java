@@ -159,4 +159,78 @@ public class AddNewEnemyFrame extends JFrame implements ActionListener,GameFrame
     }
 
 
+    public DefaultTableModel setTableModel(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Name");
+        model.addColumn("Price");
+        model.addColumn("Upgrades");
+        model.addColumn("Description");
+        return model;
+    }
+
+    private void setskillsTable() {
+        DefaultTableModel model = this.setTableModel();
+        this.skillsTable.setModel(model);
+        this.setSkillsTableData();
+        this.skillsScrollPane = new JScrollPane(this.skillsTable);
+    }
+
+    private void setSkillsTableData() {
+
+    }
+
+
+    private void setPerksTableData() {
+
+    }
+
+    @Override
+    public void setBackgroundImage() {
+
+    }
+
+    @Override
+    public void addActionListeners() {
+        this.addButton.addActionListener(this);
+        this.backButton.addActionListener(this);
+        this.addSkillButton.addActionListener(this);
+    }
+
+    @Override
+    public void showFrame() {
+        this.setSize(1500, 800);
+        this.setLayout(null);
+        //-------------------------------
+        this.addComponents();
+        this.setComponentsBounds();
+        //-------------------------------
+        this.setVisible(true);
+    }
+
+    @Override
+    public void setButtons() {
+        //ADD IMAGES
+        this.addButton.setName("AddButton");
+        this.backButton.setName("BackButton");
+        this.addSkillButton.setName("AddNewSkillButton");
+        this.setButton(addButton);
+        this.setButton(backButton);
+        this.setButton(addSkillButton);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
+
+        } else if (e.getSource() == backButton) {
+
+        } else if (e.getSource() == addSkillButton) {
+
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddNewEnemyFrame();
+    }
+
 }
