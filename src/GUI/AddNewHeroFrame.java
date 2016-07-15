@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by Future on 7/15/2016.
  */
-public class AddNewHeroFrame extends JFrame, implements GameFrame,ActionListener{
+public class AddNewHeroFrame extends JFrame implements GameFrame,ActionListener{
     private JButton addButton;
     private JButton backButton;
     private JButton addHeroClassButton;
