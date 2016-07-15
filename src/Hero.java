@@ -9,8 +9,6 @@ import java.util.HashMap;
 
 public class Hero extends HeroClass {
     public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
-    public static ArrayList<Skill> listOfActiveGlobalSkills = new ArrayList<Skill>();
-    public static ArrayList<Perk> listOfActiveGlobalPerks = new ArrayList<Perk>();
     private Map<String, SkillItem> mapOfSkillItems = new HashMap<>();
     private ArrayList<SkillItem> listOfSkillItems = new ArrayList<>();
     private Map<String, PerkItem> mapOfPerkItems = new HashMap<>();
@@ -49,12 +47,8 @@ public class Hero extends HeroClass {
 
     //------------------------------------------ Constructors
 
-    public Hero(){
-
-    }
-
-    public Hero(String name,HeroClassHandler heroClassHandler){
-        super(heroClassHandler);
+    public Hero(String name,HeroClassHandler heroClassHandler, SoldierHandler soldierHandler){
+        super(soldierHandler, heroClassHandler);
         this.setName(name);
         for (Skill skill: this.skills) {
             skill.setOwnerName(name);
@@ -62,11 +56,6 @@ public class Hero extends HeroClass {
         for (Perk perk: this.perks) {
             perk.setOwnerName(name);
         }
-    }
-
-    public Hero(String name,HeroClass heroClass){
-        super(heroClass);
-        this.setName(name);
     }
 
     //------------------------------------------ Functions
@@ -107,14 +96,6 @@ public class Hero extends HeroClass {
         perkItem.updateItemEffect(this);
     }
 
-    public void addSkill(Skill skill){
-        this.skills.add(skill);
-    }
-
-    public void addPerk(Perk perk){
-        this.perks.add(perk);
-    }
-
     public int attack(Enemy enemy){
         int finalAttackPower = 0;
         Random random = new Random();
@@ -132,43 +113,26 @@ public class Hero extends HeroClass {
             enemy.getDamage(finalAttackPower);
             System.out.println("Normal Attack!");
         }
+        this.setCurrentEnergyPoint(this.currentEnergyPoint - 2);
         return finalAttackPower;
     }
 
     public void attackOnNonTargetedEnemies(Enemy enemy) {
+        ArrayList<Enemy> nonTargetedEnemies = this.selectingNonTargetedEnemiesForAttack.selectingObjects();
+        if (nonTargetedEnemies.contains(enemy)) {
+            nonTargetedEnemies.remove(enemy);
+        }
         Random random = new Random();
         int criticalHitChance = 0;
         if (this.criticalHitChance != 0) {
             criticalHitChance = (int)(1 / this.criticalHitChance);
         }
-        if (this.numberOfNonTargetedEnemyEffected == -5) {
-            for (Enemy nonTargetedEnemy: GameEngine.listOfEnemies) {
-                if (nonTargetedEnemy == enemy)
-                    continue;
-                if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
-                    nonTargetedEnemy.getDamage((this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
-                }
-                else {
-                    nonTargetedEnemy.getDamage(this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack);
-                }
+        for (Enemy nonTargetedEnemy: nonTargetedEnemies) {
+            if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
+                nonTargetedEnemy.getDamage((this.attackPowerOnNonTargetedSoldiers + this.attackPowerRatioOnNonTargetedSoldiers * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
             }
-        }
-        else {
-            ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-            enemies.addAll(GameEngine.listOfEnemies);
-            enemies.remove(enemy);
-            for (int i = 0; i < this.numberOfNonTargetedEnemyEffected; i++) {
-                if (enemies.size() == 0) {
-                    break;
-                }
-                int randomIndex = random.nextInt(enemies.size());
-                if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
-                    enemies.get(randomIndex).getDamage((this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
-                }
-                else {
-                    enemies.get(randomIndex).getDamage(this.attackPowerOnNonTargetedEnemy + this.attackPowerRatioOnNonTargetedEnemy * this.attackPower * this.attackPowerRatioDuringAttack);
-                }
-                enemies.remove(randomIndex);
+            else {
+                nonTargetedEnemy.getDamage(this.attackPowerOnNonTargetedSoldiers + this.attackPowerRatioOnNonTargetedSoldiers * this.attackPower * this.attackPowerRatioDuringAttack);
             }
         }
     }
@@ -244,30 +208,12 @@ public class Hero extends HeroClass {
         Display.printInEachLine("");
     }
 
-    public boolean hasPerk(Perk perk){
-        for(int i = 0;i < this.perks.size();i++){
-            if(perk.equals(this.perks.get(i))){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean hasItem(SkillItem skillItem){
         return this.mapOfSkillItems.containsKey(skillItem.getName());
     }
 
     public boolean hasItem(PerkItem perkItem){
         return this.mapOfPerkItems.containsKey(perkItem.getName());
-    }
-
-    public boolean hasSkill(Skill skill){
-        for(int i = 0;i < this.skills.size();i++){
-            if(this.skills.get(i).equals(skill)){
-                return true;
-            }
-        }
-        return false;
     }
 
     public <T> T getItem(String name) {

@@ -5,23 +5,38 @@ import java.util.ArrayList;
  */
 public class Soldier {
     protected String className;
+    protected ArrayList<Perk> perks = new ArrayList<Perk>();
+    protected ArrayList<Skill> skills = new ArrayList<Skill>();
     protected int maximumHealth;
     protected double healthRefillRate;
     protected double currentHealth;
-    protected int attackPower;
+    protected int maximumMagic;
+    protected double magicRefillRate;
+    protected int currentMagic;
     protected int maximumEnergyPoint;
     protected int currentEnergyPoint;
-    protected ArrayList<Perk> perks = new ArrayList<Perk>();
-    protected ArrayList<Skill> skills = new ArrayList<Skill>();
-    //------------------------------------------- Constructors
-    public Soldier(){}
+    protected int attackPower;
+    protected double attackPowerRatioDuringAttack;
+    protected double attackPowerRatioOnNonTargetedSoldiers;
+    protected double attackPowerOnNonTargetedSoldiers;
 
-    public Soldier(int maximumHealth, int attackPower, double healthRefillRate, double currentHealth, String className) {
-        this.maximumHealth = maximumHealth;
-        this.attackPower = attackPower;
-        this.healthRefillRate = healthRefillRate;
-        this.currentHealth = currentHealth;
-        this.className = className;
+    //------------------------------------------- Constructors
+    public Soldier(SoldierHandler soldierHandler){
+        setClassName(soldierHandler.getClassName());
+        setPerks(soldierHandler.getPerks());
+        setSkills(soldierHandler.getSkills());
+        setMaximumHealth(soldierHandler.getMaximumHealth());
+        setHealthRefillRate(soldierHandler.getHealthRefillRate());
+        setCurrentHealth(soldierHandler.getMaximumHealth());
+        setMaximumMagic(soldierHandler.getMaximumMagic());
+        setMagicRefillRate(soldierHandler.getMagicRefillRate());
+        setCurrentMagic(soldierHandler.getMaximumMagic());
+        setMaximumEnergyPoint(soldierHandler.getMaximumEnergyPoint());
+        setCurrentEnergyPoint(soldierHandler.getMaximumEnergyPoint());
+        setAttackPower(soldierHandler.getAttackPower());
+        setAttackPowerRatioDuringAttack(1);
+        setAttackPowerRatioOnNonTargetedSoldiers(1);
+        setAttackPowerOnNonTargetedSoldiers(soldierHandler.getAttackPowerOnNonTargetedSoldiers());
     }
 
     //------------------------------------------- Functions
@@ -37,6 +52,33 @@ public class Soldier {
         if (this.currentHealth < 0)
             this.currentHealth = 0;
     }
+
+    public void addSkill(Skill skill){
+        this.skills.add(skill);
+    }
+
+    public void addPerk(Perk perk){
+        this.perks.add(perk);
+    }
+
+    public boolean hasPerk(Perk perk){
+        for(int i = 0;i < this.perks.size();i++){
+            if(perk.equals(this.perks.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasSkill(Skill skill){
+        for(int i = 0;i < this.skills.size();i++){
+            if(this.skills.get(i).equals(skill)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     //------------------------------------------- Getters && Setters
 
     public int getMaximumHealth() {
@@ -113,5 +155,53 @@ public class Soldier {
 
     public void setSkills(ArrayList<Skill> skills) {
         this.skills = skills;
+    }
+
+    public double getAttackPowerRatioDuringAttack() {
+        return attackPowerRatioDuringAttack;
+    }
+
+    public void setAttackPowerRatioDuringAttack(double attackPowerRatioDuringAttack) {
+        this.attackPowerRatioDuringAttack = attackPowerRatioDuringAttack;
+    }
+
+    public double getAttackPowerRatioOnNonTargetedSoldiers() {
+        return attackPowerRatioOnNonTargetedSoldiers;
+    }
+
+    public void setAttackPowerRatioOnNonTargetedSoldiers(double attackPowerRatioOnNonTargetedSoldiers) {
+        this.attackPowerRatioOnNonTargetedSoldiers = attackPowerRatioOnNonTargetedSoldiers;
+    }
+
+    public double getAttackPowerOnNonTargetedSoldiers() {
+        return attackPowerOnNonTargetedSoldiers;
+    }
+
+    public void setAttackPowerOnNonTargetedSoldiers(double attackPowerOnNonTargetedSoldiers) {
+        this.attackPowerOnNonTargetedSoldiers = attackPowerOnNonTargetedSoldiers;
+    }
+
+    public int getMaximumMagic() {
+        return maximumMagic;
+    }
+
+    public void setMaximumMagic(int maximumMagic) {
+        this.maximumMagic = maximumMagic;
+    }
+
+    public double getMagicRefillRate() {
+        return magicRefillRate;
+    }
+
+    public void setMagicRefillRate(double magicRefillRate) {
+        this.magicRefillRate = magicRefillRate;
+    }
+
+    public int getCurrentMagic() {
+        return currentMagic;
+    }
+
+    public void setCurrentMagic(int currentMagic) {
+        this.currentMagic = currentMagic;
     }
 }
