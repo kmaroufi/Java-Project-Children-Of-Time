@@ -11,16 +11,14 @@ public class HeroClassHandler implements Cloneable{
     private SelfImprovement selfImprovement;
     private SelectingObjectsDetail<Enemy> selectingNonTargetedEnemiesForAttack;
     private int inventorySize;
-    private int sizeOfOccupiedInventory;
 
-    public HeroClassHandler(CraftingRequirement craftingRequirement, double criticalHitChance, double criticalHitDamage, SelfImprovement selfImprovement, SelectingObjectsDetail<Enemy> selectingNonTargetedEnemiesForAttack, int inventorySize, int sizeOfOccupiedInventory) {
+    public HeroClassHandler(CraftingRequirement craftingRequirement, double criticalHitChance, double criticalHitDamage, SelfImprovement selfImprovement, SelectingObjectsDetail<Enemy> selectingNonTargetedEnemiesForAttack, int inventorySize) {
         this.craftingRequirement = craftingRequirement;
         this.criticalHitChance = criticalHitChance;
         this.criticalHitDamage = criticalHitDamage;
         this.selfImprovement = selfImprovement;
         this.selectingNonTargetedEnemiesForAttack = selectingNonTargetedEnemiesForAttack;
         this.inventorySize = inventorySize;
-        this.sizeOfOccupiedInventory = sizeOfOccupiedInventory;
     }
 
     public CraftingRequirement getCraftingRequirement() {
@@ -47,7 +45,4 @@ public class HeroClassHandler implements Cloneable{
         return inventorySize;
     }
 
-    public int getSizeOfOccupiedInventory() {
-        return sizeOfOccupiedInventory;
-    }
 }

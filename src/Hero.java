@@ -58,6 +58,17 @@ public class Hero extends HeroClass {
         }
     }
 
+    public Hero(String name, HeroClass heroClass) {
+        super(heroClass);
+        this.setName(name);
+        for (Skill skill: this.skills) {
+            skill.setOwnerName(name);
+        }
+        for (Perk perk: this.perks) {
+            perk.setOwnerName(name);
+        }
+    }
+
     //------------------------------------------ Functions
 
     public void removeItem(SkillItem skillItem){
@@ -121,6 +132,9 @@ public class Hero extends HeroClass {
         ArrayList<Enemy> nonTargetedEnemies = this.selectingNonTargetedEnemiesForAttack.selectingObjects();
         if (nonTargetedEnemies.contains(enemy)) {
             nonTargetedEnemies.remove(enemy);
+        }
+        if (nonTargetedEnemies.size() == 0) {
+            return;
         }
         Random random = new Random();
         int criticalHitChance = 0;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClass extends Soldier {
+public class HeroClass extends Soldier implements Cloneable {
     public static HashMap<String, HeroClass> mapOfHeroClasses = new HashMap<>();
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     protected CraftingRequirement craftingRequirement;
@@ -37,7 +37,55 @@ public class HeroClass extends Soldier {
         this.setSizeOfOccupiedInventory(0);
     }
 
+    public HeroClass(HeroClass heroClass) {
+        this.className = heroClass.getClassName();
+        this.perks = heroClass.getPerks();
+        this.skills = heroClass.getSkills();
+        this.maximumHealth = heroClass.getMaximumHealth();
+        this.healthRefillRate = heroClass.getHealthRefillRate();
+        this.currentHealth = heroClass.getMaximumHealth();
+        this.maximumMagic = heroClass.getMaximumMagic();
+        this.magicRefillRate = heroClass.getMagicRefillRate();
+        this.currentMagic = heroClass.getMaximumMagic();
+        this.maximumEnergyPoint = heroClass.getMaximumEnergyPoint();
+        this.currentEnergyPoint = heroClass.getMaximumEnergyPoint();
+        this.attackPower = heroClass.getAttackPower();
+        this.attackPowerRatioDuringAttack = heroClass.getAttackPowerRatioDuringAttack();
+        this.attackPowerRatioOnNonTargetedSoldiers = heroClass.getAttackPowerRatioOnNonTargetedSoldiers();
+        this.attackPowerOnNonTargetedSoldiers = heroClass.getAttackPowerOnNonTargetedSoldiers();
+        this.craftingRequirement = heroClass.getCraftingRequirement();
+        this.criticalHitChance = heroClass.getCriticalHitChance();
+        this.criticalHitDamage = heroClass.getCriticalHitDamage();
+        this.selfImprovement = heroClass.getSelfImprovement();
+        this.selectingNonTargetedEnemiesForAttack = heroClass.getSelectingNonTargetedEnemiesForAttack();
+        this.inventorySize = heroClass.getInventorySize();
+        this.sizeOfOccupiedInventory = heroClass.getSizeOfOccupiedInventory();
+    }
+
     //-------------------------------------------------- Functions
+
+    public HeroClass clone() {
+        HeroClass copy = null;
+        try {
+            copy = (HeroClass) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        ArrayList<Perk> newPerks = new ArrayList<>();
+        ArrayList<Skill> newSkills = new ArrayList<>();
+        for (Perk perk: this.perks) {
+            newPerks.add(perk.clone());
+        }
+        for (Skill skill: this.skills) {
+            newSkills.add(skill.clone());
+        }
+        copy.setPerks(newPerks);
+        copy.setSkills(newSkills);
+        copy.setCraftingRequirement(this.craftingRequirement.clone());
+        copy.setSelfImprovement(this.selfImprovement.clone());
+        copy.setSelectingNonTargetedEnemiesForAttack(this.selectingNonTargetedEnemiesForAttack.clone());
+        return copy;
+    }
 
     public void showDescription(){
         Display.printInEachLine("");

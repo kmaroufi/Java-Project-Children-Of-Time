@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by asus-pc on 7/6/2016.
  */
-public class SelectingObjectsDetail<T> {
+public class SelectingObjectsDetail<T> implements Cloneable {
     private ClassName classOfObjects;
     private boolean isAllRelatedObjectsInvolved;
     private boolean isUserSelected;
@@ -55,6 +55,19 @@ public class SelectingObjectsDetail<T> {
     }
 
     //---------------------------------------------------------------- Functions
+
+    public SelectingObjectsDetail<T> clone() {
+        SelectingObjectsDetail<T> copy = null;
+        try {
+            copy = (SelectingObjectsDetail<T>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        if (this.trieConditions != null) {
+            copy.setTrieConditions(this.trieConditions.clone());
+        }
+        return copy;
+    }
 
     public ArrayList<T> selectingObjects() {
         return selectingObjects(null, null, null);

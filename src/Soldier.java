@@ -21,6 +21,10 @@ public class Soldier {
     protected double attackPowerOnNonTargetedSoldiers;
 
     //------------------------------------------- Constructors
+    public Soldier() {
+
+    }
+
     public Soldier(SoldierHandler soldierHandler){
         setClassName(soldierHandler.getClassName());
         setPerks(soldierHandler.getPerks());

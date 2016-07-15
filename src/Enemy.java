@@ -40,6 +40,10 @@ public class Enemy extends Soldier{
         this.levelOfIntelligence = levelOfIntelligence;
     }
 
+    public Enemy() {
+
+    }
+
     //---------------------------------------------------- Functions
     public void showDescription(){
         Display.printInEachLine(this.getName());

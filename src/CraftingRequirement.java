@@ -1,7 +1,7 @@
 /**
  * Created by asus-pc on 7/14/2016.
  */
-public class CraftingRequirement {
+public class CraftingRequirement implements Cloneable{
     private int water;
     private int air;
     private int aether;
@@ -12,6 +12,16 @@ public class CraftingRequirement {
         this.air = air;
         this.aether = aether;
         this.fire = fire;
+    }
+
+    public CraftingRequirement clone() {
+        CraftingRequirement copy = null;
+        try {
+            copy = (CraftingRequirement) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return copy;
     }
 
     public int getWater() {

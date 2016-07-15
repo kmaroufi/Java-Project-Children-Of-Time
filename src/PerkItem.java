@@ -27,11 +27,11 @@ public class PerkItem extends Item {
         return perkItem;
     }
 
-    public <T> void updateItemEffect(T user) {
+    public <T extends Soldier> void updateItemEffect(T user) {
         updateItemEffect(null, null, user);
     }
 
-    public <T> void updateItemEffect(Enemy enemy, Hero hero, T user) {
+    public <T extends Soldier> void updateItemEffect(Enemy enemy, Hero hero, T user) {
         this.perk.updatePerkEffect(enemy, hero, user);
         if (isEffectJustOneTimeInstantlyAfterPerching) {
             Hero.mapOfHeroes.get(this.ownerName).removeItem(this);

@@ -13,9 +13,10 @@ public class SoldierHandler {
     private double magicRefillRate;
     private int maximumEnergyPoint;
     private int attackPower;
+    protected double attackPowerRatioOnNonTargetedSoldiers;
     private double attackPowerOnNonTargetedSoldiers;
 
-    public SoldierHandler(String className, ArrayList<Perk> perks, ArrayList<Skill> skills, int maximumHealth, double healthRefillRate, int maximumMagic, double magicRefillRate, int maximumEnergyPoint, int attackPower, double attackPowerOnNonTargetedSoldiers) {
+    public SoldierHandler(String className, ArrayList<Perk> perks, ArrayList<Skill> skills, int maximumHealth, double healthRefillRate, int maximumMagic, double magicRefillRate, int maximumEnergyPoint, int attackPower, double attackPowerRatioOnNonTargetedSoldiers, double attackPowerOnNonTargetedSoldiers) {
         this.className = className;
         this.perks = perks;
         this.skills = skills;
@@ -25,6 +26,7 @@ public class SoldierHandler {
         this.magicRefillRate = magicRefillRate;
         this.maximumEnergyPoint = maximumEnergyPoint;
         this.attackPower = attackPower;
+        this.attackPowerRatioOnNonTargetedSoldiers = attackPowerRatioOnNonTargetedSoldiers;
         this.attackPowerOnNonTargetedSoldiers = attackPowerOnNonTargetedSoldiers;
     }
 
@@ -70,6 +72,10 @@ public class SoldierHandler {
 
     public int getAttackPower() {
         return attackPower;
+    }
+
+    public double getAttackPowerRatioOnNonTargetedSoldiers() {
+        return attackPowerRatioOnNonTargetedSoldiers;
     }
 
     public double getAttackPowerOnNonTargetedSoldiers() {

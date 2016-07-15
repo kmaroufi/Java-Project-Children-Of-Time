@@ -326,56 +326,49 @@ public class GameEngine {
         this.creatingDefaultSkills();
         this.creatingDefaultPerks();
 
-        //Adding Fighter Class
-        HeroClassHandler fighterHandler = new HeroClassHandler(200,120,0.1,"Fighter",0,1,1,1,0.05,1,1,1,1,0,0,120,0,6,2);
-        fighterHandler.addPerk(Perk.listOfPerks.get("Fight training"));
-        fighterHandler.addPerk(Perk.listOfPerks.get("Work out"));
-        this.addNewHeroClass(new HeroClass(fighterHandler));
-        //Adding Supporter Class
-        HeroClassHandler supporterHandler = new HeroClassHandler(220,80,0.05,"Supporter",0,1,1,1,0.1,1,1,1,1,0,0,200,0,5,3);
-        supporterHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
-        supporterHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
-        this.addNewHeroClass(new HeroClass(supporterHandler));
-        //Adding Eley
-        Hero eley = null;
-        try {
-            eley = new Hero("Eley",fighterHandler.clone());
+        {
+            //Adding Fighter Class
+            SoldierHandler soldierHandler = new SoldierHandler("Fighter", new ArrayList<>(), new ArrayList<>(), 200, 0.1, 120, 0.05, 6, 120, 0, 0);
+            soldierHandler.addPerk(Perk.listOfPerks.get("Fight training"));
+            soldierHandler.addPerk(Perk.listOfPerks.get("Work out"));
+            SelectingObjectsDetailHandler<Enemy> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            HeroClassHandler fighterHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), 0, 1, new SelfImprovement(null, null), selectingObjectsDetail, 2);
+            HeroClass fighterClass = new HeroClass(soldierHandler, fighterHandler);
+            this.addNewHeroClass(fighterClass);
+            //Adding Eley
+            Hero eley = new Hero("Eley",fighterClass.clone());
             eley.addSkill(Skill.listOfSkills.get("Overpowered attack").clone());
             eley.addPerk(Perk.listOfPerks.get("Swirling attack").clone());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        this.addNewHero(eley);
-        //Adding Chrome
-        Hero chrome = null;
-        try {
-            chrome = new Hero("Chrome",fighterHandler.clone());
+            this.addNewHero(eley);
+            //Adding Chrome
+            Hero chrome = new Hero("Chrome",fighterClass.clone());
             chrome.addSkill(Skill.listOfSkills.get("Sacrifice").clone());
             chrome.addPerk(Perk.listOfPerks.get("Critical strike").clone());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            this.addNewHero(chrome);
         }
-        this.addNewHero(chrome);
-        //Adding Meryl
-        Hero meryl = null;
-        try {
-            meryl = new Hero("Meryl",supporterHandler.clone());
+        {
+            //Adding Supporter Class
+            SoldierHandler soldierHandler = new SoldierHandler("Supporter", new ArrayList<>(), new ArrayList<>(), 220, 0.05, 200, 0.1, 5, 80, 0, 0);
+            soldierHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
+            soldierHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
+            SelectingObjectsDetailHandler<Enemy> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Enemy> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            HeroClassHandler supporterHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), 0, 1, new SelfImprovement(null, null), selectingObjectsDetail, 3);
+            HeroClass supporterClass = new HeroClass(soldierHandler, supporterHandler);
+            this.addNewHeroClass(supporterClass);
+            //Adding Meryl
+            Hero meryl = new Hero("Meryl",supporterClass.clone());
             meryl.addSkill(Skill.listOfSkills.get("Elixir").clone());
             meryl.addSkill(Skill.listOfSkills.get("Caretaker").clone());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        this.addNewHero(meryl);
-        //Adding Bolti
-        Hero bolti = null;
-        try {
-            bolti = new Hero("Bolti",supporterHandler.clone());
+            this.addNewHero(meryl);
+            //Adding Bolti
+            Hero bolti = new Hero("Bolti",supporterClass.clone());
             bolti.addSkill(Skill.listOfSkills.get("Boost").clone());
             bolti.addSkill(Skill.listOfSkills.get("Mana beam").clone());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            this.addNewHero(bolti);
         }
-        this.addNewHero(bolti);
+
         //Adding Enemies
 //        if(this.getLevelOfGame().equals("Easy")){
 //            Thug thug = new Thug("Weak");
@@ -1652,8 +1645,8 @@ public class GameEngine {
         this.setCustomGame(true);
         while (true){
             //Welcome To Our Adding Factory
-            Hero newHero = new Hero();
-            this.addNewHero(newHero);
+//            Hero newHero = new Hero();
+//            this.addNewHero(newHero);
         }
     }
 
@@ -1922,7 +1915,6 @@ public class GameEngine {
                                 }
                                 int attackPower = hero.attack(enemy);
                                 hero.attackOnNonTargetedEnemies(enemy);
-                                hero.setCurrentEnergyPoint(hero.getCurrentEnergyPoint() - 2);
                                 Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + attackPower + " power");
                                 Display.printInEachLine(enemy.getName() + "'s Current Health is: " + enemy.getCurrentHealth());
                                 if (enemy.isDead()) {
@@ -2146,7 +2138,7 @@ public class GameEngine {
             if (choose > 0 && choose <= GameEngine.listOfHeroClasses.size()) {
                 hero = new Hero(name, GameEngine.listOfHeroClasses.get(choose - 1));
             } else if (choose == 0) {
-                this.addNewHeroClass(new HeroClass());
+//                this.addNewHeroClass(new HeroClass());
             }
             this.listOfHeroes.add(hero);
         }
