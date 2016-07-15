@@ -191,21 +191,10 @@ public class ShopFrame extends JFrame implements ActionListener{
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.buyButton) {
-//            this.buy();
-            System.out.println("BUY BUTTON");
-        } else if (e.getSource() == this.sellButton) {
-//            this.sellItem;
-        } else if (e.getSource() == this.showMyItemsButton) {
-//            this.showPlayerItems()
-        } else if (e.getSource() == this.addNewItemButton) {
-//            this.addNewItemButton;
+        if (e.getSource() == buyButton) {
+            //BUY WHAT EVER YOU WANT
         }
-
     }
-
-
 }

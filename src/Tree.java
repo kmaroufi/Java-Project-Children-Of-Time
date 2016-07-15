@@ -132,5 +132,7 @@ public class Tree<T> implements Cloneable{
         public void setData(E data) {
             this.data = data;
         }
+
+
     }
 }
