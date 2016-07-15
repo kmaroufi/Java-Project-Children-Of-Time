@@ -1,7 +1,9 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -127,6 +129,129 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
     public void setScrollPanes(){
         this.skillsScrollPane = new JScrollPane(skillsTable);
         this.perksScrollPane = new JScrollPane(perksTable);
+    }
+
+
+    @Override
+    public void setComponentsBounds() {
+        int labelLength = 350;
+        int textFieldLength = 150;
+        for(int i = 0 ;i < this.labels.size();i++) {
+            this.labels.get(i).setBounds(50, 50 + 25 * i, labelLength, 20);
+        }
+        for(int i = 0;i < this.textFields.size();i++) {
+            this.textFields.get(i).setBounds(labelLength, 50 + 25 * i,textFieldLength,20);
+        }
+        this.skillsScrollPane.setBounds(600, 50, 500, 150);
+        this.perksScrollPane.setBounds(600, 250, 500, 150);
+        this.addButton.setBounds(1200, 500, 200, 100);
+        this.backButton.setBounds(50, 500, 200, 100);
+        this.addSkillButton.setBounds(1200, 100, 200, 100);
+        this.addPerkButton.setBounds(1200, 300, 200, 100);
+    }
+
+    @Override
+    public void setFonts(){
+        for(int i = 0;i < this.labels.size();i++) {
+            this.labels.get(i).setFont(tahoma);
+        }
+        for(int i = 0;i < this.textFields.size();i++) {
+            this.textFields.get(i).setFont(tahoma);
+        }
+    }
+
+    @Override
+    public void addComponents() {
+        for(int i = 0;i < this.labels.size();i++) {
+            this.add(labels.get(i));
+        }
+        for(int i = 0;i < this.textFields.size();i++) {
+            this.add(textFields.get(i));
+        }
+        this.add(skillsScrollPane);
+        this.add(perksScrollPane);
+        this.add(addSkillButton);
+        this.add(addPerkButton);
+        this.add(addButton);
+        this.add(backButton);
+    }
+
+    private void setTables() {
+        this.setskillsTable();
+        this.setPerksTable();
+    }
+
+    public DefaultTableModel setTableModel(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Name");
+        model.addColumn("Price");
+        model.addColumn("Upgrades");
+        model.addColumn("Description");
+        return model;
+    }
+
+    private void setskillsTable() {
+        DefaultTableModel model = this.setTableModel();
+        this.skillsTable.setModel(model);
+        this.setSkillsTableData();
+        this.skillsScrollPane = new JScrollPane(this.skillsTable);
+    }
+
+    private void setSkillsTableData() {
+
+    }
+
+    private void setPerksTable() {
+        DefaultTableModel model = this.setTableModel();
+        this.perksTable.setModel(model);
+        this.setPerksTableData();
+        this.perksScrollPane = new JScrollPane(this.perksTable);
+    }
+
+    private void setPerksTableData() {
+
+    }
+
+    @Override
+    public void addActionListeners() {
+        this.addButton.addActionListener(this);
+        this.backButton.addActionListener(this);
+        this.addSkillButton.addActionListener(this);
+        this.addPerkButton.addActionListener(this);
+    }
+
+    @Override
+    public void showFrame() {
+        this.setSize(1500, 800);
+        this.setLayout(null);
+        //-------------------------------
+        this.addComponents();
+        this.setComponentsBounds();
+        //-------------------------------
+        this.setVisible(true);
+    }
+
+    @Override
+    public void setButtons() {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
+
+        } else if (e.getSource() == backButton) {
+
+        } else if (e.getSource() == addSkillButton) {
+
+        } else if (e.getSource() == addPerkButton) {
+
+        }
+    }
+
+
+    public static void main(String[] args) {
+        new AddNewHeroClassFrame();
     }
 
 }
