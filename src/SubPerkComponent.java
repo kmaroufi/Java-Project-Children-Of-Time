@@ -41,7 +41,7 @@ public class SubPerkComponent<T> extends SubAbilityComponent<T> implements Clone
         this.mapOfEffectedProperties.clear();
     }
 
-    public <E> void effect(Enemy enemy, Hero hero, E user) {
+    public <E extends Soldier> void effect(Enemy enemy, Hero hero, E user) {
         ArrayList<T> effectedObjects = this.selectingEffectedObjectsDetails.selectingObjects(enemy, hero, (T) user);
         for (int i = 0; i < effectedObjects.size(); i++) {
             this.mapOfEffectedProperties.put((T) effectedObjects.get(i), this.trieConditions.findCorrectNode(effectedObjects.get(i)));

@@ -54,7 +54,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         return subSkill;
     }       // Creates A Copy of This Object (Skill)
 
-    public void useSkill(Hero userHero) {
+    public <T extends Soldier> void useSkill(T user) {
 
         if (this.remainingCooldown != 0) {
             return;
@@ -63,7 +63,7 @@ public class SubSkill extends SubAbility implements Cloneable{
         boolean isEffectedOnAtLeastOnObject = false;
 
         for (SubSkillComponent subSkillComponent: this.subSkillComponents) {
-            isEffectedOnAtLeastOnObject = isEffectedOnAtLeastOnObject | subSkillComponent.effect(userHero);
+            isEffectedOnAtLeastOnObject = isEffectedOnAtLeastOnObject | subSkillComponent.effect(user);
         }
 
         if (isEffectedOnAtLeastOnObject == false) {
@@ -71,8 +71,8 @@ public class SubSkill extends SubAbility implements Cloneable{
         }
 
         this.remainingCooldown = this.cooldown;
-        userHero.setCurrentEnergyPoint(userHero.getCurrentEnergyPoint() - this.requiredEnergyPoint);
-        userHero.setCurrentMagic(userHero.getCurrentMagic() - this.requiredMagicPoint);
+        user.setCurrentEnergyPoint(user.getCurrentEnergyPoint() - this.requiredEnergyPoint);
+        user.setCurrentMagic(user.getCurrentMagic() - this.requiredMagicPoint);
     }
 
     public void removeEffect() {

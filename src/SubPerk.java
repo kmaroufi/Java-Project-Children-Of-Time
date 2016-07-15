@@ -82,7 +82,7 @@ public class SubPerk extends SubAbility implements Cloneable{
         }
     }
 
-    public <T> void updatePerkEffect(Enemy enemy, Hero hero, T user) {
+    public <T extends Soldier> void updatePerkEffect(Enemy enemy, Hero hero, T user) {
         removeEffect();
         for (SubPerkComponent subPerkComponent: this.subPerkComponents) {
             subPerkComponent.effect(enemy, hero, user);

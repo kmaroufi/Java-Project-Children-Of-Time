@@ -42,9 +42,9 @@ public class Skill extends Ability implements Cloneable{
         return skill;
     }
 
-    public void useSkill(Hero userHero) {
+    public <T extends Soldier> void useSkill(T user) {
 //        this.subSkills.get(currentGrade - 1).useSkill(userHero);
-        this.currentNode.getData().useSkill(userHero);
+        this.currentNode.getData().useSkill(user);
     }
 
     public void removeEffect() {

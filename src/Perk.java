@@ -93,11 +93,11 @@ public class Perk extends Ability implements Cloneable{
         this.currentNode.getData().removeEffect();
     }
 
-    public <T> void updatePerkEffect(T user) {
+    public <T extends Soldier> void updatePerkEffect(T user) {
         this.updatePerkEffect(null, null, user);
     }
 
-    public <T> void updatePerkEffect(Enemy enemy, Hero hero, T user) {
+    public <T extends Soldier> void updatePerkEffect(Enemy enemy, Hero hero, T user) {
 //        this.subPerks.get(this.currentGrade - 1).updatePerkEffect(enemy, hero, userHero);
         this.currentNode.getData().updatePerkEffect(enemy, hero, user);
     }
