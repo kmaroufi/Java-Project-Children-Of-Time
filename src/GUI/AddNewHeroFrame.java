@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -81,4 +82,96 @@ public class AddNewHeroFrame extends JFrame, implements GameFrame,ActionListener
     }
 
 
+    @Override
+    public void addActionListeners() {
+        this.addButton.addActionListener(this);
+        this.backButton.addActionListener(this);
+        this.addSkillButton.addActionListener(this);
+        this.addPerkButton.addActionListener(this);
+        this.addHeroClassButton.addActionListener(this);
+    }
+
+    @Override
+    public void showFrame() {
+        this.setSize(1500, 800);
+        this.setLayout(null);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //--------------------------------------------------------------------
+        this.setScrollPanes();
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        //--------------------------------------------------------------------
+        this.setVisible(true);
+    }
+
+    @Override
+    public void setButtons() {
+        this.addButton.setName("AddButton");
+        this.backButton.setName("BackButton");
+        this.addSkillButton.setName("AddSkillButton");
+        this.addPerkButton.setName("AddPerkButton");
+        this.addHeroClassButton.setName("AddHeroClassButton");
+        this.setButton(addButton);
+        this.setButton(backButton);
+        this.setButton(addSkillButton);
+        this.setButton(addPerkButton);
+        this.setButton(addHeroClassButton);
+    }
+
+    @Override
+    public void addComponents() {
+        this.add(nameLabel);
+        this.add(nameField);
+        this.add(addButton);
+        this.add(backButton);
+        this.add(addSkillButton);
+        this.add(addPerkButton);
+        this.add(addHeroClassButton);
+        this.add(skillsScrollPane);
+        this.add(perksScrollPane);
+        this.add(heroClassScrollPane);
+    }
+
+    @Override
+    public void setComponentsBounds() {
+        this.nameLabel.setBounds(50, 100, 100, 20);
+        this.nameField.setBounds(150, 100, 150, 20);
+        this.heroClassScrollPane.setBounds(50, 150, 700, 200);
+        this.skillsScrollPane.setBounds(50, 400, 700, 200);
+        this.perksScrollPane.setBounds(800, 150, 650, 200);
+        this.addButton.setBounds(1000, 480, 200, 100);
+        this.backButton.setBounds(900, 580, 200, 100);
+        this.addSkillButton.setBounds(800, 380, 200, 100);
+        this.addPerkButton.setBounds(800, 480, 200, 100);
+        this.addHeroClassButton.setBounds(1000, 380, 200 ,100);
+    }
+
+    @Override
+    public void setFonts() {
+        this.nameLabel.setFont(tahoma);
+        this.nameField.setFont(tahoma);
+        this.heroClassScrollPane.setFont(tahoma);
+        this.skillsScrollPane.setFont(tahoma);
+        this.perksScrollPane.setFont(tahoma);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
+
+        } else if (e.getSource() == backButton) {
+
+        } else if (e.getSource() == addSkillButton) {
+
+        } else if (e.getSource() == addPerkButton) {
+
+        } else if (e.getSource() == addHeroClassButton) {
+
+        }
+    }
+
+    public static void main(String[] args) {
+        new AddNewHeroFrame();
+    }
 }
