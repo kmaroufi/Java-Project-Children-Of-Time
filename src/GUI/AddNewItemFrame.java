@@ -106,8 +106,8 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
 
     @Override
     public void setComponentsBounds() {
-        int labelSize = 100;
-        int fieldSize = 150;
+        int labelSize = 200;
+        int fieldSize = 250;
         for(int i = 0;i < this.labels.size();i++) {
             this.labels.get(i).setBounds(50, 50 + 25 * i, labelSize, 20);
             this.fields.get(i).setBounds(labelSize, 50 + 25 * i, fieldSize, 20);
