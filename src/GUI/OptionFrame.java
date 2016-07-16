@@ -5,30 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Future on 7/13/2016.
+ * Created by Future on 7/16/2016.
  */
-public class SinglePlayerFrame extends JFrame implements ActionListener,GameFrame {
-    private JButton playButton;
-    private JButton backButton;
-
-
-
-
-
-    public SinglePlayerFrame(){
-        this.playButton = new JButton();
-        this.backButton = new JButton();
-    }
-
-
-
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
+public class OptionFrame extends JFrame implements ActionListener,GameFrame {
     @Override
     public void setBackgroundImage() {
 
@@ -61,6 +40,11 @@ public class SinglePlayerFrame extends JFrame implements ActionListener,GameFram
 
     @Override
     public void setFonts() {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
     }
 }

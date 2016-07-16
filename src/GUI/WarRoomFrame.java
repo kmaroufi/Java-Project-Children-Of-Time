@@ -34,6 +34,7 @@ public class WarRoomFrame extends JFrame implements ActionListener {
         JFrame frame = new JFrame("Test");
         frame.setSize(500, 500);
         JButton button = new JButton("Button");
+        frame.setVisible(true);
     }
     public void showFrame(){
         this.setSize(1500, 800);
