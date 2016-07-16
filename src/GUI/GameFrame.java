@@ -15,7 +15,7 @@ public interface GameFrame {
         button.setIcon(buttonImage);
         button.setSize(buttonImage.getIconWidth(), buttonImage.getIconHeight());
     }
-
+    void setBackgroundImage();
     void addActionListeners();
     void showFrame();
     void setButtons();
