@@ -11,28 +11,6 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
     private JLabel nameFrame;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public void setBackgroundImage() {
 
