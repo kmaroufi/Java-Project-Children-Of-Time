@@ -4,10 +4,10 @@ import PlayerPackage.*;
 import GUI.Display;
 import SoldierPackage.*;
 import AbilityPackage.*;
-import AbilityPackage.SubAbilityComponentHandler;
 import ItemPackage.*;
 import ShopPackage.*;
 import Structure.*;
+import Network.*;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -33,6 +33,8 @@ public class GameEngine {
     private Hero currentHeroAttacker;
     private Enemy currentEnemyDefender;
     public static ArrayList<SkillItem> listOfRemovedSkillItemsButHaveEffect;
+
+    public NetworkDetail networkDetail;
 
     //------------------------------------------ Functions
     public void showHeroesTraits(String name){
@@ -2231,6 +2233,10 @@ public class GameEngine {
         }
     }
 
+    public void addNewHero(String name, HeroClass heroClass) {
+        this.addNewHero(new Hero(name, heroClass));
+    }
+
     public void addNewHero(Hero hero) {
         if(isCustomGame) {
             String name;
@@ -2366,6 +2372,17 @@ public class GameEngine {
     }
 
     public void clearScreen(){}
+
+    public void PvPBattle(int code) {
+        if (code == 1) {
+            this.networkDetail.createServer();
+        }
+        if (code == 2) {
+            
+        }
+    }
+
+
     //------------------------------------------ Getter && Setters
 
     public Player getPlayer() {
