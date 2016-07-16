@@ -81,11 +81,11 @@ public class AddNewHeroFrame extends JFrame implements ActionListener, GameFrame
         return model;
     }
 
-
     @Override
     public void setBackgroundImage() {
 
     }
+
 
     @Override
     public void addActionListeners() {

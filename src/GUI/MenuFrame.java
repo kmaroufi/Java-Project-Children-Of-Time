@@ -21,7 +21,7 @@ public class MenuFrame extends JFrame implements ActionListener{
         //-------------------------------------------------
         this.singlePlayerButton = new JButton();
         this.customPlayerButton = new JButton();
-        this.PVPPlayerButton = new JButton("PVP Player");
+        this.PVPPlayerButton = new JButton("PVP PlayerPackage");
         this.optionButton = new JButton("Option");
         this.exitButton = new JButton("Exit");
         //-------------------------------------------------

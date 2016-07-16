@@ -126,6 +126,8 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
         textFields.add(attackPowerRatioOnNonTargetedEnemyField);
     }
 
+
+
     public void setScrollPanes(){
         this.skillsScrollPane = new JScrollPane(skillsTable);
         this.perksScrollPane = new JScrollPane(perksTable);

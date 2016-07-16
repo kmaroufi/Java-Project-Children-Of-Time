@@ -63,7 +63,7 @@ public class SkillRoomFrame extends JFrame implements ActionListener {
 //        this.playerCapacityLabel = player.getCapacity();
 //        this.playerNameLabel.setText(player.getName());
 //        this.playerMoneyLabel.setText(player.getMoney());
-//        ArrayList<Item> playerItems = player.getItems();
+//        ArrayList<ItemPackage> playerItems = player.getItems();
 //        for(int i = 0;i < this.playerItems.size();i++) {
 //            this.playerItems.get(i).setFont(tahoma);
 //            this.playerItems.get(i) = new JLabel((i + 1) + " - " + playerItems.get(i).getName());

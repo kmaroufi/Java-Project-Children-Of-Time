@@ -29,21 +29,21 @@ public class TileMap implements Serializable{
     public TileMap(){
         Texture[] downTextures = new Texture[3];
         for(int i = 0;i < 3;i++) {
-            downTextures[i] = new Texture("Player(Down-" + (i + 1) + ")");
+            downTextures[i] = new Texture("PlayerPackage(Down-" + (i + 1) + ")");
         }
         Texture[] rightTextures = new Texture[3];
         for(int i = 0;i < 3;i++) {
-            rightTextures[i] = new Texture("Player(Right-" + (i + 1) + ")");
+            rightTextures[i] = new Texture("PlayerPackage(Right-" + (i + 1) + ")");
         }
         Texture[] leftTextures = new Texture[3];
         for(int i = 0;i < 3;i++) {
-            leftTextures[i] = new Texture("Player(Left-" + (i + 1) + ")");
+            leftTextures[i] = new Texture("PlayerPackage(Left-" + (i + 1) + ")");
         }
         Texture[] upTextures = new Texture[3];
         for(int i = 0;i < 3;i++) {
-            upTextures[i] = new Texture("Player(Up-" + (i + 1) + ")");
+            upTextures[i] = new Texture("PlayerPackage(Up-" + (i + 1) + ")");
         }
-        player = new Player("Player(Down-1)", 300, 300, upTextures, rightTextures, leftTextures, downTextures);
+        player = new Player("PlayerPackage(Down-1)", 300, 300, upTextures, rightTextures, leftTextures, downTextures);
 //        System.out.println("Added Key Input");
         this.cells = new Cell[NUMBER_OF_BARRIERS_PER_ROW][NUMBER_OF_BARRIERS_PER_COLUMN];
         buildMap();

@@ -15,7 +15,7 @@ public class Cell implements Serializable{
 
     //--------------------------------------------------------------------------- Constructors
 
-    public Cell(String mode, int x, int y) {// Shop(3) - Empty(1) - WarRoom(4) - Barrier(2) - SkillRoom(5) - Door(6)
+    public Cell(String mode, int x, int y) {// ShopPackage(3) - Empty(1) - WarRoom(4) - Barrier(2) - SkillRoom(5) - Door(6)
         this.mode = mode;
         this.x = x;
         this.y = y;

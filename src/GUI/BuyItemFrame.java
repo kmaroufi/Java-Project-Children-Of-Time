@@ -29,8 +29,8 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
         this.buyButton = new JButton();
         this.itemImage = new JLabel(new ImageIcon("./resources/images/Barrier.png"));
         this.itemNameLabel = new JLabel("ITEM INFORMATION"); // item's information ---->> name - price description
-        this.itemPriceLabel = new JLabel("Item Price");
-        this.itemDescriptionLabel = new JLabel("Item Description");
+        this.itemPriceLabel = new JLabel("ItemPackage Price");
+        this.itemDescriptionLabel = new JLabel("ItemPackage Description");
         this.itemsBox = new JComboBox();
         //-------------------------------------------------------
         this.setButtons();
@@ -41,20 +41,20 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
         this.buyShopThread.start();
     }
 
-    public void addItemLists(/*ArrayList<Item>*/){
+    public void addItemLists(/*ArrayList<ItemPackage>*/){
         //adding items from the GameEngine.items
         for(int i = 1;i <= 10;i++) {
-            this.itemsBox.addItem("Item - " + i);
+            this.itemsBox.addItem("ItemPackage - " + i);
         }
     }
 
     private void setItemInformation(){
         String itemName = (String) this.itemsBox.getSelectedItem();
-        this.itemNameLabel.setText("Item Name : " + itemName);// item - 1
-        this.itemPriceLabel.setText("Item Price : " + itemName.charAt(7) + "$");
+        this.itemNameLabel.setText("ItemPackage Name : " + itemName);// item - 1
+        this.itemPriceLabel.setText("ItemPackage Price : " + itemName.charAt(7) + "$");
         this.itemDescriptionLabel.setText("Description : " + "heheheh");
 
-//        this.itemImage.setText("This is Item Image(!!!)");
+//        this.itemImage.setText("This is ItemPackage Image(!!!)");
     }
 
     public void process(){

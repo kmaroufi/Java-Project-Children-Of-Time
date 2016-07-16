@@ -64,7 +64,7 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
         this.addNewAbilityButton = new JButton();
         this.backButton = new JButton();
         this.nameLabel = new JLabel("Name");
-        this.typeLabel = new JLabel("Item Type");
+        this.typeLabel = new JLabel("ItemPackage Type");
         this.worthLabel = new JLabel("Worth");
         this.sizeLabel = new JLabel("Size");
         this.descriptionLabel = new JLabel("Description");

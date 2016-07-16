@@ -19,9 +19,9 @@ public class WarRoomFrame extends JFrame implements ActionListener {
     public WarRoomFrame(){
         super("War Room");
         this.attackButton = new JButton("Attack");
-        this.castButton = new JButton("Cast Ability");
+        this.castButton = new JButton("Cast AbilityPackage");
         this.skipButton = new JButton("Skip");
-        this.useItemButton = new JButton("Use Item");
+        this.useItemButton = new JButton("Use ItemPackage");
         this.playerNameLabel = new JLabel("PLAYER NAME");
         this.playerEPLabel = new JLabel("PLAYER EP");
         this.warRoomImage = new JLabel(new ImageIcon("PATH"));

@@ -32,13 +32,13 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
         this.playerMoneyLabel = new JLabel("PLAYER MONEY");
         this.playerItems = new ArrayList<>();
         this.playerCapacityLabel = new JLabel("CAPACITY");
-        this.playerImage = new JLabel(new ImageIcon("./resources/images/Player(Down-1).png"));
+        this.playerImage = new JLabel(new ImageIcon("./resources/images/PlayerPackage(Down-1).png"));
         this.buyButton = new JButton();
         this.sellButton = new JButton();
         this.showMyItemsButton = new JButton();
         this.loadingFrameProgressBar = new JProgressBar(0, 100);
         //----------------------------------------------------
-//        this.setPlayerInformation(new Player());                          // CORRECT IT!
+//        this.setPlayerInformation(new PlayerPackage());                          // CORRECT IT!
         this.addActionListeners();
         this.setBackgroundImage();
         this.showProgressFrame();
@@ -51,7 +51,7 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
 //        this.playerCapacityLabel = player.getCapacity();
 //        this.playerNameLabel.setText(player.getName());
 //        this.playerMoneyLabel.setText(player.getMoney());
-//        ArrayList<Item> playerItems = player.getItems();
+//        ArrayList<ItemPackage> playerItems = player.getItems();
 //        for(int i = 0;i < this.playerItems.size();i++) {
 //            this.playerItems.get(i).setFont(tahoma);
 //            this.playerItems.get(i) = new JLabel((i + 1) + " - " + playerItems.get(i).getName());
@@ -133,7 +133,7 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
 
     public void showProgressFrame(){
         JFrame frame = new JFrame("Progress");
-        JLabel label = new JLabel("Please Wait While Loading Shop...");
+        JLabel label = new JLabel("Please Wait While Loading ShopPackage...");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setLayout(null);

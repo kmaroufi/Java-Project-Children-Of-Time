@@ -30,7 +30,7 @@ public class Player {
         this.center = new Point((int) (boundRectangle.getX() + (boundRectangle.getWidth() / 2)), (int) (boundRectangle.getY() + (boundRectangle.getHeight() / 2)));
     }
 
-//    public Player(String imageName, int x, int y, Texture... textures) {
+//    public PlayerPackage(String imageName, int x, int y, Texture... textures) {
 //        this.texture = new Texture(imageName);
 //        this.x = x;
 //        this.y = y;
