@@ -178,7 +178,6 @@ public class AddNewEnemyFrame extends JFrame implements ActionListener,GameFrame
 
     }
 
-
     private void setPerksTableData() {
 
     }
