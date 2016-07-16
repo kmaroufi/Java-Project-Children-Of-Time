@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Future on 7/13/2016.
  */
 public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
-    private JLabel nameFrame;
+    private JLabel perkNameLabel;
     private JLabel nameOfGradesLabel;
     private JLabel descriptionLabel;
     //2
@@ -21,7 +21,7 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
     //3
     private JLabel fieldOfClassNameLabel;
     private JRadioButton greaterThan,smallerThan,equals;
-    //nabayad adade sabeti vared kone??
+    private JLabel constantNumberLabel;
     //4 set ClassName
     private JLabel nameOfEffectedFieldLabel;
     private JCheckBox isPermenantly;
@@ -49,6 +49,7 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
     private JTextField subPerkNameField;
     //3
     private JTextField fieldOfClassNameField;
+    private JTextField constantNumberField;
     //4 set ClassName
     private JTextField nameOfEffectedFieldField;
     private JTextField constantPropertyField;

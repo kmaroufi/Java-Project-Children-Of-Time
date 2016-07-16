@@ -204,18 +204,30 @@ public class TileMap implements Serializable{
 
     public void addBarrier(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("Barrier");
     }
     public void addShop(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("Shop");
     }
     public void addWarRoom(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("WarRoom");
     }
     public void addSkillRoom(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("SkillRoom");
     }
     public void addDoor(double x, double y) {
@@ -227,15 +239,32 @@ public class TileMap implements Serializable{
     }
     public void addFinalWar(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("FinalWar");
     }
     public void addEmptyTile(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("EmptyTile");
     }
     public void addBook(double x, double y) {
         Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
         cell.setMode("StoryBook");
+    }
+
+    public void addKey(double x, double y) {
+        Cell cell = findCellWithThisCoordinate(x, y);
+        if (cell == null) {
+            return;
+        }
+        cell.setMode("Key");
     }
 
 

@@ -13,6 +13,9 @@ import java.io.*;
  * Created by Future on 7/7/2016.
  */
 public class MapEditor extends JPanel implements ActionListener,GameFrame{
+    private JButton makeNewMapButton;
+    private JButton editExistingMapButton;
+    private JTable mapsTable;
     private TileMap newMap;
     private JFrame mapFrame;
     private JMenuBar menuBar;
@@ -46,6 +49,8 @@ public class MapEditor extends JPanel implements ActionListener,GameFrame{
         this.setFocusable(true);
         this.setSize(600, 600);
         //---------------------------------------------
+        this.makeNewMapButton = new JButton();
+        this.editExistingMapButton = new JButton();
         this.comboBox = new JComboBox();
         this.mapFrame = new JFrame(this.mapName);
         //---------------------------------------------
@@ -68,6 +73,7 @@ public class MapEditor extends JPanel implements ActionListener,GameFrame{
         comboBox.addItem("SkillRoom");
         comboBox.addItem("EmptyTile");
         comboBox.addItem("StoryBook");
+        comboBox.addItem("Key");
     }
 
 
@@ -106,6 +112,19 @@ public class MapEditor extends JPanel implements ActionListener,GameFrame{
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void setMapSelection(){
+
+    }
+
+    public void getMapNames(){
+        File folder = new File("./resources/maps");
+        for (File fileEntry : folder.listFiles()) {
+            int index = fileEntry.getName().indexOf(".");
+            String fileName = fileEntry.getName().substring(0, index);
+            System.out.println(fileName);
         }
     }
 
@@ -203,8 +222,9 @@ public class MapEditor extends JPanel implements ActionListener,GameFrame{
 
 
     public static void main(String[] args) {
-        MapEditor firstMap = new MapEditor();
+//        MapEditor firstMap = new MapEditor();
 //        JOptionPane.showMessageDialog(null, "Hello");
+        MapEditor.setMapSelection();
     }
 
     @Override
