@@ -1,5 +1,8 @@
 package GUI;
 
+import Input.KeyInput;
+import Input.MouseInput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
