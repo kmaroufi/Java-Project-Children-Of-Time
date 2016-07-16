@@ -7,42 +7,43 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by Future on 7/12/2016.
+ * Created by Future on 7/11/2016.
  */
-public class ShopFrame extends JFrame implements ActionListener{
+public class ShopFrame extends JFrame implements ActionListener,GameFrame{
+    private JButton backButton;
     private JButton buyButton;
     private JButton sellButton;
     private JButton showMyItemsButton;
-    private JButton addNewItemButton;
     private JProgressBar loadingFrameProgressBar;
+    private JLabel welcomeLabel;
     private JLabel playerNameLabel;
     private JLabel playerMoneyLabel;
     private JLabel playerCapacityLabel;
     private JLabel playerImage;
     private ArrayList<JLabel> playerItems;
-    private Font tahoma;
-    private boolean isCustom;
+    private Font tahoma = new Font("Tahoma", Font.PLAIN, 14);
 
 
     public ShopFrame(boolean isCustom) {
-
+        this.welcomeLabel = new JLabel(new ImageIcon("./resources/images/WelcomeToTheShop.png"));
         this.tahoma = new Font("Tahoma", Font.PLAIN, 16);
+        this.backButton = new JButton();
         this.playerNameLabel = new JLabel("PLAYER NAME");
         this.playerMoneyLabel = new JLabel("PLAYER MONEY");
         this.playerItems = new ArrayList<>();
         this.playerCapacityLabel = new JLabel("CAPACITY");
         this.playerImage = new JLabel(new ImageIcon("./resources/images/Player(Down-1).png"));
         this.buyButton = new JButton();
-        this.sellButton = new JButton(("Sell"));
-        this.showMyItemsButton = new JButton("Show My Items");
-        this.isCustom = isCustom;
+        this.sellButton = new JButton();
+        this.showMyItemsButton = new JButton();
         this.loadingFrameProgressBar = new JProgressBar(0, 100);
-        this.customInitialization();
         //----------------------------------------------------
 //        this.setPlayerInformation(new Player());                          // CORRECT IT!
-        this.setComponentsFont();
-        this.showFrame();
+        this.addActionListeners();
+        this.setBackgroundImage();
+        this.showProgressFrame();
         this.setButtons();
+        this.showFrame();
     }
 
     public void setPlayerInformation(Player player){
@@ -57,73 +58,22 @@ public class ShopFrame extends JFrame implements ActionListener{
 //        }
     }
 
+
     public void setButtons(){
-        setBuyButtonImage();
-        setShowMyItemsButtonImage();
-        setAddNewItemButtonImage();
-        setSellButtonImage();
+        this.buyButton.setName("BuyButton");
+        this.showMyItemsButton.setName("ShowMyItemsButton");
+        this.backButton.setName("BackButton");
+        this.sellButton.setName("SellButton");
+        this.setButton(buyButton);
+        this.setButton(showMyItemsButton);
+        this.setButton(backButton);
+        this.setButton(sellButton);
     }
 
-    private void setSellButtonImage() {
-        ImageIcon buyButtonImage = new ImageIcon("./resources/images/SellButton.png");
-        this.sellButton.setBorderPainted(false);
-        this.sellButton.setContentAreaFilled(false);
-        this.sellButton.setFocusPainted(false);
-        this.sellButton.setOpaque(false);
-        this.sellButton.setIcon(buyButtonImage);
-        this.sellButton.setSize(buyButtonImage.getIconWidth(), buyButtonImage.getIconHeight());
-        this.sellButton.addActionListener(this);
-    }
-
-    private void setAddNewItemButtonImage() {
-        ImageIcon buyButtonImage = new ImageIcon("./resources/images/AddNewItemButton.png");
-        this.addNewItemButton.setBorderPainted(false);
-        this.addNewItemButton.setContentAreaFilled(false);
-        this.addNewItemButton.setFocusPainted(false);
-        this.addNewItemButton.setOpaque(false);
-        this.addNewItemButton.setIcon(buyButtonImage);
-        this.addNewItemButton.setSize(buyButtonImage.getIconWidth(), buyButtonImage.getIconHeight());
-        this.addNewItemButton.addActionListener(this);
-    }
-
-    private void setShowMyItemsButtonImage() {
-        ImageIcon buyButtonImage = new ImageIcon("./resources/images/ShowMyItemsButton.png");
-        this.showMyItemsButton.setBorderPainted(false);
-        this.showMyItemsButton.setContentAreaFilled(false);
-        this.showMyItemsButton.setFocusPainted(false);
-        this.showMyItemsButton.setOpaque(false);
-        this.showMyItemsButton.setIcon(buyButtonImage);
-        this.showMyItemsButton.setSize(buyButtonImage.getIconWidth(), buyButtonImage.getIconHeight());
-        this.showMyItemsButton.addActionListener(this);
-    }
-
-    public void setBuyButtonImage() {
-        ImageIcon buyButtonImage = new ImageIcon("./resources/images/BuyButton.png");
-        this.buyButton.setBorderPainted(false);
-        this.buyButton.setContentAreaFilled(false);
-        this.buyButton.setFocusPainted(false);
-        this.buyButton.setOpaque(false);
-        this.buyButton.setIcon(buyButtonImage);
-        this.buyButton.setSize(buyButtonImage.getIconWidth(), buyButtonImage.getIconHeight());
-        this.buyButton.addActionListener(this);
-    }
-
-    public void setComponentsFont(){
-        this.buyButton.setFont(tahoma);
-        this.sellButton.setFont(tahoma);
-        this.showMyItemsButton.setFont(tahoma);
-        this.playerCapacityLabel.setFont(tahoma);
-        this.playerMoneyLabel.setFont(tahoma);
-        this.playerNameLabel.setFont(tahoma);
-        this.addNewItemButton.setFont(tahoma);
-    }
-
-    public void showFrame(){
-//        this.showProgressFrame();
-        this.getContentPane().setBackground(Color.WHITE);
-        this.setSize(475, 400);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setLayout(null);
+    @Override
+    public void addComponents() {
+        this.add(welcomeLabel);
+        this.add(backButton);
         this.add(buyButton);
         this.add(sellButton);
         this.add(showMyItemsButton);
@@ -131,38 +81,54 @@ public class ShopFrame extends JFrame implements ActionListener{
         this.add(playerCapacityLabel);
         this.add(playerMoneyLabel);
         this.add(playerImage);
-//        this.add(playerItems);
-        Dimension playerImagePreferredSize = playerImage.getPreferredSize();
-        this.playerImage.setBounds(200, 50, playerImagePreferredSize.width, playerImagePreferredSize.height);
-
-        Dimension playerNamePreferredSize = playerNameLabel.getPreferredSize();
-        this.playerNameLabel.setBounds(50, 50, playerNamePreferredSize.width + 100, playerNamePreferredSize.height);
-
-
-        Dimension playerMoneyPreferredSize = playerMoneyLabel.getPreferredSize();
-        this.playerMoneyLabel.setBounds(50, 70, playerMoneyPreferredSize.width + 100, playerMoneyPreferredSize.height);
-
-        Dimension playerCapacityPreferredSize = playerMoneyLabel.getPreferredSize();
-        this.playerCapacityLabel.setBounds(50, 90, playerCapacityPreferredSize.width + 100, playerCapacityPreferredSize.height);
-
-        Insets insets = this.getInsets();
-        Dimension buyButtonPreferredSize = this.buyButton.getPreferredSize();
-        this.buyButton.setBounds(50 + insets.left, 200 + insets.top, buyButtonPreferredSize.width + 100, buyButtonPreferredSize.height);
-        System.out.println(buyButtonPreferredSize.width);
-        System.out.println(buyButtonPreferredSize.height);
-        Dimension sellButtonPreferredSize = this.sellButton.getPreferredSize();
-        this.sellButton.setBounds(250 + insets.left, 250 + insets.top, sellButtonPreferredSize.width + 100, sellButtonPreferredSize.height);
-        Dimension showMyItemsButtonPreferredSize = this.showMyItemsButton.getPreferredSize();
-        this.showMyItemsButton.setBounds(50 + insets.left, 300 + insets.top, showMyItemsButtonPreferredSize.width + 17, showMyItemsButtonPreferredSize.height);
-        this.add(addNewItemButton);
-        Dimension addNewItemPreferredSize = this.addNewItemButton.getPreferredSize();
-        this.addNewItemButton.setBounds(220 + insets.left, 300 + insets.top, addNewItemPreferredSize.width + 28, addNewItemPreferredSize.height);
-        this.setVisible(true);
     }
 
-    private void customInitialization(){
-        this.addNewItemButton = new JButton("Add New Item");
-        this.addNewItemButton.setFont(tahoma);
+    @Override
+    public void setComponentsBounds() {
+        this.playerImage.setBounds(350, 150, 200, 200);
+        this.playerNameLabel.setBounds(60, 170, 200, 20);
+        this.playerMoneyLabel.setBounds(60, 190, 200, 20);
+        this.playerCapacityLabel.setBounds(60, 210, 200, 20);
+        this.backButton.setBounds(170, 480,200, 100);
+        this.buyButton.setBounds(50, 300, 200, 100);
+        this.sellButton.setBounds(300, 400, 200, 100);
+        this.showMyItemsButton.setBounds(50, 400, 200, 100);
+    }
+
+    @Override
+    public void setFonts() {
+        this.loadingFrameProgressBar.setFont(tahoma);
+        this.playerNameLabel.setFont(tahoma);
+        this.playerMoneyLabel.setFont(tahoma);
+        this.playerCapacityLabel.setFont(tahoma);
+    }
+
+    @Override
+    public void setBackgroundImage() {
+
+    }
+
+    @Override
+    public void addActionListeners() {
+        this.buyButton.addActionListener(this);
+        this.sellButton.addActionListener(this);
+        this.backButton.addActionListener(this);
+        this.showMyItemsButton.addActionListener(this);
+    }
+
+    public void showFrame(){
+//        this.showProgressFrame();
+//        this.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Future\\Downloads\\WhYzqs1468271980.png")));
+        this.getContentPane().setBackground(Color.WHITE);
+        this.setSize(600, 600);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        //--------------------------------------------------------------------
+        this.addComponents();
+        this.setFonts();
+        this.setComponentsBounds();
+        //--------------------------------------------------------------------
+        this.setVisible(true);
     }
 
     public void showProgressFrame(){
@@ -190,11 +156,21 @@ public class ShopFrame extends JFrame implements ActionListener{
         frame.dispose();
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buyButton) {
-            //BUY WHAT EVER YOU WANT
+        if (e.getSource() == this.buyButton) {
+//            this.buy();
+            System.out.println("BUY BUTTON");
+        } else if (e.getSource() == this.sellButton) {
+//            this.sellItem;
+        } else if (e.getSource() == this.showMyItemsButton) {
+//            this.showPlayerItems()
         }
+
+    }
+
+
+    public static void main(String[] args) {
+        new ShopFrame(true);
     }
 }

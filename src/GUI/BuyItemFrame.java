@@ -6,9 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Future on 7/12/2016.
+ * Created by Future on 7/11/2016.
  */
-public class BuyItemFrame extends JFrame implements ActionListener{
+public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
     private JComboBox itemsBox;
     private JLabel itemImage;
     private JLabel itemNameLabel, itemPriceLabel, itemDescriptionLabel;
@@ -24,30 +24,21 @@ public class BuyItemFrame extends JFrame implements ActionListener{
         }
     });
     private JButton buyButton;
-    //------------------------------------------------------------------------------- Constructors
+
     public BuyItemFrame(){
-        this.buyButton = new JButton(new ImageIcon("./resources/images/BuyButton.png"));
+        this.buyButton = new JButton();
         this.itemImage = new JLabel(new ImageIcon("./resources/images/Barrier.png"));
         this.itemNameLabel = new JLabel("ITEM INFORMATION"); // item's information ---->> name - price description
-        this.itemPriceLabel = new JLabel("Hello Fred");
-        this.itemDescriptionLabel = new JLabel("Hello Mary");
+        this.itemPriceLabel = new JLabel("Item Price");
+        this.itemDescriptionLabel = new JLabel("Item Description");
         this.itemsBox = new JComboBox();
         //-------------------------------------------------------
-        this.buyButtonSetting();
+        this.setButtons();
+        this.setBackgroundImage();
         this.addItemLists();
-        this.setComponentsFont();
         this.showFrame();
         //-------------------------------------------------------
         this.buyShopThread.start();
-    }
-
-    //-------------------------------------------------------------------------------- Functions
-    public void setComponentsFont(){
-        this.tahoma = new Font("Tahoma", Font.PLAIN, 14);
-        this.itemNameLabel.setFont(tahoma);
-        this.itemPriceLabel.setFont(tahoma);
-        this.itemDescriptionLabel.setFont(tahoma);
-        this.itemsBox.setFont(tahoma);
     }
 
     public void addItemLists(/*ArrayList<Item>*/){
@@ -70,28 +61,48 @@ public class BuyItemFrame extends JFrame implements ActionListener{
         setItemInformation();
     }
 
-    private void buyButtonSetting(){
-        this.buyButton.setBorderPainted(false);
-        this.buyButton.setContentAreaFilled(false);
-        this.buyButton.setFocusPainted(false);
-        this.buyButton.setOpaque(false);
+    @Override
+    public void setBackgroundImage() {
+
+    }
+
+    @Override
+    public void addActionListeners() {
         this.buyButton.addActionListener(this);
     }
 
-
-    private void showFrame(){
+    @Override
+    public void showFrame(){
         this.getContentPane().setBackground(Color.WHITE);
         this.setSize(600, 600);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(null);
+        //----------------------------------------------------
+        this.addComponents();
+        this.setFonts();
+        this.setComponentsBounds();
+        //----------------------------------------------------
+        setVisible(true);
+    }
+
+    @Override
+    public void setButtons() {
+        this.buyButton.setName("BuyButton");
+        this.setButton(buyButton);
+    }
+
+    @Override
+    public void addComponents() {
         this.add(buyButton);
         this.add(itemNameLabel);
         this.add(itemImage);
         this.add(itemDescriptionLabel);
         this.add(itemPriceLabel);
         this.add(itemsBox);
-        setVisible(true);
-        //----------------------------------------------------
+    }
+
+    @Override
+    public void setComponentsBounds() {
         Insets insets = this.getInsets();
         Dimension itemBoxPreferredSize = this.itemsBox.getPreferredSize();
         this.itemsBox.setBounds(50 + insets.left , 50 + insets.top, itemBoxPreferredSize.width + 400, itemBoxPreferredSize.height);
@@ -108,8 +119,13 @@ public class BuyItemFrame extends JFrame implements ActionListener{
 
     }
 
-    public static void main(String[] args) {
-        new BuyItemFrame();
+    @Override
+    public void setFonts() {
+        this.tahoma = new Font("Tahoma", Font.PLAIN, 14);
+        this.itemNameLabel.setFont(tahoma);
+        this.itemPriceLabel.setFont(tahoma);
+        this.itemDescriptionLabel.setFont(tahoma);
+        this.itemsBox.setFont(tahoma);
     }
 
     @Override
@@ -118,4 +134,9 @@ public class BuyItemFrame extends JFrame implements ActionListener{
             //BUY PROCEDURE
         }
     }
+
+    public static void main(String[] args) {
+        new BuyItemFrame();
+    }
+
 }

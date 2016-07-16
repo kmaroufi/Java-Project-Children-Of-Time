@@ -1,7 +1,5 @@
 package GUI;
 
-import Input.MouseInput;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,9 +8,9 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 
 /**
- * Created by Future on 7/12/2016.
+ * Created by Future on 7/7/2016.
  */
-public class MapEditor extends JPanel implements ActionListener{
+public class MapEditor extends JPanel implements ActionListener,GameFrame{
     private TileMap newMap;
     private JFrame mapFrame;
     private JMenuBar menuBar;
@@ -47,40 +45,9 @@ public class MapEditor extends JPanel implements ActionListener{
         this.setSize(600, 600);
         //---------------------------------------------
         this.comboBox = new JComboBox();
-        comboBox.addItem("Door");
-        comboBox.addItem("Barrier");
-        comboBox.addItem("Shop");
-        comboBox.addItem("WarRoom");
-        comboBox.addItem("FinalWar");
-        comboBox.addItem("SkillRoom");
-        comboBox.addItem("EmptyTile");
-        comboBox.addItem("StoryBook");
-
-
-
-
-//        this.door = new JRadioButton("Door");
-//        this.checkFrame.add(door);
-//
-//        this.barrier = new JRadioButton("Barrier");
-//        this.checkFrame.add(barrier);
-//
-//        this.shop = new JRadioButton("Shop");
-//        this.checkFrame.add(shop);
-//
-//        this.warRoom = new JRadioButton("WarRoom");
-//        this.checkFrame.add(warRoom);
-//
-//        this.skillRoom = new JRadioButton("SkillRoom");
-//        this.checkFrame.add(skillRoom);
-//
-//        this.finalWar = new JRadioButton("FinalWar");
-//        this.checkFrame.add(finalWar);
-//
-//        this.emptyTile = new JRadioButton("EmptyTile");
-//        this.checkFrame.add(emptyTile);
-        //----------------------------------------------------------------
         this.mapFrame = new JFrame(this.mapName);
+        //---------------------------------------------
+        this.addComboBoxItems();
         mapFrame.setFocusable(true);
         this.mapFrame.setLayout(new BorderLayout());
         this.mapFrame.add(this ,BorderLayout.CENTER);
@@ -89,6 +56,18 @@ public class MapEditor extends JPanel implements ActionListener{
         this.setMenuBar();
         showFrames();
     }
+
+    private void addComboBoxItems(){
+        comboBox.addItem("Door");
+        comboBox.addItem("Barrier");
+        comboBox.addItem("Shop");
+        comboBox.addItem("WarRoom");
+        comboBox.addItem("FinalWar");
+        comboBox.addItem("SkillRoom");
+        comboBox.addItem("EmptyTile");
+        comboBox.addItem("StoryBook");
+    }
+
 
     private void setMenuBar(){
         this.menuBar = new JMenuBar();
@@ -106,6 +85,7 @@ public class MapEditor extends JPanel implements ActionListener{
         this.restartMapMenu.addActionListener(this);
         this.exitMenu.addActionListener(this);
     }
+
     public void restartMap(){
         this.newMap = new TileMap("MAP-NAME", this.mapSize);
     }
@@ -134,37 +114,38 @@ public class MapEditor extends JPanel implements ActionListener{
         if (MouseInput.wasPressed(MouseEvent.BUTTON1)) {
             System.out.println("selected by Mouse");
             String mode = (String) this.comboBox.getSelectedItem();
+            double x = MouseInput.getX() - 10;
+            double y = MouseInput.getY() - 60;
             switch (mode) {
                 case "Door":
-                    this.newMap.addDoor(MouseInput.getX() - 10, MouseInput.getY() - 60);
+                    this.newMap.addDoor(x, y);
                     break;
                 case "Barrier":
-                    this.newMap.addBarrier(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addBarrier(x, y);
                     break;
                 case "Shop":
-                    this.newMap.addShop(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addShop(x, y);
                     break;
                 case "WarRoom":
-                    this.newMap.addWarRoom(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addWarRoom(x, y);
                     break;
                 case "SkillRoom":
-                    this.newMap.addSkillRoom(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addSkillRoom(x, y);
                     break;
                 case "FinalWar":
-                    this.newMap.addFinalWar(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addFinalWar(x, y);
                     break;
                 case "EmptyTile":
-                    this.newMap.addEmptyTile(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addEmptyTile(x, y);
                     break;
                 case "StoryBook":
-                    this.newMap.addBook(MouseInput.getX(), MouseInput.getY());
+                    this.newMap.addBook(x, y);
                     break;
                 default:
                     return;
             }
         }
     }
-
 
     public void updateTileMap(Graphics graphics){
         if (this.newMap == null) {
@@ -200,8 +181,8 @@ public class MapEditor extends JPanel implements ActionListener{
         //------------------------------------------------------------
         this.getMapSize();
         //------------------------------------------------------------
-//        this.checkFrame.addMouseListener(new Input.MouseInput());
-//        this.checkFrame.addKeyListener(new Input.KeyInput());
+//        this.checkFrame.addMouseListener(new MouseInput());
+//        this.checkFrame.addKeyListener(new KeyInput());
 //        requestFocus();
 //        this.checkFrame.setSize(500, 80);
 //        this.checkFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -219,6 +200,11 @@ public class MapEditor extends JPanel implements ActionListener{
     }
 
 
+    public static void main(String[] args) {
+        MapEditor firstMap = new MapEditor();
+//        JOptionPane.showMessageDialog(null, "Hello");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveMenu) {
@@ -230,6 +216,38 @@ public class MapEditor extends JPanel implements ActionListener{
         }
     }
 
+    @Override
+    public void setBackgroundImage() {
 
+    }
 
+    @Override
+    public void addActionListeners() {
+
+    }
+
+    @Override
+    public void showFrame() {
+
+    }
+
+    @Override
+    public void setButtons() {
+
+    }
+
+    @Override
+    public void addComponents() {
+
+    }
+
+    @Override
+    public void setComponentsBounds() {
+
+    }
+
+    @Override
+    public void setFonts() {
+
+    }
 }

@@ -1,12 +1,10 @@
 package GUI;
 
-import GUI.Texture;
-
 import java.awt.*;
 import java.io.Serializable;
 
 /**
- * Created by Future on 7/10/2016.
+ * Created by Future on 7/6/2016.
  */
 public class Cell implements Serializable{
     private Texture texture;

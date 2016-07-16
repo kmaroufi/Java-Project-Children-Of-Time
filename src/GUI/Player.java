@@ -1,14 +1,12 @@
 package GUI;
 
-import Input.KeyInput;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Future on 7/12/2016.
+ * Created by Future on 7/7/2016.
  */
 public class Player {
     private Texture texture;
@@ -22,7 +20,7 @@ public class Player {
     private boolean isMoving;
     private String direction;
 
-    //------------------------------------------------------ Constructors
+
     public Player(String imageName, int x, int y) {
         this.texture = new Texture(imageName);
         this.x = x;
@@ -31,6 +29,7 @@ public class Player {
         this.boundRectangle = new Rectangle(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
         this.center = new Point((int) (boundRectangle.getX() + (boundRectangle.getWidth() / 2)), (int) (boundRectangle.getY() + (boundRectangle.getHeight() / 2)));
     }
+
 //    public Player(String imageName, int x, int y, Texture... textures) {
 //        this.texture = new Texture(imageName);
 //        this.x = x;
@@ -39,6 +38,7 @@ public class Player {
 //        this.boundRectangle = new Rectangle(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
 //        this.animation = new Animation(5, textures);
 //    }
+
     public Player(String imageName, int x, int y, Texture[] upTextures, Texture[] rightTextures, Texture[] leftTextures, Texture[] downTextures) {
         this.texture = new Texture(imageName);
         this.x = x;
@@ -51,7 +51,6 @@ public class Player {
         this.boundRectangle = new Rectangle(this.x, this.y, this.getTexture().getWidth(), this.getTexture().getHeight());
     }
 
-    //------------------------------------------------------ Functions
 
 
     public void tick(){
@@ -162,6 +161,4 @@ public class Player {
     public void setVelY(double velY) {
         this.velY = velY;
     }
-
-
 }

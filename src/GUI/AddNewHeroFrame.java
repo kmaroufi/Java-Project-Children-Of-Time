@@ -7,9 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Future on 7/15/2016.
+ * Created by Future on 7/13/2016.
  */
-public class AddNewHeroFrame extends JFrame implements GameFrame,ActionListener{
+public class AddNewHeroFrame extends JFrame implements ActionListener, GameFrame {
     private JButton addButton;
     private JButton backButton;
     private JButton addHeroClassButton;
@@ -81,6 +81,11 @@ public class AddNewHeroFrame extends JFrame implements GameFrame,ActionListener{
         return model;
     }
 
+
+    @Override
+    public void setBackgroundImage() {
+
+    }
 
     @Override
     public void addActionListeners() {

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by Future on 7/15/2016.
+ * Created by Future on 7/13/2016.
  */
 public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameFrame{
     private JButton addButton;
@@ -131,7 +131,6 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
         this.perksScrollPane = new JScrollPane(perksTable);
     }
 
-
     @Override
     public void setComponentsBounds() {
         int labelLength = 350;
@@ -213,6 +212,11 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
     }
 
     @Override
+    public void setBackgroundImage() {
+
+    }
+
+    @Override
     public void addActionListeners() {
         this.addButton.addActionListener(this);
         this.backButton.addActionListener(this);
@@ -233,7 +237,15 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
 
     @Override
     public void setButtons() {
-
+        //ADD IMAGES
+        this.addButton.setName("AddButton");
+        this.backButton.setName("BackButton");
+        this.addSkillButton.setName("AddSkillButton");
+        this.addPerkButton.setName("AddPerkButton");
+        this.setButton(addButton);
+        this.setButton(backButton);
+        this.setButton(addSkillButton);
+        this.setButton(addPerkButton);
     }
 
     @Override
@@ -253,5 +265,5 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
     public static void main(String[] args) {
         new AddNewHeroClassFrame();
     }
-
 }
+

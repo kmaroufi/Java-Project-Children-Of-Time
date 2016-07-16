@@ -3,12 +3,14 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Area;
-import java.io.Serializable;
+import java.io.*;
+import java.util.HashMap;
 
 /**
- * Created by Future on 7/12/2016.
+ * Created by Future on 7/7/2016.
  */
 public class TileMap implements Serializable{
+    public static HashMap<String, TileMap> gameMaps = new HashMap<>();
     private Cell[][] cells;
     private int SIZE_OF_BARRIER = 50;
     private int SIZE_OF_TABLE = 600;
@@ -54,12 +56,30 @@ public class TileMap implements Serializable{
         this.cells = new Cell[NUMBER_OF_BARRIERS_PER_ROW][NUMBER_OF_BARRIERS_PER_COLUMN];
         buildMap();
     }
-
     //----------------------------------------------------------------------- Functions
+    public void readMapsFromFolder(){
+        File folder = new File("./resources/maps/");
+        File[] listOfFiles = folder.listFiles();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                try {
+                    ObjectInputStream outputStream = new ObjectInputStream(new FileInputStream(file.getPath()));
+                    int index = file.getName().indexOf('.');
+                    String fileName = file.getName().substring(0, index);
+                    TileMap tileMap = (TileMap) outputStream.readObject();
+                    this.gameMaps.put(fileName, tileMap);
+                } catch (IOException e) {
+                } catch (ClassNotFoundException e) {
+                }
+
+            }
+        }
+    }
+
     public void buildEmptyMap(){
         for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
             for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
-                this.cells[i][j] = new Cell("Empty", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
+                this.cells[i][j] = new Cell("EmptyTile", i * SIZE_OF_BARRIER, j * SIZE_OF_BARRIER);
             }
         }
     }
@@ -116,7 +136,6 @@ public class TileMap implements Serializable{
         }
     }
 
-
     public boolean hasCollisionwithAllBarriers(Player player) {
         for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
             for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
@@ -129,7 +148,7 @@ public class TileMap implements Serializable{
     }
 
     public boolean hasCollision(Player player, Cell barrier) {
-        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getTexture().getWidth(),player.getTexture().getHeight());
+        Rectangle playerBounds = new Rectangle(player.getX(), player.getY() / 2, player.getTexture().getWidth(),player.getTexture().getHeight() / 2);
         Area area1 = new Area(playerBounds);
         Rectangle barrierBounds = new Rectangle(barrier.getX(), barrier.getY(), barrier.getWidth(), barrier.getHeight());
         Area area2 = new Area(barrierBounds);
@@ -169,7 +188,6 @@ public class TileMap implements Serializable{
             }
         }
     }
-
 
     public Cell findCellWithThisCoordinate (double x, double y) {
         for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
@@ -220,20 +238,12 @@ public class TileMap implements Serializable{
         cell.setMode("StoryBook");
     }
 
+
     //---------------------------------------------------------------------- Getter And Setters
     public Player getPlayer() {
         return player;
     }
 
-    public Cell[][] getCells() {
-        return cells;
-    }
 
-    public void setCells(Cell[][] cells) {
-        this.cells = cells;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 }
+

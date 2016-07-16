@@ -158,7 +158,6 @@ public class AddNewEnemyFrame extends JFrame implements ActionListener,GameFrame
         this.setskillsTable();
     }
 
-
     public DefaultTableModel setTableModel(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Name");
