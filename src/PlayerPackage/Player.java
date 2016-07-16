@@ -11,7 +11,7 @@ public class Player {
     private String name;
 
     public static int imortalityPotion = 3;
-    private ArrayList<Hero> heros;
+    private ArrayList<Hero> heroes;
     private int xp;
     private double money;
     //----------------------------------------------- Constructors
@@ -38,15 +38,15 @@ public class Player {
     }
 
     public void addHero(Hero hero){
-        this.heros.add(hero);
+        this.heroes.add(hero);
     }
     //----------------------------------------------- Getter And Setter
-    public ArrayList<Hero> getHeros() {
-        return heros;
+    public ArrayList<Hero> getHeroes() {
+        return heroes;
     }
 
-    public void setHeros(ArrayList<Hero> heros) {
-        this.heros = heros;
+    public void setHeroes(ArrayList<Hero> heroes) {
+        this.heroes = heroes;
     }
 
     public int getXp() {
