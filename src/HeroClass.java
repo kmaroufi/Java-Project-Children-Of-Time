@@ -13,7 +13,7 @@ public class HeroClass extends Soldier implements Cloneable {
     protected double criticalHitChance;
     protected double criticalHitDamage;
     protected SelfImprovement selfImprovement;
-    protected SelectingObjectsDetail<Enemy> selectingNonTargetedEnemiesForAttack;
+    protected SelectingObjectsDetail<Soldier> selectingNonTargetedSoldiersForAttack;
     protected int inventorySize;
     protected int sizeOfOccupiedInventory;
 //    protected double armor;
@@ -32,7 +32,7 @@ public class HeroClass extends Soldier implements Cloneable {
         this.setCriticalHitChance(heroClassHandler.getCriticalHitChance());
         this.setCriticalHitDamage(heroClassHandler.getCriticalHitDamage());
         this.setSelfImprovement(heroClassHandler.getSelfImprovement());
-        this.setSelectingNonTargetedEnemiesForAttack(heroClassHandler.getSelectingNonTargetedEnemiesForAttack());
+        this.setSelectingNonTargetedSoldiersForAttack(heroClassHandler.getSelectingNonTargetedSoldiersForAttack());
         this.setInventorySize(heroClassHandler.getInventorySize());
         this.setSizeOfOccupiedInventory(0);
     }
@@ -57,7 +57,7 @@ public class HeroClass extends Soldier implements Cloneable {
         this.criticalHitChance = heroClass.getCriticalHitChance();
         this.criticalHitDamage = heroClass.getCriticalHitDamage();
         this.selfImprovement = heroClass.getSelfImprovement();
-        this.selectingNonTargetedEnemiesForAttack = heroClass.getSelectingNonTargetedEnemiesForAttack();
+        this.selectingNonTargetedSoldiersForAttack = heroClass.getSelectingNonTargetedSoldiersForAttack();
         this.inventorySize = heroClass.getInventorySize();
         this.sizeOfOccupiedInventory = heroClass.getSizeOfOccupiedInventory();
     }
@@ -83,7 +83,7 @@ public class HeroClass extends Soldier implements Cloneable {
         copy.setSkills(newSkills);
         copy.setCraftingRequirement(this.craftingRequirement.clone());
         copy.setSelfImprovement(this.selfImprovement.clone());
-        copy.setSelectingNonTargetedEnemiesForAttack(this.selectingNonTargetedEnemiesForAttack.clone());
+        copy.setSelectingNonTargetedSoldiersForAttack(this.selectingNonTargetedSoldiersForAttack.clone());
         return copy;
     }
 
@@ -134,12 +134,12 @@ public class HeroClass extends Soldier implements Cloneable {
         this.criticalHitDamage = criticalHitDamage;
     }
 
-    public SelectingObjectsDetail<Enemy> getSelectingNonTargetedEnemiesForAttack() {
-        return selectingNonTargetedEnemiesForAttack;
+    public SelectingObjectsDetail<Soldier> getSelectingNonTargetedSoldiersForAttack() {
+        return selectingNonTargetedSoldiersForAttack;
     }
 
-    public void setSelectingNonTargetedEnemiesForAttack(SelectingObjectsDetail<Enemy> selectingNonTargetedEnemiesForAttack) {
-        this.selectingNonTargetedEnemiesForAttack = selectingNonTargetedEnemiesForAttack;
+    public void setSelectingNonTargetedSoldiersForAttack(SelectingObjectsDetail<Soldier> selectingNonTargetedSoldiersForAttack) {
+        this.selectingNonTargetedSoldiersForAttack = selectingNonTargetedSoldiersForAttack;
     }
 
     public int getInventorySize() {

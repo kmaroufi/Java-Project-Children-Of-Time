@@ -141,5 +141,13 @@ public class Tree<T> implements Cloneable{
         public void setData(E data) {
             this.data = data;
         }
+
+        public Map<Condition, Node<E>> getMapOfConditions() {
+            return mapOfConditions;
+        }
+
+        public void setMapOfConditions(Map<Condition, Node<E>> mapOfConditions) {
+            this.mapOfConditions = mapOfConditions;
+        }
     }
 }

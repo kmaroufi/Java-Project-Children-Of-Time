@@ -1,12 +1,9 @@
 import GUI.Display;
 import javafx.util.Pair;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  * Created by asus-pc on 5/6/2016.
@@ -332,8 +329,8 @@ public class GameEngine {
             SoldierHandler soldierHandler = new SoldierHandler("Fighter", new ArrayList<>(), new ArrayList<>(), 200, 0.1, 120, 0.05, 6, 120, 0, 0);
             soldierHandler.addPerk(Perk.listOfPerks.get("Fight training"));
             soldierHandler.addPerk(Perk.listOfPerks.get("Work out"));
-            SelectingObjectsDetailHandler<Enemy> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
-            SelectingObjectsDetail<Enemy> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SelectingObjectsDetailHandler<Soldier> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Soldier> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             HeroClassHandler fighterHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), 0, 1, new SelfImprovement(null, null), selectingObjectsDetail, 2);
             HeroClass fighterClass = new HeroClass(soldierHandler, fighterHandler);
             this.addNewHeroClass(fighterClass);
@@ -353,8 +350,8 @@ public class GameEngine {
             SoldierHandler soldierHandler = new SoldierHandler("Supporter", new ArrayList<>(), new ArrayList<>(), 220, 0.05, 200, 0.1, 5, 80, 0, 0);
             soldierHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
             soldierHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
-            SelectingObjectsDetailHandler<Enemy> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
-            SelectingObjectsDetail<Enemy> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
+            SelectingObjectsDetailHandler<Soldier> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetail<Soldier> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             HeroClassHandler supporterHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), 0, 1, new SelfImprovement(null, null), selectingObjectsDetail, 3);
             HeroClass supporterClass = new HeroClass(soldierHandler, supporterHandler);
             this.addNewHeroClass(supporterClass);
@@ -2017,7 +2014,7 @@ public class GameEngine {
                                     break;
                                 }
                                 int attackPower = hero.attack(enemy);
-                                hero.attackOnNonTargetedEnemies(enemy);
+                                hero.attackOnNonTargetedSoldiers(enemy);
                                 Display.printInEachLine(hero.getName() + " has successfully attacked " + enemy.getName() + " with " + attackPower + " power");
                                 Display.printInEachLine(enemy.getName() + "'s Current Health is: " + enemy.getCurrentHealth());
                                 if (enemy.isDead()) {

@@ -107,7 +107,7 @@ public class Hero extends HeroClass {
         perkItem.updateItemEffect(this);
     }
 
-    public int attack(Enemy enemy){
+    public int attack(Soldier soldier){
         int finalAttackPower = 0;
         Random random = new Random();
         int criticalHitChance = 0;
@@ -116,24 +116,24 @@ public class Hero extends HeroClass {
         }
         if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
             finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack *  this.criticalHitDamage);
-            enemy.getDamage(finalAttackPower);
+            soldier.getDamage(finalAttackPower);
             System.out.println("Critical Attack!");
         }
         else {
             finalAttackPower = (int) (this.attackPower * this.attackPowerRatioDuringAttack);
-            enemy.getDamage(finalAttackPower);
+            soldier.getDamage(finalAttackPower);
             System.out.println("Normal Attack!");
         }
         this.setCurrentEnergyPoint(this.currentEnergyPoint - 2);
         return finalAttackPower;
     }
 
-    public void attackOnNonTargetedEnemies(Enemy enemy) {
-        ArrayList<Enemy> nonTargetedEnemies = this.selectingNonTargetedEnemiesForAttack.selectingObjects();
-        if (nonTargetedEnemies.contains(enemy)) {
-            nonTargetedEnemies.remove(enemy);
+    public <T extends Soldier> void attackOnNonTargetedSoldiers(T soldier) {
+        ArrayList<Soldier> nonTargetedSoldiers = this.selectingNonTargetedSoldiersForAttack.selectingObjects();
+        if (nonTargetedSoldiers.contains(soldier)) {
+            nonTargetedSoldiers.remove(soldier);
         }
-        if (nonTargetedEnemies.size() == 0) {
+        if (nonTargetedSoldiers.size() == 0) {
             return;
         }
         Random random = new Random();
@@ -141,12 +141,12 @@ public class Hero extends HeroClass {
         if (this.criticalHitChance != 0) {
             criticalHitChance = (int)(1 / this.criticalHitChance);
         }
-        for (Enemy nonTargetedEnemy: nonTargetedEnemies) {
+        for (Soldier nonTargetedSoldier: nonTargetedSoldiers) {
             if ((criticalHitChance != 0) && ((criticalHitChance - 1) == random.nextInt(criticalHitChance))) {
-                nonTargetedEnemy.getDamage((this.attackPowerOnNonTargetedSoldiers + this.attackPowerRatioOnNonTargetedSoldiers * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
+                nonTargetedSoldier.getDamage((this.attackPowerOnNonTargetedSoldiers + this.attackPowerRatioOnNonTargetedSoldiers * this.attackPower * this.attackPowerRatioDuringAttack) * this.criticalHitDamage);
             }
             else {
-                nonTargetedEnemy.getDamage(this.attackPowerOnNonTargetedSoldiers + this.attackPowerRatioOnNonTargetedSoldiers * this.attackPower * this.attackPowerRatioDuringAttack);
+                nonTargetedSoldier.getDamage(this.attackPowerOnNonTargetedSoldiers + this.attackPowerRatioOnNonTargetedSoldiers * this.attackPower * this.attackPowerRatioDuringAttack);
             }
         }
     }
