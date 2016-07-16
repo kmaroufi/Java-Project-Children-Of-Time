@@ -1,13 +1,14 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by Future on 7/15/2016.
+ * Created by Future on 7/12/2016.
  */
 public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame {
     private JLabel nameLabel;
@@ -22,7 +23,11 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
     private JTextField sizeField;
     private JTextField descriptionField;
 
+    private JScrollPane abilityScrollPane;
+    private JTable abilityTable;
+
     private JButton addButton;
+    private JButton addNewAbilityButton;
     private JButton backButton;
 
     private ArrayList<JLabel> labels;
@@ -30,14 +35,40 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
 
     private Font tahoma = new Font("Tahoma", Font.PLAIN, 14);
 
+    private Thread newItemThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while (true) {
+                if (typeField != null && typeField.getText() != null && typeField.getText().equals("SkillItem")) {
+                    addNewAbilityButton.setName("AddNewSkillButton");
+                    setButton(addNewAbilityButton);
+                    add(addNewAbilityButton);
+                    setAbilityTable();
+                    repaint();
+                    return;
+                }
+                else if (typeField != null && typeField.getText() != null && typeField.getText().equals("PerkItem")) {
+                    addNewAbilityButton.setName("AddNewPerkButton");
+                    setButton(addNewAbilityButton);
+                    add(addNewAbilityButton);
+                    setAbilityTable();
+                    repaint();
+                    return;
+                }
+            }
+        }
+    });
+
     public AddNewItemFrame(){
         this.addButton = new JButton();
+        this.addNewAbilityButton = new JButton();
         this.backButton = new JButton();
         this.nameLabel = new JLabel("Name");
         this.typeLabel = new JLabel("Item Type");
         this.worthLabel = new JLabel("Worth");
         this.sizeLabel = new JLabel("Size");
         this.descriptionLabel = new JLabel("Description");
+        this.abilityTable = new JTable();
         this.nameField = new JTextField();
         this.typeField = new JTextField();
         this.worthField = new JTextField();
@@ -46,8 +77,28 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
         //-------------------------------------------------------
         this.setLabelsAndFields();
         this.addActionListeners();
+//        this.setAbilityTable();
         this.setButtons();
         this.showFrame();
+        //-------------------------------------------------------
+        this.newItemThread.start();
+    }
+
+    public void setAbilityTable(){
+        DefaultTableModel model = this.setTableModel();
+        this.abilityTable.setModel(model);
+        this.abilityScrollPane = new JScrollPane(abilityTable);
+        this.abilityScrollPane.setBounds(50, 175, 600, 200);
+        this.add(abilityScrollPane);
+    }
+
+    public DefaultTableModel setTableModel(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Name");
+        model.addColumn("Price");
+        model.addColumn("Upgrades");
+        model.addColumn("Description");
+        return model;
     }
 
     public void setLabelsAndFields(){
@@ -66,8 +117,14 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
     }
 
     @Override
+    public void setBackgroundImage() {
+
+    }
+
+    @Override
     public void addActionListeners() {
         this.addButton.addActionListener(this);
+        this.addNewAbilityButton.addActionListener(this);
         this.backButton.addActionListener(this);
     }
 
@@ -89,8 +146,10 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
     @Override
     public void setButtons() {
         this.addButton.setName("AddButton");
+//        this.addNewAbilityButton.setName("AddNewPerkItem");
         this.backButton.setName("BackButton");
         this.setButton(addButton);
+//        this.setButton(addNewAbilityButton);
         this.setButton(backButton);
     }
 
@@ -113,6 +172,7 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
             this.fields.get(i).setBounds(labelSize, 50 + 25 * i, fieldSize, 20);
         }
         this.addButton.setBounds(500, 500, 200, 100);
+        this.addNewAbilityButton.setBounds(250, 400, 200, 100);
         this.backButton.setBounds(50, 500, 200, 100);
     }
 

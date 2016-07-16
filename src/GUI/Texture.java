@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by Future on 7/10/2016.
+ * Created by Future on 7/6/2016.
  */
 public class Texture implements Serializable{
     private transient BufferedImage image;
@@ -52,5 +52,4 @@ public class Texture implements Serializable{
     public int getHeight() {
         return height;
     }
-
 }

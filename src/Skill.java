@@ -1,11 +1,6 @@
-import GUI.Display;
-
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by asus-pc on 5/5/2016.

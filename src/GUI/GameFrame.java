@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 
 /**
- * Created by Future on 7/15/2016.
+ * Created by Future on 7/13/2016.
  */
 public interface GameFrame {
     default void setButton(JButton button){
