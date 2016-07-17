@@ -66,6 +66,8 @@ public class Player implements Serializable{
             up();
         } else if (KeyInput.wasPressed(KeyEvent.VK_DOWN)) {
             down();
+        } else if (KeyInput.wasPressed(KeyEvent.VK_ENTER)) {
+            return;
         }
         if (velX != 0 || velY != 0) {
             this.isMoving = true;
@@ -79,6 +81,7 @@ public class Player implements Serializable{
             this.animationMap.get(this.direction).run();
         }
     }
+
 
     public void up() {
         velX = 0;

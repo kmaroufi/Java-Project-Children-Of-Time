@@ -101,6 +101,8 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
         this.numberOfGradesLabel = new JLabel("Number Of Grades");
         this.descriptionLabel = new JLabel("Description");
         this.descriptionField = new JTextField();
+        this.setButtons();
+        this.addActionListeners();
         this.setBackgroundImage();
 
     }
@@ -152,7 +154,7 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
         this.addNewSubPerksButton.setBounds(100, 500, 200, 100);
         this.timeOfCheckBox.setBounds(50, 250, 400, 50);
         this.perkNameLabel.setBounds(50, 50, 100, 20);
-        this.nameField.setBounds(200, 50, 100, 20);
+        this.nameField.setBounds(200, 50, 150, 20);
         this.descriptionLabel.setBounds(50, 100, 150, 20);
         this.descriptionField.setBounds(200, 100, 150, 20);
         this.numberOfGradesLabel.setBounds(50, 150, 150, 20);
