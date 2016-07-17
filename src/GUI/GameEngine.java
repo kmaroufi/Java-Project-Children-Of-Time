@@ -78,7 +78,7 @@ public class GameEngine extends JPanel implements KeyListener, MouseListener{
         for(int i = 0;i < 3;i++) {
             upTextures[i] = new Texture("Player(Up-" + (i + 1) + ")");
         }
-        Player player = new Player("Player(Down-1)", 100, 600, upTextures, rightTextures, leftTextures, downTextures);
+        Player player = new Player("Player(Down-1)", 300, 300, upTextures, rightTextures, leftTextures, downTextures);
         this.tileMap.setPlayer(player);
     }
 
@@ -95,7 +95,7 @@ public class GameEngine extends JPanel implements KeyListener, MouseListener{
     //-------------------------------------------------------------------------------
     public void buildMap() {
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./resources/maps/SinglePlayerMap.dat"));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./resources/maps/Single.dat"));
             this.tileMap = (TileMap) inputStream.readObject();
             this.setTileMapPlayer();
         } catch (IOException e) {
