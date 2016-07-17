@@ -29,6 +29,13 @@ public class AddNewSubPerkFrame extends JFrame implements ActionListener, GameFr
     private ArrayList<String> nameNecessaryAbilities;
     public AddNewSubPerkFrame(AddNewPerkFrame newPerkFrame) throws HeadlessException {
         this.newPerkFrame = newPerkFrame;
+        this.addButton = new JButton();
+        this.addNewNecessaryAbilityButton = new JButton();
+        this.costOfUpgradeField = new JTextField();
+        this.subPerkNameLabel = new JLabel();
+        this.costOfUpgradeLabel = new JLabel();
+        this.upgradeDescriptionField = new JTextField();
+        this.subPerkNameField = new JTextField();
     }
 
     @Override
@@ -38,11 +45,19 @@ public class AddNewSubPerkFrame extends JFrame implements ActionListener, GameFr
 
     @Override
     public void addActionListeners() {
-
+        this.addButton.addActionListener(this);
+        this.addNewNecessaryAbilityButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
+        this.setSize(700, 700);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
 
     }
 

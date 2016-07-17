@@ -137,5 +137,9 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
         }
 
     }
+
+    public static void main(String[] args) {
+        new AddNewConditionFrame(null).showFrame();
+    }
     //----------------------------------------------------
 }

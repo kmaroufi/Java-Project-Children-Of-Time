@@ -24,7 +24,6 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
     private JLabel perkNameLabel;
     private JLabel numberOfGradesLabel;
     private JLabel descriptionLabel;
-    private JComboBox timeOfCheckBox;
 //        //Getting A SubPerk
 //        //set isGlobal = false;
 //        private JLabel costOfUpgradeLabel;
@@ -84,16 +83,26 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
 //            private JCheckBox isHeroSelectedLabel2;
 //            private JCheckBox isEnemySelectedLabel2;
     //finally!
-    private JComboBox timeOfCheckLabel;
+    private JComboBox timeOfCheckBox;
     //---------------------------------------------------------------------------------------------------------
     private ArrayList<SubPerk> subPerks;
     //---------------------------------------------------------------------------------------------------------         // KAMYAR!
     private JTextField nameField;                                                                                       // I'll Find You
     private JTextField numberOfGradesField;                                                                             // And I'll Kill You!
     private JTextField descriptionField;
+    public AddNewPerkFrame(){
+        this.addButton = new JButton();
+        this.addNewSubPerksButton = new JButton("Add New SubPerk");
+        this.timeOfCheckBox = new JComboBox();
+        this.subPerks = new ArrayList<>();
+        this.nameField = new JTextField();
+        this.numberOfGradesField = new JTextField();
+        this.numberOfGradesLabel = new JLabel("Number Of Grades");
+        this.descriptionLabel = new JLabel("Description");
+        this.descriptionField = new JTextField();
+        this.setBackgroundImage();
 
-    //finally!
-    private JTextField timeOfCheckField;
+    }
 
 
     @Override
@@ -103,27 +112,51 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
 
     @Override
     public void addActionListeners() {
-
+        this.addButton.addActionListener(this);
+        this.addNewSubPerksButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
-
+        this.setSize(700, 700);
+        this.setLayout(null);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
     }
 
     @Override
     public void setButtons() {
-
+        this.addButton.setName("AddButton");
+        this.setButton(addButton);
     }
 
     @Override
     public void addComponents() {
-
+        this.add(addButton);
+        this.add(addNewSubPerksButton);
+        this.add(timeOfCheckBox);
+        this.add(perkNameLabel);
+        this.add(nameField);
+        this.add(descriptionField);
+        this.add(descriptionLabel);
+        this.add(numberOfGradesLabel);
+        this.add(numberOfGradesField);
     }
 
     @Override
     public void setComponentsBounds() {
-
+        this.addButton.setBounds(500, 400, 200, 100);
+        this.addNewSubPerksButton.setBounds(100, 400, 200, 100);
+        this.timeOfCheckBox.setBounds(400, 400, 400, 50);
+        this.perkNameLabel.setBounds(100, 100, 50, 20);
+        this.nameField.setBounds(150, 100, 100, 20);
+        this.descriptionLabel.setBounds(100, 200, 150, 20);
+        this.descriptionField.setBounds(250, 200, 150, 20);
+        this.numberOfGradesLabel.setBounds(100, 300, 150, 20);
+        this.numberOfGradesField.setBounds(250, 300, 150, 20);
     }
 
     @Override

@@ -39,6 +39,21 @@ public class AddNewSelectingObjectDetailFrame extends JFrame implements ActionLi
         this.addButton = new JButton();
         this.addNewElementTrieConditionButton = new JButton();
         this.fatherFrame = fatherFrame;
+        this.numberOfSelectedObjectsByConditionsLabel = new JLabel();
+        this.isSelectedObjectsDependsOnPlayerLabel = new JCheckBox();
+        this.numberOfSelectedObjectsByPlayerLabel = new JLabel();
+        this.isAllRelatedObjectsInvolvedLabel = new JCheckBox();
+        this.isUserSelectedLabel = new JCheckBox();
+        this.isDependsOnConditionLabel = new JCheckBox();
+        this.numberOfRandomSelectedObjectsField = new JTextField();
+        this.numberOfRandomSelectedObjectsLabel = new JLabel();
+        this.numberOfSelectedObjectsByConditionsField = new JTextField();
+        this.isRandomObjectsSelectingLabel = new JCheckBox();
+        this.isRelatedToAttackDefendLabel = new JCheckBox();
+        this.isHeroSelectedLabel = new JCheckBox();
+        this.isEnemySelectedLabel = new JCheckBox();
+        this.numberOfSelectedObjectsByConditionsField = new JTextField();
+        this.numberOfSelectedObjectsByPlayerField = new JTextField();
     }
 
     @Override
@@ -48,12 +63,19 @@ public class AddNewSelectingObjectDetailFrame extends JFrame implements ActionLi
 
     @Override
     public void addActionListeners() {
-
+        this.addButton.addActionListener(this);
+        this.addNewElementTrieConditionButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
-
+        this.setSize(700, 700);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
     }
 
     @Override
