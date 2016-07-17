@@ -1,5 +1,9 @@
 package GUI;
 
+import AbilityPackage.Perk;
+import ItemPackage.*;
+import ShopPackage.Shop;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +17,7 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
     private JLabel itemImage;
     private JLabel itemNameLabel, itemPriceLabel, itemDescriptionLabel;
     private Font tahoma;
+    private Shop shop;
     private Thread buyShopThread = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -20,12 +25,18 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
                 if (itemsBox != null && itemsBox.getItemCount() != 0) {
                     process();
                 }
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     });
     private JButton buyButton;
 
-    public BuyItemFrame(){
+    public BuyItemFrame(Shop shop){
+        this.shop = shop;
         this.buyButton = new JButton();
         this.itemImage = new JLabel(new ImageIcon("./resources/images/Barrier.png"));
         this.itemNameLabel = new JLabel("ITEM INFORMATION"); // item's information ---->> name - price description
@@ -43,16 +54,38 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
 
     public void addItemLists(/*ArrayList<ItemPackage>*/){
         //adding items from the GameEngine.items
-        for(int i = 1;i <= 10;i++) {
-            this.itemsBox.addItem("ItemPackage - " + i);
+        for (ItemProperties<SkillItem> itemProperties: shop.listOfSkillItems) {
+            this.itemsBox.addItem(itemProperties.getItem().getName());
+        }
+        for (ItemProperties<PerkItem> itemProperties: shop.listOfPerkItems) {
+            this.itemsBox.addItem(itemProperties.getItem().getName());
         }
     }
 
     private void setItemInformation(){
         String itemName = (String) this.itemsBox.getSelectedItem();
-        this.itemNameLabel.setText("ItemPackage Name : " + itemName);// item - 1
-        this.itemPriceLabel.setText("ItemPackage Price : " + itemName.charAt(7) + "$");
-        this.itemDescriptionLabel.setText("Description : " + "heheheh");
+        ItemProperties<SkillItem> itemProperties = null;
+        for (ItemProperties<SkillItem> itemProperties1: shop.listOfSkillItems) {
+            if (itemProperties1.getItem().getName().equals(itemName)) {
+                itemProperties = itemProperties1;
+                System.out.println(itemProperties.getPrice());
+                this.itemNameLabel.setText("ItemPackage Name : " + itemName);// item - 1
+                this.itemPriceLabel.setText("ItemPackage Price : " + itemProperties.getPrice() + "$");
+                this.itemDescriptionLabel.setText("Description : " + itemProperties.getItem().getDescription());
+                break;
+            }
+        }
+        ItemProperties<PerkItem> perkItemItemProperties;
+        for (ItemProperties<PerkItem> itemProperties1: shop.listOfPerkItems) {
+            if (itemProperties1.getItem().getName().equals(itemName)) {
+                perkItemItemProperties = itemProperties1;
+                System.out.println(perkItemItemProperties.getPrice());
+                this.itemNameLabel.setText("ItemPackage Name : " + itemName);// item - 1
+                this.itemPriceLabel.setText("ItemPackage Price : " + perkItemItemProperties.getPrice() + "$");
+                this.itemDescriptionLabel.setText("Description : " + perkItemItemProperties.getItem().getDescription());
+                break;
+            }
+        }
 
 //        this.itemImage.setText("This is ItemPackage Image(!!!)");
     }
@@ -75,7 +108,7 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
     public void showFrame(){
         this.getContentPane().setBackground(Color.WHITE);
         this.setSize(600, 600);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setLayout(null);
         //----------------------------------------------------
         this.addComponents();
@@ -133,10 +166,6 @@ public class BuyItemFrame extends JFrame implements ActionListener,GameFrame{
         if (e.getSource() == buyButton) {
             //BUY PROCEDURE
         }
-    }
-
-    public static void main(String[] args) {
-        new BuyItemFrame();
     }
 
 }

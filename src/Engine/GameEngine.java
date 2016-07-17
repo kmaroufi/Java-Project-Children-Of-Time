@@ -1,6 +1,7 @@
 package Engine;
 
 import GUI.MenuFrame;
+import GUI.ShopFrame;
 import GUI.SkillRoomFrame;
 import PlayerPackage.*;
 import GUI.Display;
@@ -2327,7 +2328,8 @@ public class GameEngine {
     public void play() {
         MenuFrame menuFrame = new MenuFrame();
         this.addDefaultAttributes();
-        SkillRoomFrame skillRoomFrame = new SkillRoomFrame();
+//        SkillRoomFrame skillRoomFrame = new SkillRoomFrame();
+        ShopFrame shopFrame =new ShopFrame(true);
         System.out.println("ali");
         for(int i = 0;i < 5;i++) {
             this.NumberOfBattle = i + 1;

@@ -1,5 +1,8 @@
 package GUI;
 
+import Engine.*;
+import ShopPackage.Shop;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +26,8 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
     private ArrayList<JLabel> playerItems;
     private Font tahoma = new Font("Tahoma", Font.PLAIN, 14);
 
+    private Shop shop;
+
 
     public ShopFrame(boolean isCustom) {
         this.welcomeLabel = new JLabel(new ImageIcon("./resources/images/WelcomeToTheShop.png"));
@@ -37,6 +42,7 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
         this.sellButton = new JButton();
         this.showMyItemsButton = new JButton();
         this.loadingFrameProgressBar = new JProgressBar(0, 100);
+        this.shop = Engine.GameEngine.shops.get(0);
         //----------------------------------------------------
 //        this.setPlayerInformation(new PlayerPackage());                          // CORRECT IT!
         this.addActionListeners();
@@ -159,7 +165,7 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.buyButton) {
-//            this.buy();
+            BuyItemFrame buyItemFrame = new BuyItemFrame(shop);
             System.out.println("BUY BUTTON");
         } else if (e.getSource() == this.sellButton) {
 //            this.sellItem;
