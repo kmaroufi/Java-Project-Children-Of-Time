@@ -132,9 +132,10 @@ public class CustomPlayerFrame extends JFrame implements ActionListener,GameFram
         } else if (e.getSource() == addNewHeroButton) {
 
         } else if (e.getSource() == addNewPerkButton) {
-
+            AddNewPerkFrame addNewPerkFrame = new AddNewPerkFrame();
+            addNewPerkFrame.showFrame();
         } else if (e.getSource() == addNewHeroClassButton) {
-
+            AddNewHeroClassFrame addNewHeroClassFrame = new AddNewHeroClassFrame();
         } else if (e.getSource() == addNewEnemyButton) {
 
         } else if (e.getSource() == addNewItemButton) {

@@ -255,7 +255,7 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
         if (e.getSource() == addButton) {
 
         } else if (e.getSource() == backButton) {
-
+            this.setVisible(false);
         } else if (e.getSource() == addSkillButton) {
 
         } else if (e.getSource() == addPerkButton) {

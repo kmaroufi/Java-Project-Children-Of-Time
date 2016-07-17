@@ -40,6 +40,8 @@ public class MenuFrame extends JFrame implements ActionListener,GameFrame{
         this.setButton(PVPBattleButton);
         this.setButton(optionButton);
         this.setButton(exitButton);
+        this.addActionListeners();
+
     }
 
     @Override
@@ -130,7 +132,9 @@ public class MenuFrame extends JFrame implements ActionListener,GameFrame{
         if (e.getSource() == singlePlayerButton) {
             SinglePlayerFrame singlePlayerFrame = new SinglePlayerFrame();
             singlePlayerFrame.showFrame();
+
         } else if (e.getSource() == customPlayerButton) {
+            this.setVisible(false);
             CustomPlayerFrame customPlayerFrame = new CustomPlayerFrame();
             customPlayerFrame.showFrame();
         } else if (e.getSource() == PVPBattleButton) {
