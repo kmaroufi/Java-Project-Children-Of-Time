@@ -132,7 +132,7 @@ public class AddNewItemFrame extends JFrame implements ActionListener, GameFrame
     public void showFrame() {
         this.setSize(700, 700);
         this.setLayout(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         //------------------------------------------------------------------
         this.addComponents();

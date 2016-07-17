@@ -130,12 +130,21 @@ public class MenuFrame extends JFrame implements ActionListener,GameFrame{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == singlePlayerButton) {
+            this.setVisible(false);
             SinglePlayerFrame singlePlayerFrame = new SinglePlayerFrame();
             singlePlayerFrame.showFrame();
+            GameEngine gameEngine = new GameEngine();
+            JFrame frame = new JFrame("Tile Map");
+            frame.setSize(800, 800);
+            frame.add(gameEngine);
+            frame.setResizable(false);
+            frame.setFocusable(true);
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         } else if (e.getSource() == customPlayerButton) {
             this.setVisible(false);
-            CustomPlayerFrame customPlayerFrame = new CustomPlayerFrame();
+            CustomPlayerFrame customPlayerFrame = new CustomPlayerFrame(this);
             customPlayerFrame.showFrame();
         } else if (e.getSource() == PVPBattleButton) {
 

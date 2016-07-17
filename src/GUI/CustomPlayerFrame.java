@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
  * Created by Future on 7/12/2016.
  */
 public class CustomPlayerFrame extends JFrame implements ActionListener,GameFrame {
+    MenuFrame menuFrame;
+
     private JButton addNewItemButton;
     private JButton addNewHeroButton;
     private JButton addNewEnemyButton;
@@ -18,7 +20,8 @@ public class CustomPlayerFrame extends JFrame implements ActionListener,GameFram
     private JButton backButton;
     private JButton nextButton;
 
-    public CustomPlayerFrame(){
+    public CustomPlayerFrame(MenuFrame menuFrame){
+        this.menuFrame = menuFrame;
         this.addNewItemButton = new JButton();
         this.addNewHeroButton = new JButton();
         this.addNewEnemyButton = new JButton();
@@ -121,29 +124,27 @@ public class CustomPlayerFrame extends JFrame implements ActionListener,GameFram
 
     }
 
-    public static void main(String[] args) {
-        new CustomPlayerFrame();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addNewMapButton) {
 
         } else if (e.getSource() == addNewHeroButton) {
-
+            AddNewHeroFrame addNewHeroFrame = new AddNewHeroFrame();
         } else if (e.getSource() == addNewPerkButton) {
             AddNewPerkFrame addNewPerkFrame = new AddNewPerkFrame();
             addNewPerkFrame.showFrame();
         } else if (e.getSource() == addNewHeroClassButton) {
             AddNewHeroClassFrame addNewHeroClassFrame = new AddNewHeroClassFrame();
         } else if (e.getSource() == addNewEnemyButton) {
-
+            AddNewEnemyFrame addNewEnemyFrame = new AddNewEnemyFrame();
         } else if (e.getSource() == addNewItemButton) {
-
+            AddNewItemFrame addNewItemFrame = new AddNewItemFrame();
         } else if (e.getSource() == nextButton) {
 
         } else if (e.getSource() == backButton) {
-
+            this.setVisible(false);
+            this.menuFrame.setVisible(true);
         } else if (e.getSource() == addNewSkillButton) {
 
         }

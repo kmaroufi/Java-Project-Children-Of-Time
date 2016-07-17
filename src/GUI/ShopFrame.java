@@ -164,7 +164,7 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
         } else if (e.getSource() == this.sellButton) {
 //            this.sellItem;
         } else if (e.getSource() == this.showMyItemsButton) {
-//            this.showPlayerItems()
+            ShowMyItemFrame showMyItemFrame = new ShowMyItemFrame();
         }
 
     }

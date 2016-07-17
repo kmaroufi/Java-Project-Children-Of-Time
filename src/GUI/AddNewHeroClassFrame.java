@@ -1,10 +1,19 @@
 package GUI;
 
+import ItemPackage.CraftingRequirement;
+import SoldierPackage.HeroClass;
+import SoldierPackage.HeroClassHandler;
+import SoldierPackage.SelfImprovement;
+import SoldierPackage.SoldierHandler;
+import Structure.SelectingObjectsDetail;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +24,34 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
     private JButton backButton;
     private JButton addPerkButton;
     private JButton addSkillButton;
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
+            int maximumHealth = Integer.parseInt(this.maximumHealthField.getText());
+            double healthRefillrate = Double.parseDouble(this.healthRefillRateField.getText());
+            int maximumMagic = Integer.parseInt(this.magicPointsField.getText());
+            double magicRefillRate = Double.parseDouble(this.magicRefillRateField.getText());
+            int maximumEnergyPoint = Integer.parseInt(this.maximumEnergyPointField.getText());
+            int attackPower = Integer.parseInt(this.attackPowerField.getText());
+            double attackPowerRatioOnNonTargetedSoldiers = Double.parseDouble(this.attackPowerRatioOnNonTargetedEnemyField.getText());
+            int attackPowerOnNonTargetedEnemy = Integer.parseInt(this.attackPowerOnNonTargetedEnemyField.getText());
+            SoldierHandler soldierHandler = new SoldierHandler(nameField.getText(), null, null, maximumHealth, healthRefillrate, maximumMagic, magicRefillRate, maximumEnergyPoint, attackPower, attackPowerRatioOnNonTargetedSoldiers, attackPowerOnNonTargetedEnemy);
+            double criticalHitChance = Double.parseDouble(this.criticalHitChanceField.getText());
+            double criticalHitDamage = Double.parseDouble(this.criticalHitDamageField.getText());
+            int inventorySize = Integer.parseInt(this.inventorySizeField.getText());
+            HeroClassHandler heroClassHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), criticalHitChance, criticalHitDamage, new SelfImprovement(null, null), new SelectingObjectsDetail<>(), inventorySize);
+            HeroClass heroClass = new HeroClass(soldierHandler, heroClassHandler);
+            Engine.GameEngine.addNewHeroClass(heroClass);
+        } else if (e.getSource() == backButton) {
+            this.setVisible(false);
+        } else if (e.getSource() == addSkillButton) {
+
+        } else if (e.getSource() == addPerkButton) {
+
+        }
+    }
 
     private JTextField nameField;
     private JTextField attackPowerField;
@@ -89,6 +126,7 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
         this.perksTable = new JTable();
         this.skillsTable = new JTable();
         //----------------------------------------------
+        this.addActionListeners();
         this.setButtons();
         this.setLabelsAndFields();
         this.setFonts();
@@ -249,20 +287,6 @@ public class AddNewHeroClassFrame extends JFrame implements ActionListener,GameF
         this.setButton(addSkillButton);
         this.setButton(addPerkButton);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addButton) {
-
-        } else if (e.getSource() == backButton) {
-            this.setVisible(false);
-        } else if (e.getSource() == addSkillButton) {
-
-        } else if (e.getSource() == addPerkButton) {
-
-        }
-    }
-
 
     public static void main(String[] args) {
         new AddNewHeroClassFrame();

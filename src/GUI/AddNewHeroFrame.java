@@ -100,7 +100,7 @@ public class AddNewHeroFrame extends JFrame implements ActionListener, GameFrame
     public void showFrame() {
         this.setSize(1500, 800);
         this.setLayout(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //--------------------------------------------------------------------
         this.setScrollPanes();
         this.addComponents();

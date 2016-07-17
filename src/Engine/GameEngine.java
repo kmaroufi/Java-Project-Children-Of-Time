@@ -1,6 +1,7 @@
 package Engine;
 
 import GUI.MenuFrame;
+import GUI.SkillRoomFrame;
 import PlayerPackage.*;
 import GUI.Display;
 import SoldierPackage.*;
@@ -22,7 +23,7 @@ import java.util.Map;
  * Created by asus-pc on 5/6/2016.
  */
 public class GameEngine {
-    private Player player;
+    public static Player player;
     private boolean isCustomGame = false;
     public static ArrayList<Enemy> listOfEnemies = new ArrayList<>();
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<>();
@@ -47,7 +48,7 @@ public class GameEngine {
     }
 
     public void load() {
-        
+
     }
 
     public ArrayList<String> getFields(ClassName className){
@@ -2260,14 +2261,8 @@ public class GameEngine {
         }
     }
 
-    public void addNewHeroClass(HeroClass heroClass) {
-        if(isCustomGame){
-            //Creating A new Hero Class
-            this.listOfHeroClasses.add(heroClass);
-        }
-        else{
-            this.listOfHeroClasses.add(heroClass);
-        }
+    public static void addNewHeroClass(HeroClass heroClass) {
+        listOfHeroClasses.add(heroClass);
     }
 
     public void addNewHero(String name, HeroClass heroClass) {
@@ -2308,15 +2303,9 @@ public class GameEngine {
     }
 
     public void addNewSkill(Skill skill) {
-        if(isCustomGame){
-            //...
-            this.listOfSkills.add(skill);
-        }
-        else{
-            this.listOfSkills.add(skill);
-            Ability.listOfAbilities.put(skill.getName(), "skill");
-            Skill.listOfSkills.put(skill.getName(), skill);
-        }
+        this.listOfSkills.add(skill);
+        Ability.listOfAbilities.put(skill.getName(), "skill");
+        Skill.listOfSkills.put(skill.getName(), skill);
     }
 
     public void addNewItem() {
@@ -2336,20 +2325,18 @@ public class GameEngine {
     }
 
     public void play() {
+        MenuFrame menuFrame = new MenuFrame();
         this.addDefaultAttributes();
-        if(isCustomGame){
-            this.doCustomGame();
-        }
-        else{
-            for(int i = 0;i < 5;i++) {
-                this.NumberOfBattle = i + 1;
-                this.doCampaign(i);
-                if (i != 4) {
-                    player.setXp(player.getXp() + this.rewardedXP[this.getNumberOfBattle() - 1]);
-                    player.setMoney(player.getMoney() + this.rewardedMoney[this.getNumberOfBattle() - 1]);
-                }
-                this.updateAllSkills("NumberOfClashes");
+        SkillRoomFrame skillRoomFrame = new SkillRoomFrame();
+        System.out.println("ali");
+        for(int i = 0;i < 5;i++) {
+            this.NumberOfBattle = i + 1;
+            this.doCampaign(i);
+            if (i != 4) {
+                player.setXp(player.getXp() + this.rewardedXP[this.getNumberOfBattle() - 1]);
+                player.setMoney(player.getMoney() + this.rewardedMoney[this.getNumberOfBattle() - 1]);
             }
+            this.updateAllSkills("NumberOfClashes");
         }
     }
 

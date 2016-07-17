@@ -5,6 +5,7 @@ import Engine.*;
 import PlayerPackage.*;
 import GUI.Display;
 
+import javax.swing.*;
 import java.io.Serializable;
 
 public class MainClass implements Serializable {
@@ -13,7 +14,8 @@ public class MainClass implements Serializable {
 //        Display.printInEachLine("Hi,Welcome!");
 //        Display.printInEachLine("What's Your Name?");
 //        String playerName = Display.getString();
-        childrenOfTime.setPlayer(new PlayerPackage.Player(null,15,40));
+        String name = JOptionPane.showInputDialog("What's Your Name?");
+        childrenOfTime.setPlayer(new PlayerPackage.Player(name,15,40));
 //        Display.printInEachLine("Hi " + childrenOfTime.getPlayer().getName());
         childrenOfTime.play();
     }
