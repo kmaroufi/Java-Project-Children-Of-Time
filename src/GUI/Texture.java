@@ -28,8 +28,8 @@ public class Texture implements Serializable{
         } catch (IOException e) {
             return;
         }
-        this.width = image.getWidth();
-        this.height = image.getHeight();
+        this.width  = 45;
+        this.height = 45;
     }
 
     //-------------------------------------------------------------------- Functions

@@ -120,7 +120,7 @@ public class TileMap implements Serializable{
     }
 
     public boolean hasCollision(Player player, Cell barrier) {
-        Rectangle playerBounds = new Rectangle(player.getX(), player.getY() / 2, player.getTexture().getWidth(),player.getTexture().getHeight() / 2);
+        Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getTexture().getWidth(),player.getTexture().getHeight());
         Area area1 = new Area(playerBounds);
         Rectangle barrierBounds = new Rectangle(barrier.getX(), barrier.getY(), barrier.getWidth(), barrier.getHeight());
         Area area2 = new Area(barrierBounds);
