@@ -96,6 +96,7 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
         this.timeOfCheckBox = new JComboBox();
         this.subPerks = new ArrayList<>();
         this.nameField = new JTextField();
+        this.perkNameLabel = new JLabel("Perk Name");
         this.numberOfGradesField = new JTextField();
         this.numberOfGradesLabel = new JLabel("Number Of Grades");
         this.descriptionLabel = new JLabel("Description");
@@ -120,7 +121,6 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
     public void showFrame() {
         this.setSize(700, 700);
         this.setLayout(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addComponents();
         this.setComponentsBounds();
         this.setFonts();
@@ -148,15 +148,15 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
 
     @Override
     public void setComponentsBounds() {
-        this.addButton.setBounds(500, 400, 200, 100);
-        this.addNewSubPerksButton.setBounds(100, 400, 200, 100);
-        this.timeOfCheckBox.setBounds(400, 400, 400, 50);
-        this.perkNameLabel.setBounds(100, 100, 50, 20);
-        this.nameField.setBounds(150, 100, 100, 20);
-        this.descriptionLabel.setBounds(100, 200, 150, 20);
-        this.descriptionField.setBounds(250, 200, 150, 20);
-        this.numberOfGradesLabel.setBounds(100, 300, 150, 20);
-        this.numberOfGradesField.setBounds(250, 300, 150, 20);
+        this.addButton.setBounds(500, 500, 200, 100);
+        this.addNewSubPerksButton.setBounds(100, 500, 200, 100);
+        this.timeOfCheckBox.setBounds(50, 250, 400, 50);
+        this.perkNameLabel.setBounds(50, 50, 100, 20);
+        this.nameField.setBounds(200, 50, 100, 20);
+        this.descriptionLabel.setBounds(50, 100, 150, 20);
+        this.descriptionField.setBounds(200, 100, 150, 20);
+        this.numberOfGradesLabel.setBounds(50, 150, 150, 20);
+        this.numberOfGradesField.setBounds(200, 150, 150, 20);
     }
 
     @Override
@@ -197,6 +197,10 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
         }
         Perk perk = new Perk(abilityHandler, timeOfCheck, tree);
         GameEngine.addNewPerk(perk);
+    }
+
+    public static void main(String[] args) {
+        new AddNewPerkFrame().showFrame();
     }
 
     //--------------------------------------------------------------------------Getter And Setters
