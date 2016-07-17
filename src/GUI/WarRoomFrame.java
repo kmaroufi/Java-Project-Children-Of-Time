@@ -25,8 +25,8 @@ public class WarRoomFrame extends JFrame implements ActionListener,GameFrame {
         this.castButton = new JButton("Cast");
         this.skipButton = new JButton("Skip");
         this.useItemButton = new JButton("Use Item");
-        this.playerNameLabel = new JLabel(Engine.GameEngine.player.getName());
-        this.playerXPLabel = new JLabel(GameEngine.player.getXp());
+//        this.playerNameLabel = new JLabel(Engine.GameEngine.player.getName());
+//        this.playerXPLabel = new JLabel(GameEngine.player.getXp());
         this.setBackgroundImage();
         this.showFrame();
     }
@@ -118,7 +118,7 @@ public class WarRoomFrame extends JFrame implements ActionListener,GameFrame {
 
         } else if (e.getSource() == skipButton) {
 
-        }else if(e.getSource() == useItemButton)
-
+        } else if (e.getSource() == useItemButton){
+                  }
     }
 }
