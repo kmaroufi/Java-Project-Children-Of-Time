@@ -4,13 +4,14 @@ import Input.KeyInput;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Future on 7/7/2016.
  */
-public class Player {
+public class Player implements Serializable{
     private Texture texture;
     private Rectangle boundRectangle;
     public Point center;

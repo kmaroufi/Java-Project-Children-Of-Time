@@ -50,6 +50,7 @@ public class TileMap implements Serializable{
         this.cells = new Cell[NUMBER_OF_BARRIERS_PER_ROW][NUMBER_OF_BARRIERS_PER_COLUMN];
     }
 
+
     public TileMap(int SIZE_OF_TABLE) {
         this.SIZE_OF_TABLE = SIZE_OF_TABLE;
         player = new Player("player", SIZE_OF_TABLE / 2 , SIZE_OF_TABLE / 2);
@@ -91,6 +92,14 @@ public class TileMap implements Serializable{
 
     }
 
+
+    public void updateCells(){
+        for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
+            for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
+                this.cells[i][j].update();
+            }
+        }
+    }
     public void paintMapFeatures(Graphics graphics) {
         for(int i = 0;i < NUMBER_OF_BARRIERS_PER_ROW;i++) {
             for(int j = 0;j < NUMBER_OF_BARRIERS_PER_COLUMN;j++) {
@@ -237,5 +246,57 @@ public class TileMap implements Serializable{
     }
 
 
+    public static HashMap<String, TileMap> getGameMaps() {
+        return gameMaps;
+    }
+
+    public static void setGameMaps(HashMap<String, TileMap> gameMaps) {
+        TileMap.gameMaps = gameMaps;
+    }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
+    public int getSIZE_OF_BARRIER() {
+        return SIZE_OF_BARRIER;
+    }
+
+    public void setSIZE_OF_BARRIER(int SIZE_OF_BARRIER) {
+        this.SIZE_OF_BARRIER = SIZE_OF_BARRIER;
+    }
+
+    public int getSIZE_OF_TABLE() {
+        return SIZE_OF_TABLE;
+    }
+
+    public void setSIZE_OF_TABLE(int SIZE_OF_TABLE) {
+        this.SIZE_OF_TABLE = SIZE_OF_TABLE;
+    }
+
+    public int getNUMBER_OF_BARRIERS_PER_ROW() {
+        return NUMBER_OF_BARRIERS_PER_ROW;
+    }
+
+    public void setNUMBER_OF_BARRIERS_PER_ROW(int NUMBER_OF_BARRIERS_PER_ROW) {
+        this.NUMBER_OF_BARRIERS_PER_ROW = NUMBER_OF_BARRIERS_PER_ROW;
+    }
+
+    public int getNUMBER_OF_BARRIERS_PER_COLUMN() {
+        return NUMBER_OF_BARRIERS_PER_COLUMN;
+    }
+
+    public void setNUMBER_OF_BARRIERS_PER_COLUMN(int NUMBER_OF_BARRIERS_PER_COLUMN) {
+        this.NUMBER_OF_BARRIERS_PER_COLUMN = NUMBER_OF_BARRIERS_PER_COLUMN;
+    }
+
+    public void setPlayer(Player player) {
+        updateCells();
+        this.player = player;
+    }
 }
 

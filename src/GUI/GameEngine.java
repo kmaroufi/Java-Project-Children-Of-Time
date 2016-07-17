@@ -50,6 +50,27 @@ public class GameEngine extends JPanel {
         }
     });
 
+    public void setTileMapPlayer(){
+        Texture[] downTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            downTextures[i] = new Texture("Player(Down-" + (i + 1) + ")");
+        }
+        Texture[] rightTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            rightTextures[i] = new Texture("Player(Right-" + (i + 1) + ")");
+        }
+        Texture[] leftTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            leftTextures[i] = new Texture("Player(Left-" + (i + 1) + ")");
+        }
+        Texture[] upTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            upTextures[i] = new Texture("Player(Up-" + (i + 1) + ")");
+        }
+        Player player = new Player("Player(Down-1)", 300, 300, upTextures, rightTextures, leftTextures, downTextures);
+        this.tileMap.setPlayer(player);
+    }
+
     //-------------------------------------------------------------------------------
     public GameEngine() {
         this.setSize(600,600);
@@ -63,11 +84,9 @@ public class GameEngine extends JPanel {
     //-------------------------------------------------------------------------------
     public void buildMap() {
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./resources/maps/SinglePlayerMap.dat"));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./resources/maps/Mohammad.dat"));
             this.tileMap = (TileMap) inputStream.readObject();
-            if (tileMap == null) {
-                System.out.println("It's Null");
-            }
+            this.setTileMapPlayer();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -93,6 +112,9 @@ public class GameEngine extends JPanel {
 
 
     public boolean hasCollisionWithAllBarriers(Player player) {
+        if (this.tileMap == null) {
+            return false;
+        }
         return this.tileMap.hasCollisionwithAllBarriers(player);
     }
 
@@ -103,7 +125,7 @@ public class GameEngine extends JPanel {
         if (tileMap == null) {
             return;
         }
-        this.paintPlaid(graphics);
+//        this.paintPlaid(graphics);
         paintMapFeatures(graphics);
         paintPlayer(graphics, tileMap.getPlayer().getX(), tileMap.getPlayer().getY());
     }
