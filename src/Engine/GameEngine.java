@@ -433,7 +433,7 @@ public class GameEngine {
 //    public void addPerk(){
 //        //First
 //        String name;                        // #user
-//        int numberOfGrades = 0;             // #user
+//        int numberOfGrades = 0;             // #user          // AddNewPerkFrame
 //        String description;                 // #user
 //        // AbilityHandler is OK to make
 //        // 2
@@ -2264,7 +2264,7 @@ public class GameEngine {
         }
     }
 
-    public void addNewPerk(Perk perk){
+    public static void addNewPerk(Perk perk){
         if(isCustomGame){
             //...
             this.listOfPerks.add(perk);
