@@ -3,6 +3,8 @@ import GUI.Display;
 import PlayerPackage.*;
 import SoldierPackage.*;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Skill extends Ability implements Cloneable{
+public class Skill extends Ability implements Cloneable, Serializable{
     public static Map<String, Skill> listOfSkills = new HashMap<String, Skill>();
 
     private Tree<SubSkill> subSkills;

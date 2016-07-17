@@ -2,12 +2,13 @@ package SoldierPackage;
 
 import AbilityPackage.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by asus-pc on 7/15/2016.
  */
-public class SoldierHandler {
+public class SoldierHandler implements Serializable{
     private String className;
     private ArrayList<Perk> perks = new ArrayList<Perk>();
     private ArrayList<Skill> skills = new ArrayList<Skill>();

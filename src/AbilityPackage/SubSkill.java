@@ -2,12 +2,14 @@ package AbilityPackage;
 import GUI.*;
 import SoldierPackage.*;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by asus-pc on 7/7/2016.
  */
-public class SubSkill extends SubAbility implements Cloneable{
+public class SubSkill extends SubAbility implements Cloneable, Serializable{
     private Skill relatedSkill;
     private boolean isRepeated;
     private Time timeOfEffecting;

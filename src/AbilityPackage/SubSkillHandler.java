@@ -1,11 +1,13 @@
 package AbilityPackage;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by asus-pc on 7/7/2016.
  */
-public class SubSkillHandler {
+public class SubSkillHandler implements Serializable {
 
     private boolean isRepeated;
     private Time timeOfEffecting;

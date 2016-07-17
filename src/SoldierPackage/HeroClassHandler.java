@@ -1,10 +1,13 @@
 package SoldierPackage;
 import ItemPackage.*;
 import Structure.*;
+
+import java.io.Serializable;
+
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClassHandler implements Cloneable{
+public class HeroClassHandler implements Cloneable, Serializable{
     private CraftingRequirement craftingRequirement;
     private double criticalHitChance;
     private double criticalHitDamage;

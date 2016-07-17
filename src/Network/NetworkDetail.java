@@ -7,6 +7,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by asus-pc on 7/16/2016.
  */
-public class NetworkDetail {
+public class NetworkDetail implements Serializable{
     private ArrayList<Pair<String, ArrayList<Integer>>> currentHosts = new ArrayList<>();
     private boolean islocalPlayerIsHost;
     private String serverHostName;

@@ -4,13 +4,14 @@ import PlayerPackage.*;
 import SoldierPackage.*;
 import ItemPackage.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class Shop {
+public class Shop implements Serializable{
     public static ArrayList<ItemProperties<PerkItem>> listOfPerkItems = new ArrayList<>();
     public static ArrayList<ItemProperties<SkillItem>> listOfSkillItems = new ArrayList<>();
 

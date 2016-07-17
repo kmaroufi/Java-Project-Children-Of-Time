@@ -3,11 +3,13 @@ import Engine.*;
 import SoldierPackage.*;
 import AbilityPackage.*;
 
+import java.io.Serializable;
+
 
 /**
  * Created by asus-pc on 7/12/2016.
  */
-public class SkillItem extends Item {
+public class SkillItem extends Item implements Serializable{
     private Skill skill;
     private int maximumTimeOfUsed;
     private int remainingTimeOfUsed;

@@ -6,11 +6,13 @@ import GUI.Display;
 import PlayerPackage.*;
 import AbilityPackage.*;
 import ItemPackage.*;
+
+import java.io.Serializable;
 import java.util.*;
 import java.util.HashMap;
 
 
-public class Hero extends HeroClass {
+public class Hero extends HeroClass implements Serializable {
     public static HashMap<String, Hero> mapOfHeroes = new HashMap<String, Hero>();
     private Map<String, SkillItem> mapOfSkillItems = new HashMap<>();
     private ArrayList<SkillItem> listOfSkillItems = new ArrayList<>();

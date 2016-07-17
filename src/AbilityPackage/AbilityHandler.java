@@ -1,9 +1,11 @@
 package AbilityPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 5/7/2016.
  */
-public class AbilityHandler {
+public class AbilityHandler implements Serializable {
 
     private String name;
     private String ownerName; // in field shayad lazem nabashe, ama be mafhoome code komak mikone.

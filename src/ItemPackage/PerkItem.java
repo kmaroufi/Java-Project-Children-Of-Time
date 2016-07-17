@@ -1,10 +1,13 @@
 package ItemPackage;
 import SoldierPackage.*;
 import AbilityPackage.*;
+
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 7/12/2016.
  */
-public class PerkItem extends Item {
+public class PerkItem extends Item implements Serializable{
     private Perk perk;
     private boolean isEffectJustOneTimeInstantlyAfterPerching;
 

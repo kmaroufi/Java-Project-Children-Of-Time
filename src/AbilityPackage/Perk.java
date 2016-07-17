@@ -3,6 +3,8 @@ import GUI.Display;
 import PlayerPackage.*;
 import SoldierPackage.*;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Perk extends Ability implements Cloneable{
+public class Perk extends Ability implements Cloneable, Serializable{
     public static Map<String, Perk> listOfPerks = new HashMap<>();
 
     private Tree<SubPerk> subPerks;

@@ -1,12 +1,14 @@
 package AbilityPackage;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map;
 
 /**
  * Created by asus-pc on 7/9/2016.
  */
-public class SubAbilityComponentHandler<T> {
+public class SubAbilityComponentHandler<T> implements Serializable{
     protected ClassName classOfEffectedObjects;
     protected Tree<ArrayList<Property<T, ?>>> trieConditions;
     protected SelectingObjectsDetail<T> selectingEffectedObjectsDetails;

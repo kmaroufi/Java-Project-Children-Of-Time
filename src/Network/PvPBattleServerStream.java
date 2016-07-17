@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class PvPBattleServerStream extends Thread {
+public class PvPBattleServerStream extends Thread implements Serializable {
     private NetworkDetail networkDetail;
     private ObjectOutputStream out;
     private ObjectInputStream in;

@@ -4,6 +4,7 @@ import PlayerPackage.*;
 import AbilityPackage.*;
 import Structure.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 7/14/2016.
  */
-public class SelfImprovement implements Cloneable {
+public class SelfImprovement implements Cloneable, Serializable {
     Perk perk;
     Map<Integer, Condition> conditions;
 

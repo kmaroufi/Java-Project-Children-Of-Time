@@ -1,11 +1,12 @@
 package AbilityPackage;
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map;
 
 /**
  * Created by asus-pc on 7/8/2016.
  */
-public class SubAbilityHandler {
+public class SubAbilityHandler implements Serializable{
 
     protected boolean isGlobal; // Just clear that other heroes can use this AbilityPackage or no.
     protected int costOfUpgrade;

@@ -3,13 +3,15 @@ import GUI.*;
 import AbilityPackage.*;
 import ItemPackage.*;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Future on 5/6/2016.
  */
-public class HeroClass extends Soldier implements Cloneable {
+public class HeroClass extends Soldier implements Cloneable, Serializable {
     public static HashMap<String, HeroClass> mapOfHeroClasses = new HashMap<>();
     public static ArrayList<HeroClass> listOfHeroClasses = new ArrayList<HeroClass>();
     protected CraftingRequirement craftingRequirement;

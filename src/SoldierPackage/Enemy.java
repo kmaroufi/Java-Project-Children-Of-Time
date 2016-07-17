@@ -8,8 +8,9 @@ import Structure.*;
  * Created by Future on 5/6/2016.
  */
 
+import java.io.Serializable;
 import java.util.*;
-public class Enemy extends Soldier{
+public class Enemy extends Soldier implements Serializable{
     public static HashMap<String , Enemy> mapOfEnemies = new HashMap<>();        // ArrayList is Wrong
     private String version;                         // (Weak-Able-Mighty)
     protected SelectingObjectsDetail<Hero> selectingNonTargetedHeroForAttack;

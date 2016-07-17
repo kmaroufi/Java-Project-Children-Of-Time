@@ -1,11 +1,12 @@
 package AbilityPackage;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Ability {
+public class Ability implements Serializable {
 
     public static Map<String, String> listOfAbilities = new HashMap<>();
 

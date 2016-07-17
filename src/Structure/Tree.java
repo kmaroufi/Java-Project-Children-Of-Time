@@ -1,18 +1,34 @@
 package Structure;
 import AbilityPackage.*;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map;
 
 /**
  * Created by asus-pc on 7/5/2016.
  */
-public class Tree<T> implements Cloneable{
+public class Tree<T> implements Cloneable, Serializable{
     private Node<T> root;
     private ArrayList<T> dataSet = new ArrayList<>();
 
     public Tree() {
         root = new Node<T>(null, this);
+    }
+
+    public void add(ArrayList<Condition> conditions, T data) {
+        Node<T> node = this.root;
+        boolean flag = true;
+        for (Condition condition: conditions) {
+            if (flag && (node.hasThisCondition(condition) != null)) {
+                node = node.mapOfConditions.get(node.hasThisCondition(condition));
+            } else {
+                flag = false;
+                node.addChild(null, condition);
+                node.mapOfConditions.get(condition);
+            }
+        }
+        node.addChild(data, new Condition());
     }
 
     public <U> T findCorrectNode(U object) {

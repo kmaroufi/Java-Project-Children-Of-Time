@@ -1,5 +1,6 @@
 package PlayerPackage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import GUI.*;
 import SoldierPackage.*;
@@ -7,7 +8,7 @@ import SoldierPackage.*;
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class Player {
+public class Player implements Serializable{
     private String name;
 
     public static int imortalityPotion = 3;

@@ -1,9 +1,11 @@
 package ItemPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 7/12/2016.
  */
-public class ItemHandler {
+public class ItemHandler implements Serializable {
     protected String name;
     protected Item.Type type;
     protected int size;

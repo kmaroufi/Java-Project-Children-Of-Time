@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 /**
  * Created by asus-pc on 7/16/2016.
  */
-public class PvPBattleClientStream extends Thread {
+public class PvPBattleClientStream extends Thread implements Serializable {
     private NetworkDetail networkDetail;
     private String serverHostName;
     private ObjectOutputStream out;

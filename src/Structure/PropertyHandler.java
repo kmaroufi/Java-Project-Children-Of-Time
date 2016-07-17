@@ -2,12 +2,13 @@ package Structure;
 
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class PropertyHandler<T> {
+public class PropertyHandler<T> implements Serializable{
     private String name;
     private boolean isPermanently;
     private ClassName classOfEffectingObjects;

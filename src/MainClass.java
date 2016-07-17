@@ -5,7 +5,9 @@ import Engine.*;
 import PlayerPackage.*;
 import GUI.Display;
 
-public class MainClass {
+import java.io.Serializable;
+
+public class MainClass implements Serializable {
     public static GameEngine childrenOfTime = new GameEngine();
     public static void main(String[] args) {
         Display.printInEachLine("Hi,Welcome!");

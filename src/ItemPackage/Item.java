@@ -1,10 +1,12 @@
 package ItemPackage;
 import GUI.*;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class Item implements Cloneable{
+public class Item implements Cloneable, Serializable{
 
     protected String name;
     protected Type type;

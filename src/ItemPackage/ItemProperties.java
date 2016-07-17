@@ -1,9 +1,11 @@
 package ItemPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 5/6/2016.
  */
-public class ItemProperties<T> {
+public class ItemProperties<T> implements Serializable {
     private T item;
     private int numberOfThisItem;
     private boolean countLess;

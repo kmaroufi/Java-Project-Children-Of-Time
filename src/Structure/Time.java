@@ -1,9 +1,11 @@
 package Structure;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 5/13/2016.
  */
-public class Time {
+public class Time implements Serializable{
     private int numberOfTurns;
     private int numberOfCycles;
     private int numberOfClashes;

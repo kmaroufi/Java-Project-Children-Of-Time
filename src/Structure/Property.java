@@ -2,6 +2,7 @@ package Structure;
 
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Map;
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Property<E, T> implements Cloneable {
+public class Property<E, T> implements Cloneable, Serializable{
     private Double totalEffectOnProperty = new Double(0);               // az che noii e??????
     private String name;
     private boolean isPermanently;

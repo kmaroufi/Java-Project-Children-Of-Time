@@ -10,8 +10,11 @@ import Structure.*;
 import Network.*;
 import javafx.util.Pair;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -37,6 +40,30 @@ public class GameEngine {
     public NetworkDetail networkDetail;
 
     //------------------------------------------ Functions
+    public ArrayList<String> getFields(ClassName className){
+        Class clazz = null;
+        if (className == ClassName.Hero) {
+            clazz = Hero.class;
+        } else if (className == ClassName.Enemy) {
+            clazz = Enemy.class;
+        } else if (className == ClassName.Item) {
+            clazz = Item.class;
+        } else if (className == ClassName.Skill) {
+            clazz = Skill.class;
+        } else if (className == ClassName.Perk) {
+            clazz = Perk.class;
+        }
+        ArrayList<String> fieldsArray = new ArrayList<>();
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                fieldsArray.add(field.getName());
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return fieldsArray;
+    }
+
     public void showHeroesTraits(String name){
         for(Hero hero : this.listOfHeroes){
             if(hero.getName().equalsIgnoreCase(name)){
@@ -340,7 +367,7 @@ public class GameEngine {
             SoldierHandler soldierHandler = new SoldierHandler("Fighter", new ArrayList<>(), new ArrayList<>(), 200, 0.1, 120, 0.05, 6, 120, 0, 0);
             soldierHandler.addPerk(Perk.listOfPerks.get("Fight training"));
             soldierHandler.addPerk(Perk.listOfPerks.get("Work out"));
-            SelectingObjectsDetailHandler<Soldier> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Soldier> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             HeroClassHandler fighterHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), 0, 1, new SelfImprovement(null, null), selectingObjectsDetail, 2);
             HeroClass fighterClass = new HeroClass(soldierHandler, fighterHandler);
@@ -361,7 +388,7 @@ public class GameEngine {
             SoldierHandler soldierHandler = new SoldierHandler("Supporter", new ArrayList<>(), new ArrayList<>(), 220, 0.05, 200, 0.1, 5, 80, 0, 0);
             soldierHandler.addPerk(Perk.listOfPerks.get("Quick as a bunny"));
             soldierHandler.addPerk(Perk.listOfPerks.get("Magic lessons"));
-            SelectingObjectsDetailHandler<Soldier> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Soldier> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             HeroClassHandler supporterHandler = new HeroClassHandler(new CraftingRequirement(0,0,0,0), 0, 1, new SelfImprovement(null, null), selectingObjectsDetail, 3);
             HeroClass supporterClass = new HeroClass(soldierHandler, supporterHandler);
@@ -541,7 +568,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<Hero>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent =  new SubPerkComponent<Hero>(subAbilityComponentHandler);
@@ -575,7 +602,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent =  new SubPerkComponent<>(subAbilityComponentHandler);
@@ -608,7 +635,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<Hero>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<Hero>(subAbilityComponentHandler);
@@ -641,7 +668,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<Hero>(subAbilityComponentHandler);
@@ -674,7 +701,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -707,7 +734,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -740,7 +767,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -773,7 +800,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -807,7 +834,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -846,7 +873,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -862,7 +889,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -878,7 +905,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -911,7 +938,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -927,7 +954,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -943,7 +970,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -976,7 +1003,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -992,7 +1019,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1008,7 +1035,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1041,7 +1068,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1057,7 +1084,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1073,7 +1100,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1106,7 +1133,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1126,7 +1153,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1142,7 +1169,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1179,7 +1206,7 @@ public class GameEngine {
             properties.add(property2);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubPerkComponent<Hero> subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1203,7 +1230,7 @@ public class GameEngine {
             properties.add(property2);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1223,7 +1250,7 @@ public class GameEngine {
             properties.add(property2);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subPerkComponent = new SubPerkComponent<>(subAbilityComponentHandler);
@@ -1252,7 +1279,7 @@ public class GameEngine {
         {
             //Eley's Skill: Overpowered attack
 
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             Tree<ArrayList<Pair<String, Double>>> tree = new Tree<>();
             ArrayList<Pair<String, Double>> pairs = new ArrayList<>();
@@ -1264,7 +1291,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Enemy, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Enemy> selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler<>(ClassName.Enemy, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler(ClassName.Enemy, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Enemy> selectingObjectsDetail2 = new SelectingObjectsDetail<>(selectingObjectsDetailHandler2);
             SubAbilityComponentHandler<Enemy> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Enemy, trieConditions, selectingObjectsDetail2, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Enemy> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1278,7 +1305,7 @@ public class GameEngine {
             SubSkillHandler subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, "1", subSkillComponents);
             SubSkill subSkill1 = new SubSkill(subSkillHandler, subAbilityHandler);
 
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             tree = new Tree<>();
             pairs = new ArrayList<>();
@@ -1290,7 +1317,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler<>(ClassName.Enemy, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler(ClassName.Enemy, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail2 = new SelectingObjectsDetail<>(selectingObjectsDetailHandler2);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Enemy, trieConditions, selectingObjectsDetail2, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1304,7 +1331,7 @@ public class GameEngine {
             subSkillHandler = new SubSkillHandler(false, new Time(), 0, true, 2, 50, "2", subSkillComponents);
             SubSkill subSkill2 = new SubSkill(subSkillHandler, subAbilityHandler);
 
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             tree = new Tree<>();
             pairs = new ArrayList<>();
@@ -1316,7 +1343,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler<>(ClassName.Enemy, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler(ClassName.Enemy, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail2 = new SelectingObjectsDetail<>(selectingObjectsDetailHandler2);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Enemy, trieConditions, selectingObjectsDetail2, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1354,7 +1381,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Enemy, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Enemy> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Enemy> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Enemy> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Enemy, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Enemy> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1364,7 +1391,7 @@ public class GameEngine {
             properties2.add(property2);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions2 = new Tree<>();
             trieConditions2.getRoot().addChild(properties2, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail2 = new SelectingObjectsDetail<>(selectingObjectsDetailHandler2);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler2 = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions2, selectingObjectsDetail2, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent2 = new SubSkillComponent<>(subAbilityComponentHandler2);
@@ -1385,7 +1412,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Enemy, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1395,7 +1422,7 @@ public class GameEngine {
             properties2.add(property2);
             trieConditions2 = new Tree<>();
             trieConditions2.getRoot().addChild(properties2, new Condition());
-            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail2 = new SelectingObjectsDetail<>(selectingObjectsDetailHandler2);
             subAbilityComponentHandler2 = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions2, selectingObjectsDetail2, new ArrayList<>(), new HashMap<>());
             subSkillComponent2 = new SubSkillComponent<>(subAbilityComponentHandler2);
@@ -1416,7 +1443,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Enemy, true, false, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Enemy, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1426,7 +1453,7 @@ public class GameEngine {
             properties2.add(property2);
             trieConditions2 = new Tree<>();
             trieConditions2.getRoot().addChild(properties2, new Condition());
-            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
+            selectingObjectsDetailHandler2 = new SelectingObjectsDetailHandler(ClassName.Hero, false, true, false, null, 0, false, 0, false, 0, false, false, false);
             selectingObjectsDetail2 = new SelectingObjectsDetail<>(selectingObjectsDetailHandler2);
             subAbilityComponentHandler2 = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions2, selectingObjectsDetail2, new ArrayList<>(), new HashMap<>());
             subSkillComponent2 = new SubSkillComponent<>(subAbilityComponentHandler2);
@@ -1465,7 +1492,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1481,7 +1508,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1501,7 +1528,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1539,7 +1566,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1559,7 +1586,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1579,7 +1606,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1617,7 +1644,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1633,7 +1660,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1649,7 +1676,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1683,7 +1710,7 @@ public class GameEngine {
             properties.add(property);
             Tree<ArrayList<Property<Hero, ?>>> trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            SelectingObjectsDetailHandler<Hero> selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            SelectingObjectsDetailHandler selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             SelectingObjectsDetail<Hero> selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             SubAbilityComponentHandler<Hero> subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             SubSkillComponent<Hero> subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1703,7 +1730,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -1723,7 +1750,7 @@ public class GameEngine {
             properties.add(property);
             trieConditions = new Tree<>();
             trieConditions.getRoot().addChild(properties, new Condition());
-            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler<>(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
+            selectingObjectsDetailHandler = new SelectingObjectsDetailHandler(ClassName.Hero, false, false, false, null, 0, false, 0, true, 1, false, false, false);
             selectingObjectsDetail = new SelectingObjectsDetail<>(selectingObjectsDetailHandler);
             subAbilityComponentHandler = new SubAbilityComponentHandler<>(ClassName.Hero, trieConditions, selectingObjectsDetail, new ArrayList<>(), new HashMap<>());
             subSkillComponent = new SubSkillComponent<>(subAbilityComponentHandler);
@@ -2265,15 +2292,9 @@ public class GameEngine {
     }
 
     public static void addNewPerk(Perk perk){
-        if(isCustomGame){
-            //...
-            this.listOfPerks.add(perk);
-        }
-        else{
-            this.listOfPerks.add(perk);
-            Ability.listOfAbilities.put(perk.getName(), "perk");
-            Perk.listOfPerks.put(perk.getName(), perk);
-        }
+        listOfPerks.add(perk);
+        Ability.listOfAbilities.put(perk.getName(), "perk");
+        Perk.listOfPerks.put(perk.getName(), perk);
     }
 
     public void addNewSkill(Skill skill) {
@@ -2378,7 +2399,7 @@ public class GameEngine {
             this.networkDetail.createServer();
         }
         if (code == 2) {
-            
+
         }
     }
 

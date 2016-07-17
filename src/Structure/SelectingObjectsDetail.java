@@ -1,12 +1,14 @@
 package Structure;
 import GUI.*;
 import SoldierPackage.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by asus-pc on 7/6/2016.
  */
-public class SelectingObjectsDetail<T> implements Cloneable {
+public class SelectingObjectsDetail<T> implements Cloneable, Serializable {
     private ClassName classOfObjects;
     private boolean isAllRelatedObjectsInvolved;
     private boolean isUserSelected;

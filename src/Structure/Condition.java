@@ -1,10 +1,12 @@
 package Structure;
 
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 5/5/2016.
  */
-public class Condition {
+public class Condition implements Serializable {
     private String nameOfField;
     private Object valueOfField;
     private int statusOfFields;

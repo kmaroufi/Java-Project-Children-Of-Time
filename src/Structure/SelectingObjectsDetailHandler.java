@@ -1,9 +1,11 @@
 package Structure;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 7/10/2016.
  */
-public class SelectingObjectsDetailHandler<T> {
+public class SelectingObjectsDetailHandler {
     private ClassName classOfObjects;
     private boolean isAllRelatedObjectsInvolved;
     private boolean isUserSelected;

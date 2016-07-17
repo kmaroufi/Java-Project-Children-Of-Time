@@ -1,9 +1,11 @@
 package ItemPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by asus-pc on 7/14/2016.
  */
-public class CraftingRequirement implements Cloneable{
+public class CraftingRequirement implements Cloneable, Serializable{
     private int water;
     private int air;
     private int aether;

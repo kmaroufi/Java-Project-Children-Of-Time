@@ -1,12 +1,13 @@
 package Structure;
 import Engine.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by asus-pc on 7/8/2016.
  */
-public enum  ClassName {
+public enum  ClassName implements Serializable {
     Hero("Hero"), Enemy("Enemy"), Item("Item"), Skill("Skill"), Perk("Perk");
 
     String name;

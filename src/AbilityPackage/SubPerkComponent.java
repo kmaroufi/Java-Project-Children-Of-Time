@@ -1,12 +1,14 @@
 package AbilityPackage;
 import SoldierPackage.*;
 import Structure.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by asus-pc on 7/9/2016.
  */
-public class SubPerkComponent<T> extends SubAbilityComponent<T> implements Cloneable {
+public class SubPerkComponent<T> extends SubAbilityComponent<T> implements Cloneable, Serializable {
 
     private SubPerk relatedSubPerk;
 
