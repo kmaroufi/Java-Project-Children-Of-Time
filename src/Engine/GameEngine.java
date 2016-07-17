@@ -2293,9 +2293,11 @@ public class GameEngine {
             } else if (choose == 0) {
 //                this.addNewHeroClass(new HeroClass());
             }
+            hero.setTexture("Hero - " + (int)(3 * Math.random()));
             this.listOfHeroes.add(hero);
         }
         else{
+            hero.setTexture("Hero - " + (int)(3 * Math.random()));
             this.listOfHeroes.add(hero);
             Hero.mapOfHeroes.put(hero.getName(), hero);
         }

@@ -222,9 +222,9 @@ public class MapEditor extends JPanel implements ActionListener,GameFrame{
 
 
     public static void main(String[] args) {
-//        MapEditor firstMap = new MapEditor();
+        MapEditor firstMap = new MapEditor();
 //        JOptionPane.showMessageDialog(null, "Hello");
-        MapEditor.setMapSelection();
+//        MapEditor.setMapSelection();
     }
 
     @Override

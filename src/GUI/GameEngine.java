@@ -6,6 +6,10 @@ import Input.MouseInput;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 
 /**
@@ -18,6 +22,9 @@ public class GameEngine extends JPanel {
     private Thread gameThread = new Thread(new Runnable() {
         @Override
         public void run() {
+            if (tileMap == null) {
+                return;
+            }
             while(true) {
                 if (!hasCollisionWithAllBarriers(tileMap.getPlayer())) {
                     tileMap.getPlayer().setX((int) (tileMap.getPlayer().getX() + tileMap.getPlayer().getVelX()));
@@ -50,11 +57,23 @@ public class GameEngine extends JPanel {
         addKeyListener(new KeyInput());
         addMouseListener(new MouseInput());
         requestFocus();
-        this.tileMap = new TileMap();
+        buildMap();
         gameThread.start();
     }
     //-------------------------------------------------------------------------------
-
+    public void buildMap() {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./resources/maps/SinglePlayerMap.dat"));
+            this.tileMap = (TileMap) inputStream.readObject();
+            if (tileMap == null) {
+                System.out.println("It's Null");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     private void enter() {
         Cell playerCell = findPlayerCell(this.tileMap.getPlayer());
         System.out.println(playerCell.getMode());
@@ -66,6 +85,9 @@ public class GameEngine extends JPanel {
 
 
     public void paintPlaid(Graphics graphics){
+        if (tileMap == null) {
+            return;
+        }
         this.tileMap.paintPlaid(graphics);
     }
 
@@ -78,6 +100,9 @@ public class GameEngine extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+        if (tileMap == null) {
+            return;
+        }
         this.paintPlaid(graphics);
         paintMapFeatures(graphics);
         paintPlayer(graphics, tileMap.getPlayer().getX(), tileMap.getPlayer().getY());
@@ -89,6 +114,9 @@ public class GameEngine extends JPanel {
     }
 
     public void paintMapFeatures(Graphics graphics) {
+        if (this.tileMap == null) {
+            return;
+        }
         this.tileMap.paintMapFeatures(graphics);
     }
 
