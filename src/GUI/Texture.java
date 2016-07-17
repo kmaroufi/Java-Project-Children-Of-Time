@@ -37,9 +37,7 @@ public class Texture implements Serializable{
     public void render(Graphics graphics, int x, int y) {
         graphics.drawImage(this.image, x ,  y, this.width, this.height, null);
     }
-    public void render(Graphics2D g, int destX1, int destX2, int srcX1, int srcX2, int y) {
-        g.drawImage(image, destX1, y, destX2, y + height, srcX1, 0, srcX2, height, null);
-    }
+
     //-------------------------------------------------------------------- Getter And Setters
     public BufferedImage getImage() {
         return image;

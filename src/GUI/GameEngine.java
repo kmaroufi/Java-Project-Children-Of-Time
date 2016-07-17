@@ -6,6 +6,10 @@ import Input.MouseInput;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 
 /**
@@ -18,6 +22,9 @@ public class GameEngine extends JPanel {
     private Thread gameThread = new Thread(new Runnable() {
         @Override
         public void run() {
+            if (tileMap == null) {
+                return;
+            }
             while(true) {
                 if (!hasCollisionWithAllBarriers(tileMap.getPlayer())) {
                     tileMap.getPlayer().setX((int) (tileMap.getPlayer().getX() + tileMap.getPlayer().getVelX()));
@@ -43,6 +50,27 @@ public class GameEngine extends JPanel {
         }
     });
 
+    public void setTileMapPlayer(){
+        Texture[] downTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            downTextures[i] = new Texture("Player(Down-" + (i + 1) + ")");
+        }
+        Texture[] rightTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            rightTextures[i] = new Texture("Player(Right-" + (i + 1) + ")");
+        }
+        Texture[] leftTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            leftTextures[i] = new Texture("Player(Left-" + (i + 1) + ")");
+        }
+        Texture[] upTextures = new Texture[3];
+        for(int i = 0;i < 3;i++) {
+            upTextures[i] = new Texture("Player(Up-" + (i + 1) + ")");
+        }
+        Player player = new Player("Player(Down-1)", 300, 300, upTextures, rightTextures, leftTextures, downTextures);
+        this.tileMap.setPlayer(player);
+    }
+
     //-------------------------------------------------------------------------------
     public GameEngine() {
         this.setSize(600,600);
@@ -50,11 +78,21 @@ public class GameEngine extends JPanel {
         addKeyListener(new KeyInput());
         addMouseListener(new MouseInput());
         requestFocus();
-        this.tileMap = new TileMap();
+        buildMap();
         gameThread.start();
     }
     //-------------------------------------------------------------------------------
-
+    public void buildMap() {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./resources/maps/Mohammad.dat"));
+            this.tileMap = (TileMap) inputStream.readObject();
+            this.setTileMapPlayer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     private void enter() {
         Cell playerCell = findPlayerCell(this.tileMap.getPlayer());
         System.out.println(playerCell.getMode());
@@ -66,11 +104,17 @@ public class GameEngine extends JPanel {
 
 
     public void paintPlaid(Graphics graphics){
+        if (tileMap == null) {
+            return;
+        }
         this.tileMap.paintPlaid(graphics);
     }
 
 
     public boolean hasCollisionWithAllBarriers(Player player) {
+        if (this.tileMap == null) {
+            return false;
+        }
         return this.tileMap.hasCollisionwithAllBarriers(player);
     }
 
@@ -78,7 +122,10 @@ public class GameEngine extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        this.paintPlaid(graphics);
+        if (tileMap == null) {
+            return;
+        }
+//        this.paintPlaid(graphics);
         paintMapFeatures(graphics);
         paintPlayer(graphics, tileMap.getPlayer().getX(), tileMap.getPlayer().getY());
     }
@@ -89,6 +136,9 @@ public class GameEngine extends JPanel {
     }
 
     public void paintMapFeatures(Graphics graphics) {
+        if (this.tileMap == null) {
+            return;
+        }
         this.tileMap.paintMapFeatures(graphics);
     }
 
