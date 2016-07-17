@@ -71,8 +71,10 @@ public class WarRoomFrame extends JFrame implements ActionListener,GameFrame {
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
         for(int i = 0;i < GameEngine.listOfHeroes.size();i++) {
-
-//            GameEngine.listOfHeroes.get(i).getTexture().render(g, M);
+            GameEngine.listOfHeroes.get(i).getTexture().render(g, (int)(600 * Math.random()), (int)(500 * Math.random()));
+        }
+        for(int i = 0;i < GameEngine.listOfHeroes.size();i++) {
+            GameEngine.listOfEnemies.get(i).getTexture().render(g, (int)(750 + 600 * Math.random()), (int)(500 * Math.random()));
         }
 
     }
