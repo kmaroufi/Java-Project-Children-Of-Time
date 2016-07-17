@@ -2265,15 +2265,9 @@ public class GameEngine {
     }
 
     public static void addNewPerk(Perk perk){
-        if(isCustomGame){
-            //...
-            this.listOfPerks.add(perk);
-        }
-        else{
-            this.listOfPerks.add(perk);
-            Ability.listOfAbilities.put(perk.getName(), "perk");
-            Perk.listOfPerks.put(perk.getName(), perk);
-        }
+        listOfPerks.add(perk);
+        Ability.listOfAbilities.put(perk.getName(), "perk");
+        Perk.listOfPerks.put(perk.getName(), perk);
     }
 
     public void addNewSkill(Skill skill) {
