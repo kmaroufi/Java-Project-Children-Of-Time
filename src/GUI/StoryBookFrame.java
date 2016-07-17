@@ -11,13 +11,14 @@ public class StoryBookFrame extends JFrame {
     private JTextArea storyArea;
     private Font tahoma;
     private JButton okButton;
-    private ArrayList<String> story;
+    private String story;
 
-    public StoryBookFrame() {
+    public StoryBookFrame(String story) {
         this.storyArea = new JTextArea();
         this.okButton = new JButton("OK");
         this.tahoma = new Font("Tahoma", Font.PLAIN, 15);
         this.storyArea.setFont(tahoma);
+        this.storyArea.append(story);
         //---------------------------------------------------------
         this.setSize(700, 700);
         this.setLayout(null);
@@ -26,10 +27,6 @@ public class StoryBookFrame extends JFrame {
         this.add(storyArea);
         this.add(okButton);
         this.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new StoryBookFrame();
     }
 
 }

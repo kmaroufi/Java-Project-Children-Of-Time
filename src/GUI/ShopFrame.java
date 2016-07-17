@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Created by Future on 7/11/2016.
  */
 public class ShopFrame extends JFrame implements ActionListener,GameFrame{
+    private GameEngine gameEngine;
     private JButton backButton;
     private JButton buyButton;
     private JButton sellButton;
@@ -29,7 +30,8 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
     private Shop shop;
 
 
-    public ShopFrame(boolean isCustom) {
+    public ShopFrame(boolean isCustom, GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
         this.welcomeLabel = new JLabel(new ImageIcon("./resources/images/WelcomeToTheShop.png"));
         this.tahoma = new Font("Tahoma", Font.PLAIN, 16);
         this.backButton = new JButton();
@@ -127,7 +129,7 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
 //        this.setContentPane(new JLabel(new ImageIcon("C:\\Users\\Future\\Downloads\\WhYzqs1468271980.png")));
         this.getContentPane().setBackground(Color.WHITE);
         this.setSize(600, 600);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(null);
         //--------------------------------------------------------------------
         this.addComponents();
@@ -175,8 +177,4 @@ public class ShopFrame extends JFrame implements ActionListener,GameFrame{
 
     }
 
-
-    public static void main(String[] args) {
-        new ShopFrame(true);
-    }
 }

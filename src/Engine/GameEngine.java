@@ -39,6 +39,7 @@ public class GameEngine {
     private Hero currentHeroAttacker;
     private Enemy currentEnemyDefender;
     public static ArrayList<SkillItem> listOfRemovedSkillItemsButHaveEffect;
+    public static ArrayList<String> stories;
 
     public NetworkDetail networkDetail;
 
@@ -2331,7 +2332,7 @@ public class GameEngine {
         MenuFrame menuFrame = new MenuFrame();
         this.addDefaultAttributes();
 //        SkillRoomFrame skillRoomFrame = new SkillRoomFrame();
-        ShopFrame shopFrame =new ShopFrame(true);
+//        ShopFrame shopFrame =new ShopFrame(true);
         System.out.println("ali");
         for(int i = 0;i < 5;i++) {
             this.NumberOfBattle = i + 1;

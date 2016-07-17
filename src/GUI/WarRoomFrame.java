@@ -28,6 +28,7 @@ public class WarRoomFrame extends JFrame implements ActionListener,GameFrame {
         this.playerNameLabel = new JLabel();
         this.playerEPLabel = new JLabel();
         this.setBackgroundImage();
+        this.showFrame();
     }
 
 
@@ -47,7 +48,7 @@ public class WarRoomFrame extends JFrame implements ActionListener,GameFrame {
     public void showFrame(){
         this.setSize(1500, 800);
         this.setLayout(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.addComponents();
         this.setComponentsBounds();

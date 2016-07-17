@@ -1,11 +1,16 @@
 package GUI;
-
+import Engine.*;
 import Input.KeyInput;
 import Input.MouseInput;
+import ShopPackage.Shop;
+import com.sun.xml.internal.ws.api.pipe.Engine;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,32 +20,38 @@ import java.io.ObjectInputStream;
 /**
  * Created by Future on 7/6/2016.
  */
-public class GameEngine extends JPanel {
+public class GameEngine extends JPanel implements KeyListener, MouseListener{
     private TileMap tileMap;
     private final double CONST_VELOCITY = 6;
     private final int FPS = 32;
+    private boolean stop;
     private Thread gameThread = new Thread(new Runnable() {
         @Override
         public void run() {
             if (tileMap == null) {
                 return;
             }
+            addKeyListener(GameEngine.this);
+            addMouseListener(GameEngine.this);
+            GameEngine.this.stop = false;
             while(true) {
-                if (!hasCollisionWithAllBarriers(tileMap.getPlayer())) {
-                    tileMap.getPlayer().setX((int) (tileMap.getPlayer().getX() + tileMap.getPlayer().getVelX()));
-                    tileMap.getPlayer().setY((int) (tileMap.getPlayer().getY() + tileMap.getPlayer().getVelY()));
+                if (!GameEngine.this.stop) {
+                    if (!hasCollisionWithAllBarriers(tileMap.getPlayer())) {
+                        tileMap.getPlayer().setX((int) (tileMap.getPlayer().getX() + tileMap.getPlayer().getVelX()));
+                        tileMap.getPlayer().setY((int) (tileMap.getPlayer().getY() + tileMap.getPlayer().getVelY()));
+                    }
+                    while (hasCollisionWithAllBarriers(tileMap.getPlayer())) {
+                        tileMap.getPlayer().setX((int) (tileMap.getPlayer().getX() - tileMap.getPlayer().getVelX()));
+                        tileMap.getPlayer().setY((int) (tileMap.getPlayer().getY() - tileMap.getPlayer().getVelY()));
+                    }
+                    repaint();
+                    requestFocus();
+                    stopplayer();
+                    tileMap.getPlayer().tick();
                 }
-                while (hasCollisionWithAllBarriers(tileMap.getPlayer())) {
-                    tileMap.getPlayer().setX((int) (tileMap.getPlayer().getX() - tileMap.getPlayer().getVelX()));
-                    tileMap.getPlayer().setY((int) (tileMap.getPlayer().getY() - tileMap.getPlayer().getVelY()));
-                }
-                if (KeyInput.wasPressed(KeyEvent.VK_ENTER)) {
-                    enter();
-                }
-                repaint();
-                requestFocus();
-                stopplayer();
-                tileMap.getPlayer().tick();
+//                if (KeyInput.wasPressed(KeyEvent.VK_ENTER)) {
+//                    enter();
+//                }
                 try {
                     Thread.sleep(FPS);
                 } catch (InterruptedException e) {
@@ -96,6 +107,32 @@ public class GameEngine extends JPanel {
     private void enter() {
         Cell playerCell = findPlayerCell(this.tileMap.getPlayer());
         System.out.println(playerCell.getMode());
+        if (playerCell.getMode().equals("Shop")) {
+//            ShopFrame shopFrame = new ShopFrame(true, this);
+            Thread h1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ShopFrame shopFrame = new ShopFrame(true, GameEngine.this);
+                }
+            });
+            h1.start();
+        } else if (playerCell.getMode().equals("WarRoom")) {
+            Thread h1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    WarRoomFrame warRoomFrame = new WarRoomFrame();
+                }
+            });
+            h1.start();
+        } else if (playerCell.getMode().equals("SkillRoom")) {
+            SkillRoomFrame skillRoomFrame = new SkillRoomFrame();
+        } else if (playerCell.getMode().equals("FinalWar")) {
+            WarRoomFrame warRoomFrame = new WarRoomFrame();
+        } else if (playerCell.getMode().equals("StoryBook")) {
+            StoryBookFrame storyBookFrame = new StoryBookFrame("You’ve entered the castle, it takes a while for your eyes to get used to the darkness but\n" +
+                    "the horrifying halo of your enemies is vaguely visible. Angel’s unsettling presence and\n" +
+                    "the growling of thugs tell you that your first battle has BEGUN!");
+        }
     }
 
     public Cell findPlayerCell(Player player) {
@@ -146,5 +183,48 @@ public class GameEngine extends JPanel {
         this.tileMap.getPlayer().render(graphics, x, y);
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.stop = true;
+            enter();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        this.stop = false;
+        System.out.println("aaaaaaaaaaa");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
 

@@ -24,6 +24,7 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
     private JLabel perkNameLabel;
     private JLabel numberOfGradesLabel;
     private JLabel descriptionLabel;
+
 //        //Getting A SubPerk
 //        //set isGlobal = false;
 //        private JLabel costOfUpgradeLabel;
@@ -96,13 +97,14 @@ public class AddNewPerkFrame extends JFrame implements ActionListener,GameFrame{
         this.timeOfCheckBox = new JComboBox();
         this.subPerks = new ArrayList<>();
         this.nameField = new JTextField();
-        this.perkNameLabel = new JLabel("Perk Name");
+        this.perkNameLabel = new JLabel();
         this.numberOfGradesField = new JTextField();
         this.numberOfGradesLabel = new JLabel("Number Of Grades");
         this.descriptionLabel = new JLabel("Description");
         this.descriptionField = new JTextField();
         this.setBackgroundImage();
-
+        this.addActionListeners();
+        this.showFrame();
     }
 
 
