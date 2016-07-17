@@ -30,7 +30,14 @@ public class AddNewSubPerkComponentFrame extends JFrame implements ActionListene
     public AddNewSubPerkComponentFrame(AddNewSubPerkFrame newSubPerkFrame) throws HeadlessException {
         this.addNewSelectingObjectDetailButton = new JButton();
         this.addButton = new JButton();
+        this.classOfEffectedObjectsBox = new JComboBox();
         this.newSubPerkFrame = newSubPerkFrame;
+    }
+
+    public void setClassOfEffectedObjectsBox(){
+        for (ClassName className : ClassName.values()) {
+            this.classOfEffectedObjectsBox.addItem(className.getName());
+        }
     }
 
     @Override
@@ -85,7 +92,6 @@ public class AddNewSubPerkComponentFrame extends JFrame implements ActionListene
 
     //------------------------------------------------------------------------
 
-
     public Tree getTrieCondition() {
         return trieCondition;
     }
@@ -100,5 +106,49 @@ public class AddNewSubPerkComponentFrame extends JFrame implements ActionListene
 
     public void setClassOfEffectedObjects(ClassName classOfEffectedObjects) {
         this.classOfEffectedObjects = classOfEffectedObjects;
+    }
+
+    public JComboBox getclassOfEffectedObjectsBox(){
+        return this.classOfEffectedObjectsBox;
+    }
+
+    public JButton getAddNewSelectingObjectDetailButton() {
+        return addNewSelectingObjectDetailButton;
+    }
+
+    public void setAddNewSelectingObjectDetailButton(JButton addNewSelectingObjectDetailButton) {
+        this.addNewSelectingObjectDetailButton = addNewSelectingObjectDetailButton;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(JButton addButton) {
+        this.addButton = addButton;
+    }
+
+    public AddNewSubPerkFrame getNewSubPerkFrame() {
+        return newSubPerkFrame;
+    }
+
+    public void setNewSubPerkFrame(AddNewSubPerkFrame newSubPerkFrame) {
+        this.newSubPerkFrame = newSubPerkFrame;
+    }
+
+    public JComboBox getClassOfEffectedObjectsBox() {
+        return classOfEffectedObjectsBox;
+    }
+
+    public void setClassOfEffectedObjectsBox(JComboBox classOfEffectedObjectsBox) {
+        this.classOfEffectedObjectsBox = classOfEffectedObjectsBox;
+    }
+
+    public SelectingObjectsDetail getSelectingObjectsDetail() {
+        return selectingObjectsDetail;
+    }
+
+    public void setSelectingObjectsDetail(SelectingObjectsDetail selectingObjectsDetail) {
+        this.selectingObjectsDetail = selectingObjectsDetail;
     }
 }

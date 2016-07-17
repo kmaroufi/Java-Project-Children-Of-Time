@@ -1,6 +1,7 @@
 package GUI;
 
 import SoldierPackage.Hero;
+import Structure.Condition;
 import Structure.Property;
 import Structure.PropertyHandler;
 
@@ -9,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 /**
  * Created by Future on 7/17/2016.
@@ -102,5 +102,37 @@ public class AddNewElementsTrieCondition extends JFrame implements ActionListene
 
     public void setProperties(ArrayList<Property> properties) {
         this.properties = properties;
+    }
+
+    public JButton getAddProperty() {
+        return addProperty;
+    }
+
+    public void setAddProperty(JButton addProperty) {
+        this.addProperty = addProperty;
+    }
+
+    public JButton getAddCondition() {
+        return addCondition;
+    }
+
+    public void setAddCondition(JButton addCondition) {
+        this.addCondition = addCondition;
+    }
+
+    public JButton getFinishButton() {
+        return finishButton;
+    }
+
+    public void setFinishButton(JButton finishButton) {
+        this.finishButton = finishButton;
+    }
+
+    public AddNewSubPerkComponentFrame getNewSubPerkComponentFrame() {
+        return newSubPerkComponentFrame;
+    }
+
+    public void setNewSubPerkComponentFrame(AddNewSubPerkComponentFrame newSubPerkComponentFrame) {
+        this.newSubPerkComponentFrame = newSubPerkComponentFrame;
     }
 }

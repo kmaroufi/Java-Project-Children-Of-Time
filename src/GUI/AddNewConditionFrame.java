@@ -1,11 +1,14 @@
 package GUI;
 
+import SoldierPackage.Hero;
+import Structure.ClassName;
 import Structure.Condition;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 
 /**
  * Created by Future on 7/16/2016.
@@ -13,9 +16,11 @@ import java.awt.event.ActionListener;
 public class AddNewConditionFrame extends JFrame implements ActionListener,GameFrame{
     private JButton addButton;
     private JComboBox fieldOfClassNameBox;
-    private JRadioButton greaterThan,smallerThan,equals;
+    private JComboBox conditionBox;
     private JLabel constantNumberLabel;
     private JTextField constantNumberField;
+    private JLabel classOfEffectedObjectsLabel;
+    private JTextField classOfEffectedObjectsField;
     //---------------------------
     private Object fatherFrame;
 
@@ -23,13 +28,17 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
     public AddNewConditionFrame(Object fatherFrame) throws HeadlessException {
         this.addButton = new JButton();
         this.fieldOfClassNameBox = new JComboBox();
-        this.greaterThan = new JRadioButton("Greater Than");
-        this.equals = new JRadioButton("Equals");
-        this.smallerThan = new JRadioButton("Smaller Than");
+
         this.constantNumberField = new JTextField();
         this.constantNumberLabel = new JLabel("Constant Number");
         this.fatherFrame = fatherFrame;
     }
+
+    public void addBoxItems(){
+        this.conditionBox.addItem("Greater Than");
+        this.conditionBox.addItem("Smaller Than");
+        this.conditionBox.addItem("Equals");
+   }
 
     @Override
     public void setBackgroundImage() {
@@ -38,27 +47,47 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
 
     @Override
     public void addActionListeners() {
-
+        this.addButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
-
+        this.setSize(500, 500);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
     }
 
     @Override
     public void setButtons() {
-
+        this.addButton.setName("AddButton");
+        this.setButton(addButton);
     }
 
     @Override
     public void addComponents() {
-
+        this.add(addButton);
+        this.add(fieldOfClassNameBox);
+        this.add(conditionBox);
+        this.add(constantNumberLabel);
+        this.add(constantNumberField);
+        this.add(classOfEffectedObjectsLabel);
+        this.add(classOfEffectedObjectsField);
     }
 
     @Override
     public void setComponentsBounds() {
-
+        this.addButton.setBounds(300, 300, 200, 100);
+        this.classOfEffectedObjectsLabel.setBounds(50, 50, 100, 20);
+        this.classOfEffectedObjectsField.setBounds(150, 50, 100, 20);
+        this.constantNumberLabel.setBounds(50, 100, 100, 20);
+        this.constantNumberField.setBounds(150, 100, 100, 20);
+        this.fieldOfClassNameBox.setBounds(100, 200, 300, 30);
+        this.conditionBox.setBounds(100, 150, 300, 30);
     }
 
     @Override
@@ -84,11 +113,11 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
             valueOfField = this.constantNumberField.getText();
         }
         int status = 0;
-        if (greaterThan.isSelected()) {
+        if (conditionBox.getSelectedItem().equals("Greater Than")) {
             status = 1;
-        } else if (equals.isSelected()) {
+        } else if (conditionBox.getSelectedItem().equals("Equals")) {
             status = 0;
-        } else if (smallerThan.isSelected()) {
+        } else if (conditionBox.getSelectedItem().equals("Smaller Than")) {
             status = -1;
         }
 
@@ -99,7 +128,11 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
         } else if (this.fatherFrame instanceof AddNewElementsTrieConditionOfSelectingObjectDetail) {
             AddNewElementsTrieConditionOfSelectingObjectDetail newSelectingObjectDetailFrame = (AddNewElementsTrieConditionOfSelectingObjectDetail) this.fatherFrame;
             newSelectingObjectDetailFrame.getConditions().add(condition);
+        } else if (this.fatherFrame instanceof AddNewElementsTrieCondition) {
+            AddNewElementsTrieCondition addNewElementsTrieCondition = (AddNewElementsTrieCondition) this.fatherFrame;
+            addNewElementsTrieCondition.getConditions().add(condition);
         }
 
     }
+    //----------------------------------------------------
 }
