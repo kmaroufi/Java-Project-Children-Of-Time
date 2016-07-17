@@ -10,12 +10,11 @@ import java.io.Serializable;
 public class MainClass implements Serializable {
     public static GameEngine childrenOfTime = new GameEngine();
     public static void main(String[] args) {
-        Display.printInEachLine("Hi,Welcome!");
-        Display.printInEachLine("What's Your Name?");
-        String playerName = Display.getString();
-        childrenOfTime.setPlayer(new PlayerPackage.Player(playerName,15,40));
-        Display.printInEachLine("Hi " + childrenOfTime.getPlayer().getName());
-        childrenOfTime.chooseModeOfGame();
+//        Display.printInEachLine("Hi,Welcome!");
+//        Display.printInEachLine("What's Your Name?");
+//        String playerName = Display.getString();
+        childrenOfTime.setPlayer(new PlayerPackage.Player(null,15,40));
+//        Display.printInEachLine("Hi " + childrenOfTime.getPlayer().getName());
         childrenOfTime.play();
     }
 }

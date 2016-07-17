@@ -1,5 +1,6 @@
 package Engine;
 
+import GUI.MenuFrame;
 import PlayerPackage.*;
 import GUI.Display;
 import SoldierPackage.*;
@@ -40,6 +41,15 @@ public class GameEngine {
     public NetworkDetail networkDetail;
 
     //------------------------------------------ Functions
+
+    public void save() {
+
+    }
+
+    public void load() {
+        
+    }
+
     public ArrayList<String> getFields(ClassName className){
         Class clazz = null;
         if (className == ClassName.Hero) {
