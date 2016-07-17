@@ -2,6 +2,7 @@ package SoldierPackage;
 
 
 import AbilityPackage.*;
+import GUI.Texture;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * Created by Future on 5/6/2016.
  */
 public class Soldier implements Serializable{
+    protected Texture texture;
     protected String className;
     protected ArrayList<Perk> perks = new ArrayList<Perk>();
     protected ArrayList<Skill> skills = new ArrayList<Skill>();
@@ -50,6 +52,11 @@ public class Soldier implements Serializable{
     }
 
     //------------------------------------------- Functions
+
+    public void setTexture(String imageName) {
+        this.texture = new Texture(imageName);
+    }
+
     public boolean isDead(){
         if(this.currentHealth <= 0){
             return true;
@@ -90,6 +97,15 @@ public class Soldier implements Serializable{
     }
 
     //------------------------------------------- Getters && Setters
+
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
 
     public int getMaximumHealth() {
         return maximumHealth;

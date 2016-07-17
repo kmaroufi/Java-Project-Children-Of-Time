@@ -17,6 +17,9 @@ public class AddNewElementsTrieConditionOfSelectingObjectDetail extends JFrame i
     private ArrayList<Condition> conditions;
 
     public AddNewElementsTrieConditionOfSelectingObjectDetail(AddNewSelectingObjectDetailFrame addNewSelectingObjectDetailFrame) {
+        this.addButton = new JButton();
+        this.addNewConditionButton = new JButton();
+        this.conditions = new ArrayList<>();
         this.newSelectingObjectDetailFrame = addNewSelectingObjectDetailFrame;
     }
 
@@ -27,27 +30,40 @@ public class AddNewElementsTrieConditionOfSelectingObjectDetail extends JFrame i
 
     @Override
     public void addActionListeners() {
-
+        this.addButton.addActionListener(this);
+        this.addNewConditionButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
-
+        this.setSize(500, 500);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
     }
 
     @Override
     public void setButtons() {
-
+        this.addButton.setName("AddButton");
+        this.addNewConditionButton.setName("AddConditionButton");
+        this.setButton(addButton);
+        this.setButton(addNewConditionButton);
     }
 
     @Override
     public void addComponents() {
-
+        this.add(addButton);
+        this.add(addNewConditionButton);
     }
 
     @Override
     public void setComponentsBounds() {
-
+        this.addNewConditionButton.setBounds(300, 200, 200, 100);
+        this.addButton.setBounds(100, 200, 200, 100);
     }
 
     @Override
@@ -78,5 +94,30 @@ public class AddNewElementsTrieConditionOfSelectingObjectDetail extends JFrame i
 
     public void setConditions(ArrayList<Condition> conditions) {
         this.conditions = conditions;
+    }
+
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(JButton addButton) {
+        this.addButton = addButton;
+    }
+
+    public JButton getAddNewConditionButton() {
+        return addNewConditionButton;
+    }
+
+    public void setAddNewConditionButton(JButton addNewConditionButton) {
+        this.addNewConditionButton = addNewConditionButton;
+    }
+
+    public AddNewSelectingObjectDetailFrame getNewSelectingObjectDetailFrame() {
+        return newSelectingObjectDetailFrame;
+    }
+
+    public void setNewSelectingObjectDetailFrame(AddNewSelectingObjectDetailFrame newSelectingObjectDetailFrame) {
+        this.newSelectingObjectDetailFrame = newSelectingObjectDetailFrame;
     }
 }

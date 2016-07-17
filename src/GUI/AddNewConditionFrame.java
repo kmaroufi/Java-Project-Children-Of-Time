@@ -27,11 +27,14 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
 
     public AddNewConditionFrame(Object fatherFrame) throws HeadlessException {
         this.addButton = new JButton();
+        this.conditionBox = new JComboBox();
         this.fieldOfClassNameBox = new JComboBox();
-
         this.constantNumberField = new JTextField();
         this.constantNumberLabel = new JLabel("Constant Number");
+        this.classOfEffectedObjectsField = new JTextField();
+        this.classOfEffectedObjectsLabel = new JLabel("Class Of Effected Objects");
         this.fatherFrame = fatherFrame;
+        this.addBoxItems();
     }
 
     public void addBoxItems(){
@@ -82,8 +85,8 @@ public class AddNewConditionFrame extends JFrame implements ActionListener,GameF
     @Override
     public void setComponentsBounds() {
         this.addButton.setBounds(300, 300, 200, 100);
-        this.classOfEffectedObjectsLabel.setBounds(50, 50, 100, 20);
-        this.classOfEffectedObjectsField.setBounds(150, 50, 100, 20);
+        this.classOfEffectedObjectsLabel.setBounds(50, 50, 200, 20);
+        this.classOfEffectedObjectsField.setBounds(250, 50, 100, 20);
         this.constantNumberLabel.setBounds(50, 100, 100, 20);
         this.constantNumberField.setBounds(150, 100, 100, 20);
         this.fieldOfClassNameBox.setBounds(100, 200, 300, 30);

@@ -113,4 +113,68 @@ public class AddNewPropertyFrame extends JFrame implements ActionListener,GameFr
     public void setTrieCondition(Tree trieCondition) {
         this.trieCondition = trieCondition;
     }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(JButton addButton) {
+        this.addButton = addButton;
+    }
+
+    public JButton getAddNewElementsTrieConditionButton() {
+        return addNewElementsTrieConditionButton;
+    }
+
+    public void setAddNewElementsTrieConditionButton(JButton addNewElementsTrieConditionButton) {
+        this.addNewElementsTrieConditionButton = addNewElementsTrieConditionButton;
+    }
+
+    public JButton getAddNewSelectingEffectingObjectsDetailButton() {
+        return addNewSelectingEffectingObjectsDetailButton;
+    }
+
+    public void setAddNewSelectingEffectingObjectsDetailButton(JButton addNewSelectingEffectingObjectsDetailButton) {
+        this.addNewSelectingEffectingObjectsDetailButton = addNewSelectingEffectingObjectsDetailButton;
+    }
+
+    public JComboBox getNameOfEffectedFieldBox() {
+        return nameOfEffectedFieldBox;
+    }
+
+    public void setNameOfEffectedFieldBox(JComboBox nameOfEffectedFieldBox) {
+        this.nameOfEffectedFieldBox = nameOfEffectedFieldBox;
+    }
+
+    public JCheckBox getIsPermenantly() {
+        return isPermenantly;
+    }
+
+    public void setIsPermenantly(JCheckBox isPermenantly) {
+        this.isPermenantly = isPermenantly;
+    }
+
+    public JLabel getConstantPropertyLabel() {
+        return constantPropertyLabel;
+    }
+
+    public void setConstantPropertyLabel(JLabel constantPropertyLabel) {
+        this.constantPropertyLabel = constantPropertyLabel;
+    }
+
+    public JTextField getConstantPropertyField() {
+        return constantPropertyField;
+    }
+
+    public void setConstantPropertyField(JTextField constantPropertyField) {
+        this.constantPropertyField = constantPropertyField;
+    }
+
+    public AddNewElementsTrieCondition getNewElementsTrieCondition() {
+        return newElementsTrieCondition;
+    }
+
+    public void setNewElementsTrieCondition(AddNewElementsTrieCondition newElementsTrieCondition) {
+        this.newElementsTrieCondition = newElementsTrieCondition;
+    }
 }

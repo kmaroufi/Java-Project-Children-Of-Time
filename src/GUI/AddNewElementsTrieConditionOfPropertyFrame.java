@@ -21,10 +21,12 @@ public class AddNewElementsTrieConditionOfPropertyFrame extends JFrame implement
 
 
 
-
-
-
     public AddNewElementsTrieConditionOfPropertyFrame(AddNewPropertyFrame addNewPropertyFrame) {
+        this.addButton = new JButton();
+        this.addNewConditionButton = new JButton();
+        this.addNewEffectingVariablesButton = new JButton("Add New Effecting Variable");
+        this.variables = new ArrayList<>();
+        this.conditions = new ArrayList<>();
         this.newPropertyFrame = addNewPropertyFrame;
     }
 
@@ -35,27 +37,43 @@ public class AddNewElementsTrieConditionOfPropertyFrame extends JFrame implement
 
     @Override
     public void addActionListeners() {
-
+        this.addButton.addActionListener(this);
+        this.addNewEffectingVariablesButton.addActionListener(this);
+        this.addNewEffectingVariablesButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
-
+        this.setSize(500, 500);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
     }
 
     @Override
     public void setButtons() {
-
+        this.addButton.setName("AddButton");
+        this.addNewConditionButton.setName("AddConditionButton");
+        this.setButton(addButton);
+        this.setButton(addNewConditionButton);
     }
 
     @Override
     public void addComponents() {
-
+        this.add(addButton);
+        this.add(addNewConditionButton);
+        this.add(addNewEffectingVariablesButton);
     }
 
     @Override
     public void setComponentsBounds() {
-
+        this.addButton.setBounds(300, 300, 200, 100);
+        this.addNewConditionButton.setBounds(200, 200, 200, 100);
+        this.addNewEffectingVariablesButton.setBounds(100, 100, 200, 100);
     }
 
     @Override
@@ -94,5 +112,37 @@ public class AddNewElementsTrieConditionOfPropertyFrame extends JFrame implement
 
     public void setVariables(ArrayList<Pair<String, Double>> variables) {
         this.variables = variables;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(JButton addButton) {
+        this.addButton = addButton;
+    }
+
+    public JButton getAddNewConditionButton() {
+        return addNewConditionButton;
+    }
+
+    public void setAddNewConditionButton(JButton addNewConditionButton) {
+        this.addNewConditionButton = addNewConditionButton;
+    }
+
+    public JButton getAddNewEffectingVariablesButton() {
+        return addNewEffectingVariablesButton;
+    }
+
+    public void setAddNewEffectingVariablesButton(JButton addNewEffectingVariablesButton) {
+        this.addNewEffectingVariablesButton = addNewEffectingVariablesButton;
+    }
+
+    public AddNewPropertyFrame getNewPropertyFrame() {
+        return newPropertyFrame;
+    }
+
+    public void setNewPropertyFrame(AddNewPropertyFrame newPropertyFrame) {
+        this.newPropertyFrame = newPropertyFrame;
     }
 }

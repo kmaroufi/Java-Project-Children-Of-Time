@@ -20,7 +20,7 @@ public class AddNewEffectingVariableFrame extends JFrame implements ActionListen
     private AddNewElementsTrieConditionOfPropertyFrame newElementsTrieConditionOfPropertyFrame;
 
     public void setGettingVariableNameBox(){
-
+        this.gettingVariableNameBox = this.newElementsTrieConditionOfPropertyFrame.getNewPropertyFrame().getClassOfEffectingObjects();
     }
 
     public AddNewEffectingVariableFrame(AddNewElementsTrieConditionOfPropertyFrame newElementsTrieConditionOfPropertyFrame) {
@@ -29,6 +29,7 @@ public class AddNewEffectingVariableFrame extends JFrame implements ActionListen
         this.gettingVariableRatioField = new JTextField();
         this.gettingVariableNameBox = new JComboBox();
         this.newElementsTrieConditionOfPropertyFrame = newElementsTrieConditionOfPropertyFrame;
+        this.setGettingVariableNameBox();
     }
 
     @Override

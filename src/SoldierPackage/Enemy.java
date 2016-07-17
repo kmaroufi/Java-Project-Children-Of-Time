@@ -2,6 +2,7 @@ package SoldierPackage;
 import GUI.Display;
 import Engine.*;
 import AbilityPackage.*;
+import GUI.Texture;
 import ItemPackage.*;
 import Structure.*;
 /**

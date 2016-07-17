@@ -73,7 +73,10 @@ public class MenuFrame extends JFrame implements ActionListener,GameFrame{
 
     @Override
     public void addActionListeners() {
-
+        this.singlePlayerButton.addActionListener(this);
+        this.customPlayerButton.addActionListener(this);
+        this.PVPBattleButton.addActionListener(this);
+        this.exitButton.addActionListener(this);
     }
     @Override
     public void showFrame() {

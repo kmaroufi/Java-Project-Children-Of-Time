@@ -43,9 +43,6 @@ public class GameEngine extends JPanel {
         }
     });
 
-
-
-
     //-------------------------------------------------------------------------------
     public GameEngine() {
         this.setSize(600,600);
@@ -76,9 +73,6 @@ public class GameEngine extends JPanel {
     public boolean hasCollisionWithAllBarriers(Player player) {
         return this.tileMap.hasCollisionwithAllBarriers(player);
     }
-
-
-
 
 
     @Override

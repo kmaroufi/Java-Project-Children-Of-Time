@@ -28,9 +28,9 @@ public class AddNewElementsTrieCondition extends JFrame implements ActionListene
         this.addProperty = new JButton();
         this.addCondition = new JButton();
         this.finishButton = new JButton();
-        this.properties = new ArrayList<>();
-        this.conditions = new ArrayList<>();
         this.newSubPerkComponentFrame = subPerkComponentFrame;
+        this.conditions = new ArrayList<>();
+        this.properties = new ArrayList<>();
     }
 
     @Override
@@ -40,27 +40,45 @@ public class AddNewElementsTrieCondition extends JFrame implements ActionListene
 
     @Override
     public void addActionListeners() {
-
+        this.addProperty.addActionListener(this);
+        this.addCondition.addActionListener(this);
+        this.finishButton.addActionListener(this);
     }
 
     @Override
     public void showFrame() {
-
+        this.setSize(500, 500);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable(false);
+        this.addComponents();
+        this.setComponentsBounds();
+        this.setFonts();
+        this.setVisible(true);
     }
 
     @Override
     public void setButtons() {
-
+        this.addProperty.setName("AddPropertyButton");
+        this.addCondition.setName("AddConditionButton");
+        this.finishButton.setName("FinishButton");
+        this.setButton(addProperty);
+        this.setButton(addCondition);
+        this.setButton(finishButton);
     }
 
     @Override
     public void addComponents() {
-
+        this.add(addProperty);
+        this.add(addCondition);
+        this.add(finishButton);
     }
 
     @Override
     public void setComponentsBounds() {
-
+        this.addProperty.setBounds(300, 200, 200, 100);
+        this.addCondition.setBounds(100, 200, 200, 100);
+        this.finishButton.setBounds(200, 350, 200, 100);
     }
 
     @Override
